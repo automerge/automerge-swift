@@ -1,0 +1,4 @@
+.DS_STORE
+.build
+.swiftpm
+*.xcframework*

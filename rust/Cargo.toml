@@ -1,0 +1,22 @@
+[package]
+name = "uniffi_automerge"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+name = "uniffi_automerge"
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+required-features = ["uniffi/cli"]
+
+[dependencies]
+automerge = "0.3.0"
+thiserror = "1.0.38"
+uniffi = "0.23.0"
+
+[build-dependencies]
+uniffi = {version = "0.23.0", features = ["build"] }
+
