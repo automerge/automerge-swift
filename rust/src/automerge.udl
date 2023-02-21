@@ -1,0 +1,214 @@
+namespace automerge {
+    ObjId root();
+};
+
+[Custom]
+typedef sequence<u8> ObjId;
+
+[Custom]
+typedef sequence<u8> ChangeHash;
+
+[Custom]
+typedef sequence<u8> ActorId;
+
+[Enum]
+interface ScalarValue {
+    Bytes( sequence<u8> value);
+    String( string value );
+    Uint( u64 value );
+    Int(i64 value);
+    F64(double value);
+    Counter(i64 value);
+    Timestamp(i64 value);
+    Boolean(boolean value);
+    Unknown(u8 type_code, sequence<u8> data);
+    Null();
+};
+
+[Enum]
+interface Value {
+    Object ( ObjType typ, ObjId id);
+    Scalar ( ScalarValue value);
+};
+
+enum ObjType {
+    "Map",
+    "List",
+    "Text",
+};
+
+[Error] enum DocError {
+    "WrongObjectType",
+    "Internal",
+};
+
+[Error]
+enum LoadError {
+    "Internal",
+};
+
+[Error]
+enum ReceiveSyncError {
+    "Internal",
+    "InvalidMessage",
+};
+
+[Error]
+enum DecodeSyncStateError {
+    "Internal",
+};
+
+interface SyncState {
+    constructor();
+
+    [Name=decode, Throws=DecodeSyncStateError]
+    constructor(sequence<u8> bytes);
+    sequence<u8> encode();
+
+    void reset();
+    sequence<ChangeHash>? their_heads();
+
+};
+
+dictionary KeyValue {
+    string key;
+    Value value;
+};
+
+[Enum]
+interface Prop {
+    Key( string value );
+    Index( u64 value );
+};
+
+dictionary PathElement {
+    Prop prop;
+    ObjId obj;
+};
+
+dictionary Patch {
+    sequence<PathElement> path;
+    PatchAction action;
+};
+
+[Enum]
+interface PatchAction {
+    Put( ObjId obj, Prop prop, Value value);
+    Insert( ObjId obj, u64 index, sequence<Value> values);
+    SpliceText( ObjId obj, u64 index, string value);
+    Increment( ObjId obj, Prop prop, i64 value);
+    DeleteMap( ObjId obj, string key);
+    DeleteSeq( ObjId obj, u64 index, u64 length);
+};
+
+interface Doc {
+
+    constructor();
+    [Name=new_with_actor]
+    constructor(ActorId actor);
+    [Name=load, Throws=LoadError]
+    constructor(sequence<u8> bytes);
+
+    ActorId actor_id();
+    void set_actor(ActorId actor);
+    Doc fork();
+    [Throws=DocError]
+    Doc fork_at(sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    void put_in_map(ObjId obj, string key, ScalarValue value);
+    [Throws=DocError]
+    ObjId put_object_in_map(ObjId obj, string key, ObjType obj_type);
+    [Throws=DocError]
+    void put_in_list(ObjId obj, u64 index, ScalarValue value);
+    [Throws=DocError]
+    ObjId put_object_in_list(ObjId obj, u64 index, ObjType obj_type);
+    [Throws=DocError]
+    void insert_in_list(ObjId obj, u64 index, ScalarValue value);
+    [Throws=DocError]
+    ObjId insert_object_in_list(ObjId obj, u64 index, ObjType obj_type);
+
+    [Throws=DocError]
+    void splice_text(ObjId obj, u64 start, u64 delete, string chars);
+
+    [Throws=DocError]
+    void splice(ObjId obj, u64 start, u64 delete, sequence<ScalarValue> values);
+
+    [Throws=DocError]
+    void delete_in_map(ObjId obj, string key);
+    [Throws=DocError]
+    void delete_in_list(ObjId obj, u64 index);
+
+    [Throws=DocError]
+    void increment_in_map(ObjId obj, string key, i64 by);
+    [Throws=DocError]
+    void increment_in_list(ObjId obj, u64 index, i64 by);
+
+    [Throws=DocError]
+    Value? get_in_map(ObjId obj, string key);
+    [Throws=DocError]
+    Value? get_in_list(ObjId obj, u64 index);
+
+    [Throws=DocError]
+    Value? get_at_in_map(ObjId obj, string key, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    Value? get_at_in_list(ObjId obj, u64 index, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    sequence<Value> get_all_in_map(ObjId obj, string key);
+    [Throws=DocError]
+    sequence<Value> get_all_in_list(ObjId obj, u64 index);
+
+    [Throws=DocError]
+    sequence<Value> get_all_at_in_map(ObjId obj, string key, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    sequence<Value> get_all_at_in_list(ObjId obj, u64 index, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    string text(ObjId obj);
+    [Throws=DocError]
+    string text_at(ObjId obj, sequence<ChangeHash> heads);
+
+    sequence<string> map_keys(ObjId obj);
+    sequence<string> map_keys_at(ObjId obj, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    sequence<KeyValue> map_entries(ObjId obj);
+    [Throws=DocError]
+    sequence<KeyValue> map_entries_at(ObjId obj, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    sequence<Value> values(ObjId obj);
+    [Throws=DocError]
+    sequence<Value> values_at(ObjId obj, sequence<ChangeHash> heads);
+
+    u64 length(ObjId obj);
+    u64 length_at(ObjId obj, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    sequence<PathElement> path(ObjId obj);
+
+    sequence<ChangeHash> heads();
+
+    sequence<u8> save();
+
+    [Throws=DocError]
+    void merge(Doc other);
+    [Throws=DocError]
+    sequence<Patch> merge_with_patches(Doc other);
+
+    sequence<u8>? generate_sync_message(SyncState state);
+    [Throws=ReceiveSyncError]
+    void receive_sync_message(SyncState state, sequence<u8> msg);
+    [Throws=ReceiveSyncError]
+    sequence<Patch> receive_sync_message_with_patches(SyncState state, sequence<u8> msg);
+
+    sequence<u8> encode_new_changes();
+    [Throws=DocError]
+    sequence<u8> encode_changes_since(sequence<ChangeHash> heads);
+    [Throws=DocError]
+    void apply_encoded_changes(sequence<u8> changes);
+    [Throws=DocError]
+    sequence<Patch> apply_encoded_changes_with_patches(sequence<u8> changes);
+};
+

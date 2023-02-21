@@ -1,0 +1,42 @@
+name: test
+on: [push]
+jobs:
+  build-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.66.0
+          default: true
+      - name: build xcframework
+        run: ./scripts/build-xcframework.sh
+      - name: Swift tests
+        run: swift test
+
+  rustfmt:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.66.0
+          default: true
+          components: rustfmt
+      - name: Clippy
+        run: ./scripts/ci/rustfmt.sh
+
+  clippy:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.66.0
+          default: true
+          components: clippy
+      - name: Clippy
+        run: ./scripts/ci/clippy.sh
