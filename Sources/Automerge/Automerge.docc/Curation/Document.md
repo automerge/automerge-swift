@@ -28,7 +28,7 @@
 
 - ``put(obj:key:value:)``
 - ``putObject(obj:key:ty:)``
-- ``delete(obj:key:)`` 
+- ``delete(obj:key:)``
 
 ### Reading lists
 

@@ -1,0 +1,9 @@
+{
+  "bundleDisplayName" : "Automerge",
+  "bundleIdentifier" : "com.github.automerge.automerge-swift",
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 1,
+    "patch" : 0
+  }
+}

@@ -1,0 +1,983 @@
+{
+  "abstract" : [
+    {
+      "text" : "Automerge Encoding errors",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge20CodingKeyLookupErrorO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "CodingKeyLookupError"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "CodingKeyLookupError"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "CodingKeyLookupError"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "CodingKeyLookupError"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
+        "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+        "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathParseError",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BindingError"
+      ],
+      "title" : "Codable Errors"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/==(_:_:)"
+      ],
+      "title" : "Operators"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/AutomergeDocError(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/EmptyListIndex(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/IndexOutOfBounds(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidIndexLookup(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidPathElement(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidValueLookup(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/MismatchedSchema(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/NoPathForSingleValue(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/PathExtendsThroughScalar(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/PathExtendsThroughText(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/SchemaMissing(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/UnexpectedLookupFailure(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/errorDescription",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/failureReason"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/Equatable-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/Error-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/LocalizedError-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/codingkeylookuperror"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/SQ": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/BindingError": {
+  "abstract" : [
+    {
+      "text" : "Binding errors",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "BindingError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BindingError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "BindingError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "BindingError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/bindingerror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError": {
+  "abstract" : [
+    {
+      "text" : "Automerge Encoding errors",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CodingKeyLookupError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CodingKeyLookupError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/==(_:_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "=="
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge20CodingKeyLookupErrorO",
+      "text" : "CodingKeyLookupError"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge20CodingKeyLookupErrorO",
+      "text" : "CodingKeyLookupError"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/==(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "==(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/==(_:_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/AutomergeDocError(_:)": {
+  "abstract" : [
+    {
+      "text" : "An underlying Automerge Document error.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AutomergeDocError"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5ErrorP",
+      "text" : "Error"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/AutomergeDocError(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.AutomergeDocError(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/automergedocerror(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/EmptyListIndex(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path element, structured as a Index location, doesn’t include an index value.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "EmptyListIndex"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/EmptyListIndex(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.EmptyListIndex(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/emptylistindex(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/equatable-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/error-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/IndexOutOfBounds(_:)": {
+  "abstract" : [
+    {
+      "text" : "The list index requested was longer than the list in the Document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "IndexOutOfBounds"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/IndexOutOfBounds(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.IndexOutOfBounds(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/indexoutofbounds(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/InvalidIndexLookup(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided to look up an index is invalid.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InvalidIndexLookup"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidIndexLookup(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.InvalidIndexLookup(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/invalidindexlookup(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/InvalidPathElement(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path element is not valid.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InvalidPathElement"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidPathElement(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.InvalidPathElement(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/invalidpathelement(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/InvalidValueLookup(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided to look up a value is invalid.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "InvalidValueLookup"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/InvalidValueLookup(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.InvalidValueLookup(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/invalidvaluelookup(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/localizederror-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/MismatchedSchema(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided doesn’t match the schema within the Automerge Document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MismatchedSchema"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/MismatchedSchema(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.MismatchedSchema(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/mismatchedschema(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/NoPathForSingleValue(_:)": {
+  "abstract" : [
+    {
+      "text" : "No coding path was provided for encoding a single value into the Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "NoPathForSingleValue"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/NoPathForSingleValue(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.NoPathForSingleValue(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/nopathforsinglevalue(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/PathExtendsThroughScalar(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided extends through an Automerge ScalarValue, a leaf node in the schema.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PathExtendsThroughScalar"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/PathExtendsThroughScalar(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.PathExtendsThroughScalar(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/pathextendsthroughscalar(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/PathExtendsThroughText(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided extends through Automerge Text, a leaf node in the schema.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PathExtendsThroughText"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/PathExtendsThroughText(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.PathExtendsThroughText(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/pathextendsthroughtext(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/SchemaMissing(_:)": {
+  "abstract" : [
+    {
+      "text" : "The path provided expected schema within the Automerge document that doesn’t exist.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SchemaMissing"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/SchemaMissing(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.SchemaMissing(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/schemamissing(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/UnexpectedLookupFailure(_:)": {
+  "abstract" : [
+    {
+      "text" : "An error that represents a coding container was unable to look up a relevant Automerge objectId and was unable",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "to capture a more specific error.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "UnexpectedLookupFailure"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/UnexpectedLookupFailure(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "CodingKeyLookupError.UnexpectedLookupFailure(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/unexpectedlookupfailure(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/errorDescription": {
+  "abstract" : [
+    {
+      "text" : "A localized message describing the error.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errorDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/errorDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errorDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/errordescription"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/CodingKeyLookupError/failureReason": {
+  "abstract" : [
+    {
+      "text" : "A localized message describing the reason for the failure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "failureReason"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError\/failureReason",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "failureReason",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/codingkeylookuperror\/failurereason"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/PathParseError": {
+  "abstract" : [
+    {
+      "text" : "Path Parsing Errors",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PathParseError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathParseError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PathParseError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PathParseError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/pathparseerror"
+},
+"doc://com.github.automerge.automerge-swift/s5ErrorP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8SendableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

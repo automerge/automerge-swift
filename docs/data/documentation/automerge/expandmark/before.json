@@ -1,0 +1,270 @@
+{
+  "abstract" : [
+    {
+      "text" : "Characters added just before the mark should be inside the mark.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/before"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge10ExpandMarkO6beforeyA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "before"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "ExpandMark.before"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "before"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/after",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/both",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/none"
+      ],
+      "title" : "Mark Expansion Configurations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/expandmark\/before"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark": {
+  "abstract" : [
+    {
+      "text" : "A type that indicates how a mark should expand when adding characters at the ends of the mark.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ExpandMark"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ExpandMark"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ExpandMark",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/expandmark"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark/after": {
+  "abstract" : [
+    {
+      "text" : "Characters added just after the mark should be inside the mark.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "after"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/after",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ExpandMark.after",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/expandmark\/after"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark/before": {
+  "abstract" : [
+    {
+      "text" : "Characters added just before the mark should be inside the mark.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "before"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/before",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ExpandMark.before",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/expandmark\/before"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark/both": {
+  "abstract" : [
+    {
+      "text" : "Characters added just before or just after the mark should be inside the mark.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "both"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/both",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ExpandMark.both",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/expandmark\/both"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark/none": {
+  "abstract" : [
+    {
+      "text" : "Characters added just before or just after the mark should never be added to it.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "none"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/none",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ExpandMark.none",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/expandmark\/none"
+}
+}
+}
