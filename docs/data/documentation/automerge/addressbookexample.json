@@ -1,0 +1,1168 @@
+{
+  "abstract" : [
+    {
+      "text" : "Building a CLI address book application using Automerge.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AddressBookExample"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "article",
+    "roleHeading" : "Article",
+    "title" : "Address Book Example"
+  },
+  "primaryContentSections" : [
+    {
+      "content" : [
+        {
+          "anchor" : "Overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "All the code herein can also be found in the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/automerge\/contaaacts",
+              "isActive" : true,
+              "type" : "reference"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Let’s imagine we’re building a simple collaborative address book with a structure similar to the following JSON:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{",
+            "    \"contacts\": [",
+            "        {",
+            "            \"name\": \"Alice\",",
+            "            \"email\": \"alice@example.com\"",
+            "        },",
+            "        {",
+            "            \"name\": \"Bob\",",
+            "            \"email\": \"bob@example.com\"",
+            "        }",
+            "    ]",
+            "}"
+          ],
+          "syntax" : "json",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "We’re going to build a simple CLI application called ",
+              "type" : "text"
+            },
+            {
+              "code" : "contaaacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " for collaborating on an address book. Here’s what we want to be able to do:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "# create a new address book",
+            "contaaacts create .\/friends",
+            "",
+            "# Add a new contact",
+            "contaaacts add .\/friends 'Alice' 'alice@example.com'",
+            "",
+            "# List the contents of the address book",
+            "contaaacts list .\/friends",
+            "",
+            "# Modify a contact",
+            "contaaacts update .\/friends alice --email 'alice2@example.com'",
+            "",
+            "# merge with another version of the address book and output to a new file",
+            "contaaacts merge .\/friends .\/otherfriends .\/merged",
+            "",
+            "# provide a sync server for other peers to sync with on localhost:9090",
+            "contaaacts serve .\/friends localhost 9090",
+            "",
+            "# sync with a contaaacts server running at localhost:9090 and save the result",
+            "contaaacts sync .\/friends localhost 9090"
+          ],
+          "syntax" : "bash",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Setup",
+          "level" : 2,
+          "text" : "Setup",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "We’re creating a simple command line application, we’ll have a single file called ",
+              "type" : "text"
+            },
+            {
+              "code" : "Contaaacts.swift",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " where we parse and dispatch arguments. No error handling of any kind because this is an example. As we go through the rest of this guide we’ll fill in the implementations of the handlers.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "@main",
+            "struct Contaaacts {",
+            "    public static func main() {",
+            "        let args = CommandLine.arguments",
+            "        switch args[1] {",
+            "        case \"create\":",
+            "            create(filename: args[2])",
+            "        case \"add\":",
+            "            add(filename: args[2], name: args[4], email: args[6])",
+            "        case \"list\":",
+            "            list(filename: args[2])",
+            "        case \"update\":",
+            "            update(filename: args[2], contact: args[4], newEmail: args[6])",
+            "        case \"merge\":",
+            "            merge(filename1: args[2], filename2: args[3], out: args[4])",
+            "        case \"serve\":",
+            "            serve(filename: args[2], port: args[3])",
+            "        case \"sync\":",
+            "            sync(filename: args[2], server: args[3], port: args[4])",
+            "        default:",
+            "            print(\"unknown command\")",
+            "        }",
+            "    }",
+            "}",
+            "",
+            "func create(filename: String) {",
+            "}",
+            "",
+            "func add(filename: String, name: String, email: String) {",
+            "}",
+            "",
+            "func list(filename: String) {",
+            "}",
+            "",
+            "func update(filename: String, contact: String, newEmail: String) {",
+            "}",
+            "",
+            "func merge(filename1: String, filename2: String, out: String) {",
+            "}",
+            "",
+            "func serve(filename: String, port: String) {",
+            "}",
+            "",
+            "func sync(server: String) {",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Creating-the-address-book",
+          "level" : 2,
+          "text" : "Creating the address book",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To create an address book we just need to create an Automerge document with an empty ",
+              "type" : "text"
+            },
+            {
+              "code" : "contacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " array in it. This is conceptually simple but there’s a wrinkle, which we refer to as the “initial data” problem. Once we’ve explained the problem, the approach we take will make more sense.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "The-initial-data-problem",
+          "level" : 3,
+          "text" : "The “initial data” problem",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Automerge documents contain “objects”, which are maps, lists, or text objects. These objects have an ID (",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : "). Every Automerge document contains a “root” ID (",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId\/ROOT",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ")which is a map, any time you create a new object in an Automerge document the new object has an ID you use to refer to it. The reason you need to know this is because the IDs which Automerge generates are used to determine how to merge documents, this means that for two documents with similar structure to merge in the way we expect, they need to share a history.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Let’s make this a bit more concrete. We are building a contact book application, the core data structure is a list of contacts under the ",
+              "type" : "text"
+            },
+            {
+              "code" : "contacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " key in the document. The merge behaviour we want is that when two nodes concurrently add contacts to the contact book, they end up in the same sequence. In terms of the Automerge data model then, the ",
+              "type" : "text"
+            },
+            {
+              "code" : "contacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " key is a property in the root object which contains a list object. The list has an ID - obtained by calling ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/putObject(obj:key:ty:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " with ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId\/ROOT",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ", ",
+              "type" : "text"
+            },
+            {
+              "code" : "\"contacts\"",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", and ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType\/List",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ". For concurrent insertions into this list to merge, we want all insertions to reference the same ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for the list, but every time you call ",
+              "type" : "text"
+            },
+            {
+              "code" : "putObject",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " you get a new object ID. What this means is that every node needs to share a basic skeleton document which already has an empty ",
+              "type" : "text"
+            },
+            {
+              "code" : "\"contacts\"",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " list in it.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "We are very much aware that this is not a good developer experience and we are thinking about ways to make this easier. See ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "https:\/\/github.com\/automerge\/automerge\/issues\/528",
+                  "isActive" : true,
+                  "type" : "reference"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "anchor" : "Generating-a-skeleton-document",
+          "level" : 3,
+          "text" : "Generating a skeleton document",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The easiest way to have every peer start from a shared history is to use the Automerge command line tools (installable by using ",
+              "type" : "text"
+            },
+            {
+              "code" : "cargo install automerge-cli",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ") to generate an Automerge document from a JSON skeleton, and then including the bytes of this document as a resource in the application bundle.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "# generate the skeleton  document",
+            "echo '{\"contacts\": []}' | automerge import > skeleton"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "You can verify the structure of the document by doing ",
+              "type" : "text"
+            },
+            {
+              "code" : "automerge export skeleton",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "We bundle the ",
+              "type" : "text"
+            },
+            {
+              "code" : "skeleton",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " as a resource in the application, see the demo repository for details.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Implementing-create",
+          "level" : 3,
+          "text" : "Implementing `create`",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Now that we have the skeleton document, implementing ",
+              "type" : "text"
+            },
+            {
+              "code" : "\"create\"",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " is quite simple, we just output the contents of the bundled resource.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "func create(filename: String) {",
+            "    let skeletonUrl = Bundle.module.url(forResource: \"skeleton\", withExtension: \"\")!",
+            "    let data = try! Data(contentsOf: skeletonUrl)",
+            "    let output = URL(fileURLWithPath: filename)",
+            "    try! data.write(to: output)",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Adding-a-contact",
+          "level" : 2,
+          "text" : "Adding a contact",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To add a contact we need to load the contents of the address book, then insert an ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType\/Map",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " into the ",
+              "type" : "text"
+            },
+            {
+              "code" : "contacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " list. Like so:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "func add(filename: String, name: String, email: String) {",
+            "",
+            "    \/\/ Load the data from the filesyste",
+            "    let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))",
+            "    let document = try! Document(bytes)",
+            "    ",
+            "    \/\/ Find the contacts list in the document",
+            "    let contacts: ObjId",
+            "    switch try! document.get(obj: ObjId.ROOT, key: \"contacts\")! {",
+            "    case .Object(let id, _):",
+            "        contacts = id",
+            "    default:",
+            "        fatalError(\"contacts was not a list\")",
+            "    }",
+            "",
+            "    \/\/ Insert a new map for the new contact at the end of the contacts list",
+            "    let lastIndex = try! document.length(obj: contacts)",
+            "    let newContact = try! document.insertObject(obj: contacts, index: lastIndex, ty: .Map)",
+            "\/\/ Set the name to a text field",
+            "    let nameText = try! document.putObject(obj: newContact, key: \"name\", ty: .Text)",
+            "    try! document.spliceText(obj: nameText, start:0, delete:0, value: name)",
+            "",
+            "    \/\/ Set the email to a text field",
+            "    let emailText = try! document.putObject(obj: newContact, key: \"email\", ty: .Text)",
+            "    try! document.spliceText(obj: emailText, start:0, delete:0, value: email)",
+            "",
+            "    \/\/ now save the document to the filesystem",
+            "    let savedBytes = document.save()",
+            "    let data = Data(bytes: savedBytes, count:savedBytes.count)",
+            "    let output = URL(fileURLWithPath: filename)",
+            "    try! data.write(to: output)",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Note that we are using text objects to represent the name and email fields. Automerge does have a primitive string type (",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/String(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ") but it’s generally best to use text. There’s very little extra cost to a text object and text objects support concurrent edits.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Listing-contacts",
+          "level" : 2,
+          "text" : "Listing contacts",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To list contacts we iterate over each value in the contacts list, printing them out.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "func list(filename: String) {",
+            "    let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))",
+            "    let document = try! Document(bytes)",
+            "    let contacts: ObjId",
+            "    switch try! document.get(obj: ObjId.ROOT, key: \"contacts\")! {",
+            "    case .Object(let id, _):",
+            "        contacts = id",
+            "    default:",
+            "        fatalError(\"contacts was not a list\")",
+            "    }",
+            "",
+            "    for value in try! document.values(obj: contacts) {",
+            "        switch value {",
+            "        case .Object(let contact, .Map):",
+            "            let nameId: ObjId",
+            "            switch try! document.get(obj: contact, key: \"name\")! {",
+            "            case .Object(let id, .Text):",
+            "                nameId = id",
+            "            default:",
+            "                fatalError(\"contact name was not a text object\")",
+            "            }",
+            "",
+            "            let emailId: ObjId",
+            "            switch try! document.get(obj: contact, key: \"email\")! {",
+            "            case .Object(let id, .Text):",
+            "                emailId = id",
+            "            default:",
+            "                fatalError(\"contact email was not a text object\")",
+            "            }",
+            "",
+            "            let name = try! document.text(obj: nameId)",
+            "            let email = try! document.text(obj: emailId)",
+            "            print(\"\\(name): \\(email)\")",
+            "        default:",
+            "            fatalError(\"unexpected value in contacts\")",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Updating-a-contact",
+          "level" : 2,
+          "text" : "Updating a contact",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Here we load the document, loop over the contacts in the ",
+              "type" : "text"
+            },
+            {
+              "code" : "contacts",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " list, and if we find a matching name we update the email.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "func update(filename: String, contact: String, newEmail: String) {",
+            "    let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))",
+            "    let document = try! Document(bytes)",
+            "    let contacts: ObjId",
+            "    switch try! document.get(obj: ObjId.ROOT, key: \"contacts\")! {",
+            "    case .Object(let id, _):",
+            "        contacts = id",
+            "    default:",
+            "        fatalError(\"contacts was not a list\")",
+            "    }",
+            "",
+            "    var found = false",
+            "    for value in try! document.values(obj:contacts) {",
+            "        switch value {",
+            "        case .Object(let contactId, .Map):",
+            "            let nameId: ObjId",
+            "            switch try! document.get(obj: contactId, key: \"name\")! {",
+            "            case .Object(let id, .Text):",
+            "                nameId = id",
+            "            default:",
+            "                fatalError(\"contact name was not a text object\")",
+            "            }",
+            "",
+            "            let name = try! document.text(obj: nameId)",
+            "            if name == contact.trimmingCharacters(in: .whitespacesAndNewlines) {",
+            "                found = true",
+            "                let newEmailId = try! document.putObject(obj: contactId, key: \"email\", ty: .Text)",
+            "                try! document.spliceText(obj:newEmailId, start:0, delete:0, value: newEmail)",
+            "                break;",
+            "            }",
+            "        default:",
+            "            continue",
+            "        } }",
+            "    if !found {",
+            "        fatalError(\"contact \\(contact) not found\")",
+            "    }",
+            "",
+            "    \/\/ now save the document to the filesystem",
+            "    let savedBytes = document.save()",
+            "    let data = Data(bytes: savedBytes, count:savedBytes.count)",
+            "    let output = URL(fileURLWithPath: filename)",
+            "    try! data.write(to: output)",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Merging-address-books",
+          "level" : 2,
+          "text" : "Merging address books",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "func merge(filename1: String, filename2: String, out: String) {",
+            "    let leftBytes = try! Data(contentsOf: URL(fileURLWithPath: filename1))",
+            "    let left = try! Document(leftBytes)",
+            "",
+            "    let rightBytes = try! Data(contentsOf: URL(fileURLWithPath: filename2))",
+            "    let right = try! Document(rightBytes)",
+            "",
+            "    try! left.merge(other: right)",
+            "    let savedBytes = left.save()",
+            "    let data = Data(bytes: savedBytes, count:savedBytes.count)",
+            "    let output = URL(fileURLWithPath: out)",
+            "    try! data.write(to: output)",
+            "}"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Sync",
+          "level" : 2,
+          "text" : "Sync",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "There’s quite a bit of ceremony involved in network programming in Swift, so we don’t repeat the code here, see the demo for the gory details.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue"
+      ],
+      "title" : "Representing Objects and Values"
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/putObject(obj:key:ty:)": {
+  "abstract" : [
+    {
+      "text" : "Set or update an object within a dictionary object you specify.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "putObject"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ty"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge7ObjTypeO",
+      "text" : "ObjType"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/putObject(obj:key:ty:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "putObject(obj:key:ty:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/putobject(obj:key:ty:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ModelingData": {
+  "abstract" : [
+    {
+      "text" : "Store, read, share, and synchronize complex data in an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Modeling Data with Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/modelingdata"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjId": {
+  "abstract" : [
+    {
+      "text" : "The unique internal identifier for an object stored in an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ObjId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ObjId"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ObjId",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjId/ROOT": {
+  "abstract" : [
+    {
+      "text" : "The root identifier for an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ROOT"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId\/ROOT",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ROOT",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objid\/root"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjType": {
+  "abstract" : [
+    {
+      "text" : "A type that represents an Automerge object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ObjType"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ObjType"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ObjType",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objtype"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjType/List": {
+  "abstract" : [
+    {
+      "text" : "A type that represents an array of Automerge values.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "List"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType\/List",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ObjType.List",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objtype\/list"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjType/Map": {
+  "abstract" : [
+    {
+      "text" : "A type that represents a dictionary that uses the type String for keys.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Map"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType\/Map",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ObjType.Map",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objtype\/map"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue": {
+  "abstract" : [
+    {
+      "text" : "A type that represents a primitive Automerge value.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValue"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ScalarValue",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvalue"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue/String(_:)": {
+  "abstract" : [
+    {
+      "text" : "A string.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/String(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "ScalarValue.String(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvalue\/string(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Value": {
+  "abstract" : [
+    {
+      "text" : "A type that represents a value or object managed by Automerge.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Value"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Value"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Value",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/value"
+},
+"https://github.com/automerge/automerge/issues/528": {
+  "identifier" : "https:\/\/github.com\/automerge\/automerge\/issues\/528",
+  "title" : "this issue",
+  "titleInlineContent" : [
+    {
+      "text" : "this issue",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/github.com\/automerge\/automerge\/issues\/528"
+},
+"https://github.com/automerge/contaaacts": {
+  "identifier" : "https:\/\/github.com\/automerge\/contaaacts",
+  "title" : "demo repository",
+  "titleInlineContent" : [
+    {
+      "text" : "demo repository",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/github.com\/automerge\/contaaacts"
+}
+}
+}
