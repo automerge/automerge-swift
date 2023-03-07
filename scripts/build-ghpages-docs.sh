@@ -23,7 +23,10 @@ $(xcrun --find swift) package \
     --disable-indexing \
     --transform-for-static-hosting \
     --hosting-base-path 'automerge-swifter' \
-    --source-service github \
-    --source-service-base-url https://github.com/automerge/automerge-swifter/blob/main \
-    --checkout-path ${PACKAGE_PATH}
+
+# The following options are Swift 5.8  *only* and add github reference
+# links to the hosted documentation.
+#    --source-service github \
+#    --source-service-base-url https://github.com/automerge/automerge-swifter/blob/main \
+#    --checkout-path ${PACKAGE_PATH}
 
