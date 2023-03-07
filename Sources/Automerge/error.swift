@@ -13,6 +13,9 @@ typealias FfiReceiveSyncError = AutomergeUniffi.ReceiveSyncError
 // binding generator and we would rather not couple our public API to the
 // specific binding generator tech we're using
 
+/// An general document error.
+///
+/// The error is specific to the Rust language binding infrastructure.
 public struct DocError: Error {
     let inner: FfiDocError
 
@@ -21,6 +24,9 @@ public struct DocError: Error {
     }
 }
 
+/// An error that indicates the synchronisation state could not be decoded.
+///
+/// The error is specific to the Rust language binding infrastructure.
 public struct DecodeSyncStateError: Error {
     let inner: FfiDecodeSyncStateError
 
@@ -29,6 +35,9 @@ public struct DecodeSyncStateError: Error {
     }
 }
 
+/// An error that indicates a problem loading the document.
+///
+/// The error is specific to the Rust language binding infrastructure.
 public struct LoadError: Error {
     let inner: FfiLoadError
 
@@ -37,6 +46,9 @@ public struct LoadError: Error {
     }
 }
 
+/// An error that indicates the received synchornisation could not be applied.
+///
+/// The error is specific to the Rust language binding infrastructure.
 public struct ReceiveSyncError: Error {
     let inner: FfiReceiveSyncError
 

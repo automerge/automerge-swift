@@ -164,7 +164,7 @@ public class Document {
         return val.map(Value.fromFfi)
     }
 
-    /// Get all the possibly vonflicting values for `key` in map `obj` as at `heads`
+    /// Get all the possibly conflicting values for `key` in map `obj` as at `heads`
     public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
         -> Set<Value>
     {
@@ -174,7 +174,7 @@ public class Document {
         return Set(vals.map { Value.fromFfi(value: $0) })
     }
 
-    /// Get all the possibly vonflicting values for `index` in list `obj` as at `heads`
+    /// Get all the possibly conflicting values for `index` in list `obj` as at `heads`
     public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads)
         throws -> Set<Value>
     {
