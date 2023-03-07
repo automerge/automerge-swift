@@ -61,4 +61,31 @@ When you apply changes received from a remote document (or merged from a separat
 ### Essentials
 
 - <doc:AddressBookExample>
-- ``Document``
+- ``Automerge/Document``
+
+### Representing Objects and Values
+
+- ``Automerge/ObjType``
+- ``Automerge/ObjId``
+- ``Automerge/Value``
+- ``Automerge/ScalarValue``
+
+### Replicating Documents
+
+- ``Automerge/SyncState``
+- ``Automerge/ActorId``
+- ``Automerge/ChangeHash``
+- ``Automerge/DeleteSeq``
+
+- ``Automerge/Patch``
+- ``Automerge/PatchAction``
+- ``Automerge/PathElement``
+
+- ``Automerge/Prop``
+
+### Error Types 
+
+- ``Automerge/DecodeSyncStateError``
+- ``Automerge/DocError``
+- ``Automerge/LoadError``
+- ``Automerge/ReceiveSyncError``
