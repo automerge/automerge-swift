@@ -9,7 +9,7 @@ class LengthTestCase: XCTestCase {
     try! doc.insert(obj: list, index: 0, value: .String("one"))
     try! doc.insert(obj: list, index: 1, value: .String("two"))
 
-    XCTAssertEqual(try! doc.length(obj: list), 2)
+    XCTAssertEqual(doc.length(obj: list), 2)
   }
 
   func testLengthAt() {
