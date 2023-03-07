@@ -6,17 +6,24 @@ THIS_SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 PACKAGE_PATH=$THIS_SCRIPT_DIR/../
 BUILD_DIR=$PACKAGE_PATH/.build
 
-swift build \
-    --package-path $PACKAGE_PATH \
+pushd ${PACKAGE_PATH}
+# Enables deterministic output
+# - useful when you're committing the results to host on github pages
+export DOCC_JSON_PRETTYPRINT=YES
+
+# Swift package plugin for hosted content:
+#
+$(xcrun --find swift) package \
+    --allow-writing-to-directory ./docs \
+    generate-documentation \
+    --fallback-bundle-identifier com.github.automerge.automerge-swifter \
     --target Automerge \
-    -Xswiftc -emit-symbol-graph \
-    -Xswiftc -emit-symbol-graph-dir \
-    -Xswiftc $BUILD_DIR
-xcrun docc convert Automerge.docc \
-    --fallback-display-name Automerge \
-    --fallback-bundle-identifier org.automerge.Automerge \
-    --fallback-bundle-version 1 \
-    --additional-symbol-graph-dir $BUILD_DIR \
+    --output-path ${PACKAGE_PATH}/docs \
+    --emit-digest \
+    --disable-indexing \
     --transform-for-static-hosting \
-    --hosting-base-path automerge-swifter \
-    --output-path $PACKAGE_PATH/docs/
+    --hosting-base-path 'automerge-swifter' \
+    --source-service github \
+    --source-service-base-url https://github.com/automerge/automerge-swifter/blob/main \
+    --checkout-path ${PACKAGE_PATH}
+
