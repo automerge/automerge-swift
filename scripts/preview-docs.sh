@@ -12,7 +12,7 @@ swift build \
     -Xswiftc -emit-symbol-graph \
     -Xswiftc -emit-symbol-graph-dir \
     -Xswiftc $BUILD_DIR
-xcrun docc preview Automerge.docc \
+xcrun docc preview Sources/Automerge/Automerge.docc \
     --fallback-display-name Automerge \
     --fallback-bundle-identifier org.automerge.Automerge \
     --fallback-bundle-version 1 \
