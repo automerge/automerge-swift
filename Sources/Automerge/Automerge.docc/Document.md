@@ -3,10 +3,12 @@
 ## Topics
 
 ### Creating or loading a document
+
 - ``init()``
 - ``init(_:)``
 
 ### Creating and modifying values
+
 - ``put(obj:key:value:)``
 - ``put(obj:index:value:)``
 - ``putObject(obj:key:ty:)``
@@ -19,7 +21,8 @@
 - ``splice(obj:start:delete:values:)``
 - ``spliceText(obj:start:delete:value:)``
 
-### Reading 
+### Reading values and objects
+
 - ``get(obj:key:)``
 - ``get(obj:index:)``
 - ``getAll(obj:key:)``
@@ -31,7 +34,7 @@
 - ``text(obj:)``
 - ``heads()``
 
-### Reading old values
+### Reading historical values
 
 - ``getAt(obj:key:heads:)``
 - ``getAt(obj:index:heads:)``
@@ -43,17 +46,20 @@
 - ``lengthAt(obj:heads:)``
 - ``textAt(obj:heads:)``
 
-### Saving, syncing, forking, and merging
+### Saving, forking, and merging documents
 
 - ``save()``
 - ``encodeNewChanges()``
 - ``encodeChangesSince(heads:)``
 - ``applyEncodedChanges(encoded:)``
 - ``applyEncodedChangesWithPatches(encoded:)``
-- ``generateSyncMessage(state:)``
-- ``receiveSyncMessage(state:message:)``
-- ``receiveSyncMessageWithPatches(state:message:)``
 - ``fork()``
 - ``forkAt(heads:)``
 - ``merge(other:)``
 - ``mergeWithPatches(other:)``
+
+### Syncing documents
+
+- ``generateSyncMessage(state:)``
+- ``receiveSyncMessage(state:message:)``
+- ``receiveSyncMessageWithPatches(state:message:)``

@@ -14,47 +14,47 @@ typealias FfiReceiveSyncError = AutomergeUniffi.ReceiveSyncError
 // specific binding generator tech we're using
 
 public struct DocError: Error {
-  let inner: FfiDocError
+    let inner: FfiDocError
 
-  init(_ inner: FfiDocError) {
-    self.inner = inner
-  }
+    init(_ inner: FfiDocError) {
+        self.inner = inner
+    }
 }
 
 public struct DecodeSyncStateError: Error {
-  let inner: FfiDecodeSyncStateError
+    let inner: FfiDecodeSyncStateError
 
-  init(_ inner: FfiDecodeSyncStateError) {
-    self.inner = inner
-  }
+    init(_ inner: FfiDecodeSyncStateError) {
+        self.inner = inner
+    }
 }
 
 public struct LoadError: Error {
-  let inner: FfiLoadError
+    let inner: FfiLoadError
 
-  init(_ inner: FfiLoadError) {
-    self.inner = inner
-  }
+    init(_ inner: FfiLoadError) {
+        self.inner = inner
+    }
 }
 
 public struct ReceiveSyncError: Error {
-  let inner: FfiReceiveSyncError
+    let inner: FfiReceiveSyncError
 
-  init(_ inner: FfiReceiveSyncError) {
-    self.inner = inner
-  }
+    init(_ inner: FfiReceiveSyncError) {
+        self.inner = inner
+    }
 }
 
 internal func wrappedErrors<T>(_ f: () throws -> T) throws -> T {
-  do {
-    return try f()
-  } catch let error as FfiDocError {
-    throw DocError(error)
-  } catch let error as FfiLoadError {
-    throw LoadError(error)
-  } catch let error as FfiReceiveSyncError {
-    throw ReceiveSyncError(error)
-  } catch let error as FfiDecodeSyncStateError {
-    throw DecodeSyncStateError(error)
-  }
+    do {
+        return try f()
+    } catch let error as FfiDocError {
+        throw DocError(error)
+    } catch let error as FfiLoadError {
+        throw LoadError(error)
+    } catch let error as FfiReceiveSyncError {
+        throw ReceiveSyncError(error)
+    } catch let error as FfiDecodeSyncStateError {
+        throw DecodeSyncStateError(error)
+    }
 }

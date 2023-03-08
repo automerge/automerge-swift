@@ -1,0 +1,9 @@
+--hexgrouping ignore
+--decimalgrouping ignore
+--enable isEmpty
+--ifdef no-indent
+--wraparguments before-first
+--wrapcollections before-first
+--closingparen balanced
+--maxwidth 120
+
