@@ -1,5 +1,5 @@
 import AutomergeUniffi
 
 public struct ActorId: Equatable, Hashable {
-  internal var bytes: [UInt8]
+    internal var bytes: [UInt8]
 }

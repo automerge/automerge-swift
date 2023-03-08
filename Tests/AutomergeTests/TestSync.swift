@@ -2,42 +2,40 @@ import Automerge
 import XCTest
 
 class SyncTests: XCTestCase {
+    func testSyncTwoDocs() {
+        let doc1 = Document()
+        let syncState1 = SyncState()
 
-  func testSyncTwoDocs() {
-    let doc1 = Document()
-    let syncState1 = SyncState()
+        let doc2 = Document()
+        let syncState2 = SyncState()
 
-    let doc2 = Document()
-    let syncState2 = SyncState()
+        try! doc1.put(obj: ObjId.ROOT, key: "key1", value: .String("value1"))
+        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
 
-    try! doc1.put(obj: ObjId.ROOT, key: "key1", value: .String("value1"))
-    try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
+        sync(doc1, syncState1, doc2, syncState2)
 
-    sync(doc1, syncState1, doc2, syncState2)
+        for doc in [doc1, doc2] {
+            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key1")!, .Scalar(.String("value1")))
+            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key2")!, .Scalar(.String("value2")))
+        }
 
-    for doc in [doc1, doc2] {
-      XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key1")!, .Scalar(.String("value1")))
-      XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key2")!, .Scalar(.String("value2")))
+        XCTAssertNotNil(syncState1.theirHeads)
     }
-
-    XCTAssertNotNil(syncState1.theirHeads)
-  }
-
 }
 
 func sync(_ doc1: Document, _ sync1: SyncState, _ doc2: Document, _ sync2: SyncState) {
-  var quiet = false
-  while !quiet {
-    quiet = true
+    var quiet = false
+    while !quiet {
+        quiet = true
 
-    if let msg = doc1.generateSyncMessage(state: sync1) {
-      quiet = false
-      try! doc2.receiveSyncMessage(state: sync2, message: msg)
-    }
+        if let msg = doc1.generateSyncMessage(state: sync1) {
+            quiet = false
+            try! doc2.receiveSyncMessage(state: sync2, message: msg)
+        }
 
-    if let msg = doc2.generateSyncMessage(state: sync2) {
-      quiet = false
-      try! doc1.receiveSyncMessage(state: sync1, message: msg)
+        if let msg = doc2.generateSyncMessage(state: sync2) {
+            quiet = false
+            try! doc1.receiveSyncMessage(state: sync1, message: msg)
+        }
     }
-  }
 }
