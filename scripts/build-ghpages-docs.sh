@@ -21,10 +21,6 @@ $(xcrun --find swift) build --target Automerge \
    -Xswiftc -emit-symbol-graph \
    -Xswiftc -emit-symbol-graph-dir -Xswiftc "${BUILD_DIR}/symbol-graphs"
 
-# Enables deterministic output from DocC
-# - useful when you're committing the results to host on github pages
-export DOCC_JSON_PRETTYPRINT=YES
-
 $(xcrun --find docc) convert Sources/Automerge/Automerge.docc \
     --output-path ./docs \
     --fallback-display-name Automerge \
@@ -42,7 +38,11 @@ $(xcrun --find docc) convert Sources/Automerge/Automerge.docc \
 #    --checkout-path ${PACKAGE_PATH}
 
 # Swift package plugin for hosted content - this _should_ work, but it's not generating
-# any symbols in the resulting documentation.
+# any symbols in the resulting documentation. Swift 5.6 to 5.8 don't support the plugin
+# with a _local_ XCFframework reference.
+#   Bug filed: https://github.com/apple/swift-docc-plugin/issues/52
+# The workaround is to buld and extract the symbols to generate the documentation
+# manually.
 #
 # $(xcrun --find swift) package \
 #     --allow-writing-to-directory ./docs \
