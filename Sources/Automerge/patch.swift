@@ -4,18 +4,18 @@ import enum AutomergeUniffi.PatchAction
 typealias FfiPatchAction = AutomergeUniffi.PatchAction
 typealias FfiPatch = AutomergeUniffi.Patch
 
-/// A collection of changes to an Automerge document.
+/// A collection of updates to the current state of an Automerge document.
 public struct Patch: Equatable {
-    /// The type change
+    /// The kind of update to apply.
     public let action: PatchAction
 
-    /// The path to the object identifier the action effects.
+    /// The path to the object identifier the update effects.
     public let path: [PathElement]
 
     /// Creates a new patch
     /// - Parameters:
-    ///   - action: The type of change
-    ///   - path: A collection of the paths to apply the change.
+    ///   - action: The kind of update to apply.
+    ///   - path: The path to the object identifier the update effects.
     public init(action: PatchAction, path: [PathElement]) {
         self.action = action
         self.path = path
@@ -27,13 +27,17 @@ public struct Patch: Equatable {
     }
 }
 
-/// The type of change to apply along with the data to change.
+/// The type of change the library applied to an Automerge document, along with the data that changed.
 public enum PatchAction: Equatable {
     /// Put a new value at the property for the identified object.
+    ///
+    /// The property included within the `Put` can be either an index to a sequence, or a key into a map.
     case Put(ObjId, Prop, Value)
     /// Insert a collection of values at the index you provide for the identified object.
     case Insert(ObjId, UInt64, [Value])
     /// Splices characters into and/or removes characters from the identified object at a given position within it.
+    ///
+    /// The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
     case SpliceText(ObjId, UInt64, String)
     /// Increment the property of the identified object by the value you provide.
     case Increment(ObjId, Prop, Int64)

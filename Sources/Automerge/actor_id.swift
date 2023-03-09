@@ -1,6 +1,9 @@
 import AutomergeUniffi
 
-/// A type that represents a collaboration instance for managing replication within an Automerge document.
+/// A type that represents an identifier for a collaborator that makes changes within an Automerge document.
+///
+/// Each separate instance of an Automerge document should have it's own, unique, `ActorId`.
+/// If you create your own `ActorId`, no concurrent changes should ever be made with the same `ActorId`.
 public struct ActorId: Equatable, Hashable {
     internal var bytes: [UInt8]
 }
