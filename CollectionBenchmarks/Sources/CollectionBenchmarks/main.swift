@@ -47,16 +47,49 @@ import Foundation
 
 var benchmark = Benchmark(title: "Automerge")
 
-benchmark.addSimple(
-    title: "Array<Int> append",
-    input: [Int].self
-) { input in
-    var list: [Int] = []
-    for i in input {
-        list.append(i)
+let stringCharacters = "a bcdef ghijk lmnop qrstu vwxyz ABCD EFGHI JKLMN OPQRS TUVWX YZ😀😎🤓⚁ ♛⛺︎🕰️⏰⏲️ ⏱️🧭".map { char in
+    String(char)
+}
+
+// benchmark returns type of [String], but is essentially a large array of random characters.
+benchmark.registerInputGenerator(for: [String].self) { size in
+    (0 ..< size)
+    .map { _ in
+        stringCharacters.randomElement() ?? " "
     }
-    precondition(list.count == input.count)
-    blackHole(list)
+}
+
+benchmark.addSimple(
+    title: "Document text append",
+    input: [String].self
+) { input in
+    let doc = Automerge.Document()
+    let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+
+    var stringLength = doc.length(obj: text)
+    for strChar in input {
+        try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: strChar)
+        stringLength = doc.length(obj: text)        
+    }
+    //precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent lengths
+    blackHole(doc)
+}
+
+benchmark.addSimple(
+    title: "Document text append and read",
+    input: [String].self
+) { input in
+    let doc = Automerge.Document()
+    let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+
+    var stringLength = doc.length(obj: text)
+    for strChar in input {
+        try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: strChar)
+        stringLength = doc.length(obj: text)        
+    }
+    let resultingString = try! doc.text(obj: text)
+    //precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent lengths
+    blackHole(resultingString)
 }
 
 // Execute the benchmark tool with the above definitions.

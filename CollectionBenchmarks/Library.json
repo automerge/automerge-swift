@@ -5,10 +5,18 @@
   "contents": [
     {
       "kind": "chart",
-      "title": "Array<Int>",
+      "title": "Append text",
       "tasks": [
-        "Array<Int> append",
+        "Document text append",
       ]
     },
+    {
+      "kind": "chart",
+      "title": "Append text and read it back",
+      "tasks": [
+        "Document text append and read",
+      ]
+    },
+    
   ]
 }
