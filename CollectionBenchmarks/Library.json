@@ -1,0 +1,14 @@
+{
+  "kind": "group",
+  "title": "All results",
+  "directory": "Results",
+  "contents": [
+    {
+      "kind": "chart",
+      "title": "Array<Int>",
+      "tasks": [
+        "Array<Int> append",
+      ]
+    },
+  ]
+}
