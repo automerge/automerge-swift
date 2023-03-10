@@ -1,0 +1,22 @@
+{
+  "kind": "group",
+  "title": "All results",
+  "directory": "Results",
+  "contents": [
+    {
+      "kind": "chart",
+      "title": "Append text",
+      "tasks": [
+        "Document text append",
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Append text and read it back",
+      "tasks": [
+        "Document text append and read",
+      ]
+    },
+    
+  ]
+}
