@@ -77,6 +77,12 @@ What this means is that the typical development cycle usually looks like this:
 * Wire up the swift side of the wrappers in `./Sources/*`
 * Run tests on the swift side with `swift test`
 
+### Benchmarking
+
+The repository has two-dimensional benchmarking as a seperate project in the directory `CollectionBenchmarks`.
+It uses the library [swift-collections-benchmarks](https://github.com/apple/swift-collections-benchmark) to run benchmarks that are relevant over the size of the collection.
+The benchmark baselines were built on an Apple M1 MacBook Pro.
+
 ### Building the docs
 
 The script `./scripts/preview-docs.sh` will run a web server previewing the docs. This won't pick up all source code changes so you may need to restart it occasionally (I have not figured out which changes it does and does not pick up on).
@@ -92,3 +98,4 @@ Creating a release then requires doing the following things:
 * Add a commit containing `AutomergeFFI.xcframework.zip` and `AutomergeUniffi` to the index
 * Tag the branch with a version - e.g. `git tag 0.0.1`
 * Push the tag to the remote
+

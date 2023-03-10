@@ -1,4 +1,8 @@
-# CollectionBenchmarks
+# Collection Benchmarks
+
+Benchmarks that track time of operation over a growing size of a collection, using the [swift-collections-benchmarks](https://github.com/apple/swift-collections-benchmark) library.
+
+## Running Benchmarks Locally
 
 List the available benchmarks:
 
@@ -11,6 +15,8 @@ Run the benchmarks for sizes from 1 to 300,000, iterating 5 times, and put the r
 Render the benchmark results into an image named `./temp.png`:
 
     swift run -c release CollectionBenchmarks render ./temp temp.png
+
+## Generating the baselines, and reporting their output in markdown format.
 
 Generate and report the baselines for tasks defined in `Library.json`:
 
@@ -26,4 +32,3 @@ swift run -c release CollectionBenchmarks \
     --library Library.json \
     --output Baselines
 ```
-
