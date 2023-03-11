@@ -1,4 +1,4 @@
-import Automerge
+@testable import Automerge
 import XCTest
 
 class PatchesTestCase: XCTestCase {
