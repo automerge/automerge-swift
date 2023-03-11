@@ -2,16 +2,29 @@ import enum AutomergeUniffi.ScalarValue
 
 typealias FFIScalar = AutomergeUniffi.ScalarValue
 
+/// A type that represents a primitive Automerge value.
 public enum ScalarValue: Equatable, Hashable {
+    /// A byte buffer.
     case Bytes([UInt8])
+    /// A string.
     case String(String)
+    /// An unsigned integer.
     case Uint(UInt64)
+    /// A signed integer.
     case Int(Int64)
+    /// A floating point number.
     case F64(Double)
+    /// An integer counter.
     case Counter(Int64)
+    /// A timestamp represented by the milliseconds since UNIX epoch.
     case Timestamp(Int64)
+    /// A Boolean value.
     case Boolean(Bool)
+    /// An unknown, raw scalar type.
+    ///
+    /// This type is reserved for forward compatibility, and is not expected to be created directly.
     case Unknown(typeCode: UInt8, data: [UInt8])
+    /// A null.
     case Null
 
     internal func toFfi() -> FFIScalar {

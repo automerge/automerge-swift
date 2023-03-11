@@ -1,6 +1,6 @@
 # Automerge-swifter
 
-An automerge implementation for swift.
+An Automerge implementation for swift.
 
 This is a reasonably low-level library with relatively few concessions to ergonomics, nicer APIs should be built on top of this work.
 
@@ -30,7 +30,7 @@ let package = Package(
 )
 ```
 
-Now you can create a document and do all sorts of automerge things with it
+Now you can create a document and do all sorts of Automerge things with it
 
 ```swift
 let doc = Document()
@@ -61,7 +61,7 @@ The moving parts here then are:
 
 * The `rust/src/automerge.udl` file which describes the FFI interface
 * The `rust/build.rs` build script, which uses Uniffi to generate the boilerplate parts of the rust side of the interface
-* The `rust/src/*`files which implement the automerge specific parts of the rust binding
+* The `rust/src/*`files which implement the Automerge specific parts of the rust binding
 * The `rust/uniffi-bindgen.rs` script, which uses Uniffi to output a Swift wrapper around the interface
 * The source files in `./Sources` and `./Tests` which implement the handwritten swift wrappers
 * The `./scripts/build-xcframework.sh` script, which builds the rust project and packages it into an XCFramework

@@ -164,7 +164,7 @@ public class Document {
         return val.map(Value.fromFfi)
     }
 
-    /// Get all the possibly vonflicting values for `key` in map `obj` as at `heads`
+    /// Get all the possibly conflicting values for `key` in map `obj` as at `heads`
     public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
         -> Set<Value>
     {
@@ -174,7 +174,7 @@ public class Document {
         return Set(vals.map { Value.fromFfi(value: $0) })
     }
 
-    /// Get all the possibly vonflicting values for `index` in list `obj` as at `heads`
+    /// Get all the possibly conflicting values for `index` in list `obj` as at `heads`
     public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads)
         throws -> Set<Value>
     {
@@ -344,7 +344,7 @@ public class Document {
         return patches.map { Patch($0) }
     }
 
-    /// Returns: a sequence of ``Patch`` representing the changes which were
+    /// Returns: a sequence of ``ChangeHash`` representing the changes which were
     /// made to the document as a result of the merge
     public func heads() -> Set<ChangeHash> {
         Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })

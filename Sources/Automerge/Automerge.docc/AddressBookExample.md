@@ -1,6 +1,6 @@
 # Address Book Example
 
-Building a CLI address book application using automerge. 
+Building a CLI address book application using Automerge. 
 
 ## Overview
 
@@ -102,19 +102,19 @@ func sync(server: String) {
 
 ## Creating the address book 
 
-To create an address book we just need to create an automerge document with an empty `contacts` array in it. This is conceptually simple but there's a wrinkle, which we refer to as the "initial data" problem. Once we've explained the problem, the approach we take will make more sense.
+To create an address book we just need to create an Automerge document with an empty `contacts` array in it. This is conceptually simple but there's a wrinkle, which we refer to as the "initial data" problem. Once we've explained the problem, the approach we take will make more sense.
 
 ### The "initial data" problem
 
-Automerge documents contain "objects", which are maps, lists, or text objects. These objects have an ID (``ObjId``). Every automerge document contains a "root" ID (``ObjId/ROOT``)which is a map, any time you create a new object in an automerge document the new object has an ID you use to refer to it. The reason you need to know this is because the IDs which automerge generates are used to determine how to merge documents, this means that for two documents with similar structure to merge in the way we expect, they need to share a history. 
+Automerge documents contain "objects", which are maps, lists, or text objects. These objects have an ID (``ObjId``). Every Automerge document contains a "root" ID (``ObjId/ROOT``)which is a map, any time you create a new object in an Automerge document the new object has an ID you use to refer to it. The reason you need to know this is because the IDs which Automerge generates are used to determine how to merge documents, this means that for two documents with similar structure to merge in the way we expect, they need to share a history. 
 
-Let's make this a bit more concrete. We are building a contact book application, the core data structure is a list of contacts under the `contacts` key in the document. The merge behaviour we want is that when two nodes concurrently add contacts to the contact book, they end up in the same sequence. In terms of the automerge data model then, the `contacts` key is a property in the root object which contains a list object. The list has an ID - obtained by calling ``Document/putObject(obj:key:ty:)`` with ``ObjId/ROOT``, `"contacts"`, and ``ObjType/List``. For concurrent insertions into this list to merge, we want all insertions to reference the same ``ObjId`` for the list, but every time you call `putObject` you get a new object ID. What this means is that every node needs to share a basic skeleton document which already has an empty `"contacts"` list in it.
+Let's make this a bit more concrete. We are building a contact book application, the core data structure is a list of contacts under the `contacts` key in the document. The merge behaviour we want is that when two nodes concurrently add contacts to the contact book, they end up in the same sequence. In terms of the Automerge data model then, the `contacts` key is a property in the root object which contains a list object. The list has an ID - obtained by calling ``Document/putObject(obj:key:ty:)`` with ``ObjId/ROOT``, `"contacts"`, and ``ObjType/List``. For concurrent insertions into this list to merge, we want all insertions to reference the same ``ObjId`` for the list, but every time you call `putObject` you get a new object ID. What this means is that every node needs to share a basic skeleton document which already has an empty `"contacts"` list in it.
 
 > Note: We are very much aware that this is not a good developer experience and we are thinking about ways to make this easier. See [this issue](https://github.com/automerge/automerge/issues/528)
 
 ### Generating a skeleton document
 
-The easiest way to have every peer start from a shared history is to use the automerge command line tools (installable by using `cargo install automerge-cli`) to generate an automerge document from a JSON skeleton, and then including the bytes of this document as a resource in the application bundle.
+The easiest way to have every peer start from a shared history is to use the Automerge command line tools (installable by using `cargo install automerge-cli`) to generate an Automerge document from a JSON skeleton, and then including the bytes of this document as a resource in the application bundle.
 
 ```
 # generate the skeleton  document
