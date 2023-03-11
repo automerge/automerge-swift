@@ -344,7 +344,7 @@ public class Document {
         return patches.map { Patch($0) }
     }
 
-    /// Returns: a sequence of ``Patch`` representing the changes which were
+    /// Returns: a sequence of ``ChangeHash`` representing the changes which were
     /// made to the document as a result of the merge
     public func heads() -> Set<ChangeHash> {
         Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })

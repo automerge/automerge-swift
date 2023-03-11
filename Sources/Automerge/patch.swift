@@ -4,7 +4,15 @@ import enum AutomergeUniffi.PatchAction
 typealias FfiPatchAction = AutomergeUniffi.PatchAction
 typealias FfiPatch = AutomergeUniffi.Patch
 
-/// A collection of updates to the current state of an Automerge document.
+/// A collection of updates applied to an Automerge document.
+///
+/// A patch can be received from applying updates to an Automerge document with one of the following methods:
+/// -  ``Document/applyEncodedChangesWithPatches(encoded:)``
+/// - ``Document/receiveSyncMessageWithPatches(state:message:)``
+/// - ``Document/mergeWithPatches(other:)``.
+///
+/// You can inspect these patches to identify the objects updated within the Automerge document, in order to react accordingly within your code.
+/// A common use case for inspecting patches is to recalculate derived data that is using Automerge as an authoritative source.
 public struct Patch: Equatable {
     /// The kind of update to apply.
     public let action: PatchAction
@@ -15,7 +23,10 @@ public struct Patch: Equatable {
     /// Creates a new patch
     /// - Parameters:
     ///   - action: The kind of update to apply.
-    ///   - path: The path to the object identifier the update effects.
+    ///   - path: The path to the object identifier that the action effects.
+    ///
+    ///   The `path` does not identify the property on an object, or index in a sequence, that is updated, only the object that is effected.
+    ///   The `action` includes the type of change, and the value being updated, if relevant to the change.
     public init(action: PatchAction, path: [PathElement]) {
         self.action = action
         self.path = path
@@ -37,9 +48,10 @@ public enum PatchAction: Equatable {
     case Insert(ObjId, UInt64, [Value])
     /// Splices characters into and/or removes characters from the identified object at a given position within it.
     ///
-    /// The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
+    /// > Note: The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
+    /// If you are working with `Characters` from a `String`, you will need to calculate the offset to insert it correctly.
     case SpliceText(ObjId, UInt64, String)
-    /// Increment the property of the identified object by the value you provide.
+    /// Increment the property of the identified object, typically a Counter.
     case Increment(ObjId, Prop, Int64)
     /// Delete a key from a identified object.
     case DeleteMap(ObjId, String)
