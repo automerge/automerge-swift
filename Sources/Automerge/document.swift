@@ -1,6 +1,6 @@
-import Foundation
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
+import Foundation
 
 /// The entry point to automerge, a ``Document`` presents a key/value interface to
 /// the data it contains; as well as methods for loading and saving documents, and

@@ -1,5 +1,5 @@
-import Foundation
 import class AutomergeUniffi.SyncState
+import Foundation
 
 typealias FfiSyncState = AutomergeUniffi.SyncState
 

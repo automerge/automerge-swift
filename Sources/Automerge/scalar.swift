@@ -1,5 +1,5 @@
-import Foundation
 import enum AutomergeUniffi.ScalarValue
+import Foundation
 
 typealias FFIScalar = AutomergeUniffi.ScalarValue
 

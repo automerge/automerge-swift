@@ -36,13 +36,13 @@ import Foundation
 // the type you defined in the `for:` parameter to be returned for that instance of size.
 //
 // For example, the definition of the `[Int].self` generator is:
-// 
+//
 // ```swift
 // registerInputGenerator(for: [Int].self) { size in
 //     (0 ..< size).shuffled()
 // }
 // ```
-// The above generator creates a range of values from 0 to the size provided and returns 
+// The above generator creates a range of values from 0 to the size provided and returns
 // them as an array of integers, shuffled.
 
 var benchmark = Benchmark(title: "Automerge")
@@ -54,9 +54,9 @@ let stringCharacters = "a bcdef ghijk lmnop qrstu vwxyz ABCD EFGHI JKLMN OPQRS T
 // benchmark returns type of [String], but is essentially a large array of random characters.
 benchmark.registerInputGenerator(for: [String].self) { size in
     (0 ..< size)
-    .map { _ in
-        stringCharacters.randomElement() ?? " "
-    }
+        .map { _ in
+            stringCharacters.randomElement() ?? " "
+        }
 }
 
 benchmark.addSimple(
@@ -69,9 +69,10 @@ benchmark.addSimple(
     var stringLength = doc.length(obj: text)
     for strChar in input {
         try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: strChar)
-        stringLength = doc.length(obj: text)        
+        stringLength = doc.length(obj: text)
     }
-    //precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent lengths
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
     blackHole(doc)
 }
 
@@ -85,10 +86,11 @@ benchmark.addSimple(
     var stringLength = doc.length(obj: text)
     for strChar in input {
         try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: strChar)
-        stringLength = doc.length(obj: text)        
+        stringLength = doc.length(obj: text)
     }
     let resultingString = try! doc.text(obj: text)
-    //precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent lengths
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
     blackHole(resultingString)
 }
 

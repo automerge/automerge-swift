@@ -1,5 +1,5 @@
-import XCTest
 @testable import CollectionBenchmarks
+import XCTest
 
 final class CollectionBenchmarksTests: XCTestCase {
     func testExample() throws {
