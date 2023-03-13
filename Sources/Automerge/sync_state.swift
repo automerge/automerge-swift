@@ -58,7 +58,7 @@ public struct SyncState {
     /// The serialized representation does not include session data which
     /// depends on reliable in-order delivery. I.e. you do not need to call
     /// ``reset()`` on a decoded sync state.
-    public func encode() -> [UInt8] {
-        self.ffi_state.encode()
+    public func encode() -> Data {
+        Data(self.ffi_state.encode())
     }
 }

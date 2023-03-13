@@ -24,7 +24,7 @@ public enum ScalarValue: Equatable, Hashable {
     /// An unknown, raw scalar type.
     ///
     /// This type is reserved for forward compatibility, and is not expected to be created directly.
-    case Unknown(typeCode: UInt8, data: [UInt8])
+    case Unknown(typeCode: UInt8, data: Data)
     /// A null.
     case Null
 
@@ -47,7 +47,7 @@ public enum ScalarValue: Equatable, Hashable {
         case let .Boolean(v):
             return .boolean(value: v)
         case let .Unknown(t, d):
-            return .unknown(typeCode: t, data: d)
+            return .unknown(typeCode: t, data: Array(d))
         case .Null:
             return .null
         }
@@ -72,7 +72,7 @@ public enum ScalarValue: Equatable, Hashable {
         case let .boolean(value):
             return .Boolean(value)
         case let .unknown(typeCode, data):
-            return .Unknown(typeCode: typeCode, data: data)
+            return .Unknown(typeCode: typeCode, data: Data(data))
         case .null:
             return .Null
         }
