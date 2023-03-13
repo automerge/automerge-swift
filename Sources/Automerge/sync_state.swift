@@ -1,3 +1,4 @@
+import Foundation
 import class AutomergeUniffi.SyncState
 
 typealias FfiSyncState = AutomergeUniffi.SyncState
@@ -38,8 +39,8 @@ public struct SyncState {
         ffi_state = FfiSyncState()
     }
 
-    public init(bytes: [UInt8]) throws {
-        self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: bytes) }
+    public init(bytes: Data) throws {
+        self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: Array(bytes)) }
     }
 
     /// Reset the state if the connection is interrupted

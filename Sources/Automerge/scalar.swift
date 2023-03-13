@@ -1,3 +1,4 @@
+import Foundation
 import enum AutomergeUniffi.ScalarValue
 
 typealias FFIScalar = AutomergeUniffi.ScalarValue
@@ -5,7 +6,7 @@ typealias FFIScalar = AutomergeUniffi.ScalarValue
 /// A type that represents a primitive Automerge value.
 public enum ScalarValue: Equatable, Hashable {
     /// A byte buffer.
-    case Bytes([UInt8])
+    case Bytes(Data)
     /// A string.
     case String(String)
     /// An unsigned integer.
@@ -30,7 +31,7 @@ public enum ScalarValue: Equatable, Hashable {
     internal func toFfi() -> FFIScalar {
         switch self {
         case let .Bytes(b):
-            return .bytes(value: b)
+            return .bytes(value: Array(b))
         case let .String(s):
             return .string(value: s)
         case let .Uint(i):
@@ -55,7 +56,7 @@ public enum ScalarValue: Equatable, Hashable {
     static func fromFfi(value: FFIScalar) -> Self {
         switch value {
         case let .bytes(value):
-            return .Bytes(value)
+            return .Bytes(Data(value))
         case let .string(value):
             return .String(value)
         case let .uint(value):
