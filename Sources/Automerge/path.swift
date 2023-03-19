@@ -6,13 +6,13 @@ typealias FfiProp = AutomergeUniffi.Prop
 
 /// A component of the path to an object within a document.
 ///
-/// A path constructed of `PathElement` instances represents the sequence of navigating through a hierarchical structure of objects within an Automerge document.
+/// A path constructed of `PathElement` instances represents the sequence of navigating through a hierarchical structure
+/// of objects within an Automerge document.
 /// The base of this tree structure is  ``ObjId/ROOT``.
 public struct PathElement: Equatable {
     let prop: Prop
     let obj: ObjId
 
-    
     /// Creates a new path element.
     /// - Parameters:
     ///   - obj: The object Id of the path element.

@@ -147,7 +147,7 @@ func add(filename: String, name: String, email: String) {
 
     // Load the data from the filesyste
     let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))
-    let document = try! Document([UInt8](bytes))
+    let document = try! Document(bytes)
     
     // Find the contacts list in the document
     let contacts: ObjId
@@ -186,7 +186,7 @@ To list contacts we iterate over each value in the contacts list, printing them 
 ```
 func list(filename: String) {
     let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))
-    let document = try! Document([UInt8](bytes))
+    let document = try! Document(bytes)
     let contacts: ObjId
     switch try! document.get(obj: ObjId.ROOT, key: "contacts")! {
     case .Object(let id, _):
@@ -231,7 +231,7 @@ Here we load the document, loop over the contacts in the `contacts` list, and if
 ```
 func update(filename: String, contact: String, newEmail: String) {
     let bytes = try! Data(contentsOf: URL(fileURLWithPath: filename))
-    let document = try! Document([UInt8](bytes))
+    let document = try! Document(bytes)
     let contacts: ObjId
     switch try! document.get(obj: ObjId.ROOT, key: "contacts")! {
     case .Object(let id, _):
@@ -279,10 +279,10 @@ func update(filename: String, contact: String, newEmail: String) {
 ```
 func merge(filename1: String, filename2: String, out: String) {
     let leftBytes = try! Data(contentsOf: URL(fileURLWithPath: filename1))
-    let left = try! Document([UInt8](leftBytes))
+    let left = try! Document(leftBytes)
 
     let rightBytes = try! Data(contentsOf: URL(fileURLWithPath: filename2))
-    let right = try! Document([UInt8](rightBytes))
+    let right = try! Document(rightBytes)
 
     try! left.merge(other: right)
     let savedBytes = left.save()

@@ -7,7 +7,7 @@ let package = Package(
     platforms: [.macOS(.v10_15)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections-benchmark", from: "0.0.1"),
-        .package(path: "../")
+        .package(path: "../"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -16,8 +16,11 @@ let package = Package(
             name: "CollectionBenchmarks",
             dependencies: [
                 .product(name: "Automerge", package: "automerge-swifter"),
-                .product(name: "CollectionsBenchmark", package: "swift-collections-benchmark"
-),
-            ]),
+                .product(
+                    name: "CollectionsBenchmark",
+                    package: "swift-collections-benchmark"
+                ),
+            ]
+        ),
     ]
 )

@@ -11,15 +11,18 @@ typealias FfiPatch = AutomergeUniffi.Patch
 /// - ``Document/receiveSyncMessageWithPatches(state:message:)``
 /// - ``Document/mergeWithPatches(other:)``.
 ///
-/// You can inspect these patches to identify the objects updated within the Automerge document, in order to react accordingly within your code.
-/// A common use case for inspecting patches is to recalculate derived data that is using Automerge as an authoritative source.
+/// You can inspect these patches to identify the objects updated within the Automerge document, in order to react
+/// accordingly within your code.
+/// A common use case for inspecting patches is to recalculate derived data that is using Automerge as an authoritative
+/// source.
 public struct Patch: Equatable {
     /// The the type of change, and the value that patch updated, if relevant to the change.
     public let action: PatchAction
 
     /// The path to the object that the update effects.
     ///
-    /// The path doesn't identify the property or index being updated on that object, that information is contained with the associated `action`.
+    /// The path doesn't identify the property or index being updated on that object, that information is contained with
+    /// the associated `action`.
     public let path: [PathElement]
 
     /// Creates a new patch
@@ -27,7 +30,8 @@ public struct Patch: Equatable {
     ///   - action: The kind of update to apply.
     ///   - path: The path to the object identifier that the action effects.
     ///
-    ///   The `path` does not identify the property on an object, or index in a sequence, that is updated, only the object that is effected.
+    ///   The `path` does not identify the property on an object, or index in a sequence, that is updated, only the
+    /// object that is effected.
     ///   The `action` includes the type of change, and the value being updated, if relevant to the change.
     init(action: PatchAction, path: [PathElement]) {
         self.action = action
@@ -51,7 +55,8 @@ public enum PatchAction: Equatable {
     /// Splices characters into and/or removes characters from the identified object at a given position within it.
     ///
     /// > Note: The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
-    /// If you are working with `Characters` from a `String`, you will need to calculate the offset to insert it correctly.
+    /// If you are working with `Characters` from a `String`, you will need to calculate the offset to insert it
+    /// correctly.
     case SpliceText(ObjId, UInt64, String)
     /// Increment the property of the identified object, typically a Counter.
     case Increment(ObjId, Prop, Int64)

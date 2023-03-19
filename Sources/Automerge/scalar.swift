@@ -1,11 +1,12 @@
 import enum AutomergeUniffi.ScalarValue
+import Foundation
 
 typealias FFIScalar = AutomergeUniffi.ScalarValue
 
 /// A type that represents a primitive Automerge value.
 public enum ScalarValue: Equatable, Hashable {
     /// A byte buffer.
-    case Bytes([UInt8])
+    case Bytes(Data)
     /// A string.
     case String(String)
     /// An unsigned integer.
@@ -23,14 +24,14 @@ public enum ScalarValue: Equatable, Hashable {
     /// An unknown, raw scalar type.
     ///
     /// This type is reserved for forward compatibility, and is not expected to be created directly.
-    case Unknown(typeCode: UInt8, data: [UInt8])
+    case Unknown(typeCode: UInt8, data: Data)
     /// A null.
     case Null
 
     internal func toFfi() -> FFIScalar {
         switch self {
         case let .Bytes(b):
-            return .bytes(value: b)
+            return .bytes(value: Array(b))
         case let .String(s):
             return .string(value: s)
         case let .Uint(i):
@@ -46,7 +47,7 @@ public enum ScalarValue: Equatable, Hashable {
         case let .Boolean(v):
             return .boolean(value: v)
         case let .Unknown(t, d):
-            return .unknown(typeCode: t, data: d)
+            return .unknown(typeCode: t, data: Array(d))
         case .Null:
             return .null
         }
@@ -55,7 +56,7 @@ public enum ScalarValue: Equatable, Hashable {
     static func fromFfi(value: FFIScalar) -> Self {
         switch value {
         case let .bytes(value):
-            return .Bytes(value)
+            return .Bytes(Data(value))
         case let .string(value):
             return .String(value)
         case let .uint(value):
@@ -71,7 +72,7 @@ public enum ScalarValue: Equatable, Hashable {
         case let .boolean(value):
             return .Boolean(value)
         case let .unknown(typeCode, data):
-            return .Unknown(typeCode: typeCode, data: data)
+            return .Unknown(typeCode: typeCode, data: Data(data))
         case .null:
             return .Null
         }

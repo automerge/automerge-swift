@@ -1,4 +1,5 @@
 import class AutomergeUniffi.SyncState
+import Foundation
 
 typealias FfiSyncState = AutomergeUniffi.SyncState
 
@@ -38,8 +39,8 @@ public struct SyncState {
         ffi_state = FfiSyncState()
     }
 
-    public init(bytes: [UInt8]) throws {
-        self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: bytes) }
+    public init(bytes: Data) throws {
+        self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: Array(bytes)) }
     }
 
     /// Reset the state if the connection is interrupted
@@ -57,7 +58,7 @@ public struct SyncState {
     /// The serialized representation does not include session data which
     /// depends on reliable in-order delivery. I.e. you do not need to call
     /// ``reset()`` on a decoded sync state.
-    public func encode() -> [UInt8] {
-        self.ffi_state.encode()
+    public func encode() -> Data {
+        Data(self.ffi_state.encode())
     }
 }

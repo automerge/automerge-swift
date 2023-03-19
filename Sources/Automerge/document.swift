@@ -1,5 +1,6 @@
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
+import Foundation
 
 /// The entry point to automerge, a ``Document`` presents a key/value interface to
 /// the data it contains; as well as methods for loading and saving documents, and
@@ -38,8 +39,8 @@ public class Document {
     /// concatenation of many calls to ``encodeChangesSince(heads:)``, or
     /// ``encodeNewChanges()`` or the concatenation of any of those, or really
     /// any sequence of bytes containing valid encodings of automerge changes.
-    public init(_ bytes: [UInt8]) throws {
-        doc = try WrappedDoc { try Doc.load(bytes: bytes) }
+    public init(_ bytes: Data) throws {
+        doc = try WrappedDoc { try Doc.load(bytes: Array(bytes)) }
     }
 
     private init(doc: Doc) {
@@ -283,32 +284,39 @@ public class Document {
     }
 
     /// Encode this document in a compressed binary format
-    public func save() -> [UInt8] {
-        self.doc.wrapErrors { $0.save() }
+    public func save() -> Data {
+        self.doc.wrapErrors { Data($0.save()) }
     }
 
     /// Generate a sync message to send to the peer represented by `state`
     ///
     /// - Returns: A message to send to the peer, or `nil` if we are in sync
-    public func generateSyncMessage(state: SyncState) -> [UInt8]? {
-        self.doc.wrapErrors { $0.generateSyncMessage(state: state.ffi_state) }
+    public func generateSyncMessage(state: SyncState) -> Data? {
+        self.doc.wrapErrors {
+            if let tempArr = $0.generateSyncMessage(state: state.ffi_state) {
+                return Data(tempArr)
+            }
+            return nil
+        }
     }
 
     /// Receive a sync message from the peer represented by `state`
     ///
     /// > Tip: if you need to know what changed in the document as a result of
     /// the message try using ``receiveSyncMessageWithPatches(state:message:)``
-    public func receiveSyncMessage(state: SyncState, message: [UInt8]) throws {
-        try self.doc.wrapErrors { try $0.receiveSyncMessage(state: state.ffi_state, msg: message) }
+    public func receiveSyncMessage(state: SyncState, message: Data) throws {
+        try self.doc.wrapErrors {
+            try $0.receiveSyncMessage(state: state.ffi_state, msg: Array(message))
+        }
     }
 
     /// Receive a sync message from the peer represented by `state`, returning patches
     ///
     /// Returns: a sequence of ``Patch`` representing the changes which were
     /// made to the document as a result of the message.
-    public func receiveSyncMessageWithPatches(state: SyncState, message: [UInt8]) throws -> [Patch] {
+    public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
         let patches = try self.doc.wrapErrors {
-            try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: message)
+            try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
         }
         return patches.map { Patch($0) }
     }
@@ -360,16 +368,16 @@ public class Document {
     ///
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
-    public func encodeNewChanges() -> [UInt8] {
-        self.doc.wrapErrors { $0.encodeNewChanges() }
+    public func encodeNewChanges() -> Data {
+        self.doc.wrapErrors { Data($0.encodeNewChanges()) }
     }
 
     /// Encode any changes made since `heads`
     ///
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
-    public func encodeChangesSince<Heads: Collection<ChangeHash>>(heads: Heads) throws -> [UInt8] {
-        try self.doc.wrapErrors { try $0.encodeChangesSince(heads: heads.map(\.bytes)) }
+    public func encodeChangesSince<Heads: Collection<ChangeHash>>(heads: Heads) throws -> Data {
+        try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
     }
 
     /// Apply encoded changes to this document
@@ -380,8 +388,8 @@ public class Document {
     ///
     /// > Tip: if you need to know what changed in the document as a result of
     /// the applied changes try using ``applyEncodedChangesWithPatches(encoded:)``
-    public func applyEncodedChanges(encoded: [UInt8]) throws {
-        try self.doc.wrapErrors { try $0.applyEncodedChanges(changes: encoded) }
+    public func applyEncodedChanges(encoded: Data) throws {
+        try self.doc.wrapErrors { try $0.applyEncodedChanges(changes: Array(encoded)) }
     }
 
     /// Apply encoded changes to this document
@@ -389,9 +397,9 @@ public class Document {
     /// The input to this function can be anything returned by ``save()``,
     /// ``encodeNewChanges()``, ``encodeChangesSince(heads:)`` or any
     /// concatenation of those.
-    public func applyEncodedChangesWithPatches(encoded: [UInt8]) throws -> [Patch] {
+    public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
         let patches = try self.doc.wrapErrors {
-            try $0.applyEncodedChangesWithPatches(changes: encoded)
+            try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
         }
         return patches.map { Patch($0) }
     }
