@@ -8,30 +8,19 @@ let package = Package(
     products: [
         .library(name: "Automerge", targets: ["Automerge"]),
     ],
-    dependencies: [.package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0")],
     targets: [
-        // These comments were copied from
-        // https://github.com/y-crdt/y-uniffi/blob/7cd55266c11c424afa3ae5b3edae6e9f70d9a6bb/lib/Package.swift
-        // which was written by Joseph Heck and  Aidar Nugmanoff and licensed
-        // under the MIT license. There is also an elaboration of the problems
-        // we are solving at
-        // https://rhonabwy.com/2023/02/10/creating-an-xcframework/
-
-        // ---
-        // Copied Comments
-        // ---
-        // If you're getting the error 'does not contain expected binary artifact',
-        // then the filename of the xcframework doesn't match the name module that's
-        // exposed within it.
-        // There's a *tight* coupling to the module name (case sensitive!!) and the
-        // name of the XCFramework. Annoying, yeah - but there it is.
-
-        // In addition to the name of the framework, the binary target name in
-        // Package.swift MUST be the same as the exported module. Without it, you'll
-        // get the same error. And there's some detail that if you use a compressed,
-        // remote framework and forgot to compress it using ditto with the option
-        // '--keepParent', then it'll expand into a different name, and again
-        // - wham - the same "does not contain the expected binary" error.
+        // We are using a local file reference to an XCFramework, which is functional
+        // on the tags for this package because the XCFramework.zip file is committed with
+        // those specific release points. This does, however, cause a few awkward issues,
+        // in particular it means that swift-docc-plugin doesn't operate correctly as the
+        // process to retrieve the symbols from this and the XCFramework fails within
+        // Swift Package Manager. Building documentation within Xcode works perfectly fine,
+        // but if you're attempting to generate HTML documentation, use the script
+        // `./scripts/build-ghpages-docs.sh`.
+        //
+        // If you're working from source, or a branch without an existing xcframework.zip,
+        // use the script `./scripts/build-xcframework.sh` to create the library locally.
+        // This script _does_ expect that you have Rust installed locally in order to function.
         .binaryTarget(
             name: "automergeFFI",
             path: "./automergeFFI.xcframework.zip"
