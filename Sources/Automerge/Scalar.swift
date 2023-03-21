@@ -13,6 +13,13 @@ public enum ScalarValue: Equatable, Hashable {
     case Uint(UInt64)
     /// A signed integer.
     case Int(Int64)
+    
+    // Interesting detail here: Int64 can't be represented in 32bit environments - macOS and iOS would be fine,
+    // but this limits transport to - for example - WatchOS, in which Int is a 32 bit.
+    // But likewise, creating an Int64 from an Int isn't entirely straightforward. For our
+    // use cases Int64(exactly: someInt)! would probably do the trick, but we probably want
+    // to handle that conversion to expose the external API as `Int` rather than `Int64`.
+    
     /// A floating point number.
     case F64(Double)
     /// An integer counter.
