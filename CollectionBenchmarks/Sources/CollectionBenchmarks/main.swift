@@ -60,7 +60,7 @@ benchmark.registerInputGenerator(for: [String].self) { size in
 }
 
 benchmark.addSimple(
-    title: "Document text append",
+    title: "Text - append",
     input: [String].self
 ) { input in
     let doc = Automerge.Document()
@@ -77,7 +77,7 @@ benchmark.addSimple(
 }
 
 benchmark.addSimple(
-    title: "Document text append and read",
+    title: "Text - append and read",
     input: [String].self
 ) { input in
     let doc = Automerge.Document()
@@ -95,7 +95,7 @@ benchmark.addSimple(
 }
 
 benchmark.addSimple(
-    title: "Integer list append",
+    title: "List - Integer append",
     input: [Int].self
 ) { integerInput in
     let doc = Automerge.Document()
@@ -108,7 +108,22 @@ benchmark.addSimple(
     // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
     // lengths
     blackHole(doc)
+}
 
+benchmark.addSimple(
+    title: "Map - Integer append",
+    input: [Int].self
+) { integerInput in
+    let doc = Automerge.Document()
+    let numberMap = try! doc.putObject(obj: ObjId.ROOT, key: "numbermap", ty: .Map)
+
+    for intValue in integerInput {
+        try! doc.put(obj: numberMap, key: String(intValue), value: .Int(Int64(exactly: intValue)!))
     }
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(doc)
+}
+
 // Execute the benchmark tool with the above definitions.
 benchmark.main()
