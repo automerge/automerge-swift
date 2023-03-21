@@ -94,5 +94,21 @@ benchmark.addSimple(
     blackHole(resultingString)
 }
 
+benchmark.addSimple(
+    title: "Integer list append",
+    input: [Int].self
+) { integerInput in
+    let doc = Automerge.Document()
+    let numList = try! doc.putObject(obj: ObjId.ROOT, key: "numberlist", ty: .List)
+
+    for intValue in integerInput {
+        let listLength = doc.length(obj: numList)
+        try! doc.insert(obj: numList, index: listLength, value: .Int(Int64(exactly: intValue)!))
+    }
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(doc)
+
+    }
 // Execute the benchmark tool with the above definitions.
 benchmark.main()

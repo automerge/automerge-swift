@@ -17,6 +17,12 @@
         "Document text append and read",
       ]
     },
-    
+    {
+      "kind": "chart",
+      "title": "Integer List append",
+      "tasks": [
+        "Integer list append",
+      ]
+    },
   ]
 }
