@@ -1,6 +1,7 @@
 # Collection Benchmarks
 
-Benchmarks that track time of operation over a growing size of a collection, using the [swift-collections-benchmarks](https://github.com/apple/swift-collections-benchmark) library.
+Benchmarks that track time of operation over a growing size of a collection, 
+using the [swift-collections-benchmarks](https://github.com/apple/swift-collections-benchmark) library.
 
 ## Running Benchmarks Locally
 

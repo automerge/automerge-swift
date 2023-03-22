@@ -5,18 +5,31 @@
   "contents": [
     {
       "kind": "chart",
-      "title": "Append text",
+      "title": "Text - append",
       "tasks": [
-        "Document text append",
+        "Text - append",
       ]
     },
     {
       "kind": "chart",
-      "title": "Append text and read it back",
+      "title": "Text - append and read",
       "tasks": [
-        "Document text append and read",
+        "Text - append and read",
       ]
     },
-    
+    {
+      "kind": "chart",
+      "title": "List - Integer append",
+      "tasks": [
+        "List - Integer append",
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Map - Integer append",
+      "tasks": [
+        "Map - Integer append",
+      ]
+    },
   ]
 }

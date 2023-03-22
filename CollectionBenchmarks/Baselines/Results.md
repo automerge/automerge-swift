@@ -5,12 +5,20 @@ Click to expand individual items below.
   <summary><strong>All results</strong></summary>
   <ul>
   <details>
-    <summary>01: Append text</summary>
-    <img src="Results/01%20Append%20text.png">
+    <summary>01: Text - append</summary>
+    <img src="Results/01%20Text%20-%20append.png">
   </details>
   <details>
-    <summary>02: Append text and read it back</summary>
-    <img src="Results/02%20Append%20text%20and%20read%20it%20back.png">
+    <summary>02: Text - append and read</summary>
+    <img src="Results/02%20Text%20-%20append%20and%20read.png">
+  </details>
+  <details>
+    <summary>03: List - Integer append</summary>
+    <img src="Results/03%20List%20-%20Integer%20append.png">
+  </details>
+  <details>
+    <summary>04: Map - Integer append</summary>
+    <img src="Results/04%20Map%20-%20Integer%20append.png">
   </details>
   </ul>
 </details>
