@@ -1,7 +1,7 @@
 import Foundation
 
 /// A type that represents the value of an Automerge counter.
-public struct Counter {
+public struct Counter: Equatable, Hashable {
     /// The value of the counter.
     public var value: Int
 

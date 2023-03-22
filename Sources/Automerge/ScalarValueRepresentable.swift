@@ -2,8 +2,8 @@ import Foundation
 
 /// A type that can be represented within an Automerge document.
 ///
-/// The ``ScalarValue`` representation of a local type is an atomic update, as compared with ``Value/Object(_:_:)`` types
-/// which represent types that can be incrementally updated by multiple collaborators.
+/// The ``ScalarValue`` representation of a local type is an atomic update, as compared with ``Value/Object(_:_:)``
+/// types which represent types that can be incrementally updated by multiple collaborators.
 ///
 /// You can encode your own types to be used within ``ObjType/List`` or ``ObjType/Map`` by conforming your type
 /// to `ScalarValueRepresentable`. Implement ``ScalarValueRepresentable/toScalarValue()`` with your
@@ -18,7 +18,8 @@ public protocol ScalarValueRepresentable {
     /// - Returns: The type, converted to a local type, or an error indicating the reason for the failure to convert.
     ///
     /// The protocol accepts defines a function to accept a ``Value`` primarily for convenience.
-    /// ``Value`` is a higher level enumeration that can include object types such as ``ObjType/List``, ``ObjType/Map``, and ``ObjType/Text``.
+    /// ``Value`` is a higher level enumeration that can include object types such as ``ObjType/List``, ``ObjType/Map``,
+    /// and ``ObjType/Text``.
     static func fromValue(_ val: Value) -> Result<Self, ConvertError>
 
     /// Converts a local type into an Automerge scalar value.
