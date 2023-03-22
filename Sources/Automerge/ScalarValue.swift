@@ -85,3 +85,41 @@ public enum ScalarValue: Equatable, Hashable {
         }
     }
 }
+
+extension ScalarValue: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case let .Boolean(boolValue):
+            return "Boolean(\(boolValue))"
+        case let .Bytes(data):
+            var stringRep = "Data("
+            if data.count > 16 {
+                let first16Bytes = data[0 ..< 15]
+                stringRep.append(first16Bytes.map { Swift.String(format: "%02hhx", $0) }.joined())
+            } else {
+                stringRep.append(data.map { Swift.String(format: "%02hhx", $0) }.joined())
+            }
+            return stringRep.appending(")")
+        case let .String(stringVal):
+            return "String(\(stringVal))"
+        case let .Uint(uintVal):
+            return "UInt(\(uintVal))"
+        case let .Int(intValue):
+            return "Int(\(intValue))"
+        case let .F64(doubleValue):
+            if #available(iOS 15.0, macOS 12.0, *) {
+                return "Double(\(doubleValue.formatted(.number.precision(.significantDigits(2)))))"
+            } else {
+                return "Double(\(doubleValue))"
+            }
+        case let .Counter(intValue):
+            return "Counter(\(intValue))"
+        case let .Timestamp(intValue):
+            return "Timestamp(\(intValue))"
+        case let .Unknown(typeCode: typeCode, data: data):
+            return "Unknown(type: \(typeCode), data: \(data.map { Swift.String(format: "%02hhx", $0) }.joined()))"
+        case .Null:
+            return "Null()"
+        }
+    }
+}
