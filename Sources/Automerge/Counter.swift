@@ -1,6 +1,6 @@
 import Foundation
 
-/// A struct that represents the value of an Automerge counter.
+/// A type that represents the value of an Automerge counter.
 public struct Counter {
     /// The value of the counter.
     public var value: Int
@@ -34,7 +34,7 @@ public enum CounterScalarConversionError: LocalizedError {
 
 extension Counter: ScalarValueRepresentable {
     public typealias ConvertError = CounterScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Counter, CounterScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Counter, CounterScalarConversionError> {
         switch val {
         case let .Scalar(.Counter(d)):
             return .success(Counter(d))
@@ -43,7 +43,7 @@ extension Counter: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Counter(Int64(value))
     }
 }

@@ -1,6 +1,14 @@
 import Foundation
 
 /// A type that can be represented within an Automerge document.
+///
+/// The ``ScalarValue`` representation of a local type is an atomic update, as compared with ``Value/Object(_:_:)`` types
+/// which represent types that can be incrementally updated by multiple collaborators.
+///
+/// You can encode your own types to be used within ``ObjType/List`` or ``ObjType/Map`` by conforming your type
+/// to `ScalarValueRepresentable`. Implement ``ScalarValueRepresentable/toScalarValue()`` with your
+/// preferred encoding, returning ``ScalarValue/Bytes(_:)`` with the encoded data embedded,
+/// and ``ScalarValueRepresentable/fromValue(_:)`` to decode into your type.
 public protocol ScalarValueRepresentable {
     /// The error type associated with failed attempted conversion into or out of Automerge representation.
     associatedtype ConvertError: LocalizedError
@@ -8,11 +16,14 @@ public protocol ScalarValueRepresentable {
     /// Converts the Automerge representation to a local type, or returns a failure
     /// - Parameter val: The Automerge ``Value`` to be converted as a scalar value into a local type.
     /// - Returns: The type, converted to a local type, or an error indicating the reason for the failure to convert.
-    static func fromAMValue(_ val: Value) -> Result<Self, ConvertError>
+    ///
+    /// The protocol accepts defines a function to accept a ``Value`` primarily for convenience.
+    /// ``Value`` is a higher level enumeration that can include object types such as ``ObjType/List``, ``ObjType/Map``, and ``ObjType/Text``.
+    static func fromValue(_ val: Value) -> Result<Self, ConvertError>
 
     /// Converts a local type into an Automerge scalar value.
     /// - Returns: The ``ScalarValue`` that aligns with the provided type
-    func toAMValue() -> ScalarValue
+    func toScalarValue() -> ScalarValue
 }
 
 // MARK: Boolean Conversions
@@ -35,7 +46,7 @@ public enum BooleanScalarConversionError: LocalizedError {
 
 extension Bool: ScalarValueRepresentable {
     public typealias ConvertError = BooleanScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Self, BooleanScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Self, BooleanScalarConversionError> {
         switch val {
         case let .Scalar(.Boolean(b)):
             return .success(b)
@@ -44,7 +55,7 @@ extension Bool: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Boolean(self)
     }
 }
@@ -69,7 +80,7 @@ public enum StringScalarConversionError: LocalizedError {
 
 extension String: ScalarValueRepresentable {
     public typealias ConvertError = StringScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<String, StringScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<String, StringScalarConversionError> {
         switch val {
         case let .Scalar(.String(s)):
             return .success(s)
@@ -78,7 +89,7 @@ extension String: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .String(self)
     }
 }
@@ -103,7 +114,7 @@ public enum BytesScalarConversionError: LocalizedError {
 
 extension Data: ScalarValueRepresentable {
     public typealias ConvertError = BytesScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Data, BytesScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Data, BytesScalarConversionError> {
         switch val {
         case let .Scalar(.Bytes(d)):
             return .success(d)
@@ -112,7 +123,7 @@ extension Data: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Bytes(self)
     }
 }
@@ -137,7 +148,7 @@ public enum UIntScalarConversionError: LocalizedError {
 
 extension UInt: ScalarValueRepresentable {
     public typealias ConvertError = UIntScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<UInt, UIntScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<UInt, UIntScalarConversionError> {
         switch val {
         case let .Scalar(.Uint(d)):
             return .success(UInt(d))
@@ -146,7 +157,7 @@ extension UInt: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Uint(UInt64(self))
     }
 }
@@ -171,7 +182,7 @@ public enum IntScalarConversionError: LocalizedError {
 
 extension Int: ScalarValueRepresentable {
     public typealias ConvertError = IntScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Int, IntScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Int, IntScalarConversionError> {
         switch val {
         case let .Scalar(.Int(d)):
             return .success(Int(d))
@@ -180,7 +191,7 @@ extension Int: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Int(Int64(self))
     }
 }
@@ -205,7 +216,7 @@ public enum DoubleScalarConversionError: LocalizedError {
 
 extension Double: ScalarValueRepresentable {
     public typealias ConvertError = DoubleScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Double, DoubleScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Double, DoubleScalarConversionError> {
         switch val {
         case let .Scalar(.F64(d)):
             return .success(Double(d))
@@ -214,7 +225,7 @@ extension Double: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .F64(self)
     }
 }
@@ -239,7 +250,7 @@ public enum TimestampScalarConversionError: LocalizedError {
 
 extension Date: ScalarValueRepresentable {
     public typealias ConvertError = TimestampScalarConversionError
-    public static func fromAMValue(_ val: Value) -> Result<Date, TimestampScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Date, TimestampScalarConversionError> {
         switch val {
         case let .Scalar(.Timestamp(d)):
             return .success(Date(timeIntervalSince1970: TimeInterval(d)))
@@ -248,7 +259,7 @@ extension Date: ScalarValueRepresentable {
         }
     }
 
-    public func toAMValue() -> ScalarValue {
+    public func toScalarValue() -> ScalarValue {
         .Timestamp(Int64(timeIntervalSince1970))
     }
 }
