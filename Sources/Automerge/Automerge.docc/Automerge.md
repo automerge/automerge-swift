@@ -92,6 +92,11 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/Value``
 - ``Automerge/ScalarValue``
 
+### Converting Scalar Values to Local Types
+
+- ``Automerge/ScalarValueRepresentable``
+- ``Automerge/Counter``
+
 ### Replicating Documents
 
 - ``Automerge/SyncState``
@@ -104,6 +109,17 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/PathElement``
 
 - ``Automerge/Prop``
+
+### Conversion Error Types
+
+- ``Automerge/BooleanScalarConversionError``
+- ``Automerge/BytesScalarConversionError``
+- ``Automerge/CounterScalarConversionError``
+- ``Automerge/DoubleScalarConversionError``
+- ``Automerge/IntScalarConversionError``
+- ``Automerge/StringScalarConversionError``
+- ``Automerge/TimestampScalarConversionError``
+- ``Automerge/UIntScalarConversionError``
 
 ### Error Types 
 

@@ -13,13 +13,6 @@ public enum ScalarValue: Equatable, Hashable {
     case Uint(UInt64)
     /// A signed integer.
     case Int(Int64)
-
-    // Interesting detail here: Int64 can't be represented in 32bit environments - macOS and iOS would be fine,
-    // but this limits transport to - for example - WatchOS, in which Int is a 32 bit.
-    // But likewise, creating an Int64 from an Int isn't entirely straightforward. For our
-    // use cases Int64(exactly: someInt)! would probably do the trick, but we probably want
-    // to handle that conversion to expose the external API as `Int` rather than `Int64`.
-
     /// A floating point number.
     case F64(Double)
     /// An integer counter.
@@ -82,6 +75,44 @@ public enum ScalarValue: Equatable, Hashable {
             return .Unknown(typeCode: typeCode, data: Data(data))
         case .null:
             return .Null
+        }
+    }
+}
+
+extension ScalarValue: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case let .Boolean(boolValue):
+            return "Boolean(\(boolValue))"
+        case let .Bytes(data):
+            var stringRep = "Data("
+            if data.count > 16 {
+                let first16Bytes = data[0 ..< 15]
+                stringRep.append(first16Bytes.map { Swift.String(format: "%02hhx", $0) }.joined())
+            } else {
+                stringRep.append(data.map { Swift.String(format: "%02hhx", $0) }.joined())
+            }
+            return stringRep.appending(")")
+        case let .String(stringVal):
+            return "String(\(stringVal))"
+        case let .Uint(uintVal):
+            return "UInt(\(uintVal))"
+        case let .Int(intValue):
+            return "Int(\(intValue))"
+        case let .F64(doubleValue):
+            if #available(iOS 15.0, macOS 12.0, *) {
+                return "Double(\(doubleValue.formatted(.number.precision(.significantDigits(2)))))"
+            } else {
+                return "Double(\(doubleValue))"
+            }
+        case let .Counter(intValue):
+            return "Counter(\(intValue))"
+        case let .Timestamp(intValue):
+            return "Timestamp(\(intValue))"
+        case let .Unknown(typeCode: typeCode, data: data):
+            return "Unknown(type: \(typeCode), data: \(data.map { Swift.String(format: "%02hhx", $0) }.joined()))"
+        case .Null:
+            return "Null()"
         }
     }
 }
