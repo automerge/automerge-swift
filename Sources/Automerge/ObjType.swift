@@ -3,7 +3,7 @@ import enum AutomergeUniffi.ObjType
 typealias FfiObjtype = AutomergeUniffi.ObjType
 
 /// A type that represents an Automerge object.
-public enum ObjType {
+public enum ObjType: Sendable {
     /// A type that represents a map that uses String as keys.
     case Map
     /// A type that represents a sequence of arbitrary Automerge values.
