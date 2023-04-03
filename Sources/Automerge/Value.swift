@@ -3,7 +3,7 @@ import enum AutomergeUniffi.Value
 typealias FfiValue = AutomergeUniffi.Value
 
 /// A type that represents a value or object managed by Automerge.
-public enum Value: Equatable, Hashable {
+public enum Value: Equatable, Hashable, Sendable {
     /// An object type
     case Object(ObjId, ObjType)
     /// A scalar value

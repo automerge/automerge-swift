@@ -4,7 +4,7 @@ import Foundation
 typealias FFIScalar = AutomergeUniffi.ScalarValue
 
 /// A type that represents a primitive Automerge value.
-public enum ScalarValue: Equatable, Hashable {
+public enum ScalarValue: Equatable, Hashable, Sendable {
     /// A byte buffer.
     case Bytes(Data)
     /// A string.
