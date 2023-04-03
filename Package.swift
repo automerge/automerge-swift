@@ -2,6 +2,25 @@
 
 import PackageDescription
 
+var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
+#if swift(>=5.7)
+    globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
+    /*
+     Summation from https://www.donnywals.com/enabling-concurrency-warnings-in-xcode-14/
+     Set `strict-concurrency` to `targeted` to enforce Sendable and actor-isolation
+     checks in your code. This explicitly verifies that `Sendable` constraints are
+     met when you mark one of your types as `Sendable`.
+
+     This mode is essentially a bit of a hybrid between the behavior that's intended
+     in Swift 6, and the default in Swift 5.7. Use this mode to have a bit of
+     checking on your code that uses Swift concurrency without too many warnings
+     and / or errors in your current codebase.
+
+     Set `strict-concurrency` to `complete` to get the full suite of concurrency
+     constraints, essentially as they will work in Swift 6.
+     */
+#endif
+
 let package = Package(
     name: "Automerge",
     platforms: [.iOS(.v13), .macOS(.v10_15)],
@@ -32,7 +51,8 @@ let package = Package(
         ),
         .target(
             name: "Automerge",
-            dependencies: ["AutomergeUniffi"]
+            dependencies: ["AutomergeUniffi"],
+            swiftSettings: globalSwiftSettings
         ),
         .testTarget(
             name: "AutomergeTests",
