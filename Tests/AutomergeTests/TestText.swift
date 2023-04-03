@@ -41,9 +41,9 @@ class TextTestCase: XCTestCase {
         for _ in 0 ... 5000 {
             let stringToInsert = characterCollection.randomElement() ?? " "
             stringLength = doc.length(obj: text)
-            print("Adding '\(stringToInsert)' at \(stringLength)")
+            //print("Adding '\(stringToInsert)' at \(stringLength)")
             try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: stringToInsert)
-            print("Combined text: \(try! doc.text(obj: text))")
+            //print("Combined text: \(try! doc.text(obj: text))")
         }
 
         // flaky assertion, don't do it :: because length is in UTF-8 codepoints, not!!! grapheme clusters.
