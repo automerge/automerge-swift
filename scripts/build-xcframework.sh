@@ -4,7 +4,10 @@
 # which was written by Joseph Heck and  Aidar Nugmanoff and licensed under the
 # MIT license. We have made some slight naming changes
 
-# a known issue with Catalyst build https://github.com/rust-lang/rust/issues/107630
+# currently macabi/Catalyst target has no prebuild rust-std library hence we use-Z build-std
+# how to build-std: https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#build-std
+# list of targets with prebuild rust-std https://doc.rust-lang.org/nightly/rustc/platform-support.html
+# WARNING this build script is not workin due to a known issue with Catalyst build https://github.com/rust-lang/rust/issues/107630
 
 set -e # immediately terminate script on any failure conditions
 set -x # echo script commands for easier debugging
@@ -104,6 +107,8 @@ lipo -create  \
     "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
+# the line below fails with:
+# error: unable to determine the platform for the given binary '.../automerge-swifter/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
