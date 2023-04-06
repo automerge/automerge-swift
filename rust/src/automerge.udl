@@ -185,6 +185,8 @@ interface Doc {
     u64 length(ObjId obj);
     u64 length_at(ObjId obj, sequence<ChangeHash> heads);
 
+    ObjType object_type(ObjId obj);
+
     [Throws=DocError]
     sequence<PathElement> path(ObjId obj);
 
