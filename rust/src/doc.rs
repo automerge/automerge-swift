@@ -321,6 +321,12 @@ impl Doc {
         doc.length_at(obj, &heads) as u64
     }
 
+    pub fn object_type(&self, obj: ObjId) -> ObjType {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        doc.object_type(obj).unwrap().into()
+    }
+
     pub fn text(&self, obj: ObjId) -> Result<String, DocError> {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
