@@ -4,6 +4,8 @@
 # which was written by Joseph Heck and  Aidar Nugmanoff and licensed under the
 # MIT license. We have made some slight naming changes
 
+# a known issue with Catalyst build https://github.com/rust-lang/rust/issues/107630
+
 set -e # immediately terminate script on any failure conditions
 set -x # echo script commands for easier debugging
 
@@ -19,6 +21,13 @@ BUILD_FOLDER="$RUST_FOLDER/target"
 
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
+
+echo "Install nightly and rust-src for Catalyst"
+rustup toolchain install nightly
+rustup component add rust-src --toolchain nightly
+rustup update
+
+
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
 rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
@@ -26,6 +35,8 @@ rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
+cargo_build_nightly="cargo +nightly build --manifest-path $RUST_FOLDER/Cargo.toml"
+
 
 echo "▸ Clean state"
 rm -rf "${XCFRAMEWORK_FOLDER}"
@@ -59,24 +70,39 @@ echo "▸ Building for x86_64-apple-darwin"
 CFLAGS_x86_64_apple_darwin="-target x86_64-apple-darwin" \
 $cargo_build --target x86_64-apple-darwin --locked --release
 
+echo "▸ Building for aarch64-apple-ios-macabi"
+CFLAGS="-target aarch64-apple-ios-macabi -mios-version-min=13.0" \
+$cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --release
+
+echo "▸ Building for x86_64-apple-ios-macabi"
+CFLAGS="-target x86_64-apple-ios-macabi -mios-version-min=13.0" \
+$cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
+
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 mkdir -p "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.h" "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${BUILD_FOLDER}/includes/module.modulemap"
 
-mkdir -p "${BUILD_FOLDER}/ios-simulator/release"
 echo "▸ Lipo (merge) x86 and arm simulator static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/ios-simulator/release"
 lipo -create  \
     "${BUILD_FOLDER}/x86_64-apple-ios/release/${LIB_NAME}" \
     "${BUILD_FOLDER}/aarch64-apple-ios-sim/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/ios-simulator/release/${LIB_NAME}"
 
-mkdir -p "${BUILD_FOLDER}/apple-darwin/release"
 echo "▸ Lipo (merge) x86 and arm macOS static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/apple-darwin/release"
 lipo -create  \
     "${BUILD_FOLDER}/x86_64-apple-darwin/release/${LIB_NAME}" \
     "${BUILD_FOLDER}/aarch64-apple-darwin/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-darwin/release/${LIB_NAME}"
+
+echo "▸ Lipo (merge) x86 and arm macOS Catalyst static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/apple-macabi/release"
+lipo -create  \
+    "${BUILD_FOLDER}/x86_64-apple-ios-macabi/release/${LIB_NAME}" \
+    "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
+    -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
@@ -84,6 +110,8 @@ xcodebuild -create-xcframework \
     -library "${BUILD_FOLDER}/ios-simulator/release/${LIB_NAME}" \
     -headers "${BUILD_FOLDER}/includes" \
     -library "$BUILD_FOLDER/apple-darwin/release/$LIB_NAME" \
+    -headers "${BUILD_FOLDER}/includes" \
+    -library "$BUILD_FOLDER/apple-macabi/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
