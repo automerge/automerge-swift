@@ -10,8 +10,8 @@ typealias FfiProp = AutomergeUniffi.Prop
 /// of objects within an Automerge document.
 /// The base of this tree structure is  ``ObjId/ROOT``.
 public struct PathElement: Equatable {
-    let prop: Prop
-    let obj: ObjId
+    public let prop: Prop
+    public let obj: ObjId
 
     /// Creates a new path element.
     /// - Parameters:
