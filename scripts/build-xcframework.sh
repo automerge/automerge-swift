@@ -121,8 +121,6 @@ xcodebuild -create-xcframework \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
-mkdir -p "${XCFRAMEWORK_FOLDER}"/ios-arm64_x86_64-maccatalyst/Headers
-
 echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
 
