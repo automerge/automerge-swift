@@ -238,6 +238,14 @@ public class Document {
         self.doc.wrapErrors { $0.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
     }
 
+    /// Returns the object type for the object Id that you provide.
+    /// - Parameter obj: The object Id to inspect.
+    public func objectType(obj: ObjId) -> ObjType {
+        self.doc.wrapErrors {
+            ObjType.fromFfi(ty: $0.objectType(obj: obj.bytes))
+        }
+    }
+
     /// Get the value of the text object `obj`
     public func text(obj: ObjId) throws -> String {
         try self.doc.wrapErrors { try $0.text(obj: obj.bytes) }
