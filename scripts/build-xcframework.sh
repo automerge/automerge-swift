@@ -4,10 +4,12 @@
 # which was written by Joseph Heck and  Aidar Nugmanoff and licensed under the
 # MIT license. We have made some slight naming changes
 
-# currently macabi/Catalyst target has no prebuild rust-std library hence we use-Z build-std
+# currently macabi/Catalyst target has no prebuild rust-std library hence we use `-Z build-std`
 # how to build-std: https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#build-std
 # list of targets with prebuild rust-std https://doc.rust-lang.org/nightly/rustc/platform-support.html
-# WARNING this build script is not workin due to a known issue with Catalyst build https://github.com/rust-lang/rust/issues/107630
+
+# WARNING this build script to work requires pinned rust version due a known issue with Catalyst build
+# that was later introduced https://github.com/rust-lang/rust/issues/106021
 
 set -e # immediately terminate script on any failure conditions
 set -x # echo script commands for easier debugging
@@ -24,13 +26,13 @@ BUILD_FOLDER="$RUST_FOLDER/target"
 
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
+RUST_NIGHTLY="nightly-2023-02-02"
 
 echo "Install nightly and rust-src for Catalyst"
-rustup toolchain install nightly-2022-07-07
-rustup component add rust-src --toolchain nightly-2022-07-07
+rustup toolchain install ${RUST_NIGHTLY}
+rustup component add rust-src --toolchain ${RUST_NIGHTLY}
 rustup update
-#cargo install xargo
-rustup default nightly-2022-07-07
+rustup default ${RUST_NIGHTLY}
 
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
@@ -39,8 +41,7 @@ rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
-cargo_build_nightly="cargo +nightly-2022-07-07 build --manifest-path $RUST_FOLDER/Cargo.toml"
-xargo_build_nightly="xargo build --manifest-path $RUST_FOLDER/Cargo.toml"
+cargo_build_nightly="cargo +${RUST_NIGHTLY} build --manifest-path $RUST_FOLDER/Cargo.toml"
 
 
 echo "▸ Clean state"
@@ -76,11 +77,9 @@ CFLAGS_x86_64_apple_darwin="-target x86_64-apple-darwin" \
 $cargo_build --target x86_64-apple-darwin --locked --release
 
 echo "▸ Building for aarch64-apple-ios-macabi"
-#CFLAGS="-target aarch64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --release
 
 echo "▸ Building for x86_64-apple-ios-macabi"
-#CFLAGS="-target x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
@@ -109,7 +108,7 @@ lipo -create  \
     "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
-# the line below fails with:
+# the line below fails on the post 2023-02-02 nightly with:
 # error: unable to determine the platform for the given binary '.../automerge-swifter/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
@@ -121,8 +120,6 @@ xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/apple-macabi/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
-
-
 
 mkdir -p "${XCFRAMEWORK_FOLDER}"/ios-arm64_x86_64-maccatalyst/Headers
 
