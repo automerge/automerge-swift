@@ -4,6 +4,13 @@
 # which was written by Joseph Heck and  Aidar Nugmanoff and licensed under the
 # MIT license. We have made some slight naming changes
 
+# currently macabi/Catalyst target has no prebuild rust-std library hence we use `-Z build-std`
+# how to build-std: https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#build-std
+# list of targets with prebuild rust-std https://doc.rust-lang.org/nightly/rustc/platform-support.html
+
+# WARNING this build script to work requires pinned rust version due a known issue with Catalyst build
+# that was later introduced https://github.com/rust-lang/rust/issues/106021
+
 set -e # immediately terminate script on any failure conditions
 set -x # echo script commands for easier debugging
 
@@ -19,6 +26,14 @@ BUILD_FOLDER="$RUST_FOLDER/target"
 
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
+RUST_NIGHTLY="nightly-2023-02-02"
+
+echo "Install nightly and rust-src for Catalyst"
+rustup toolchain install ${RUST_NIGHTLY}
+rustup component add rust-src --toolchain ${RUST_NIGHTLY}
+rustup update
+rustup default ${RUST_NIGHTLY}
+
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
 rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
@@ -26,6 +41,8 @@ rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
+cargo_build_nightly="cargo +${RUST_NIGHTLY} build --manifest-path $RUST_FOLDER/Cargo.toml"
+
 
 echo "▸ Clean state"
 rm -rf "${XCFRAMEWORK_FOLDER}"
@@ -59,25 +76,40 @@ echo "▸ Building for x86_64-apple-darwin"
 CFLAGS_x86_64_apple_darwin="-target x86_64-apple-darwin" \
 $cargo_build --target x86_64-apple-darwin --locked --release
 
+echo "▸ Building for aarch64-apple-ios-macabi"
+$cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --release
+
+echo "▸ Building for x86_64-apple-ios-macabi"
+$cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
+
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 mkdir -p "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.h" "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${BUILD_FOLDER}/includes/module.modulemap"
 
-mkdir -p "${BUILD_FOLDER}/ios-simulator/release"
 echo "▸ Lipo (merge) x86 and arm simulator static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/ios-simulator/release"
 lipo -create  \
     "${BUILD_FOLDER}/x86_64-apple-ios/release/${LIB_NAME}" \
     "${BUILD_FOLDER}/aarch64-apple-ios-sim/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/ios-simulator/release/${LIB_NAME}"
 
-mkdir -p "${BUILD_FOLDER}/apple-darwin/release"
 echo "▸ Lipo (merge) x86 and arm macOS static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/apple-darwin/release"
 lipo -create  \
     "${BUILD_FOLDER}/x86_64-apple-darwin/release/${LIB_NAME}" \
     "${BUILD_FOLDER}/aarch64-apple-darwin/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-darwin/release/${LIB_NAME}"
 
+echo "▸ Lipo (merge) x86 and arm macOS Catalyst static libraries into a fat static binary"
+mkdir -p "${BUILD_FOLDER}/apple-macabi/release"
+lipo -create  \
+    "${BUILD_FOLDER}/x86_64-apple-ios-macabi/release/${LIB_NAME}" \
+    "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
+    -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
+
+# the line below fails on the post 2023-02-02 nightly with:
+# error: unable to determine the platform for the given binary '.../automerge-swifter/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
@@ -85,10 +117,12 @@ xcodebuild -create-xcframework \
     -headers "${BUILD_FOLDER}/includes" \
     -library "$BUILD_FOLDER/apple-darwin/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
+    -library "$BUILD_FOLDER/apple-macabi/release/$LIB_NAME" \
+    -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
-# echo "▸ Compress xcframework"
+echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
 
-# echo "▸ Compute checksum"
+echo "▸ Compute checksum"
 openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
