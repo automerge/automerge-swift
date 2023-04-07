@@ -26,10 +26,11 @@ XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
 
 echo "Install nightly and rust-src for Catalyst"
-rustup toolchain install nightly
-rustup component add rust-src --toolchain nightly
+rustup toolchain install nightly-2022-07-07
+rustup component add rust-src --toolchain nightly-2022-07-07
 rustup update
-
+#cargo install xargo
+rustup default nightly-2022-07-07
 
 echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
@@ -38,7 +39,8 @@ rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
-cargo_build_nightly="cargo +nightly build --manifest-path $RUST_FOLDER/Cargo.toml"
+cargo_build_nightly="cargo +nightly-2022-07-07 build --manifest-path $RUST_FOLDER/Cargo.toml"
+xargo_build_nightly="xargo build --manifest-path $RUST_FOLDER/Cargo.toml"
 
 
 echo "▸ Clean state"
@@ -74,11 +76,11 @@ CFLAGS_x86_64_apple_darwin="-target x86_64-apple-darwin" \
 $cargo_build --target x86_64-apple-darwin --locked --release
 
 echo "▸ Building for aarch64-apple-ios-macabi"
-CFLAGS="-target aarch64-apple-ios-macabi -mios-version-min=13.0" \
+#CFLAGS="-target aarch64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --release
 
 echo "▸ Building for x86_64-apple-ios-macabi"
-CFLAGS="-target x86_64-apple-ios-macabi -mios-version-min=13.0" \
+#CFLAGS="-target x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
@@ -120,8 +122,12 @@ xcodebuild -create-xcframework \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
-# echo "▸ Compress xcframework"
+
+
+mkdir -p "${XCFRAMEWORK_FOLDER}"/ios-arm64_x86_64-maccatalyst/Headers
+
+echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
 
-# echo "▸ Compute checksum"
+echo "▸ Compute checksum"
 openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
