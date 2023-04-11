@@ -5,11 +5,11 @@ public struct Counter: Equatable, Hashable {
     /// The value of the counter.
     public var value: Int
 
-    internal init(_ value: Int) {
+    public init(_ value: Int) {
         self.value = value
     }
 
-    internal init(_ value: Int64) {
+    public init(_ value: Int64) {
         self.value = Int(value)
     }
 }
