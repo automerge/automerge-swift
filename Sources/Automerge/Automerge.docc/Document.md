@@ -7,44 +7,74 @@
 - ``init()``
 - ``init(_:)``
 
-### Creating and modifying values
-
-- ``put(obj:key:value:)``
-- ``put(obj:index:value:)``
-- ``putObject(obj:key:ty:)``
-- ``putObject(obj:index:ty:)``
-- ``insertObject(obj:index:ty:)``
-- ``increment(obj:key:by:)``
-- ``increment(obj:index:by:)``
-- ``delete(obj:key:)`` 
-- ``delete(obj:index:)``
-- ``splice(obj:start:delete:values:)``
-- ``spliceText(obj:start:delete:value:)``
-
-### Reading values and objects
+### Reading maps
 
 - ``get(obj:key:)``
-- ``get(obj:index:)``
 - ``getAll(obj:key:)``
-- ``getAll(obj:index:)``
 - ``keys(obj:)``
-- ``values(obj:)``
 - ``mapEntries(obj:)``
 - ``length(obj:)``
+
+### Updating maps
+
+- ``put(obj:key:value:)``
+- ``putObject(obj:key:ty:)``
+- ``delete(obj:key:)`` 
+
+### Reading lists
+
+- ``get(obj:index:)``
+- ``getAll(obj:index:)``
+- ``values(obj:)``
+- ``length(obj:)``
+
+### Updating lists
+
+- ``insert(obj:index:value:)``
+- ``insertObject(obj:index:ty:)``
+- ``put(obj:index:value:)``
+- ``putObject(obj:index:ty:)``
+- ``delete(obj:index:)``
+- ``splice(obj:start:delete:values:)``
+
+### Reading Text
+
 - ``text(obj:)``
+- ``length(obj:)``
+
+### Updating Text values
+
+- ``spliceText(obj:start:delete:value:)``
+
+### Updating counters
+
+- ``increment(obj:key:by:)``
+- ``increment(obj:index:by:)``
+
+### Reading a document's history
+
 - ``heads()``
 
-### Reading historical values
+### Reading historical map values
 
 - ``getAt(obj:key:heads:)``
-- ``getAt(obj:index:heads:)``
 - ``getAllAt(obj:key:heads:)``
-- ``getAllAt(obj:index:heads:)``
 - ``keysAt(obj:heads:)``
 - ``valuesAt(obj:heads:)``
 - ``mapEntriesAt(obj:heads:)``
 - ``lengthAt(obj:heads:)``
+
+### Reading historical list values
+
+- ``getAt(obj:index:heads:)``
+- ``getAllAt(obj:index:heads:)``
+- ``valuesAt(obj:heads:)``
+- ``lengthAt(obj:heads:)``
+
+### Reading historical text values
+
 - ``textAt(obj:heads:)``
+- ``lengthAt(obj:heads:)``
 
 ### Saving, forking, and merging documents
 
