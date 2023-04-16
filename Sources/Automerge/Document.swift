@@ -17,7 +17,7 @@ import Foundation
 ///  using the methods in "Saving, syncing, forking, and merging"
 public class Document: @unchecked Sendable {
     private var doc: WrappedDoc
-    private let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
+    fileprivate let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
 
     /// The actor ID of this document
     public var actor: ActorId {
