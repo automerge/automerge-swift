@@ -17,7 +17,7 @@ import Foundation
 ///  using the methods in "Saving, syncing, forking, and merging"
 public class Document: @unchecked Sendable {
     private var doc: WrappedDoc
-    private let queue = DispatchQueue(label: "automerge-wrapper", qos: .userInteractive)
+    private let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
 
     /// The actor ID of this document
     public var actor: ActorId {
@@ -175,7 +175,7 @@ public class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:key:heads:)``
-    public func getAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
+    public func getAt(obj: ObjId, key: String, heads: [ChangeHash]) throws
         -> Value?
     {
         try queue.sync {
@@ -191,7 +191,7 @@ public class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:index:heads:)``
-    public func getAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads) throws
+    public func getAt(obj: ObjId, index: UInt64, heads: [ChangeHash]) throws
         -> Value?
     {
         try queue.sync {
@@ -203,7 +203,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the possibly conflicting values for `key` in map `obj` as at `heads`
-    public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
+    public func getAllAt(obj: ObjId, key: String, heads: [ChangeHash]) throws
         -> Set<Value>
     {
         try queue.sync {
@@ -215,7 +215,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the possibly conflicting values for `index` in list `obj` as at `heads`
-    public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads)
+    public func getAllAt(obj: ObjId, index: UInt64, heads: [ChangeHash])
         throws -> Set<Value>
     {
         try queue.sync {
@@ -234,7 +234,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the keys that were in the map `obj` as at `heads`
-    public func keysAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) -> [String] {
+    public func keysAt(obj: ObjId, heads: [ChangeHash]) -> [String] {
         queue.sync {
             self.doc.wrapErrors { $0.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -252,7 +252,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the values in the map or list `obj` as at `heads`
-    public func valuesAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> [Value] {
+    public func valuesAt(obj: ObjId, heads: [ChangeHash]) throws -> [Value] {
         try queue.sync {
             let vals = try self.doc.wrapErrors {
                 try $0.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
@@ -270,7 +270,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the (key,value) entries in the map `obj` as at `heads`
-    public func mapEntriesAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> [(
+    public func mapEntriesAt(obj: ObjId, heads: [ChangeHash]) throws -> [(
         String, Value
     )] {
         try queue.sync {
@@ -289,7 +289,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// The length of the list `obj` as at `heads`
-    public func lengthAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) -> UInt64 {
+    public func lengthAt(obj: ObjId, heads: [ChangeHash]) -> UInt64 {
         queue.sync {
             self.doc.wrapErrors { $0.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -313,7 +313,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the value of the text object `obj` as at `heads`
-    public func textAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> String {
+    public func textAt(obj: ObjId, heads: [ChangeHash]) throws -> String {
         try queue.sync {
             try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -417,7 +417,7 @@ public class Document: @unchecked Sendable {
     /// Fork the document as at `heads`
     ///
     /// Fork the document but such that it only contains changes up to `heads`
-    public func forkAt<Heads: Collection<ChangeHash>>(heads: Heads) throws -> Document {
+    public func forkAt(heads: [ChangeHash]) throws -> Document {
         try queue.sync {
             try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
         }
@@ -473,7 +473,7 @@ public class Document: @unchecked Sendable {
     ///
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
-    public func encodeChangesSince<Heads: Collection<ChangeHash>>(heads: Heads) throws -> Data {
+    public func encodeChangesSince(heads: [ChangeHash]) throws -> Data {
         try queue.sync {
             try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
         }
