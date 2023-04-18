@@ -29,7 +29,7 @@ typealias FfiSyncState = AutomergeUniffi.SyncState
 /// you can use ``encode()`` to save the state and ``init(bytes:)`` to decode it.
 public struct SyncState: @unchecked Sendable {
     fileprivate let queue = DispatchQueue(label: "automerge-syncstate-queue", qos: .userInteractive)
-    
+
     var ffi_state: FfiSyncState
     // NOTE(heckj): `FfiSyncState` is a fully generated reference type, which I would
     // otherwise make Sendable down when it's being generated, but instead I'm doing it "up one layer"
