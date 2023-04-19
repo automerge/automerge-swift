@@ -15,16 +15,21 @@ import Foundation
 ///  the methods in the "Reading old values" section
 /// - Interacting with concurrent documents (via the sync protocol or otherwise)
 ///  using the methods in "Saving, syncing, forking, and merging"
-public class Document {
+public class Document: @unchecked Sendable {
     private var doc: WrappedDoc
+    fileprivate let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
 
     /// The actor ID of this document
     public var actor: ActorId {
         get {
-            ActorId(bytes: self.doc.wrapErrors { $0.actorId() })
+            queue.sync {
+                ActorId(bytes: self.doc.wrapErrors { $0.actorId() })
+            }
         }
         set {
-            self.doc.wrapErrors { $0.setActor(actor: newValue.bytes) }
+            queue.sync {
+                self.doc.wrapErrors { $0.setActor(actor: newValue.bytes) }
+            }
         }
     }
 
@@ -49,60 +54,80 @@ public class Document {
 
     /// Set or update the  value at `key` in the map `obj` to `value`
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
-        try self.doc.wrapErrors { try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi()) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi()) }
+        }
     }
 
     /// Set or update the value at `index` in the sequence `obj` to `value`
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
-        try self.doc.wrapErrors { try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi()) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi()) }
+        }
     }
 
     /// Set or update `key` in map `obj` to a new instance of `ty`
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
-        try self.doc.wrapErrors {
-            try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
+            }
         }
     }
 
     /// Set or update `index` in list `obj` to a new instance of `ty`
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        try self.doc.wrapErrors {
-            try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+            }
         }
     }
 
     /// Insert `value` into the sequence `obj` at `index`
     public func insert(obj: ObjId, index: UInt64, value: ScalarValue) throws {
-        try self.doc.wrapErrors {
-            try $0.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
+            }
         }
     }
 
     /// Insert a new instance of `ty` in the list `obj` at `index`
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        try self.doc.wrapErrors {
-            try ObjId(bytes: $0.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try ObjId(bytes: $0.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+            }
         }
     }
 
     /// Delete `key` from the map `obj`
     public func delete(obj: ObjId, key: String) throws {
-        try self.doc.wrapErrors { try $0.deleteInMap(obj: obj.bytes, key: key) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.deleteInMap(obj: obj.bytes, key: key) }
+        }
     }
 
     /// Delete the value at `index` from `obj`
     public func delete(obj: ObjId, index: UInt64) throws {
-        try self.doc.wrapErrors { try $0.deleteInList(obj: obj.bytes, index: index) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.deleteInList(obj: obj.bytes, index: index) }
+        }
     }
 
     /// Increment the counter at `key` in map `obj` by the amount `by`
     public func increment(obj: ObjId, key: String, by: Int64) throws {
-        try self.doc.wrapErrors { try $0.incrementInMap(obj: obj.bytes, key: key, by: by) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.incrementInMap(obj: obj.bytes, key: key, by: by) }
+        }
     }
 
     /// Increment the counter at `index` in list `obj` by the amount `by`
     public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
-        try self.doc.wrapErrors { try $0.incrementInList(obj: obj.bytes, index: index, by: by) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.incrementInList(obj: obj.bytes, index: index, by: by) }
+        }
     }
 
     /// Get the value at `key` from the map `obj`
@@ -111,8 +136,10 @@ public class Document {
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAll(obj:key:)``
     public func get(obj: ObjId, key: String) throws -> Value? {
-        let val = try self.doc.wrapErrors { try $0.getInMap(obj: obj.bytes, key: key) }
-        return val.map(Value.fromFfi)
+        try queue.sync {
+            let val = try self.doc.wrapErrors { try $0.getInMap(obj: obj.bytes, key: key) }
+            return val.map(Value.fromFfi)
+        }
     }
 
     /// Get the value at `index` from the list `obj`
@@ -121,20 +148,26 @@ public class Document {
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAll(obj:index:)``
     public func get(obj: ObjId, index: UInt64) throws -> Value? {
-        let val = try self.doc.wrapErrors { try $0.getInList(obj: obj.bytes, index: index) }
-        return val.map(Value.fromFfi)
+        try queue.sync {
+            let val = try self.doc.wrapErrors { try $0.getInList(obj: obj.bytes, index: index) }
+            return val.map(Value.fromFfi)
+        }
     }
 
     /// Get all the possibly conflicting values at `key` in the map `obj`
     public func getAll(obj: ObjId, key: String) throws -> Set<Value> {
-        let vals = try self.doc.wrapErrors { try $0.getAllInMap(obj: obj.bytes, key: key) }
-        return Set(vals.map { Value.fromFfi(value: $0) })
+        try queue.sync {
+            let vals = try self.doc.wrapErrors { try $0.getAllInMap(obj: obj.bytes, key: key) }
+            return Set(vals.map { Value.fromFfi(value: $0) })
+        }
     }
 
     /// Get all the possibly conflicting values at `index` in the list `obj`
     public func getAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
-        let vals = try self.doc.wrapErrors { try $0.getAllInList(obj: obj.bytes, index: index) }
-        return Set(vals.map { Value.fromFfi(value: $0) })
+        try queue.sync {
+            let vals = try self.doc.wrapErrors { try $0.getAllInList(obj: obj.bytes, index: index) }
+            return Set(vals.map { Value.fromFfi(value: $0) })
+        }
     }
 
     /// Get the value at `key` in map `obj` as at `heads`
@@ -142,13 +175,15 @@ public class Document {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:key:heads:)``
-    public func getAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
+    public func getAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Value?
     {
-        let val = try self.doc.wrapErrors {
-            try $0.getAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+        try queue.sync {
+            let val = try self.doc.wrapErrors {
+                try $0.getAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+            }
+            return val.map(Value.fromFfi)
         }
-        return val.map(Value.fromFfi)
     }
 
     /// Get the value at `index` in list `obj` as at `heads`
@@ -156,43 +191,53 @@ public class Document {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:index:heads:)``
-    public func getAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads) throws
+    public func getAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws
         -> Value?
     {
-        let val = try self.doc.wrapErrors {
-            try $0.getAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+        try queue.sync {
+            let val = try self.doc.wrapErrors {
+                try $0.getAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+            }
+            return val.map(Value.fromFfi)
         }
-        return val.map(Value.fromFfi)
     }
 
     /// Get all the possibly conflicting values for `key` in map `obj` as at `heads`
-    public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, key: String, heads: Heads) throws
+    public func getAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Set<Value>
     {
-        let vals = try self.doc.wrapErrors {
-            try $0.getAllAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+        try queue.sync {
+            let vals = try self.doc.wrapErrors {
+                try $0.getAllAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+            }
+            return Set(vals.map { Value.fromFfi(value: $0) })
         }
-        return Set(vals.map { Value.fromFfi(value: $0) })
     }
 
     /// Get all the possibly conflicting values for `index` in list `obj` as at `heads`
-    public func getAllAt<Heads: Collection<ChangeHash>>(obj: ObjId, index: UInt64, heads: Heads)
+    public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
         throws -> Set<Value>
     {
-        let vals = try self.doc.wrapErrors {
-            try $0.getAllAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+        try queue.sync {
+            let vals = try self.doc.wrapErrors {
+                try $0.getAllAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+            }
+            return Set(vals.map { Value.fromFfi(value: $0) })
         }
-        return Set(vals.map { Value.fromFfi(value: $0) })
     }
 
     /// Get all the keys in the map `obj`
     public func keys(obj: ObjId) -> [String] {
-        self.doc.wrapErrors { $0.mapKeys(obj: obj.bytes) }
+        queue.sync {
+            self.doc.wrapErrors { $0.mapKeys(obj: obj.bytes) }
+        }
     }
 
     /// Get all the keys that were in the map `obj` as at `heads`
-    public func keysAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) -> [String] {
-        self.doc.wrapErrors { $0.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+    public func keysAt(obj: ObjId, heads: Set<ChangeHash>) -> [String] {
+        queue.sync {
+            self.doc.wrapErrors { $0.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+        }
     }
 
     /// Get all the values in the map or list `obj`
@@ -200,60 +245,78 @@ public class Document {
     /// For a list this just returns the contents of the list, for a map this
     /// returns the values (and not the keys).
     public func values(obj: ObjId) throws -> [Value] {
-        let vals = try self.doc.wrapErrors { try $0.values(obj: obj.bytes) }
-        return vals.map { Value.fromFfi(value: $0) }
+        try queue.sync {
+            let vals = try self.doc.wrapErrors { try $0.values(obj: obj.bytes) }
+            return vals.map { Value.fromFfi(value: $0) }
+        }
     }
 
     /// Get the values in the map or list `obj` as at `heads`
-    public func valuesAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> [Value] {
-        let vals = try self.doc.wrapErrors {
-            try $0.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+    public func valuesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Value] {
+        try queue.sync {
+            let vals = try self.doc.wrapErrors {
+                try $0.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            }
+            return vals.map { Value.fromFfi(value: $0) }
         }
-        return vals.map { Value.fromFfi(value: $0) }
     }
 
     /// Get the (key,value) entries in the map `obj`
     public func mapEntries(obj: ObjId) throws -> [(String, Value)] {
-        let entries = try self.doc.wrapErrors { try $0.mapEntries(obj: obj.bytes) }
-        return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
+        try queue.sync {
+            let entries = try self.doc.wrapErrors { try $0.mapEntries(obj: obj.bytes) }
+            return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
+        }
     }
 
     /// Get the (key,value) entries in the map `obj` as at `heads`
-    public func mapEntriesAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> [(
+    public func mapEntriesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [(
         String, Value
     )] {
-        let entries = try self.doc.wrapErrors {
-            try $0.mapEntriesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+        try queue.sync {
+            let entries = try self.doc.wrapErrors {
+                try $0.mapEntriesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            }
+            return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
         }
-        return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
     }
 
     /// The length of the list `obj`
     public func length(obj: ObjId) -> UInt64 {
-        self.doc.wrapErrors { $0.length(obj: obj.bytes) }
+        queue.sync {
+            self.doc.wrapErrors { $0.length(obj: obj.bytes) }
+        }
     }
 
     /// The length of the list `obj` as at `heads`
-    public func lengthAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) -> UInt64 {
-        self.doc.wrapErrors { $0.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+    public func lengthAt(obj: ObjId, heads: Set<ChangeHash>) -> UInt64 {
+        queue.sync {
+            self.doc.wrapErrors { $0.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+        }
     }
 
     /// Returns the object type for the object Id that you provide.
     /// - Parameter obj: The object Id to inspect.
     public func objectType(obj: ObjId) -> ObjType {
-        self.doc.wrapErrors {
-            ObjType.fromFfi(ty: $0.objectType(obj: obj.bytes))
+        queue.sync {
+            self.doc.wrapErrors {
+                ObjType.fromFfi(ty: $0.objectType(obj: obj.bytes))
+            }
         }
     }
 
     /// Get the value of the text object `obj`
     public func text(obj: ObjId) throws -> String {
-        try self.doc.wrapErrors { try $0.text(obj: obj.bytes) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.text(obj: obj.bytes) }
+        }
     }
 
     /// Get the value of the text object `obj` as at `heads`
-    public func textAt<Heads: Collection<ChangeHash>>(obj: ObjId, heads: Heads) throws -> String {
-        try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+    public func textAt(obj: ObjId, heads: Set<ChangeHash>) throws -> String {
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
+        }
     }
 
     /// Splice into the list `obj`
@@ -264,10 +327,12 @@ public class Document {
     ///   - delete: the number of elements to delete
     ///   - values: the values to insert
     public func splice(obj: ObjId, start: UInt64, delete: UInt64, values: [ScalarValue]) throws {
-        try self.doc.wrapErrors {
-            try $0.splice(
-                obj: obj.bytes, start: start, delete: delete, values: values.map { $0.toFfi() }
-            )
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.splice(
+                    obj: obj.bytes, start: start, delete: delete, values: values.map { $0.toFfi() }
+                )
+            }
         }
     }
 
@@ -280,31 +345,37 @@ public class Document {
     ///   - values: the characters to insert
     ///
     /// # Indexes
-    /// Swift string indexes represent graphaeme clusters, but automerge works
+    /// Swift string indexes represent grapheme clusters, but automerge works
     /// in terms of UTF-8 code points. The indices to this method are utf-8
     /// code point indices. This means if you receive indices from other parts
     /// of the application which are swift string indices you will need to
     /// convert them.
     public func spliceText(obj: ObjId, start: UInt64, delete: UInt64, value: String? = nil) throws {
-        try self.doc.wrapErrors {
-            try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
+            }
         }
     }
 
     /// Encode this document in a compressed binary format
     public func save() -> Data {
-        self.doc.wrapErrors { Data($0.save()) }
+        queue.sync {
+            self.doc.wrapErrors { Data($0.save()) }
+        }
     }
 
     /// Generate a sync message to send to the peer represented by `state`
     ///
     /// - Returns: A message to send to the peer, or `nil` if we are in sync
     public func generateSyncMessage(state: SyncState) -> Data? {
-        self.doc.wrapErrors {
-            if let tempArr = $0.generateSyncMessage(state: state.ffi_state) {
-                return Data(tempArr)
+        queue.sync {
+            self.doc.wrapErrors {
+                if let tempArr = $0.generateSyncMessage(state: state.ffi_state) {
+                    return Data(tempArr)
+                }
+                return nil
             }
-            return nil
         }
     }
 
@@ -313,8 +384,10 @@ public class Document {
     /// > Tip: if you need to know what changed in the document as a result of
     /// the message try using ``receiveSyncMessageWithPatches(state:message:)``
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
-        try self.doc.wrapErrors {
-            try $0.receiveSyncMessage(state: state.ffi_state, msg: Array(message))
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.receiveSyncMessage(state: state.ffi_state, msg: Array(message))
+            }
         }
     }
 
@@ -323,10 +396,12 @@ public class Document {
     /// Returns: a sequence of ``Patch`` representing the changes which were
     /// made to the document as a result of the message.
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
-        let patches = try self.doc.wrapErrors {
-            try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
+        try queue.sync {
+            let patches = try self.doc.wrapErrors {
+                try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
+            }
+            return patches.map { Patch($0) }
         }
-        return patches.map { Patch($0) }
     }
 
     /// Fork the document
@@ -334,14 +409,18 @@ public class Document {
     /// Returns: A copy of the document with a new actor ID, ready for concurrent
     /// use
     public func fork() -> Document {
-        Document(doc: self.doc.wrapErrors { $0.fork() })
+        queue.sync {
+            Document(doc: self.doc.wrapErrors { $0.fork() })
+        }
     }
 
     /// Fork the document as at `heads`
     ///
     /// Fork the document but such that it only contains changes up to `heads`
-    public func forkAt<Heads: Collection<ChangeHash>>(heads: Heads) throws -> Document {
-        try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
+    public func forkAt(heads: Set<ChangeHash>) throws -> Document {
+        try queue.sync {
+            try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
+        }
     }
 
     /// Merge this document with `other`
@@ -349,27 +428,35 @@ public class Document {
     /// > Tip: if you need to know what changed in the document as a result of
     /// the merge try using ``mergeWithPatches(other:)``
     public func merge(other: Document) throws {
-        try self.doc.wrapErrorsWithOther(other: other.doc) { try $0.merge(other: $1) }
+        try queue.sync {
+            try self.doc.wrapErrorsWithOther(other: other.doc) { try $0.merge(other: $1) }
+        }
     }
 
     /// Merge this document with other returning patches
     public func mergeWithPatches(other: Document) throws -> [Patch] {
-        let patches = try self.doc.wrapErrorsWithOther(other: other.doc) {
-            try $0.mergeWithPatches(other: $1)
+        try queue.sync {
+            let patches = try self.doc.wrapErrorsWithOther(other: other.doc) {
+                try $0.mergeWithPatches(other: $1)
+            }
+            return patches.map { Patch($0) }
         }
-        return patches.map { Patch($0) }
     }
 
     /// Returns: a sequence of ``ChangeHash`` representing the changes which were
     /// made to the document as a result of the merge
     public func heads() -> Set<ChangeHash> {
-        Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
+        queue.sync {
+            Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
+        }
     }
 
     /// Get the path to `obj` in the document
     public func path(obj: ObjId) throws -> [PathElement] {
-        let elems = try self.doc.wrapErrors { try $0.path(obj: obj.bytes) }
-        return elems.map { PathElement.fromFfi($0) }
+        try queue.sync {
+            let elems = try self.doc.wrapErrors { try $0.path(obj: obj.bytes) }
+            return elems.map { PathElement.fromFfi($0) }
+        }
     }
 
     /// Encode any changes since the last call to `encodeNewChanges`
@@ -377,15 +464,19 @@ public class Document {
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
     public func encodeNewChanges() -> Data {
-        self.doc.wrapErrors { Data($0.encodeNewChanges()) }
+        queue.sync {
+            self.doc.wrapErrors { Data($0.encodeNewChanges()) }
+        }
     }
 
     /// Encode any changes made since `heads`
     ///
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
-    public func encodeChangesSince<Heads: Collection<ChangeHash>>(heads: Heads) throws -> Data {
-        try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
+    public func encodeChangesSince(heads: Set<ChangeHash>) throws -> Data {
+        try queue.sync {
+            try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
+        }
     }
 
     /// Apply encoded changes to this document
@@ -397,7 +488,9 @@ public class Document {
     /// > Tip: if you need to know what changed in the document as a result of
     /// the applied changes try using ``applyEncodedChangesWithPatches(encoded:)``
     public func applyEncodedChanges(encoded: Data) throws {
-        try self.doc.wrapErrors { try $0.applyEncodedChanges(changes: Array(encoded)) }
+        try queue.sync {
+            try self.doc.wrapErrors { try $0.applyEncodedChanges(changes: Array(encoded)) }
+        }
     }
 
     /// Apply encoded changes to this document
@@ -406,10 +499,12 @@ public class Document {
     /// ``encodeNewChanges()``, ``encodeChangesSince(heads:)`` or any
     /// concatenation of those.
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
-        let patches = try self.doc.wrapErrors {
-            try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
+        try queue.sync {
+            let patches = try self.doc.wrapErrors {
+                try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
+            }
+            return patches.map { Patch($0) }
         }
-        return patches.map { Patch($0) }
     }
 }
 

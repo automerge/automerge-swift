@@ -27,12 +27,20 @@ typealias FfiSyncState = AutomergeUniffi.SyncState
 ///
 /// Sync states can be persisted. If you know a peer might connect to you again
 /// you can use ``encode()`` to save the state and ``init(bytes:)`` to decode it.
-public struct SyncState {
+public struct SyncState: @unchecked Sendable {
+    fileprivate let queue = DispatchQueue(label: "automerge-syncstate-queue", qos: .userInteractive)
+
     var ffi_state: FfiSyncState
+    // NOTE(heckj): `FfiSyncState` is a fully generated reference type, which I would
+    // otherwise make Sendable down when it's being generated, but instead I'm doing it "up one layer"
+    // in this wrapping type, and serializing the interaction with the type through a serial
+    // dispatch queue in order to accommodate marking the wrapping class as `unchecked @Sendable`.
 
     // The heads the other end last reported (`nil` if we haven't received anything from them yet)
     public var theirHeads: Set<ChangeHash>? {
-        ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
+        queue.sync {
+            ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
+        }
     }
 
     public init() {
@@ -50,7 +58,9 @@ public struct SyncState {
     /// longer be relied (messages may have been lost, or may be redelivered
     /// etc. etc.) then you must call ``reset()`` before continuing to synch.
     public func reset() {
-        self.ffi_state.reset()
+        queue.sync {
+            self.ffi_state.reset()
+        }
     }
 
     /// Serialize this sync state
@@ -59,6 +69,8 @@ public struct SyncState {
     /// depends on reliable in-order delivery. I.e. you do not need to call
     /// ``reset()`` on a decoded sync state.
     public func encode() -> Data {
-        Data(self.ffi_state.encode())
+        queue.sync {
+            Data(self.ffi_state.encode())
+        }
     }
 }
