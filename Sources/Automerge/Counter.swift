@@ -18,12 +18,15 @@ public struct Counter: Equatable, Hashable {
 
 /// A failure to convert an Automerge scalar value to or from a signer integer counter representation.
 public enum CounterScalarConversionError: LocalizedError {
-    case notCounter(_ val: Value)
+    case notCounterValue(_ val: Value)
+    case notCounterScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notCounter(val):
+        case let .notCounterValue(val):
+            return "Failed to read the value \(val) as a signed integer counter."
+        case let .notCounterScalarValue(val):
             return "Failed to read the scalar value \(val) as a signed integer counter."
         }
     }
@@ -34,12 +37,22 @@ public enum CounterScalarConversionError: LocalizedError {
 
 extension Counter: ScalarValueRepresentable {
     public typealias ConvertError = CounterScalarConversionError
+
     public static func fromValue(_ val: Value) -> Result<Counter, CounterScalarConversionError> {
         switch val {
         case let .Scalar(.Counter(d)):
             return .success(Counter(d))
         default:
-            return .failure(CounterScalarConversionError.notCounter(val))
+            return .failure(CounterScalarConversionError.notCounterValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Counter, CounterScalarConversionError> {
+        switch val {
+        case let .Counter(d):
+            return .success(Counter(d))
+        default:
+            return .failure(CounterScalarConversionError.notCounterScalarValue(val))
         }
     }
 
