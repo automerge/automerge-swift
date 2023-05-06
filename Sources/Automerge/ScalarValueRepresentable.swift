@@ -268,19 +268,229 @@ extension Int: ScalarValueRepresentable {
     }
 }
 
+extension Int8: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<Int8, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Int(d)):
+            return .success(Int8(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Int8, IntScalarConversionError> {
+        switch val {
+        case let .Int(d):
+            return .success(Int8(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Int(Int64(self))
+    }
+}
+
+extension Int16: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<Int16, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Int(d)):
+            return .success(Int16(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Int16, IntScalarConversionError> {
+        switch val {
+        case let .Int(d):
+            return .success(Int16(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Int(Int64(self))
+    }
+}
+
+extension Int32: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<Int32, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Int(d)):
+            return .success(Int32(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Int32, IntScalarConversionError> {
+        switch val {
+        case let .Int(d):
+            return .success(Int32(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Int(Int64(self))
+    }
+}
+
+extension Int64: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<Int64, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Int(d)):
+            return .success(Int64(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Int64, IntScalarConversionError> {
+        switch val {
+        case let .Int(d):
+            return .success(Int64(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Int(Int64(self))
+    }
+}
+
+// MARK: UInt types
+
+extension UInt8: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<UInt8, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Uint(d)):
+            return .success(UInt8(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt8, IntScalarConversionError> {
+        switch val {
+        case let .Uint(d):
+            return .success(UInt8(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Uint(UInt64(self))
+    }
+}
+
+extension UInt16: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<UInt16, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Uint(d)):
+            return .success(UInt16(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt16, IntScalarConversionError> {
+        switch val {
+        case let .Uint(d):
+            return .success(UInt16(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Uint(UInt64(self))
+    }
+}
+
+extension UInt32: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<UInt32, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Uint(d)):
+            return .success(UInt32(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt32, IntScalarConversionError> {
+        switch val {
+        case let .Uint(d):
+            return .success(UInt32(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Uint(UInt64(self))
+    }
+}
+
+extension UInt64: ScalarValueRepresentable {
+    public typealias ConvertError = IntScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<UInt64, IntScalarConversionError> {
+        switch val {
+        case let .Scalar(.Int(d)):
+            return .success(UInt64(d))
+        default:
+            return .failure(IntScalarConversionError.notIntValue(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt64, IntScalarConversionError> {
+        switch val {
+        case let .Uint(d):
+            return .success(UInt64(d))
+        default:
+            return .failure(IntScalarConversionError.notIntScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .Uint(self)
+    }
+}
+
 // MARK: Double Conversions
 
 /// A failure to convert an Automerge scalar value to or from a 64-bit floating-point value representation.
-public enum DoubleScalarConversionError: LocalizedError {
-    case notDoubleValue(_ val: Value)
-    case notDoubleScalarValue(_ val: ScalarValue)
+public enum FloatingPointScalarConversionError: LocalizedError {
+    case notF64Value(_ val: Value)
+    case notF64ScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notDoubleValue(val):
+        case let .notF64Value(val):
             return "Failed to read the value \(val) as a 64-bit floating-point value."
-        case let .notDoubleScalarValue(val):
+        case let .notF64ScalarValue(val):
             return "Failed to read the scalar value \(val) as a 64-bit floating-point value."
         }
     }
@@ -290,28 +500,54 @@ public enum DoubleScalarConversionError: LocalizedError {
 }
 
 extension Double: ScalarValueRepresentable {
-    public typealias ConvertError = DoubleScalarConversionError
+    public typealias ConvertError = FloatingPointScalarConversionError
 
-    public static func fromValue(_ val: Value) -> Result<Double, DoubleScalarConversionError> {
+    public static func fromValue(_ val: Value) -> Result<Double, FloatingPointScalarConversionError> {
         switch val {
         case let .Scalar(.F64(d)):
             return .success(Double(d))
         default:
-            return .failure(DoubleScalarConversionError.notDoubleValue(val))
+            return .failure(FloatingPointScalarConversionError.notF64Value(val))
         }
     }
 
-    public static func fromScalarValue(_ val: ScalarValue) -> Result<Double, DoubleScalarConversionError> {
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Double, FloatingPointScalarConversionError> {
         switch val {
         case let .F64(d):
             return .success(Double(d))
         default:
-            return .failure(DoubleScalarConversionError.notDoubleScalarValue(val))
+            return .failure(FloatingPointScalarConversionError.notF64ScalarValue(val))
         }
     }
 
     public func toScalarValue() -> ScalarValue {
         .F64(self)
+    }
+}
+
+extension Float: ScalarValueRepresentable {
+    public typealias ConvertError = FloatingPointScalarConversionError
+
+    public static func fromValue(_ val: Value) -> Result<Float, FloatingPointScalarConversionError> {
+        switch val {
+        case let .Scalar(.F64(d)):
+            return .success(Float(d))
+        default:
+            return .failure(FloatingPointScalarConversionError.notF64Value(val))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<Float, FloatingPointScalarConversionError> {
+        switch val {
+        case let .F64(d):
+            return .success(Float(d))
+        default:
+            return .failure(FloatingPointScalarConversionError.notF64ScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .F64(Double(self))
     }
 }
 
