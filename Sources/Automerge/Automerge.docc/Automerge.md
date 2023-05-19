@@ -115,8 +115,8 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/BooleanScalarConversionError``
 - ``Automerge/BytesScalarConversionError``
 - ``Automerge/CounterScalarConversionError``
-- ``Automerge/DoubleScalarConversionError``
 - ``Automerge/IntScalarConversionError``
+- ``Automerge/FloatingPointScalarConversionError``
 - ``Automerge/StringScalarConversionError``
 - ``Automerge/TimestampScalarConversionError``
 - ``Automerge/UIntScalarConversionError``
