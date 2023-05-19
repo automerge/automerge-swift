@@ -26,6 +26,34 @@ if ProcessInfo.processInfo.environment["CI"] != nil {
 }
 #endif
 
+let FFIbinaryTarget: PackageDescription.Target
+// If the environment variable `LOCAL_BUILD` is set to any value, the packages uses
+// a local reference to the XCFramework file (built from `./scripts/build-xcframework.sh`)
+// rather than the previous released version.
+//
+// The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust
+// installed locally in order to function.
+if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
+    // We are using a local file reference to an XCFramework, which is functional
+    // on the tags for this package because the XCFramework.zip file is committed with
+    // those specific release points. This does, however, cause a few awkward issues,
+    // in particular it means that swift-docc-plugin doesn't operate correctly as the
+    // process to retrieve the symbols from this and the XCFramework fails within
+    // Swift Package Manager. Building documentation within Xcode works perfectly fine,
+    // but if you're attempting to generate HTML documentation, use the script
+    // `./scripts/build-ghpages-docs.sh`.
+    FFIbinaryTarget = .binaryTarget(
+            name: "automergeFFI",
+            path: "./automergeFFI.xcframework.zip"
+    )
+} else {
+    FFIbinaryTarget = .binaryTarget(
+            name: "automergeFFI",
+            url: "https://github.com/automerge/automerge-swifter/releases/download/0.1.0/automergeFFI.xcframework.zip",
+            checksum: "201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d"
+    )
+}
+
 let package = Package(
     name: "Automerge",
     platforms: [.iOS(.v13), .macOS(.v10_15)],
@@ -33,22 +61,7 @@ let package = Package(
         .library(name: "Automerge", targets: ["Automerge"]),
     ],
     targets: [
-        // We are using a local file reference to an XCFramework, which is functional
-        // on the tags for this package because the XCFramework.zip file is committed with
-        // those specific release points. This does, however, cause a few awkward issues,
-        // in particular it means that swift-docc-plugin doesn't operate correctly as the
-        // process to retrieve the symbols from this and the XCFramework fails within
-        // Swift Package Manager. Building documentation within Xcode works perfectly fine,
-        // but if you're attempting to generate HTML documentation, use the script
-        // `./scripts/build-ghpages-docs.sh`.
-        //
-        // If you're working from source, or a branch without an existing xcframework.zip,
-        // use the script `./scripts/build-xcframework.sh` to create the library locally.
-        // This script _does_ expect that you have Rust installed locally in order to function.
-        .binaryTarget(
-            name: "automergeFFI",
-            path: "./automergeFFI.xcframework.zip"
-        ),
+        FFIbinaryTarget,
         .target(
             name: "AutomergeUniffi",
             dependencies: ["automergeFFI"],
