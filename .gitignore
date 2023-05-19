@@ -2,4 +2,3 @@
 .build
 .swiftpm
 *.xcframework*
-AutomergeUniffi
