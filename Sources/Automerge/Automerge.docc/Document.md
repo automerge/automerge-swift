@@ -7,6 +7,13 @@
 - ``init()``
 - ``init(_:)``
 
+### Inspecting Documents
+
+- ``actor``
+- ``ActorId``
+- ``objectType(obj:)``
+- ``path(obj:)``
+
 ### Reading maps
 
 - ``get(obj:key:)``
