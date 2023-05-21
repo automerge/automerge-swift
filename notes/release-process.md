@@ -1,4 +1,4 @@
-# GitHub oriented Swift package release process
+# Release Process
 
 Release process:
 
