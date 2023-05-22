@@ -1,7 +1,7 @@
 // swift-tools-version:5.6
 
-import PackageDescription
 import Foundation
+import PackageDescription
 
 var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
 #if swift(>=5.7)
@@ -43,14 +43,14 @@ if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
     // but if you're attempting to generate HTML documentation, use the script
     // `./scripts/build-ghpages-docs.sh`.
     FFIbinaryTarget = .binaryTarget(
-            name: "automergeFFI",
-            path: "./automergeFFI.xcframework.zip"
+        name: "automergeFFI",
+        path: "./automergeFFI.xcframework.zip"
     )
 } else {
     FFIbinaryTarget = .binaryTarget(
-            name: "automergeFFI",
-            url: "https://github.com/automerge/automerge-swifter/releases/download/0.1.1/automergeFFI.xcframework.zip",
-            checksum: "2a73a8723c330df82d24ab0e27a7964b68b6b966878335bedae9f46491618f61"
+        name: "automergeFFI",
+        url: "https://github.com/automerge/automerge-swifter/releases/download/0.1.1/automergeFFI.xcframework.zip",
+        checksum: "2a73a8723c330df82d24ab0e27a7964b68b6b966878335bedae9f46491618f61"
     )
 }
 

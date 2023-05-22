@@ -12,7 +12,7 @@ extension ObjId: CustomDebugStringConvertible {
         if bytes == AutomergeUniffi.root() {
             return "ObjId.ROOT"
         } else {
-            return "ObjId(\(bytes.map { Swift.String(format: "%02hhx", $0) }.joined())"
+            return "ObjId(\(bytes.map { Swift.String(format: "%02hhx", $0) }.joined()))"
         }
     }
 }
