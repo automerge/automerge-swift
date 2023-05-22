@@ -33,3 +33,13 @@ public enum ObjType: Sendable {
         }
     }
 }
+
+extension ObjType: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .List: return "List"
+        case .Map: return "Map"
+        case .Text: return "Text"
+        }
+    }
+}

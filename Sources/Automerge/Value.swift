@@ -18,3 +18,14 @@ public enum Value: Equatable, Hashable, Sendable {
         }
     }
 }
+
+extension Value: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case let .Object(objId, objType):
+            return "OBJ[\(objId), \(objType)]"
+        case let .Scalar(scalarValue):
+            return "SCALAR[\(scalarValue)]"
+        }
+    }
+}
