@@ -23,9 +23,9 @@ extension Value: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case let .Object(objId, objType):
-            return "OBJ[\(objId), \(objType)]"
+            return "Object<\(objId), \(objType)>"
         case let .Scalar(scalarValue):
-            return "SCALAR[\(scalarValue)]"
+            return "ScalarValue<\(scalarValue)>"
         }
     }
 }
