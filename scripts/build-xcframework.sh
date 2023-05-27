@@ -109,7 +109,7 @@ lipo -create  \
     -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
 # the line below fails on the post 2023-02-02 nightly with:
-# error: unable to determine the platform for the given binary '.../automerge-swifter/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
+# error: unable to determine the platform for the given binary '.../automerge-swift/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \

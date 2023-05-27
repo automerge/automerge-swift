@@ -15,7 +15,7 @@ let package = Package(
         .executableTarget(
             name: "CollectionBenchmarks",
             dependencies: [
-                .product(name: "Automerge", package: "automerge-swifter"),
+                .product(name: "Automerge", package: "automerge-swift"),
                 .product(
                     name: "CollectionsBenchmark",
                     package: "swift-collections-benchmark"

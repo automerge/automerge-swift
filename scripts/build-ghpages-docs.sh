@@ -24,17 +24,17 @@ $(xcrun --find swift) build --target Automerge \
 $(xcrun --find docc) convert Sources/Automerge/Automerge.docc \
     --output-path ./docs \
     --fallback-display-name Automerge \
-    --fallback-bundle-identifier com.github.automerge.automerge-swifter \
+    --fallback-bundle-identifier com.github.automerge.automerge-swift \
     --fallback-bundle-version 0.0.1 \
     --additional-symbol-graph-dir "${BUILD_DIR}/symbol-graphs" \
     --emit-digest \
     --transform-for-static-hosting \
-    --hosting-base-path 'automerge-swifter'
+    --hosting-base-path 'automerge-swift'
 
 # The following options are Swift 5.8  *only* and add github reference
 # links to the hosted documentation.
 #    --source-service github \
-#    --source-service-base-url https://github.com/automerge/automerge-swifter/blob/main \
+#    --source-service-base-url https://github.com/automerge/automerge-swift/blob/main \
 #    --checkout-path ${PACKAGE_PATH}
 
 # Swift package plugin for hosted content - this _should_ work, but it's not generating
@@ -47,10 +47,10 @@ $(xcrun --find docc) convert Sources/Automerge/Automerge.docc \
 # $(xcrun --find swift) package \
 #     --allow-writing-to-directory ./docs \
 #     generate-documentation \
-#     --fallback-bundle-identifier com.github.automerge.automerge-swifter \
+#     --fallback-bundle-identifier com.github.automerge.automerge-swift \
 #     --target Automerge \
 #     --output-path ${PACKAGE_PATH}/docs \
 #     --emit-digest \
 #     --disable-indexing \
 #     --transform-for-static-hosting \
-#     --hosting-base-path 'automerge-swifter'
+#     --hosting-base-path 'automerge-swift'

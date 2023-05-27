@@ -1,11 +1,11 @@
-# Automerge-swifter
+# Automerge-swift
 
 An Automerge implementation for swift.
 
 This is a low-level library with few concessions to ergonomics, meant to interact directly with the low-level Automerge API.
 Additional API that is more ergonomic is being added into the repository as this project evolves.
 
-[Automerge-Swifter API Documentation](https://automerge.org/automerge-swifter/documentation/automerge/) is available on the [Automerge site](https://automerge.org/).
+[Automerge-Swifter API Documentation](https://automerge.org/automerge-swift/documentation/automerge/) is available on the [Automerge site](https://automerge.org/).
 A command-line demonstration application ([contaaacts](https://github.com/automerge/contaaacts)) is available that shows using the lower level API.
 
 ## Quickstart
@@ -17,12 +17,12 @@ let package = Package(
     ...
     dependencies: [
         ...
-        .package(url: "https://github.com/automerge/automerge-swifter.git", from: "0.1.1")
+        .package(url: "https://github.com/automerge/automerge-swift.git", from: "0.1.1")
     ],
     targets: [
         .executableTarget(
             ...
-            dependencies: [.product(name: "Automerge", package: "automerge-swifter")],
+            dependencies: [.product(name: "Automerge", package: "automerge-swift")],
             ...
         )
     ]
@@ -45,4 +45,4 @@ try! doc.delete(obj: list, index: 0)
 try! doc.merge(doc2) // `doc` now contains {"colours": ["green", "red"]}
 ```
 
-For more details on the API, see the [Automerge-swifter API documentation](https://automerge.org/automerge-swifter/documentation/automerge/) and the articles within.
+For more details on the API, see the [Automerge-swift API documentation](https://automerge.org/automerge-swift/documentation/automerge/) and the articles within.

@@ -20,7 +20,7 @@ Doing this regenerates the Swift wrappers from UniFFI, so the low-level wrapper 
 It will look something like:
 
 ```
-SHA256(/Users/heckj/src/automerge-swifter/automergeFFI.xcframework.zip)= 201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d```
+SHA256(/Users/heckj/src/automerge-swift/automergeFFI.xcframework.zip)= 201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d```
 
 The part that you need to capture and save from the above example is:
 
@@ -37,7 +37,7 @@ The version that you are releasing is embedded in this URL - `0.1.0` in this cas
 The pattern is roughly:
 
 ```
-https://github.com/automerge/automerge-swifter/releases/download/0.10/automergeFFI.xcframework.zip
+https://github.com/automerge/automerge-swift/releases/download/0.10/automergeFFI.xcframework.zip
 ```
 
 The end result of that section of Package.swift should look something like:
@@ -45,7 +45,7 @@ The end result of that section of Package.swift should look something like:
 ```
 FFIbinaryTarget = .binaryTarget(
         name: "automergeFFI",
-        url: "https://github.com/automerge/automerge-swifter/releases/download/0.1.0/automergeFFI.xcframework.zip",
+        url: "https://github.com/automerge/automerge-swift/releases/download/0.1.0/automergeFFI.xcframework.zip",
         checksum: "201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d"
 )
 ```
@@ -65,7 +65,7 @@ git push origin --tags
 ```
 
 - Open a browser and navigate to the URL that you can use to create a release on GitHub.
-  - https://github.com/automerge/automerge-swifter/releases/new
+  - https://github.com/automerge/automerge-swift/releases/new
   - choose the existing tag (`0.1.0` in this example)
 
 ![GitHub release page with tag selected, but otherwise empty.](./github_release_empty.png)

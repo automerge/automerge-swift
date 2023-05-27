@@ -8,6 +8,6 @@ PACKAGE_PATH=$THIS_SCRIPT_DIR/..
 
 cat "${PACKAGE_PATH}/docs/linkable-entities.json" | jq '.[].referenceURL' -r > all_identifiers.txt
 sort all_identifiers.txt \
-    | sed -e 's/doc:\/\/com\.github\.automerge\.automerge-swifter\/documentation\///g' \
+    | sed -e 's/doc:\/\/com\.github\.automerge\.automerge-swift\/documentation\///g' \
     | sed -e 's/^/- ``/g' \
     | sed -e 's/$/``/g' > all_symbols.txt
