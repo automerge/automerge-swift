@@ -8,6 +8,9 @@ Additional API that is more ergonomic is being added into the repository as this
 [Automerge-Swifter API Documentation](https://automerge.org/automerge-swift/documentation/automerge/) is available on the [Automerge site](https://automerge.org/).
 A command-line demonstration application ([contaaacts](https://github.com/automerge/contaaacts)) is available that shows using the lower level API.
 
+Note: There was an earlier Swift language bindings for Automerge here at automerge/automerge-swift.
+The repository was [renamed and archived](https://github.com/automerge/automerge-swift-archived), but is still available if you are looking for it.
+
 ## Quickstart
 
 Add a dependency in `Package.swift`, as the following example shows:
