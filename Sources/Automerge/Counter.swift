@@ -14,6 +14,8 @@ public struct Counter: Equatable, Hashable {
     }
 }
 
+extension Counter: Codable {}
+
 // MARK: Counter Conversions
 
 /// A failure to convert an Automerge scalar value to or from a signer integer counter representation.
