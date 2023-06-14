@@ -1,5 +1,6 @@
 import Foundation // for LocalizedError
 
+/// Automerge Encoding errors
 public enum CodingKeyLookupError: LocalizedError, Equatable {
     public static func == (lhs: CodingKeyLookupError, rhs: CodingKeyLookupError) -> Bool {
         lhs.errorDescription == rhs.errorDescription

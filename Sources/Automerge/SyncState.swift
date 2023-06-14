@@ -4,6 +4,7 @@ import Foundation
 typealias FfiSyncState = AutomergeUniffi.SyncState
 
 /// A synchronisation session with another peer
+/// 
 /// The sync protocol is designed to run over a reliable in-order transport with
 /// the ``SyncState`` tracking the state between successive calls to
 /// ``Document/generateSyncMessage(state:)`` and

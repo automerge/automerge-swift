@@ -53,7 +53,7 @@ public struct AnyCodingKey: Equatable {
 extension AnyCodingKey: CodingKey {
     /// Creates a new schema path element for an un-keyed container using the index you provide.
     ///
-    /// For a non-failable initializer for ``AnyCodingKey``, use ``AnyCodingKey/init(_:)``.
+    /// For a non-failable initializer for ``AnyCodingKey``, use ``AnyCodingKey/init(_:)-6faed``.
     ///
     /// - Parameter intValue: The index position for an un-keyed container.
     public init?(intValue: Int) {
@@ -65,7 +65,7 @@ extension AnyCodingKey: CodingKey {
 
     /// Creates a new schema path element for a keyed container using the string you provide.
     ///
-    /// For a non-failable initializer for ``AnyCodingKey``, use ``AnyCodingKey/init(_:)``.
+    /// For a non-failable initializer for ``AnyCodingKey``, use ``AnyCodingKey/init(_:)-5azuh``.
     ///
     /// - Parameter stringVal: The key for a keyed container.
     public init?(stringValue: String) {
@@ -91,7 +91,7 @@ extension AnyCodingKey: CodingKey {
     }
 }
 
-/// Path Errors
+/// Path Parsing Errors
 public enum PathParseError: LocalizedError {
     /// The path element is not valid.
     case InvalidPathElement(String)

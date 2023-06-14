@@ -1,3 +1,4 @@
+/// An encoder that stores codable-conforming types into an Automerge document.
 public struct AutomergeEncoder {
     public var userInfo: [CodingUserInfoKey: Any] = [:]
     var doc: Document

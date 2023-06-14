@@ -1,5 +1,6 @@
 import Foundation
 
+/// A decoder that initializes codable-conforming types from an Automerge document.
 public struct AutomergeDecoder {
     public var codingPath: [CodingKey]
 
