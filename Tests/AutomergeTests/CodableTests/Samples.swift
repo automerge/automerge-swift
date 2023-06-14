@@ -46,127 +46,78 @@ public struct ExampleModel: Codable {
 
 func generateSampleNotes() -> [Note] {
     var result: [Note] = []
-    do {
-        try result.append(Note(
-            timestamp: Date("1941-04-26T08:17:00Z", strategy: .iso8601),
-            description: "Burlington",
-            location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
-            ratings: [2, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1967-05-22T03:23:00Z", strategy: .iso8601),
-            description: "St. Louis",
-            location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
-            ratings: [1, 3, 4, 2]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-05-24T19:14:11Z", strategy: .iso8601),
-            description: "Seattle",
-            location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
-            ratings: [4, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-06-05T17:00:00Z", strategy: .iso8601),
-            description: "WWDC",
-            location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
-            ratings: [1, 2, 3, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1941-04-26T08:17:00Z", strategy: .iso8601),
-            description: "Burlington",
-            location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
-            ratings: [2, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1967-05-22T03:23:00Z", strategy: .iso8601),
-            description: "St. Louis",
-            location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
-            ratings: [1, 3, 4, 2]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-05-24T19:14:11Z", strategy: .iso8601),
-            description: "Seattle",
-            location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
-            ratings: [4, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-06-05T17:00:00Z", strategy: .iso8601),
-            description: "WWDC",
-            location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
-            ratings: [1, 2, 3, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1941-04-26T08:17:00Z", strategy: .iso8601),
-            description: "Burlington",
-            location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
-            ratings: [2, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1967-05-22T03:23:00Z", strategy: .iso8601),
-            description: "St. Louis",
-            location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
-            ratings: [1, 3, 4, 2]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-05-24T19:14:11Z", strategy: .iso8601),
-            description: "Seattle",
-            location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
-            ratings: [4, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-06-05T17:00:00Z", strategy: .iso8601),
-            description: "WWDC",
-            location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
-            ratings: [1, 2, 3, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1941-04-26T08:17:00Z", strategy: .iso8601),
-            description: "Burlington",
-            location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
-            ratings: [2, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1967-05-22T03:23:00Z", strategy: .iso8601),
-            description: "St. Louis",
-            location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
-            ratings: [1, 3, 4, 2]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-05-24T19:14:11Z", strategy: .iso8601),
-            description: "Seattle",
-            location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
-            ratings: [4, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-06-05T17:00:00Z", strategy: .iso8601),
-            description: "WWDC",
-            location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
-            ratings: [1, 2, 3, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1941-04-26T08:17:00Z", strategy: .iso8601),
-            description: "Burlington",
-            location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
-            ratings: [2, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("1967-05-22T03:23:00Z", strategy: .iso8601),
-            description: "St. Louis",
-            location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
-            ratings: [1, 3, 4, 2]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-05-24T19:14:11Z", strategy: .iso8601),
-            description: "Seattle",
-            location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
-            ratings: [4, 5, 4]
-        ))
-        try result.append(Note(
-            timestamp: Date("2023-06-05T17:00:00Z", strategy: .iso8601),
-            description: "WWDC",
-            location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
-            ratings: [1, 2, 3, 5, 4]
-        ))
-    } catch {}
+    let dateFormatter = ISO8601DateFormatter()
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1941-04-26T08:17:00Z")!,
+        description: "Burlington",
+        location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
+        ratings: [2, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1967-05-22T03:23:00Z")!,
+        description: "St. Louis",
+        location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
+        ratings: [1, 3, 4, 2]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-05-24T19:14:11Z")!,
+        description: "Seattle",
+        location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
+        ratings: [4, 5, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-06-05T17:00:00Z")!,
+        description: "WWDC",
+        location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
+        ratings: [1, 2, 3, 5, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1941-04-26T08:17:00Z")!,
+        description: "Burlington",
+        location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
+        ratings: [2, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1967-05-22T03:23:00Z")!,
+        description: "St. Louis",
+        location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
+        ratings: [1, 3, 4, 2]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-05-24T19:14:11Z")!,
+        description: "Seattle",
+        location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
+        ratings: [4, 5, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-06-05T17:00:00Z")!,
+        description: "WWDC",
+        location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
+        ratings: [1, 2, 3, 5, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1941-04-26T08:17:00Z")!,
+        description: "Burlington",
+        location: GeoLocation(latitude: 40.8057015, longitude: -91.1704486),
+        ratings: [2, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "1967-05-22T03:23:00Z")!,
+        description: "St. Louis",
+        location: GeoLocation(latitude: 38.653253, longitude: -90.4082707),
+        ratings: [1, 3, 4, 2]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-05-24T19:14:11Z")!,
+        description: "Seattle",
+        location: GeoLocation(latitude: 47.6131419, longitude: -122.5068714, altitude: 112),
+        ratings: [4, 5, 4]
+    ))
+    result.append(Note(
+        timestamp: dateFormatter.date(from: "2023-06-05T17:00:00Z")!,
+        description: "WWDC",
+        location: GeoLocation(latitude: 37.334648, longitude: -122.0115469, altitude: 50),
+        ratings: [1, 2, 3, 5, 4]
+    ))
     return result
 }
