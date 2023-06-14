@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "3F49E46F-3749-44D3-BE33-88C4367B858F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AutomergeTests",
+        "name" : "AutomergeTests"
+      }
+    }
+  ],
+  "version" : 1
+}
