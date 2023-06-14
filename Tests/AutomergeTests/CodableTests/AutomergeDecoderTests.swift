@@ -63,7 +63,8 @@ final class AutomergeDecoderTests: XCTestCase {
         let expectedUUID = UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!
         XCTAssertEqual(decodedStruct.uuid, expectedUUID)
 
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         XCTAssertEqual(earlyDate, decodedStruct.date)
         XCTAssertEqual(Data("hello".utf8), decodedStruct.data)
 

@@ -24,7 +24,8 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
             let notes: Text
         }
 
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
 
         let sample = SimpleStruct(
             name: "henry",
@@ -218,7 +219,8 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
             let thing: Date
         }
 
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         let topLevel = WrapperStruct(thing: earlyDate)
 
         try encoder.encode(topLevel)

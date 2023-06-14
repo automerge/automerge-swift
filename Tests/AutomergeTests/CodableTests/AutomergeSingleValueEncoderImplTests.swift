@@ -195,17 +195,19 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Date() throws {
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         try singleValueContainer.encode(earlyDate)
         XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Timestamp(-905182980)))
 
-        let anotherDate = try Date("1942-04-26T08:17:00Z", strategy: .iso8601)
+        let anotherDate = dateFormatter.date(from: "1942-04-26T08:17:00Z")!
         try cautiousSingleValueContainer.encode(anotherDate)
     }
 
     func testSimpleKeyEncode_Date_CautiousFailure() throws {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(earlyDate)
         )
@@ -426,7 +428,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             strategy: .readonly,
             cautiousWrite: false
         )
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(earlyDate))
     }

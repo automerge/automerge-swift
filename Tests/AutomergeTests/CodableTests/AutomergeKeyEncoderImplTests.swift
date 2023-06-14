@@ -246,7 +246,8 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
 
     func testSimpleKeyEncode_Date_CautiousFailure() throws {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(earlyDate, forKey: .value)
         )

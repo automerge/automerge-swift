@@ -32,7 +32,8 @@ final class AutomergeEncoderTests: XCTestCase {
         }
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
-        let earlyDate = try Date("1941-04-26T08:17:00Z", strategy: .iso8601)
+        let dateFormatter = ISO8601DateFormatter()
+        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
 
         let sample = SimpleStruct(
             name: "henry",
