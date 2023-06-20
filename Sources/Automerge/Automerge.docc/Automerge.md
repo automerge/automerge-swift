@@ -92,10 +92,20 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/Value``
 - ``Automerge/ScalarValue``
 
+### Reading and Writing Codable Types
+
+- ``Automerge/AutomergeEncoder``
+- ``Automerge/AutomergeDecoder``
+- ``Automerge/AnyCodingKey``
+- ``Automerge/Counter``
+- ``Automerge/Text``
+- ``Automerge/SchemaStrategy``
+- ``Automerge/CodingKeyLookupError``
+- ``Automerge/PathParseError``
+
 ### Converting Scalar Values to Local Types
 
 - ``Automerge/ScalarValueRepresentable``
-- ``Automerge/Counter``
 
 ### Replicating Documents
 
