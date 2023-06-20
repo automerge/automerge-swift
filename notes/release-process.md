@@ -20,7 +20,8 @@ Doing this regenerates the Swift wrappers from UniFFI, so the low-level wrapper 
 It will look something like:
 
 ```
-SHA256(/Users/heckj/src/automerge-swift/automergeFFI.xcframework.zip)= 201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d```
+SHA256(/Users/heckj/src/automerge-swift/automergeFFI.xcframework.zip)= 201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d
+```
 
 The part that you need to capture and save from the above example is:
 
@@ -42,7 +43,7 @@ https://github.com/automerge/automerge-swift/releases/download/0.10/automergeFFI
 
 The end result of that section of Package.swift should look something like:
 
-```
+```swift
 FFIbinaryTarget = .binaryTarget(
         name: "automergeFFI",
         url: "https://github.com/automerge/automerge-swift/releases/download/0.1.0/automergeFFI.xcframework.zip",
@@ -59,7 +60,7 @@ FFIbinaryTarget = .binaryTarget(
 Set the tag to a semantic version that Package.swift supports.
 (Note: GitHub suggests tags like `v0.1.0`, but Swift packages have a rough time with the preceeding `v` in the semantic coding, so I recommend using a bare tag, and suffixing if `-beta` or such if you're making a beta release.)
 
-```
+```bash
 git tag 0.1.0
 git push origin --tags
 ```
