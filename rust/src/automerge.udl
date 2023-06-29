@@ -81,6 +81,20 @@ interface Prop {
     Index( u64 value );
 };
 
+enum ExpandMark {
+    "Before",
+    "After",
+    "None",
+    "Both",
+};
+
+dictionary Mark {
+    u64 start;
+    u64 end;
+    string name;
+    Value value;
+};
+
 dictionary PathElement {
     Prop prop;
     ObjId obj;
@@ -94,11 +108,13 @@ dictionary Patch {
 [Enum]
 interface PatchAction {
     Put( ObjId obj, Prop prop, Value value);
-    Insert( ObjId obj, u64 index, sequence<Value> values);
-    SpliceText( ObjId obj, u64 index, string value);
+    Insert( ObjId obj, u64 index, sequence<Value> values, record<string, Value> marks);
+    SpliceText( ObjId obj, u64 index, string value, record<string, Value> marks);
     Increment( ObjId obj, Prop prop, i64 value);
+    Conflict( ObjId obj, Prop prop);
     DeleteMap( ObjId obj, string key);
     DeleteSeq( ObjId obj, u64 index, u64 length);
+    Marks( ObjId obj, sequence<Mark> marks );
 };
 
 interface Doc {
@@ -129,10 +145,17 @@ interface Doc {
     ObjId insert_object_in_list(ObjId obj, u64 index, ObjType obj_type);
 
     [Throws=DocError]
-    void splice_text(ObjId obj, u64 start, u64 delete, string chars);
+    void splice_text(ObjId obj, u64 start, i64 delete, string chars);
 
     [Throws=DocError]
-    void splice(ObjId obj, u64 start, u64 delete, sequence<ScalarValue> values);
+    void splice(ObjId obj, u64 start, i64 delete, sequence<ScalarValue> values);
+
+    [Throws=DocError]
+    void mark(ObjId obj, u64 start, u64 end, ExpandMark expand, string name, ScalarValue value);
+    [Throws=DocError]
+    sequence<Mark> marks(ObjId obj);
+    [Throws=DocError]
+    sequence<Mark> marks_at(ObjId obj, sequence<ChangeHash> heads);
 
     [Throws=DocError]
     void delete_in_map(ObjId obj, string key);

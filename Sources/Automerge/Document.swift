@@ -324,9 +324,9 @@ public class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The list to insert into
     ///   - start: the index to begin inserting at
-    ///   - delete: the number of elements to delete
+    ///   - delete: the number of elements to delete. This can be negative, in which case `delete` elements preceding `start` will be removed
     ///   - values: the values to insert
-    public func splice(obj: ObjId, start: UInt64, delete: UInt64, values: [ScalarValue]) throws {
+    public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try queue.sync {
             try self.doc.wrapErrors {
                 try $0.splice(
@@ -341,7 +341,9 @@ public class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The list to insert into
     ///   - start: the index to begin inserting at IN UNICODE CODE POINTS
-    ///   - delete: the number of elements to delete IN UNICODE CODE POINTS
+    ///   - delete: the number of elements to delete IN UNICODE CODE POINTS.
+    ///     This can be negative, in which case `delete` characters preceding
+    ///    `start` will be removed
     ///   - values: the characters to insert
     ///
     /// # Indexes
@@ -350,10 +352,48 @@ public class Document: @unchecked Sendable {
     /// code point indices. This means if you receive indices from other parts
     /// of the application which are swift string indices you will need to
     /// convert them.
-    public func spliceText(obj: ObjId, start: UInt64, delete: UInt64, value: String? = nil) throws {
+    public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try queue.sync {
             try self.doc.wrapErrors {
                 try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
+            }
+        }
+    }
+
+    /// Add or remove a mark to a given range of text
+    /// 
+    /// - Parameters:
+    ///   - obj: The text to add the mark to
+    ///   - start: The UNICODE CODE POINT index to start the mark at
+    ///   - end: The UNICODE CODE POINT index to end the mark at
+    ///   - expand: How the mark should expand when text is inserted at the beginning or end of the range
+    ///   - name: The name of the mark (e.g. "bold")
+    ///   - value: The value to associate with the mark
+    ///
+    /// Note that setting the value `.None` for a mark will delete it.
+    ///
+    public func mark(obj: ObjId, start: UInt64, end: UInt64, expand: ExpandMark, name: String, value: ScalarValue) throws {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.mark(obj: obj.bytes, start: start, end: end, expand: expand.toFfi(), name: name, value: value.toFfi())
+            }
+        }
+    }
+
+    /// Get the active marks for a text object
+    public func marks(obj: ObjId) throws -> [Mark] {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.marks(obj: obj.bytes).map(Mark.fromFfi)
+            }
+        }
+    }
+
+    /// Get the active marks for a text object as at the given heads
+    public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
             }
         }
     }

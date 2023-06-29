@@ -50,35 +50,57 @@ public enum PatchAction: Equatable {
     ///
     /// The property included within the `Put` can be either an index to a sequence, or a key into a map.
     case Put(ObjId, Prop, Value)
-    /// Insert a collection of values at the index you provide for the identified object.
-    case Insert(ObjId, UInt64, [Value])
+    /// Insert a collection of values at the index you provide for the identified object with the given marks
+    ///
+    /// `marks` will only  be set for text objects.
+    case Insert(obj: ObjId, index: UInt64, values: [Value], marks: [String: Value])
     /// Splices characters into and/or removes characters from the identified object at a given position within it.
     ///
     /// > Note: The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
     /// If you are working with `Characters` from a `String`, you will need to calculate the offset to insert it
     /// correctly.
-    case SpliceText(ObjId, UInt64, String)
+    ///
+    /// `marks` are the currently active marks for the inserted value
+    case SpliceText(obj: ObjId, index: UInt64, value: String, marks: [String: Value])
     /// Increment the property of the identified object, typically a Counter.
     case Increment(ObjId, Prop, Int64)
     /// Delete a key from a identified object.
     case DeleteMap(ObjId, String)
     /// Delete a sequence from the identified object starting at the index you provide for the length you provide.
     case DeleteSeq(DeleteSeq)
+    /// Add marks to a text object
+    case Marks(ObjId, [Mark])
+    /// Flag that a property within an object is conflicted
+    case Conflict(ObjId, Prop)
 
     static func fromFfi(_ ffi: FfiPatchAction) -> Self {
         switch ffi {
         case let .put(obj, prop, value):
             return .Put(ObjId(bytes: obj), Prop.fromFfi(prop), Value.fromFfi(value: value))
-        case let .insert(obj, index, values):
-            return .Insert(ObjId(bytes: obj), index, values.map { Value.fromFfi(value: $0) })
-        case let .spliceText(obj, index, value):
-            return .SpliceText(ObjId(bytes: obj), index, value)
+        case let .insert(obj, index, values, marks):
+            return .Insert(
+                obj: ObjId(bytes: obj),
+                index: index, 
+                values: values.map { Value.fromFfi(value: $0) },
+                marks: marks.mapValues(Value.fromFfi)
+            )
+        case let .spliceText(obj, index, value, marks):
+            return .SpliceText(
+                obj: ObjId(bytes: obj),
+                index: index,
+                value: value,
+                marks: marks.mapValues(Value.fromFfi)
+            )
         case let .increment(obj, prop, value):
             return .Increment(ObjId(bytes: obj), Prop.fromFfi(prop), value)
         case let .deleteMap(obj, key):
             return .DeleteMap(ObjId(bytes: obj), key)
         case let .deleteSeq(obj, index, length):
             return .DeleteSeq(Automerge.DeleteSeq(obj: ObjId(bytes: obj), index: index, length: length))
+        case let .marks(obj, marks):
+            return .Marks(ObjId(bytes: obj), marks.map(Mark.fromFfi))
+        case let .conflict(obj, prop):
+            return .Conflict(ObjId(bytes: obj), Prop.fromFfi(prop))
         }
     }
 }

@@ -6,6 +6,8 @@ mod change_hash;
 use change_hash::ChangeHash;
 mod doc;
 use doc::{Doc, DocError, KeyValue, LoadError, ReceiveSyncError};
+mod mark;
+use mark::{ExpandMark, Mark};
 mod obj_id;
 use obj_id::{root, ObjId};
 mod obj_type;

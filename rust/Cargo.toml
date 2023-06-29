@@ -13,10 +13,10 @@ path = "uniffi-bindgen.rs"
 required-features = ["uniffi/cli"]
 
 [dependencies]
-automerge = "0.3.0"
+automerge = "0.5.0"
 thiserror = "1.0.38"
-uniffi = "0.23.0"
+uniffi = "0.24.1"
 
 [build-dependencies]
-uniffi = {version = "0.23.0", features = ["build"] }
+uniffi = {version = "0.24.1", features = ["build"] }
 
