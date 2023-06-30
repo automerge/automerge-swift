@@ -11,10 +11,10 @@ typealias FfiPatch = AutomergeUniffi.Patch
 /// - ``Document/receiveSyncMessageWithPatches(state:message:)``
 /// - ``Document/mergeWithPatches(other:)``.
 ///
-/// You can inspect these patches to identify the objects updated within the Automerge document, in order to react
-/// accordingly within your code.
-/// A common use case for inspecting patches is to recalculate derived data that is using Automerge as an authoritative
-/// source.
+/// You can inspect these patches to identify the objects updated within the Automerge document,
+/// in order to react accordingly within your code.
+/// A common use case for inspecting patches is to recalculate derived data that is using
+/// Automerge as an authoritative source.
 public struct Patch: Equatable {
     /// The the type of change, and the value that patch updated, if relevant to the change.
     public let action: PatchAction
@@ -25,7 +25,7 @@ public struct Patch: Equatable {
     /// the associated `action`.
     public let path: [PathElement]
 
-    /// Creates a new patch
+    /// Creates a new patch.
     /// - Parameters:
     ///   - action: The kind of update to apply.
     ///   - path: The path to the object identifier that the action effects.
@@ -68,9 +68,9 @@ public enum PatchAction: Equatable {
     case DeleteMap(ObjId, String)
     /// Delete a sequence from the identified object starting at the index you provide for the length you provide.
     case DeleteSeq(DeleteSeq)
-    /// Add marks to a text object
+    /// Add marks to a text object.
     case Marks(ObjId, [Mark])
-    /// Flag that a property within an object is conflicted
+    /// Flag that a property within an object is conflicted.
     case Conflict(ObjId, Prop)
 
     static func fromFfi(_ ffi: FfiPatchAction) -> Self {

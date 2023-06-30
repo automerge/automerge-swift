@@ -5,7 +5,10 @@ typealias FfiMark = AutomergeUniffi.Mark
 typealias FfiExpandMark = AutomergeUniffi.ExpandMark
 
 
-/// A marked range of text
+/// A type that represents a marked range of text.
+///
+/// Marks are annotations to text, which can be used to identify additional formatting, or other indicators relevant to the text at a specific location.
+/// The are identified by a string `name` and have an associated ``ScalarValue``.
 public struct Mark: Equatable, Hashable, Sendable {
     /// The utf-8 codepoint index of the start of the mark
     public let start: UInt64
@@ -29,21 +32,23 @@ public struct Mark: Equatable, Hashable, Sendable {
 
 }
 
-/// Whether a created mark should expand when adding characters at the ends of the mark
+/// A type that indicates how a mark should expand when adding characters at the ends of the mark.
 ///
 /// Typically there are two different kinds of mark: "bold" type marks, where
 /// adding text at the ends of the mark is expected to expand the mark to
 /// include the added text, and "link" type marks, where the marked text is _not_
-/// expected to expand when adding new characters. See [The Peritext Essay](https://www.inkandswitch.com/peritext/)
-/// for a detailed discussion.
+/// expected to expand when adding new characters.
+///
+/// For more information on marks and how they expand,
+/// see the [The Peritext Essay](https://www.inkandswitch.com/peritext/).
 public enum ExpandMark {
-    /// Characters added before the mark should be inside the mark
+    /// Characters added just before the mark should be inside the mark.
     case before
-    /// Characters added after the mark should be inside the mark
-    case after 
-    /// Characters added before and after the mark should be inside the mark
+    /// Characters added just after the mark should be inside the mark.
+    case after
+    /// Characters added just before or just after the mark should be inside the mark.
     case both
-    /// Characters added before or after the mark should never be added to it
+    /// Characters added just before or just after the mark should never be added to it.
     case none
 
     static func fromFfi(_ ffiExp: FfiExpandMark) -> Self {

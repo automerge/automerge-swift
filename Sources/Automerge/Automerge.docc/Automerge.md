@@ -102,6 +102,8 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/SchemaStrategy``
 - ``Automerge/CodingKeyLookupError``
 - ``Automerge/PathParseError``
+- ``Automerge/Mark``
+- ``Automerge/ExpandMark``
 
 ### Converting Scalar Values to Local Types
 
