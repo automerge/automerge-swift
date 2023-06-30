@@ -38,7 +38,7 @@ pub struct KeyValue {
 
 pub struct Doc(RwLock<automerge::AutoCommit>);
 
-// These are okay because on the swift side we wrap all accesses of the 
+// These are okay because on the swift side we wrap all accesses of the
 // document to ensure they are only accessed from a single thread
 unsafe impl Send for Doc {}
 unsafe impl Sync for Doc {}
