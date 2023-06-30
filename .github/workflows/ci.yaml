@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build-test:
     runs-on: macos-latest
+    env:
+      LOCAL_BUILD: true
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
