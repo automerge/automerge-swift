@@ -38,7 +38,7 @@ The version that you are releasing is embedded in this URL - `0.1.0` in this cas
 The pattern is roughly:
 
 ```
-https://github.com/automerge/automerge-swift/releases/download/0.10/automergeFFI.xcframework.zip
+https://github.com/automerge/automerge-swift/releases/download/0.1.0/automergeFFI.xcframework.zip
 ```
 
 The end result of that section of Package.swift should look something like:
