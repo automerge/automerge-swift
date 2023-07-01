@@ -5,9 +5,11 @@ import PackageDescription
 
 var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
 #if swift(>=5.7)
-// Only enable these additional checker settings if the environment variable `CI` is set.
-// (Typically set through GitHub actions)
-if ProcessInfo.processInfo.environment["CI"] != nil {
+// Only enable these additional checker settings if the environment variable
+// `LOCAL_BUILD` is set. Previous value of `CI` was a poor choice because iOS
+// apps in GitHub Actions would trigger this as unsafe flags and fail builds
+// when using a released library.
+if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
     globalSwiftSettings.append(.unsafeFlags(["-Xfrontend", "-strict-concurrency=complete"]))
     /*
      Summation from https://www.donnywals.com/enabling-concurrency-warnings-in-xcode-14/
