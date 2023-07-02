@@ -13,6 +13,7 @@
 - ``ActorId``
 - ``objectType(obj:)``
 - ``path(obj:)``
+- ``lookupPath(path:)``
 
 ### Reading maps
 
@@ -48,10 +49,12 @@
 
 - ``text(obj:)``
 - ``length(obj:)``
+- ``marks(obj:)``
 
 ### Updating Text values
 
 - ``spliceText(obj:start:delete:value:)``
+- ``mark(obj:start:end:expand:name:value:)``
 
 ### Updating counters
 
@@ -82,6 +85,7 @@
 
 - ``textAt(obj:heads:)``
 - ``lengthAt(obj:heads:)``
+- ``marksAt(obj:heads:)``
 
 ### Saving, forking, and merging documents
 

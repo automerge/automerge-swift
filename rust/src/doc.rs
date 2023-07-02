@@ -1,12 +1,12 @@
 use std::sync::{Arc, RwLock, RwLockWriteGuard};
 
 use am::sync::SyncDoc;
-use am::transaction::Observed;
 use automerge as am;
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
-use crate::patches::{Observer, Patch};
+use crate::mark::{ExpandMark, Mark};
+use crate::patches::Patch;
 use crate::{ChangeHash, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value};
 
 #[derive(Debug, thiserror::Error)]
@@ -36,15 +36,21 @@ pub struct KeyValue {
     pub value: Value,
 }
 
-pub struct Doc(RwLock<automerge::AutoCommitWithObs<Observed<crate::patches::Observer>>>);
+pub struct Doc(RwLock<automerge::AutoCommit>);
+
+// These are okay because on the swift side we wrap all accesses of the
+// document to ensure they are only accessed from a single thread
+unsafe impl Send for Doc {}
+unsafe impl Sync for Doc {}
+
 impl Doc {
     pub(crate) fn new() -> Self {
-        Self(RwLock::new(automerge::AutoCommitWithObs::default()))
+        Self(RwLock::new(automerge::AutoCommit::default()))
     }
 
     pub(crate) fn new_with_actor(actor: ActorId) -> Self {
         Self(RwLock::new(
-            am::AutoCommitWithObs::default().with_actor(actor.into()),
+            am::AutoCommit::default().with_actor(actor.into()),
         ))
     }
 
@@ -261,9 +267,9 @@ impl Doc {
         assert_map(&*doc, &obj)?;
         Ok(doc
             .map_range(&obj, ..)
-            .map(|(k, v, id)| KeyValue {
-                key: k.into(),
-                value: (v, id).into(),
+            .map(|am::iter::MapRangeItem { key, value, id, .. }| KeyValue {
+                key: key.into(),
+                value: (value, id).into(),
             })
             .collect::<Vec<_>>())
     }
@@ -279,9 +285,9 @@ impl Doc {
         assert_map(&*doc, &obj)?;
         Ok(doc
             .map_range_at(&obj, .., &heads)
-            .map(|(k, v, id)| KeyValue {
-                key: k.into(),
-                value: (v, id).into(),
+            .map(|am::iter::MapRangeItem { key, value, id, .. }| KeyValue {
+                key: key.into(),
+                value: (value, id).into(),
             })
             .collect::<Vec<_>>())
     }
@@ -349,13 +355,13 @@ impl Doc {
         &self,
         obj: ObjId,
         start: u64,
-        delete: u64,
+        delete: i64,
         value: String,
     ) -> Result<(), DocError> {
         let obj = am::ObjId::from(obj);
         let mut doc = self.0.write().unwrap();
         assert_text(&*doc, &obj)?;
-        doc.splice_text(&obj, start as usize, delete as usize, value.as_str())?;
+        doc.splice_text(&obj, start as usize, delete as isize, value.as_str())?;
         Ok(())
     }
 
@@ -363,7 +369,7 @@ impl Doc {
         &self,
         obj: ObjId,
         start: u64,
-        delete: u64,
+        delete: i64,
         values: Vec<ScalarValue>,
     ) -> Result<(), DocError> {
         let obj = am::ObjId::from(obj);
@@ -372,10 +378,53 @@ impl Doc {
         doc.splice(
             &obj,
             start as usize,
-            delete as usize,
+            delete as isize,
             values.into_iter().map(|i| i.into()),
         )?;
         Ok(())
+    }
+
+    pub fn mark(
+        &self,
+        obj: ObjId,
+        start: u64,
+        end: u64,
+        expand: ExpandMark,
+        name: String,
+        value: ScalarValue,
+    ) -> Result<(), DocError> {
+        let obj = am::ObjId::from(obj);
+        let mut doc = self.0.write().unwrap();
+        assert_text(&*doc, &obj)?;
+        let mark = am::marks::Mark::new(name, value, start as usize, end as usize);
+        doc.mark(obj, mark, expand.into())?;
+        Ok(())
+    }
+
+    pub fn marks(&self, obj: ObjId) -> Result<Vec<Mark>, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.write().unwrap();
+        assert_text(&*doc, &obj)?;
+        Ok(doc
+            .marks(obj)?
+            .into_iter()
+            .map(|m| Mark::from(&m))
+            .collect())
+    }
+
+    pub fn marks_at(&self, obj: ObjId, heads: Vec<ChangeHash>) -> Result<Vec<Mark>, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.write().unwrap();
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        Ok(doc
+            .marks_at(obj, &heads)?
+            .into_iter()
+            .map(|m| Mark::from(&m))
+            .collect())
     }
 
     pub fn merge(&self, other: Arc<Self>) -> Result<(), DocError> {
@@ -401,9 +450,7 @@ impl Doc {
 
     pub fn load(bytes: Vec<u8>) -> Result<Self, LoadError> {
         let ac = automerge::AutoCommit::load(bytes.as_slice())?;
-        Ok(Doc(RwLock::new(
-            ac.with_observer(crate::patches::Observer::default()),
-        )))
+        Ok(Doc(RwLock::new(ac)))
     }
 
     pub fn generate_sync_message(&self, sync_state: Arc<SyncState>) -> Option<Vec<u8>> {
@@ -470,7 +517,7 @@ impl Doc {
     pub fn path(&self, obj: ObjId) -> Result<Vec<PathElement>, DocError> {
         let doc = self.0.read().unwrap();
         let obj = am::ObjId::from(obj);
-        let path = doc.path_to_object(obj)?;
+        let path = doc.parents(obj)?.path();
         Ok(path
             .into_iter()
             .map(|(id, prop)| PathElement::new(prop, id))
@@ -488,7 +535,7 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        let changes = doc.get_changes(&heads)?;
+        let changes = doc.get_changes(&heads);
         let mut result = Vec::new();
         for change in changes {
             result.extend(change.clone().bytes().as_ref());
@@ -498,6 +545,7 @@ impl Doc {
 
     pub fn apply_encoded_changes(&self, changes: Vec<u8>) -> Result<(), DocError> {
         let mut doc = self.0.write().unwrap();
+        doc.reset_diff_cursor();
         doc.load_incremental(&changes)?;
         Ok(())
     }
@@ -514,20 +562,18 @@ impl Doc {
     }
 
     fn do_with_patches<F, E>(
-        mut doc: RwLockWriteGuard<am::AutoCommitWithObs<Observed<Observer>>>,
+        mut doc: RwLockWriteGuard<am::AutoCommit>,
         f: F,
     ) -> Result<Vec<Patch>, E>
     where
-        F: FnOnce(
-            &mut RwLockWriteGuard<am::AutoCommitWithObs<Observed<Observer>>>,
-        ) -> Result<(), E>,
+        F: FnOnce(&mut RwLockWriteGuard<am::AutoCommit>) -> Result<(), E>,
     {
-        doc.observer().enable(true);
         // Note no early return so we get a chance to pop the patches
+        doc.update_diff_cursor();
         let result = f(&mut doc);
-        let patches = doc.observer().take_patches();
-        doc.observer().enable(false);
+        let am_patches = doc.diff_incremental();
         result?;
+        let patches = am_patches.into_iter().map(|p| p.into()).collect();
         Ok(patches)
     }
 }

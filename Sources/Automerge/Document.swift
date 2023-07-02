@@ -322,11 +322,12 @@ public class Document: @unchecked Sendable {
     /// Splice into the list `obj`
     ///
     /// - Parameters:
-    ///   - obj: The list to insert into
-    ///   - start: the index to begin inserting at
-    ///   - delete: the number of elements to delete
-    ///   - values: the values to insert
-    public func splice(obj: ObjId, start: UInt64, delete: UInt64, values: [ScalarValue]) throws {
+    ///   - obj: The list to into which to insert.
+    ///   - start: The index where the function begins inserting or deleting.
+    ///   - delete: The number of elements to delete from the `start` index.
+    ///   If negative, the function deletes elements preceding `start` index, rather than following it.
+    ///   - values: The values to insert after the `start` index.
+    public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try queue.sync {
             try self.doc.wrapErrors {
                 try $0.splice(
@@ -339,18 +340,22 @@ public class Document: @unchecked Sendable {
     /// Splice into the list `obj`
     ///
     /// - Parameters:
-    ///   - obj: The list to insert into
-    ///   - start: the index to begin inserting at IN UNICODE CODE POINTS
-    ///   - delete: the number of elements to delete IN UNICODE CODE POINTS
-    ///   - values: the characters to insert
+    ///   - obj: The list into which to insert.
+    ///   - start: The index position, in UTF-8 code points, where the function begins inserting or deleting.
+    ///   - delete: The number of UTF-8 code points to delete from the `start` index.
+    ///   If negative, the function deletes characters preceding `start` index, rather than following it.
+    ///   - values: The characters to insert after the `start` index.
     ///
-    /// # Indexes
-    /// Swift string indexes represent grapheme clusters, but automerge works
-    /// in terms of UTF-8 code points. The indices to this method are utf-8
-    /// code point indices. This means if you receive indices from other parts
-    /// of the application which are swift string indices you will need to
-    /// convert them.
-    public func spliceText(obj: ObjId, start: UInt64, delete: UInt64, value: String? = nil) throws {
+    /// With `spliceText`, the `start` and `delete` parameters represent UTF-8
+    /// code point indexes. Swift string indexes represent grapheme clusters, but Automerge works
+    /// in terms of UTF-8 code points. This means if you receive indices from other parts
+    /// of the application which are swift string indices you need to convert them.
+    ///
+    /// It can be convenient to access the `UTF8View` of the String through it's `utf8` property,
+    /// or if you have a `String.Index` type,  you can convert that into a
+    /// `String.UTF8View.Index` position using `samePosition` on the index with
+    /// a reference to the UTF-8 view of the string through its `utf8` property.
+    public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try queue.sync {
             try self.doc.wrapErrors {
                 try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
@@ -358,16 +363,54 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Encode this document in a compressed binary format
+    /// Add or remove a mark to a given range of text
+    /// 
+    /// - Parameters:
+    ///   - obj: The text object to which to add the mark.
+    ///   - start: The index position, in UTF-8 code points, where the function starts the mark.
+    ///   - end: The index position, in UTF-8 code points, where the function starts the mark.
+    ///   - expand: How the mark should expand when text is inserted at the beginning or end of the range
+    ///   - name: The name of the mark, for example "bold".
+    ///   - value: The scalar value to associate with the mark.
+    ///
+    /// To remove an existing mark between two index positions, set the name to the same value
+    /// as the existing mark and set the value to the scalar value ``ScalarValue/Null``.
+    public func mark(obj: ObjId, start: UInt64, end: UInt64, expand: ExpandMark, name: String, value: ScalarValue) throws {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.mark(obj: obj.bytes, start: start, end: end, expand: expand.toFfi(), name: name, value: value.toFfi())
+            }
+        }
+    }
+
+    /// Returns a list of marks for a text object.
+    public func marks(obj: ObjId) throws -> [Mark] {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.marks(obj: obj.bytes).map(Mark.fromFfi)
+            }
+        }
+    }
+
+    /// Get the list of marks for a text object at the given heads.
+    public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
+            }
+        }
+    }
+
+    /// Encode this document in a compressed binary format.
     public func save() -> Data {
         queue.sync {
             self.doc.wrapErrors { Data($0.save()) }
         }
     }
 
-    /// Generate a sync message to send to the peer represented by `state`
+    /// Generate a sync message to send to the peer represented by `state`.
     ///
-    /// - Returns: A message to send to the peer, or `nil` if we are in sync
+    /// - Returns: A message to send to the peer, or `nil` if the Automerge documents are in sync.
     public func generateSyncMessage(state: SyncState) -> Data? {
         queue.sync {
             self.doc.wrapErrors {
@@ -379,10 +422,10 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Receive a sync message from the peer represented by `state`
+    /// Receive a sync message from the peer represented by `state`.
     ///
     /// > Tip: if you need to know what changed in the document as a result of
-    /// the message try using ``receiveSyncMessageWithPatches(state:message:)``
+    /// the message use the function ``receiveSyncMessageWithPatches(state:message:)``.
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
         try queue.sync {
             try self.doc.wrapErrors {
@@ -391,9 +434,12 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Receive a sync message from the peer represented by `state`, returning patches
+    /// Receive a sync message from the peer represented by `state`, returning patches.
     ///
-    /// Returns: a sequence of ``Patch`` representing the changes which were
+    /// - Parameters:
+    ///   - state: The state of another Automerge document.
+    ///   - message: The sync message to integrate into this document.
+    /// - Returns: a sequence of ``Patch`` representing the changes which were
     /// made to the document as a result of the message.
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
         try queue.sync {

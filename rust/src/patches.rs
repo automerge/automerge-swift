@@ -1,20 +1,27 @@
+use std::collections::HashMap;
+
 use automerge as am;
 
-mod sequence_tree;
-use sequence_tree::SequenceTree;
-
 use crate::{
+    mark::Mark,
     obj_id::ObjId,
     path::{PathElement, Prop},
     value::Value,
 };
-mod observer;
-pub(crate) use observer::Observer;
-use observer::Patch as ObserverPatch;
 
 pub struct Patch {
     pub path: Vec<PathElement>,
     pub action: PatchAction,
+}
+
+impl From<am::Patch> for Patch {
+    fn from(p: am::Patch) -> Self {
+        let action = PatchAction::from_am(p.obj, p.action);
+        Patch {
+            path: convert_path(p.path),
+            action,
+        }
+    }
 }
 
 pub enum PatchAction {
@@ -27,16 +34,22 @@ pub enum PatchAction {
         obj: ObjId,
         index: u64,
         values: Vec<Value>,
+        marks: HashMap<String, Value>,
     },
     SpliceText {
         obj: ObjId,
         index: u64,
         value: String,
+        marks: HashMap<String, Value>,
     },
     Increment {
         obj: ObjId,
         prop: Prop,
         value: i64,
+    },
+    Conflict {
+        obj: ObjId,
+        prop: Prop,
     },
     DeleteMap {
         obj: ObjId,
@@ -47,103 +60,89 @@ pub enum PatchAction {
         index: u64,
         length: u64,
     },
+    Marks {
+        obj: ObjId,
+        marks: Vec<Mark>,
+    },
 }
 
-impl From<ObserverPatch> for Patch {
-    fn from(value: ObserverPatch) -> Self {
-        match value {
-            ObserverPatch::PutMap {
-                obj,
-                path,
-                key,
-                value,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::Put {
-                    obj: obj.into(),
-                    prop: Prop::Key { value: key },
-                    value: value.into(),
-                },
+impl PatchAction {
+    fn from_am(obj: am::ObjId, am_action: am::PatchAction) -> PatchAction {
+        match am_action {
+            am::PatchAction::PutMap { key, value, .. } => PatchAction::Put {
+                obj: obj.into(),
+                prop: Prop::Key { value: key },
+                value: value.into(),
             },
-            ObserverPatch::PutSeq {
-                obj,
-                path,
-                index,
-                value,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::Put {
-                    obj: obj.into(),
-                    prop: Prop::Index {
-                        value: index as u64,
-                    },
-                    value: value.into(),
+            am::PatchAction::PutSeq { index, value, .. } => PatchAction::Put {
+                obj: obj.into(),
+                prop: Prop::Index {
+                    value: index as u64,
                 },
+                value: value.into(),
             },
-            ObserverPatch::Insert {
-                obj,
-                path,
+            am::PatchAction::Insert {
                 index,
                 values,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::Insert {
-                    obj: obj.into(),
-                    index: index as u64,
-                    values: values
-                        .into_iter()
-                        .map(|(v, id)| Value::from((v.clone(), id.clone())))
-                        .collect(),
-                },
+                marks,
+            } => PatchAction::Insert {
+                obj: obj.into(),
+                index: index as u64,
+                values: values
+                    .into_iter()
+                    .map(|(v, id, _conflict)| Value::from((v.clone(), id.clone())))
+                    .collect(),
+                marks: convert_marks(marks),
             },
-            ObserverPatch::SpliceText {
-                obj,
-                path,
+            am::PatchAction::SpliceText {
                 index,
                 value,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::SpliceText {
-                    obj: obj.into(),
-                    index: index as u64,
-                    value: value.into_iter().collect(),
-                },
+                marks,
+            } => PatchAction::SpliceText {
+                obj: obj.into(),
+                index: index as u64,
+                value: value.make_string(),
+                marks: convert_marks(marks),
             },
-            ObserverPatch::Increment {
-                obj,
-                path,
-                prop,
+            am::PatchAction::Increment { prop, value } => PatchAction::Increment {
+                obj: obj.into(),
+                prop: prop.into(),
                 value,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::Increment {
-                    obj: obj.into(),
-                    prop: prop.into(),
-                    value,
-                },
             },
-            ObserverPatch::DeleteMap { obj, path, key } => Patch {
-                path: convert_path(path),
-                action: PatchAction::DeleteMap {
-                    obj: obj.into(),
-                    key,
-                },
+            am::PatchAction::Conflict { prop } => PatchAction::Conflict {
+                prop: prop.into(),
+                obj: obj.into(),
             },
-            ObserverPatch::DeleteSeq {
-                obj,
-                path,
-                index,
-                length,
-            } => Patch {
-                path: convert_path(path),
-                action: PatchAction::DeleteSeq {
-                    obj: obj.into(),
-                    index: index as u64,
-                    length: length as u64,
-                },
+            am::PatchAction::DeleteMap { key } => PatchAction::DeleteMap {
+                obj: obj.into(),
+                key,
+            },
+            am::PatchAction::DeleteSeq { index, length } => PatchAction::DeleteSeq {
+                obj: obj.into(),
+                index: index as u64,
+                length: length as u64,
+            },
+            am::PatchAction::Mark { marks } => PatchAction::Marks {
+                obj: obj.into(),
+                marks: marks.into_iter().map(|m| Mark::from(&m)).collect(),
             },
         }
     }
+}
+
+fn convert_marks(am_marks: Option<am::marks::MarkSet>) -> HashMap<String, Value> {
+    let mut result = HashMap::new();
+    if let Some(am_marks) = am_marks {
+        for (name, value) in am_marks.iter() {
+            result.insert(
+                name.to_string(),
+                Value::Scalar {
+                    value: value.into(),
+                },
+            );
+        }
+    }
+    result
 }
 
 fn convert_path(p: Vec<(am::ObjId, am::Prop)>) -> Vec<PathElement> {
