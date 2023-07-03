@@ -1,13 +1,13 @@
-import struct AutomergeUniffi.Mark
 import enum AutomergeUniffi.ExpandMark
+import struct AutomergeUniffi.Mark
 
 typealias FfiMark = AutomergeUniffi.Mark
 typealias FfiExpandMark = AutomergeUniffi.ExpandMark
 
-
 /// A type that represents a marked range of text.
 ///
-/// Marks are annotations to text, which can be used to identify additional formatting, or other indicators relevant to the text at a specific location.
+/// Marks are annotations to text, which can be used to identify additional formatting, or other indicators relevant to
+/// the text at a specific location.
 /// The are identified by a string `name` and have an associated ``ScalarValue``.
 public struct Mark: Equatable, Hashable, Sendable {
     /// The utf-8 codepoint index of the start of the mark
@@ -29,7 +29,6 @@ public struct Mark: Equatable, Hashable, Sendable {
     static func fromFfi(_ ffiMark: FfiMark) -> Self {
         Self(start: ffiMark.start, end: ffiMark.end, name: ffiMark.name, value: Value.fromFfi(value: ffiMark.value))
     }
-
 }
 
 /// A type that indicates how a mark should expand when adding characters at the ends of the mark.

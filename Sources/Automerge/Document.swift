@@ -364,7 +364,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Add or remove a mark to a given range of text
-    /// 
+    ///
     /// - Parameters:
     ///   - obj: The text object to which to add the mark.
     ///   - start: The index position, in UTF-8 code points, where the function starts the mark.
@@ -375,10 +375,24 @@ public class Document: @unchecked Sendable {
     ///
     /// To remove an existing mark between two index positions, set the name to the same value
     /// as the existing mark and set the value to the scalar value ``ScalarValue/Null``.
-    public func mark(obj: ObjId, start: UInt64, end: UInt64, expand: ExpandMark, name: String, value: ScalarValue) throws {
+    public func mark(
+        obj: ObjId,
+        start: UInt64,
+        end: UInt64,
+        expand: ExpandMark,
+        name: String,
+        value: ScalarValue
+    ) throws {
         try queue.sync {
             try self.doc.wrapErrors {
-                try $0.mark(obj: obj.bytes, start: start, end: end, expand: expand.toFfi(), name: name, value: value.toFfi())
+                try $0.mark(
+                    obj: obj.bytes,
+                    start: start,
+                    end: end,
+                    expand: expand.toFfi(),
+                    name: name,
+                    value: value.toFfi()
+                )
             }
         }
     }
