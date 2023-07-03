@@ -34,7 +34,7 @@ public struct PathElement: Equatable {
 ///
 /// The property is either a ``Prop/Key(_:)``, in the from of a `String` to a map,
 /// or a ``Prop/Index(_:)`` with the index position represented as a 64-bit unsigned integer.
-public enum Prop: Equatable {
+public enum Prop: Equatable, Sendable {
     /// A property in a map.
     case Key(String)
     /// An index into a sequence.
