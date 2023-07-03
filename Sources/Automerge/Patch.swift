@@ -80,7 +80,7 @@ public enum PatchAction: Equatable {
         case let .insert(obj, index, values, marks):
             return .Insert(
                 obj: ObjId(bytes: obj),
-                index: index, 
+                index: index,
                 values: values.map { Value.fromFfi(value: $0) },
                 marks: marks.mapValues(Value.fromFfi)
             )
