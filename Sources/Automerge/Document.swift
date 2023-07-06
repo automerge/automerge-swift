@@ -1,6 +1,7 @@
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
 import Foundation
+import OrderedCollections
 
 /// The entry point to automerge, a ``Document`` presents a key/value interface to
 /// the data it contains; as well as methods for loading and saving documents, and
@@ -476,7 +477,7 @@ public class Document: @unchecked Sendable {
 
     /// Fork the document as at `heads`
     ///
-    /// Fork the document but such that it only contains changes up to `heads`
+    /// Fork the document but such that it only contains changes up to the set of `heads` you provide.
     public func forkAt(heads: Set<ChangeHash>) throws -> Document {
         try queue.sync {
             try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
@@ -503,11 +504,14 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Returns: a sequence of ``ChangeHash`` representing the changes which were
-    /// made to the document as a result of the merge
-    public func heads() -> Set<ChangeHash> {
+    /// Returns: a sequence of ``ChangeHash`` that represents the changes made to the document.
+    ///
+    /// The collection of change hashes is of unique values, and are accepted into other parts of the API as a set.
+    /// The additional ordering provided by the OrderedSet returned preserves a causal history of the changes applied
+    /// over time.
+    public func heads() -> OrderedSet<ChangeHash> {
         queue.sync {
-            Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
+            OrderedSet(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
         }
     }
 
