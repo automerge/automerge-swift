@@ -503,11 +503,17 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Returns: a sequence of ``ChangeHash`` representing the changes which were
-    /// made to the document as a result of the merge
+    /// Returns a set of change hashes that represent the current state of the document.
     public func heads() -> Set<ChangeHash> {
         queue.sync {
             Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
+        }
+    }
+
+    /// Returns an list of change hashes that represent the causal sequence of changes to the document.
+    public func changes() -> [ChangeHash] {
+        queue.sync {
+            self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } }
         }
     }
 
