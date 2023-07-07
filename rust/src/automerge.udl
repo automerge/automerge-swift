@@ -215,6 +215,8 @@ interface Doc {
 
     sequence<ChangeHash> heads();
 
+    sequence<ChangeHash> changes();
+
     sequence<u8> save();
 
     [Throws=DocError]

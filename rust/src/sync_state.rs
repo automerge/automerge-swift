@@ -41,3 +41,9 @@ impl SyncState {
             .map(|heads| heads.iter().map(ChangeHash::from).collect())
     }
 }
+
+impl Default for SyncState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
