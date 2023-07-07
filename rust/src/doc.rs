@@ -514,6 +514,19 @@ impl Doc {
             .collect()
     }
 
+    pub fn changes(&self) -> Vec<ChangeHash> {
+        let mut emptyHeads: Vec<am::ChangeHash> = Vec::new();
+        let mut doc = self.0.write().unwrap();
+        let changes = doc.get_changes(&emptyHeads);
+
+        let mut result = Vec::new();
+        let x = changes
+            .into_iter()
+            .map(|h| h.into())
+            .collect();
+        return x
+    }
+
     pub fn path(&self, obj: ObjId) -> Result<Vec<PathElement>, DocError> {
         let doc = self.0.read().unwrap();
         let obj = am::ObjId::from(obj);
