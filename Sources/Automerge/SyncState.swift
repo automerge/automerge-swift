@@ -1,6 +1,5 @@
 import class AutomergeUniffi.SyncState
 import Foundation
-import OrderedCollections
 
 typealias FfiSyncState = AutomergeUniffi.SyncState
 
@@ -39,9 +38,9 @@ public struct SyncState: @unchecked Sendable {
     // dispatch queue in order to accommodate marking the wrapping class as `unchecked @Sendable`.
 
     // The heads the other end last reported (`nil` if we haven't received anything from them yet)
-    public var theirHeads: OrderedSet<ChangeHash>? {
+    public var theirHeads: Set<ChangeHash>? {
         queue.sync {
-            ffi_state.theirHeads().map { OrderedSet($0.map { ChangeHash(bytes: $0) }) }
+            ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
         }
     }
 

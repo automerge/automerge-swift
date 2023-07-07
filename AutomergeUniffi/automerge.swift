@@ -104,12 +104,12 @@ private func readBytes(_ reader: inout (data: Data, offset: Data.Index), count: 
 
 // Reads a float at the current offset.
 private func readFloat(_ reader: inout (data: Data, offset: Data.Index)) throws -> Float {
-    try Float(bitPattern: readInt(&reader))
+    Float(bitPattern: try readInt(&reader))
 }
 
 // Reads a float at the current offset.
 private func readDouble(_ reader: inout (data: Data, offset: Data.Index)) throws -> Double {
-    try Double(bitPattern: readInt(&reader))
+    Double(bitPattern: try readInt(&reader))
 }
 
 // Indicates if the offset has reached the end of the buffer.
@@ -281,7 +281,7 @@ private func uniffiCheckCallStatus(
         // with the message.  But if that code panics, then it just sends back
         // an empty buffer.
         if callStatus.errorBuf.len > 0 {
-            throw try UniffiInternalError.rustPanic(FfiConverterString.lift(callStatus.errorBuf))
+            throw UniffiInternalError.rustPanic(try FfiConverterString.lift(callStatus.errorBuf))
         } else {
             callStatus.errorBuf.deallocate()
             throw UniffiInternalError.rustPanic("Rust panic")
@@ -395,7 +395,7 @@ private struct FfiConverterString: FfiConverter {
 
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> String {
         let len: Int32 = try readInt(&buf)
-        return try String(bytes: readBytes(&buf, count: Int(len)), encoding: String.Encoding.utf8)!
+        return String(bytes: try readBytes(&buf, count: Int(len)), encoding: String.Encoding.utf8)!
     }
 
     public static func write(_ value: String, into buf: inout [UInt8]) {
@@ -487,7 +487,7 @@ public class Doc: DocProtocol {
     }
 
     public static func load(bytes: [UInt8]) throws -> Doc {
-        try Doc(unsafeFromRawPointer: rustCallWithError(FfiConverterTypeLoadError.lift) {
+        Doc(unsafeFromRawPointer: try rustCallWithError(FfiConverterTypeLoadError.lift) {
             uniffi_automerge_fn_constructor_doc_load(
                 FfiConverterSequenceUInt8.lower(bytes), $0
             )
@@ -532,14 +532,15 @@ public class Doc: DocProtocol {
 
     public func forkAt(heads: [ChangeHash]) throws -> Doc {
         try FfiConverterTypeDoc.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_fork_at(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_fork_at(
+                        self.pointer,
 
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
@@ -559,16 +560,17 @@ public class Doc: DocProtocol {
 
     public func putObjectInMap(obj: ObjId, key: String, objType: ObjType) throws -> ObjId {
         try FfiConverterTypeObjId.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_put_object_in_map(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_put_object_in_map(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterString.lower(key),
-                    FfiConverterTypeObjType.lower(objType),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterString.lower(key),
+                        FfiConverterTypeObjType.lower(objType),
+                        $0
+                    )
+                }
         )
     }
 
@@ -588,16 +590,17 @@ public class Doc: DocProtocol {
 
     public func putObjectInList(obj: ObjId, index: UInt64, objType: ObjType) throws -> ObjId {
         try FfiConverterTypeObjId.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_put_object_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_put_object_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    FfiConverterTypeObjType.lower(objType),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        FfiConverterTypeObjType.lower(objType),
+                        $0
+                    )
+                }
         )
     }
 
@@ -617,16 +620,17 @@ public class Doc: DocProtocol {
 
     public func insertObjectInList(obj: ObjId, index: UInt64, objType: ObjType) throws -> ObjId {
         try FfiConverterTypeObjId.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_insert_object_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_insert_object_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    FfiConverterTypeObjType.lower(objType),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        FfiConverterTypeObjType.lower(objType),
+                        $0
+                    )
+                }
         )
     }
 
@@ -686,28 +690,30 @@ public class Doc: DocProtocol {
 
     public func marks(obj: ObjId) throws -> [Mark] {
         try FfiConverterSequenceTypeMark.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_marks(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_marks(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        $0
+                    )
+                }
         )
     }
 
     public func marksAt(obj: ObjId, heads: [ChangeHash]) throws -> [Mark] {
         try FfiConverterSequenceTypeMark.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_marks_at(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_marks_at(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
@@ -767,144 +773,154 @@ public class Doc: DocProtocol {
 
     public func getInMap(obj: ObjId, key: String) throws -> Value? {
         try FfiConverterOptionTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_in_map(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_in_map(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterString.lower(key),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterString.lower(key),
+                        $0
+                    )
+                }
         )
     }
 
     public func getInList(obj: ObjId, index: UInt64) throws -> Value? {
         try FfiConverterOptionTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAtInMap(obj: ObjId, key: String, heads: [ChangeHash]) throws -> Value? {
         try FfiConverterOptionTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_at_in_map(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_at_in_map(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterString.lower(key),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterString.lower(key),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAtInList(obj: ObjId, index: UInt64, heads: [ChangeHash]) throws -> Value? {
         try FfiConverterOptionTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_at_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_at_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAllInMap(obj: ObjId, key: String) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_all_in_map(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_all_in_map(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterString.lower(key),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterString.lower(key),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAllInList(obj: ObjId, index: UInt64) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_all_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_all_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAllAtInMap(obj: ObjId, key: String, heads: [ChangeHash]) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_all_at_in_map(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_all_at_in_map(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterString.lower(key),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterString.lower(key),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
     public func getAllAtInList(obj: ObjId, index: UInt64, heads: [ChangeHash]) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_get_all_at_in_list(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_get_all_at_in_list(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterUInt64.lower(index),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterUInt64.lower(index),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
     public func text(obj: ObjId) throws -> String {
         try FfiConverterString.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_text(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_text(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        $0
+                    )
+                }
         )
     }
 
     public func textAt(obj: ObjId, heads: [ChangeHash]) throws -> String {
         try FfiConverterString.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_text_at(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_text_at(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
@@ -939,55 +955,59 @@ public class Doc: DocProtocol {
 
     public func mapEntries(obj: ObjId) throws -> [KeyValue] {
         try FfiConverterSequenceTypeKeyValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_map_entries(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_map_entries(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        $0
+                    )
+                }
         )
     }
 
     public func mapEntriesAt(obj: ObjId, heads: [ChangeHash]) throws -> [KeyValue] {
         try FfiConverterSequenceTypeKeyValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_map_entries_at(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_map_entries_at(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
     public func values(obj: ObjId) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_values(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_values(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        $0
+                    )
+                }
         )
     }
 
     public func valuesAt(obj: ObjId, heads: [ChangeHash]) throws -> [Value] {
         try FfiConverterSequenceTypeValue.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_values_at(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_values_at(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
@@ -1036,14 +1056,15 @@ public class Doc: DocProtocol {
 
     public func path(obj: ObjId) throws -> [PathElement] {
         try FfiConverterSequenceTypePathElement.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_path(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_path(
+                        self.pointer,
 
-                    FfiConverterTypeObjId.lower(obj),
-                    $0
-                )
-            }
+                        FfiConverterTypeObjId.lower(obj),
+                        $0
+                    )
+                }
         )
     }
 
@@ -1085,14 +1106,15 @@ public class Doc: DocProtocol {
 
     public func mergeWithPatches(other: Doc) throws -> [Patch] {
         try FfiConverterSequenceTypePatch.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_merge_with_patches(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_merge_with_patches(
+                        self.pointer,
 
-                    FfiConverterTypeDoc.lower(other),
-                    $0
-                )
-            }
+                        FfiConverterTypeDoc.lower(other),
+                        $0
+                    )
+                }
         )
     }
 
@@ -1125,15 +1147,16 @@ public class Doc: DocProtocol {
 
     public func receiveSyncMessageWithPatches(state: SyncState, msg: [UInt8]) throws -> [Patch] {
         try FfiConverterSequenceTypePatch.lift(
-            rustCallWithError(FfiConverterTypeReceiveSyncError.lift) {
-                uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeReceiveSyncError.lift) {
+                    uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(
+                        self.pointer,
 
-                    FfiConverterTypeSyncState.lower(state),
-                    FfiConverterSequenceUInt8.lower(msg),
-                    $0
-                )
-            }
+                        FfiConverterTypeSyncState.lower(state),
+                        FfiConverterSequenceUInt8.lower(msg),
+                        $0
+                    )
+                }
         )
     }
 
@@ -1151,14 +1174,15 @@ public class Doc: DocProtocol {
 
     public func encodeChangesSince(heads: [ChangeHash]) throws -> [UInt8] {
         try FfiConverterSequenceUInt8.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_encode_changes_since(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_encode_changes_since(
+                        self.pointer,
 
-                    FfiConverterSequenceTypeChangeHash.lower(heads),
-                    $0
-                )
-            }
+                        FfiConverterSequenceTypeChangeHash.lower(heads),
+                        $0
+                    )
+                }
         )
     }
 
@@ -1176,14 +1200,15 @@ public class Doc: DocProtocol {
 
     public func applyEncodedChangesWithPatches(changes: [UInt8]) throws -> [Patch] {
         try FfiConverterSequenceTypePatch.lift(
-            rustCallWithError(FfiConverterTypeDocError.lift) {
-                uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(
-                    self.pointer,
+            try
+                rustCallWithError(FfiConverterTypeDocError.lift) {
+                    uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(
+                        self.pointer,
 
-                    FfiConverterSequenceUInt8.lower(changes),
-                    $0
-                )
-            }
+                        FfiConverterSequenceUInt8.lower(changes),
+                        $0
+                    )
+                }
         )
     }
 }
@@ -1253,7 +1278,7 @@ public class SyncState: SyncStateProtocol {
     }
 
     public static func decode(bytes: [UInt8]) throws -> SyncState {
-        try SyncState(unsafeFromRawPointer: rustCallWithError(FfiConverterTypeDecodeSyncStateError.lift) {
+        SyncState(unsafeFromRawPointer: try rustCallWithError(FfiConverterTypeDecodeSyncStateError.lift) {
             uniffi_automerge_fn_constructor_syncstate_decode(
                 FfiConverterSequenceUInt8.lower(bytes), $0
             )
@@ -1568,8 +1593,8 @@ public struct FfiConverterTypeDecodeSyncStateError: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> DecodeSyncStateError {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .Internal(
-                message: FfiConverterString.read(from: &buf)
+        case 1: return .Internal(
+                message: try FfiConverterString.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -1606,12 +1631,12 @@ public struct FfiConverterTypeDocError: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> DocError {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .WrongObjectType(
-                message: FfiConverterString.read(from: &buf)
+        case 1: return .WrongObjectType(
+                message: try FfiConverterString.read(from: &buf)
             )
 
-        case 2: return try .Internal(
-                message: FfiConverterString.read(from: &buf)
+        case 2: return .Internal(
+                message: try FfiConverterString.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -1701,8 +1726,8 @@ public struct FfiConverterTypeLoadError: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> LoadError {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .Internal(
-                message: FfiConverterString.read(from: &buf)
+        case 1: return .Internal(
+                message: try FfiConverterString.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -1788,51 +1813,51 @@ public struct FfiConverterTypePatchAction: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PatchAction {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .put(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                prop: FfiConverterTypeProp.read(from: &buf),
-                value: FfiConverterTypeValue.read(from: &buf)
+        case 1: return .put(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                prop: try FfiConverterTypeProp.read(from: &buf),
+                value: try FfiConverterTypeValue.read(from: &buf)
             )
 
-        case 2: return try .insert(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                index: FfiConverterUInt64.read(from: &buf),
-                values: FfiConverterSequenceTypeValue.read(from: &buf),
-                marks: FfiConverterDictionaryStringTypeValue.read(from: &buf)
+        case 2: return .insert(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                index: try FfiConverterUInt64.read(from: &buf),
+                values: try FfiConverterSequenceTypeValue.read(from: &buf),
+                marks: try FfiConverterDictionaryStringTypeValue.read(from: &buf)
             )
 
-        case 3: return try .spliceText(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                index: FfiConverterUInt64.read(from: &buf),
-                value: FfiConverterString.read(from: &buf),
-                marks: FfiConverterDictionaryStringTypeValue.read(from: &buf)
+        case 3: return .spliceText(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                index: try FfiConverterUInt64.read(from: &buf),
+                value: try FfiConverterString.read(from: &buf),
+                marks: try FfiConverterDictionaryStringTypeValue.read(from: &buf)
             )
 
-        case 4: return try .increment(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                prop: FfiConverterTypeProp.read(from: &buf),
-                value: FfiConverterInt64.read(from: &buf)
+        case 4: return .increment(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                prop: try FfiConverterTypeProp.read(from: &buf),
+                value: try FfiConverterInt64.read(from: &buf)
             )
 
-        case 5: return try .conflict(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                prop: FfiConverterTypeProp.read(from: &buf)
+        case 5: return .conflict(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                prop: try FfiConverterTypeProp.read(from: &buf)
             )
 
-        case 6: return try .deleteMap(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                key: FfiConverterString.read(from: &buf)
+        case 6: return .deleteMap(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                key: try FfiConverterString.read(from: &buf)
             )
 
-        case 7: return try .deleteSeq(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                index: FfiConverterUInt64.read(from: &buf),
-                length: FfiConverterUInt64.read(from: &buf)
+        case 7: return .deleteSeq(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                index: try FfiConverterUInt64.read(from: &buf),
+                length: try FfiConverterUInt64.read(from: &buf)
             )
 
-        case 8: return try .marks(
-                obj: FfiConverterTypeObjId.read(from: &buf),
-                marks: FfiConverterSequenceTypeMark.read(from: &buf)
+        case 8: return .marks(
+                obj: try FfiConverterTypeObjId.read(from: &buf),
+                marks: try FfiConverterSequenceTypeMark.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -1914,12 +1939,12 @@ public struct FfiConverterTypeProp: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Prop {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .key(
-                value: FfiConverterString.read(from: &buf)
+        case 1: return .key(
+                value: try FfiConverterString.read(from: &buf)
             )
 
-        case 2: return try .index(
-                value: FfiConverterUInt64.read(from: &buf)
+        case 2: return .index(
+                value: try FfiConverterUInt64.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -1967,12 +1992,12 @@ public struct FfiConverterTypeReceiveSyncError: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ReceiveSyncError {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .Internal(
-                message: FfiConverterString.read(from: &buf)
+        case 1: return .Internal(
+                message: try FfiConverterString.read(from: &buf)
             )
 
-        case 2: return try .InvalidMessage(
-                message: FfiConverterString.read(from: &buf)
+        case 2: return .InvalidMessage(
+                message: try FfiConverterString.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -2014,41 +2039,41 @@ public struct FfiConverterTypeScalarValue: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ScalarValue {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .bytes(
-                value: FfiConverterSequenceUInt8.read(from: &buf)
+        case 1: return .bytes(
+                value: try FfiConverterSequenceUInt8.read(from: &buf)
             )
 
-        case 2: return try .string(
-                value: FfiConverterString.read(from: &buf)
+        case 2: return .string(
+                value: try FfiConverterString.read(from: &buf)
             )
 
-        case 3: return try .uint(
-                value: FfiConverterUInt64.read(from: &buf)
+        case 3: return .uint(
+                value: try FfiConverterUInt64.read(from: &buf)
             )
 
-        case 4: return try .int(
-                value: FfiConverterInt64.read(from: &buf)
+        case 4: return .int(
+                value: try FfiConverterInt64.read(from: &buf)
             )
 
-        case 5: return try .f64(
-                value: FfiConverterDouble.read(from: &buf)
+        case 5: return .f64(
+                value: try FfiConverterDouble.read(from: &buf)
             )
 
-        case 6: return try .counter(
-                value: FfiConverterInt64.read(from: &buf)
+        case 6: return .counter(
+                value: try FfiConverterInt64.read(from: &buf)
             )
 
-        case 7: return try .timestamp(
-                value: FfiConverterInt64.read(from: &buf)
+        case 7: return .timestamp(
+                value: try FfiConverterInt64.read(from: &buf)
             )
 
-        case 8: return try .boolean(
-                value: FfiConverterBool.read(from: &buf)
+        case 8: return .boolean(
+                value: try FfiConverterBool.read(from: &buf)
             )
 
-        case 9: return try .unknown(
-                typeCode: FfiConverterUInt8.read(from: &buf),
-                data: FfiConverterSequenceUInt8.read(from: &buf)
+        case 9: return .unknown(
+                typeCode: try FfiConverterUInt8.read(from: &buf),
+                data: try FfiConverterSequenceUInt8.read(from: &buf)
             )
 
         case 10: return .null
@@ -2125,13 +2150,13 @@ public struct FfiConverterTypeValue: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Value {
         let variant: Int32 = try readInt(&buf)
         switch variant {
-        case 1: return try .object(
-                typ: FfiConverterTypeObjType.read(from: &buf),
-                id: FfiConverterTypeObjId.read(from: &buf)
+        case 1: return .object(
+                typ: try FfiConverterTypeObjType.read(from: &buf),
+                id: try FfiConverterTypeObjId.read(from: &buf)
             )
 
-        case 2: return try .scalar(
-                value: FfiConverterTypeScalarValue.read(from: &buf)
+        case 2: return .scalar(
+                value: try FfiConverterTypeScalarValue.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -2241,7 +2266,7 @@ private struct FfiConverterSequenceUInt8: FfiConverterRustBuffer {
         var seq = [UInt8]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterUInt8.read(from: &buf))
+            seq.append(try FfiConverterUInt8.read(from: &buf))
         }
         return seq
     }
@@ -2263,7 +2288,7 @@ private struct FfiConverterSequenceString: FfiConverterRustBuffer {
         var seq = [String]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterString.read(from: &buf))
+            seq.append(try FfiConverterString.read(from: &buf))
         }
         return seq
     }
@@ -2285,7 +2310,7 @@ private struct FfiConverterSequenceTypeKeyValue: FfiConverterRustBuffer {
         var seq = [KeyValue]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeKeyValue.read(from: &buf))
+            seq.append(try FfiConverterTypeKeyValue.read(from: &buf))
         }
         return seq
     }
@@ -2307,7 +2332,7 @@ private struct FfiConverterSequenceTypeMark: FfiConverterRustBuffer {
         var seq = [Mark]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeMark.read(from: &buf))
+            seq.append(try FfiConverterTypeMark.read(from: &buf))
         }
         return seq
     }
@@ -2329,7 +2354,7 @@ private struct FfiConverterSequenceTypePatch: FfiConverterRustBuffer {
         var seq = [Patch]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypePatch.read(from: &buf))
+            seq.append(try FfiConverterTypePatch.read(from: &buf))
         }
         return seq
     }
@@ -2351,7 +2376,7 @@ private struct FfiConverterSequenceTypePathElement: FfiConverterRustBuffer {
         var seq = [PathElement]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypePathElement.read(from: &buf))
+            seq.append(try FfiConverterTypePathElement.read(from: &buf))
         }
         return seq
     }
@@ -2373,7 +2398,7 @@ private struct FfiConverterSequenceTypeScalarValue: FfiConverterRustBuffer {
         var seq = [ScalarValue]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeScalarValue.read(from: &buf))
+            seq.append(try FfiConverterTypeScalarValue.read(from: &buf))
         }
         return seq
     }
@@ -2395,7 +2420,7 @@ private struct FfiConverterSequenceTypeValue: FfiConverterRustBuffer {
         var seq = [Value]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeValue.read(from: &buf))
+            seq.append(try FfiConverterTypeValue.read(from: &buf))
         }
         return seq
     }
@@ -2417,7 +2442,7 @@ private struct FfiConverterSequenceTypeChangeHash: FfiConverterRustBuffer {
         var seq = [ChangeHash]()
         seq.reserveCapacity(Int(len))
         for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeChangeHash.read(from: &buf))
+            seq.append(try FfiConverterTypeChangeHash.read(from: &buf))
         }
         return seq
     }

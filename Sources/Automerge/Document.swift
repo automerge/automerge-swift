@@ -1,7 +1,6 @@
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
 import Foundation
-import OrderedCollections
 
 /// The entry point to automerge, a ``Document`` presents a key/value interface to
 /// the data it contains; as well as methods for loading and saving documents, and
@@ -176,7 +175,7 @@ public class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:key:heads:)``
-    public func getAt(obj: ObjId, key: String, heads: OrderedSet<ChangeHash>) throws
+    public func getAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Value?
     {
         try queue.sync {
@@ -192,7 +191,7 @@ public class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:index:heads:)``
-    public func getAt(obj: ObjId, index: UInt64, heads: OrderedSet<ChangeHash>) throws
+    public func getAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws
         -> Value?
     {
         try queue.sync {
@@ -204,7 +203,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the possibly conflicting values for `key` in map `obj` as at `heads`
-    public func getAllAt(obj: ObjId, key: String, heads: OrderedSet<ChangeHash>) throws
+    public func getAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Set<Value>
     {
         try queue.sync {
@@ -216,7 +215,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the possibly conflicting values for `index` in list `obj` as at `heads`
-    public func getAllAt(obj: ObjId, index: UInt64, heads: OrderedSet<ChangeHash>)
+    public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
         throws -> Set<Value>
     {
         try queue.sync {
@@ -235,7 +234,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get all the keys that were in the map `obj` as at `heads`
-    public func keysAt(obj: ObjId, heads: OrderedSet<ChangeHash>) -> [String] {
+    public func keysAt(obj: ObjId, heads: Set<ChangeHash>) -> [String] {
         queue.sync {
             self.doc.wrapErrors { $0.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -253,7 +252,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the values in the map or list `obj` as at `heads`
-    public func valuesAt(obj: ObjId, heads: OrderedSet<ChangeHash>) throws -> [Value] {
+    public func valuesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Value] {
         try queue.sync {
             let vals = try self.doc.wrapErrors {
                 try $0.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
@@ -271,7 +270,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the (key,value) entries in the map `obj` as at `heads`
-    public func mapEntriesAt(obj: ObjId, heads: OrderedSet<ChangeHash>) throws -> [(
+    public func mapEntriesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [(
         String, Value
     )] {
         try queue.sync {
@@ -290,7 +289,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// The length of the list `obj` as at `heads`
-    public func lengthAt(obj: ObjId, heads: OrderedSet<ChangeHash>) -> UInt64 {
+    public func lengthAt(obj: ObjId, heads: Set<ChangeHash>) -> UInt64 {
         queue.sync {
             self.doc.wrapErrors { $0.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -314,7 +313,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the value of the text object `obj` as at `heads`
-    public func textAt(obj: ObjId, heads: OrderedSet<ChangeHash>) throws -> String {
+    public func textAt(obj: ObjId, heads: Set<ChangeHash>) throws -> String {
         try queue.sync {
             try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
@@ -408,7 +407,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Get the list of marks for a text object at the given heads.
-    public func marksAt(obj: ObjId, heads: OrderedSet<ChangeHash>) throws -> [Mark] {
+    public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
         try queue.sync {
             try self.doc.wrapErrors {
                 try $0.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
@@ -477,8 +476,8 @@ public class Document: @unchecked Sendable {
 
     /// Fork the document as at `heads`
     ///
-    /// Fork the document but such that it only contains changes up to the set of `heads` you provide.
-    public func forkAt(heads: OrderedSet<ChangeHash>) throws -> Document {
+    /// Fork the document but such that it only contains changes up to `heads`
+    public func forkAt(heads: Set<ChangeHash>) throws -> Document {
         try queue.sync {
             try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
         }
@@ -504,14 +503,11 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Returns: a sequence of ``ChangeHash`` that represents the changes made to the document.
-    ///
-    /// The collection of change hashes is of unique values, and are accepted into other parts of the API as a set.
-    /// The additional ordering provided by the OrderedSet returned preserves a causal history of the changes applied
-    /// over time.
-    public func heads() -> OrderedSet<ChangeHash> {
+    /// Returns: a sequence of ``ChangeHash`` representing the changes which were
+    /// made to the document as a result of the merge
+    public func heads() -> Set<ChangeHash> {
         queue.sync {
-            OrderedSet(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
+            Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
         }
     }
 
@@ -537,7 +533,7 @@ public class Document: @unchecked Sendable {
     ///
     /// Returns: encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``
-    public func encodeChangesSince(heads: OrderedSet<ChangeHash>) throws -> Data {
+    public func encodeChangesSince(heads: Set<ChangeHash>) throws -> Data {
         try queue.sync {
             try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
         }

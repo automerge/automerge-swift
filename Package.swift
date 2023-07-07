@@ -62,12 +62,6 @@ let package = Package(
     products: [
         .library(name: "Automerge", targets: ["Automerge"]),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-collections.git",
-            .upToNextMajor(from: "1.0.0")
-        ),
-    ],
     targets: [
         FFIbinaryTarget,
         .target(
@@ -77,7 +71,7 @@ let package = Package(
         ),
         .target(
             name: "Automerge",
-            dependencies: ["AutomergeUniffi", .product(name: "Collections", package: "swift-collections")],
+            dependencies: ["AutomergeUniffi"],
             swiftSettings: globalSwiftSettings
         ),
         .testTarget(
