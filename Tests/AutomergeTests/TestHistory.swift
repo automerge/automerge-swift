@@ -39,11 +39,21 @@ class HistoryTests: XCTestCase {
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("two"))
         XCTAssertEqual(doc.changes().count, 2)
 
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("three"))
-        XCTAssertEqual(doc.changes().count, 3)
-
         let replicaDoc = doc.fork()
         XCTAssertEqual(doc.heads(), replicaDoc.heads())
         XCTAssertEqual(doc.changes(), replicaDoc.changes())
+
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("three"))
+        XCTAssertEqual(doc.changes().count, 3)
+        XCTAssertEqual(replicaDoc.changes().count, 2)
+
+        try doc.put(obj: ObjId.ROOT, key: "newkey", value: .String("beta"))
+        try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: .String("alpha"))
+        XCTAssertEqual(doc.changes().count, 4)
+        XCTAssertEqual(replicaDoc.changes().count, 3)
+
+        try doc.merge(other: replicaDoc)
+        XCTAssertEqual(doc.changes().count, 5)
+        XCTAssertEqual(replicaDoc.changes().count, 3)
     }
 }

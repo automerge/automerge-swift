@@ -504,6 +504,8 @@ public class Document: @unchecked Sendable {
     }
 
     /// Returns a set of change hashes that represent the current state of the document.
+    ///
+    /// The number of change hashes returned represents the number of concurrent changes the document tracks.
     public func heads() -> Set<ChangeHash> {
         queue.sync {
             Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
