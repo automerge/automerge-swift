@@ -446,6 +446,7 @@ public protocol DocProtocol {
     func objectType(obj: ObjId) -> ObjType
     func path(obj: ObjId) throws -> [PathElement]
     func heads() -> [ChangeHash]
+    func changes() -> [ChangeHash]
     func save() -> [UInt8]
     func merge(other: Doc) throws
     func mergeWithPatches(other: Doc) throws -> [Patch]
@@ -1052,6 +1053,18 @@ public class Doc: DocProtocol {
             try!
                 rustCall {
                     uniffi_automerge_fn_method_doc_heads(
+                        self.pointer,
+                        $0
+                    )
+                }
+        )
+    }
+
+    public func changes() -> [ChangeHash] {
+        try! FfiConverterSequenceTypeChangeHash.lift(
+            try!
+                rustCall {
+                    uniffi_automerge_fn_method_doc_changes(
                         self.pointer,
                         $0
                     )
@@ -2669,6 +2682,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_automerge_checksum_method_doc_heads() != 41278 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_automerge_checksum_method_doc_changes() != 11521 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_automerge_checksum_method_doc_save() != 57703 {
