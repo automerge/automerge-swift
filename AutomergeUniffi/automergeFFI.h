@@ -169,6 +169,8 @@ RustBuffer uniffi_automerge_fn_method_doc_path(void*_Nonnull ptr, RustBuffer obj
 );
 RustBuffer uniffi_automerge_fn_method_doc_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
 RustBuffer uniffi_automerge_fn_method_doc_save(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 void uniffi_automerge_fn_method_doc_merge(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
@@ -330,6 +332,9 @@ uint16_t uniffi_automerge_checksum_method_doc_path(void
     
 );
 uint16_t uniffi_automerge_checksum_method_doc_heads(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_changes(void
     
 );
 uint16_t uniffi_automerge_checksum_method_doc_save(void

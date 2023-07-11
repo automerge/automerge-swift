@@ -40,7 +40,7 @@ public struct Mark: Equatable, Hashable, Sendable {
 ///
 /// For more information on marks and how they expand,
 /// see the [The Peritext Essay](https://www.inkandswitch.com/peritext/).
-public enum ExpandMark {
+public enum ExpandMark: Equatable, Hashable, Sendable {
     /// Characters added just before the mark should be inside the mark.
     case before
     /// Characters added just after the mark should be inside the mark.
