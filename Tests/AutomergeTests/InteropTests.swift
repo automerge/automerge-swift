@@ -3,6 +3,7 @@ import Foundation
 import XCTest
 
 class InteropTests: XCTestCase {
+    var markdownData: Data? = nil
     #if os(macOS)
     // DEVNOTE(heckj): Bundle based approaches for finding fixture files
     // work reasonably well with regular targets, but fail (or more specifically,
@@ -32,9 +33,25 @@ class InteropTests: XCTestCase {
         return data
     }
 
-    func testFileLoad() throws {
-        let data = try dataFrom(resource: "markdown.md")
-        XCTAssertNotNil(data)
+    override func setUp() async throws {
+        markdownData = try dataFrom(resource: "markdown.md")
+    }
+
+    func testFixtureFileLoad() throws {
+        XCTAssertNotNil(markdownData)
+    }
+
+    func testAttributedStringParse() throws {
+        let data = try XCTUnwrap(markdownData)
+        let fancy = try AttributedString(markdown: data)
+        XCTAssertNotNil(fancy)
+        // print(fancy) // A basic print() provides a loose idea of runs within the multi-line output.
+        //
+        // custom encoders built in to foundation:
+        // fancy.encode(to: Encoder, configuration: AttributeScopeCodableConfiguration)
+        // see: https://developer.apple.com/documentation/foundation/decodableattributedstringkey
+        // https://developer.apple.com/documentation/foundation/inlinepresentationintent includes
+        // code, emphasis, line-break, strike-through, strong, etc.
     }
     #endif
 }
