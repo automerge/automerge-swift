@@ -18,6 +18,7 @@ import Foundation
 public class Document: @unchecked Sendable {
     private var doc: WrappedDoc
     fileprivate let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
+    internal var reportingLogLevel: LogVerbosity
 
     /// The actor ID of this document
     public var actor: ActorId {
@@ -34,8 +35,9 @@ public class Document: @unchecked Sendable {
     }
 
     /// Create an new empty document with a random actor ID
-    public init() {
+    public init(logLevel: LogVerbosity = .errorOnly) {
         doc = WrappedDoc(Doc())
+        self.reportingLogLevel = logLevel
     }
 
     /// Load the document in `bytes`
@@ -44,12 +46,14 @@ public class Document: @unchecked Sendable {
     /// concatenation of many calls to ``encodeChangesSince(heads:)``, or
     /// ``encodeNewChanges()`` or the concatenation of any of those, or really
     /// any sequence of bytes containing valid encodings of automerge changes.
-    public init(_ bytes: Data) throws {
+    public init(_ bytes: Data, logLevel: LogVerbosity = .errorOnly) throws {
         doc = try WrappedDoc { try Doc.load(bytes: Array(bytes)) }
+        self.reportingLogLevel = logLevel
     }
 
-    private init(doc: Doc) {
+    private init(doc: Doc, logLevel: LogVerbosity = .errorOnly) {
         self.doc = WrappedDoc(doc)
+        self.reportingLogLevel = logLevel
     }
 
     /// Set or update the  value at `key` in the map `obj` to `value`

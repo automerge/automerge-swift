@@ -1,3 +1,5 @@
+import os
+
 /// The internal implementation of AutomergeEncoder.
 ///
 /// Instances of the class capture one of the various kinds of schema value types - single value, array, or object.
@@ -8,7 +10,7 @@ final class AutomergeEncoderImpl {
     let document: Document
     let schemaStrategy: SchemaStrategy
     let cautiousWrite: Bool
-
+    let reportingLogLevel: LogVerbosity
     // indicator that the singleValue has written a value
     var singleValueWritten: Bool = false
 
@@ -17,13 +19,15 @@ final class AutomergeEncoderImpl {
         codingPath: [CodingKey],
         doc: Document,
         strategy: SchemaStrategy,
-        cautiousWrite: Bool
+        cautiousWrite: Bool,
+        logLevel: LogVerbosity
     ) {
         self.userInfo = userInfo
         self.codingPath = codingPath
         document = doc
         schemaStrategy = strategy
         self.cautiousWrite = cautiousWrite
+        reportingLogLevel = logLevel
     }
 }
 

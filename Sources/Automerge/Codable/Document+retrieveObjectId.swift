@@ -1,16 +1,5 @@
 import os // for structured logging
 
-@usableFromInline
-func tracePrint(indent: Int = 0, _ stringval: String) {
-    #if DEBUG
-    if #available(macOS 11, iOS 14, *) {
-        let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
-        let prefix = String(repeating: " ", count: indent)
-        logger.debug("\(prefix, privacy: .public)\(stringval, privacy: .public)")
-    }
-    #endif
-}
-
 // // MARK: Cache for Object Id Lookups
 //
 // typealias CacheKey = [AnyCodingKey]
@@ -23,6 +12,19 @@ func tracePrint(indent: Int = 0, _ stringval: String) {
 // }
 
 extension Document {
+    @usableFromInline
+    func tracePrint(indent: Int = 0, _ stringval: String) {
+        #if DEBUG
+        if reportingLogLevel >= .tracing {
+            if #available(macOS 11, iOS 14, *) {
+                let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
+                let prefix = String(repeating: " ", count: indent)
+                logger.debug("\(prefix, privacy: .public)\(stringval, privacy: .public)")
+            }
+        }
+        #endif
+    }
+
     /// Returns an Automerge objectId for the location within the document.
     ///
     /// The function looks up an Automerge Object Id for a specific schema location, optionally creating schema if
