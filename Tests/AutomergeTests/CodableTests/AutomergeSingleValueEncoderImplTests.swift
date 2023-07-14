@@ -17,7 +17,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("value")],
             doc: doc,
             strategy: .createWhenNeeded,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         let cautious = AutomergeEncoderImpl(
@@ -25,7 +26,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("value")],
             doc: doc,
             strategy: .createWhenNeeded,
-            cautiousWrite: true
+            cautiousWrite: true,
+            logLevel: .errorOnly
         )
         cautiousSingleValueContainer = cautious.singleValueContainer()
     }
@@ -258,7 +260,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(true))
@@ -270,7 +273,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Float(3.4)))
@@ -282,7 +286,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Double(8.16)))
@@ -294,7 +299,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Int(8)))
@@ -306,7 +312,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Int8(8)))
@@ -318,7 +325,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Int16(8)))
@@ -330,7 +338,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Int32(8)))
@@ -342,7 +351,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Int64(8)))
@@ -354,7 +364,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(UInt(8)))
@@ -366,7 +377,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(UInt8(8)))
@@ -378,7 +390,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(UInt16(8)))
@@ -390,7 +403,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(UInt32(8)))
@@ -402,7 +416,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(UInt64(8)))
@@ -414,7 +429,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Text("hi")))
@@ -426,7 +442,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         let dateFormatter = ISO8601DateFormatter()
         let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
@@ -440,7 +457,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere"), AnyCodingKey("value")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(Data("Hello".utf8)))
@@ -456,7 +474,8 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             codingPath: [AnyCodingKey("nothere")],
             doc: doc,
             strategy: .readonly,
-            cautiousWrite: false
+            cautiousWrite: false,
+            logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
         XCTAssertThrowsError(try singleValueContainer.encode(SimpleStruct(a: "foo")))
