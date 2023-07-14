@@ -1,9 +1,8 @@
-import Foundation
 @testable import Automerge
+import Foundation
 import XCTest
 
 class InteropTests: XCTestCase {
-    
     #if os(macOS)
     // DEVNOTE(heckj): Bundle based approaches for finding fixture files
     // work reasonably well with regular targets, but fail (or more specifically,
@@ -21,9 +20,14 @@ class InteropTests: XCTestCase {
         let testsDir = url.deletingLastPathComponent()
         return testsDir.appendingPathComponent("Fixtures")
     }
-    
+
     func dataFrom(resource: String) throws -> Data? {
-        let urlForResource = fixturesDirectory().appending(component: resource)
+        let urlForResource: URL
+        if #available(macOS 13, *) {
+            urlForResource = fixturesDirectory().appending(component: resource)
+        } else {
+            urlForResource = fixturesDirectory().appendingPathComponent(resource)
+        }
         let data = try Data(contentsOf: urlForResource)
         return data
     }
