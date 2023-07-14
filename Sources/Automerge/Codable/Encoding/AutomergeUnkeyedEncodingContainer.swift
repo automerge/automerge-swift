@@ -35,7 +35,9 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
         }
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
-            logger.debug("Establishing Unkeyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
+            if impl.reportingLogLevel >= LogVerbosity.debug {
+                logger.debug("Establishing Unkeyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
+            }
         }
     }
 
@@ -62,7 +64,8 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             codingPath: newPath,
             doc: document,
             strategy: impl.schemaStrategy,
-            cautiousWrite: impl.cautiousWrite
+            cautiousWrite: impl.cautiousWrite,
+            logLevel: impl.reportingLogLevel
         )
         guard let objectId = objectId else {
             throw reportBestError()

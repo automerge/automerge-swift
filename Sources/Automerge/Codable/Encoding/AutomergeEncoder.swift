@@ -4,11 +4,18 @@ public struct AutomergeEncoder {
     var doc: Document
     var schemaStrategy: SchemaStrategy
     var cautiousWrite: Bool
+    let logLevel: LogVerbosity
 
-    public init(doc: Document, strategy: SchemaStrategy = .createWhenNeeded, cautiousWrite: Bool = false) {
+    public init(
+        doc: Document,
+        strategy: SchemaStrategy = .createWhenNeeded,
+        cautiousWrite: Bool = false,
+        reportingLoglevel: LogVerbosity = .errorOnly
+    ) {
         self.doc = doc
         schemaStrategy = strategy
         self.cautiousWrite = cautiousWrite
+        logLevel = reportingLoglevel
     }
 
     public func encode<T: Encodable>(_ value: T?) throws {
@@ -25,7 +32,8 @@ public struct AutomergeEncoder {
             codingPath: [],
             doc: doc,
             strategy: schemaStrategy,
-            cautiousWrite: cautiousWrite
+            cautiousWrite: cautiousWrite,
+            logLevel: logLevel
         )
         try value.encode(to: encoder)
     }
@@ -36,7 +44,8 @@ public struct AutomergeEncoder {
             codingPath: path,
             doc: doc,
             strategy: schemaStrategy,
-            cautiousWrite: cautiousWrite
+            cautiousWrite: cautiousWrite,
+            logLevel: logLevel
         )
         try value.encode(to: encoder)
     }

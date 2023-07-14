@@ -59,7 +59,9 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         }
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
-            logger.debug("Establishing Keyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
+            if impl.reportingLogLevel >= LogVerbosity.debug {
+                logger.debug("Establishing Keyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
+            }
         }
     }
 
@@ -279,7 +281,8 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             codingPath: newPath,
             doc: document,
             strategy: impl.schemaStrategy,
-            cautiousWrite: impl.cautiousWrite
+            cautiousWrite: impl.cautiousWrite,
+            logLevel: impl.reportingLogLevel
         )
         switch T.self {
         case is Date.Type:
