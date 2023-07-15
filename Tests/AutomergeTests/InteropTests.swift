@@ -2,6 +2,7 @@
 import Foundation
 import XCTest
 
+@available(macOS 12, *)
 class InteropTests: XCTestCase {
     var markdownData: Data? = nil
     #if os(macOS)
@@ -45,6 +46,9 @@ class InteropTests: XCTestCase {
         let data = try XCTUnwrap(markdownData)
         let fancy = try AttributedString(markdown: data)
         XCTAssertNotNil(fancy)
+        let enc = JSONEncoder()
+        let jsonencode = try enc.encode(fancy)
+        print(String(bytes: jsonencode, encoding: .utf8))
         // print(fancy) // A basic print() provides a loose idea of runs within the multi-line output.
         //
         // custom encoders built in to foundation:
