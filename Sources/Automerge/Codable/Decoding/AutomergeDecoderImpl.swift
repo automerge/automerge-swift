@@ -28,7 +28,7 @@ import Foundation
 
     @inlinable public func decode<T: Decodable>(_: T.Type) throws -> T {
         switch T.self {
-        case is Text.Type:
+        case is AutomergeText.Type:
             let directContainer = try singleValueContainer()
             return try directContainer.decode(T.self)
         case is Counter.Type:

@@ -278,7 +278,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                 }
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
-        case is Text.Type:
+        case is AutomergeText.Type:
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
                     .NoPathForSingleValue(
@@ -287,7 +287,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
             }
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
-            let downcastText = value as! Text
+            let downcastText = value as! AutomergeText
 
             let existingValue: Value?
             // get any existing value - type of `get` based on the key type

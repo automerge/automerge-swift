@@ -130,10 +130,10 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                 )
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
-        case is Text.Type:
+        case is AutomergeText.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
-            let downcastText = value as! Text
+            let downcastText = value as! AutomergeText
 
             let textNodeId: ObjId
             if let existingNode = try document.get(obj: objectId, index: UInt64(count)) {

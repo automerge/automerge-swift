@@ -47,7 +47,7 @@ final class AutomergeDecoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
-            let notes: Text
+            let notes: AutomergeText
         }
         let decoder = AutomergeDecoder(doc: doc)
 
@@ -129,7 +129,7 @@ final class AutomergeDecoderTests: XCTestCase {
         try doc.spliceText(obj: text1, start: 0, delete: 0, value: "Hello!")
 
         struct ListOfText: Codable {
-            let list: [Text]
+            let list: [AutomergeText]
         }
 
         let decoder = AutomergeDecoder(doc: doc)

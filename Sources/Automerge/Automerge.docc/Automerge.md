@@ -56,7 +56,7 @@ See the documentation of ``Document`` for more details on the individual methods
 ## Saving, loading, and syncing
 
 An Automerge document can be saved using ``Document/save()``. 
-This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:)``. 
+This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``. 
 In many cases you know that the other end already has some set of changes and you just want to send "new" changes. 
 You can obtain these changes using ``Document/encodeNewChanges()`` and ``Document/encodeChangesSince(heads:)``. 
 On the other end of the wire you can apply changes using ``Document/applyEncodedChanges(encoded:)``.
@@ -98,7 +98,7 @@ Any document method which accepts remote changes has a `*WithPatches` variant wh
 - ``Automerge/AutomergeDecoder``
 - ``Automerge/AnyCodingKey``
 - ``Automerge/Counter``
-- ``Automerge/Text``
+- ``Automerge/AutomergeText``
 - ``Automerge/SchemaStrategy``
 - ``Automerge/CodingKeyLookupError``
 - ``Automerge/PathParseError``

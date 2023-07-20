@@ -165,9 +165,9 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
                     debugDescription: "Expected to decode \(T.self) from \(value), but it wasn't a `.counter`."
                 ))
             }
-        case is Text.Type:
+        case is AutomergeText.Type:
             if case let .Scalar(.String(stringValue)) = value {
-                return Text(stringValue) as! T
+                return AutomergeText(stringValue) as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
