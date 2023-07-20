@@ -66,7 +66,7 @@ The default strategy when dealing with this dynamic schema is `createWhenNeeded`
 
 One thing to note: when you call encode on a type, the Codable protocol is set up to "hand control" over to code provided by the type (or synthesized by the compiler) that has the details of _how_ to encode that type.
 In a few cases, this was surprising, and especially to support some of the specific Automerge primitives, the encoder adds special casing to use it's own logic - instead of the type's logic - for storing values into Automerge.
-This can be seen within the generic encode methods on the encoder, which switches over the type provided looking for the Automerge types of Text or Counter, or the foundational types of Date or Data.
+This can be seen within the generic encode methods on the encoder, which switches over the type provided looking for the Automerge types of AutomergeText or Counter, or the foundational types of Date or Data.
 Each of keyed container, unkeyed container, and single-value container need to contain consistent logic for these scenarios.
 
 ### Type Checking an Automerge content

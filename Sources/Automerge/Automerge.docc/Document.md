@@ -4,8 +4,8 @@
 
 ### Creating or loading a document
 
-- ``init()``
-- ``init(_:)``
+- ``init(logLevel:)``
+- ``init(_:logLevel:)``
 
 ### Inspecting Documents
 

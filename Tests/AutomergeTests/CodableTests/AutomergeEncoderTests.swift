@@ -28,7 +28,7 @@ final class AutomergeEncoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
-            let notes: Text
+            let notes: AutomergeText
         }
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
@@ -43,7 +43,7 @@ final class AutomergeEncoderTests: XCTestCase {
             date: earlyDate,
             data: Data("hello".utf8),
             uuid: UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!,
-            notes: Text("Something wicked this way comes.")
+            notes: AutomergeText("Something wicked this way comes.")
         )
 
         try automergeEncoder.encode(sample)
@@ -240,9 +240,9 @@ final class AutomergeEncoderTests: XCTestCase {
     func testTextUpdateWithEncoding_Object() throws {
         let doc = Document()
         struct TestModel: Codable {
-            var notes: Text
+            var notes: AutomergeText
         }
-        var model = TestModel(notes: Text("Hello"))
+        var model = TestModel(notes: AutomergeText("Hello"))
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
         try automergeEncoder.encode(model)
@@ -254,7 +254,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
 
-        model.notes = Text("Hello World!")
+        model.notes = AutomergeText("Hello World!")
         try automergeEncoder.encode(model)
 
         if case let .Object(textNode, nodeType) = try doc.get(obj: ObjId.ROOT, key: "notes") {
@@ -264,7 +264,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
 
-        model.notes = Text("Wassup World?")
+        model.notes = AutomergeText("Wassup World?")
         try automergeEncoder.encode(model)
 
         if case let .Object(textNode, nodeType) = try doc.get(obj: ObjId.ROOT, key: "notes") {
@@ -278,9 +278,9 @@ final class AutomergeEncoderTests: XCTestCase {
     func testTextUpdateWithEncoding_List() throws {
         let doc = Document()
         struct TestModel: Codable {
-            var notes: [Text]
+            var notes: [AutomergeText]
         }
-        var model = TestModel(notes: [Text("Hello")])
+        var model = TestModel(notes: [AutomergeText("Hello")])
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
         try automergeEncoder.encode(model)
@@ -294,7 +294,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
 
-        model.notes = [Text("Hello World!")]
+        model.notes = [AutomergeText("Hello World!")]
         try automergeEncoder.encode(model)
 
         if case let .Object(listNode, nodeType) = try doc.get(obj: ObjId.ROOT, key: "notes"),
@@ -306,7 +306,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
 
-        model.notes = [Text("Wassup World?")]
+        model.notes = [AutomergeText("Wassup World?")]
         try automergeEncoder.encode(model)
 
         if case let .Object(listNode, nodeType) = try doc.get(obj: ObjId.ROOT, key: "notes"),
@@ -327,12 +327,12 @@ final class AutomergeEncoderTests: XCTestCase {
             var notes: String
         }
         struct UpdatedTestModel: Codable {
-            var notes: Text
+            var notes: AutomergeText
         }
 
         let model = InitialTestModel(notes: "Hello")
         try automergeEncoder.encode(model)
-        let followupModel = UpdatedTestModel(notes: Text("Hello"))
+        let followupModel = UpdatedTestModel(notes: AutomergeText("Hello"))
 
         XCTAssertThrowsError(
             try automergeEncoder.encode(followupModel),
@@ -350,12 +350,12 @@ final class AutomergeEncoderTests: XCTestCase {
             var notes: [String]
         }
         struct UpdatedTestModel: Codable {
-            var notes: [Text]
+            var notes: [AutomergeText]
         }
 
         let model = InitialTestModel(notes: ["Hello"])
         try automergeEncoder.encode(model)
-        let followupModel = UpdatedTestModel(notes: [Text("Hello")])
+        let followupModel = UpdatedTestModel(notes: [AutomergeText("Hello")])
 
         XCTAssertThrowsError(
             try automergeEncoder.encode(followupModel),

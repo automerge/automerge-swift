@@ -231,7 +231,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Text() throws {
-        try singleValueContainer.encode(Text("hi"))
+        try singleValueContainer.encode(AutomergeText("hi"))
         let value = try doc.get(obj: ObjId.ROOT, key: "value")
         if case let .Object(objectId, .Text) = value {
             XCTAssertEqual(try doc.text(obj: objectId), "hi")
@@ -433,7 +433,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         singleValueContainer = impl.singleValueContainer()
-        XCTAssertThrowsError(try singleValueContainer.encode(Text("hi")))
+        XCTAssertThrowsError(try singleValueContainer.encode(AutomergeText("hi")))
     }
 
     func testErrorEncode_Date() throws {
