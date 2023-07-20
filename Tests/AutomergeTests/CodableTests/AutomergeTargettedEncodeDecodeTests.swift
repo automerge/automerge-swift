@@ -11,7 +11,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
     func testSimpleKeyEncode() throws {
         struct SimpleStruct: Codable, Equatable {
             let name: String
-            let notes: Text
+            let notes: AutomergeText
         }
 
         let automergeEncoder = AutomergeEncoder(doc: doc)
@@ -19,7 +19,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
         let sample = SimpleStruct(
             name: "henry",
-            notes: Text("Something wicked this way comes.")
+            notes: AutomergeText("Something wicked this way comes.")
         )
 
         let pathToTry: [AnyCodingKey] = [
@@ -39,7 +39,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
     func testTargetedSingleValueDecode() throws {
         struct SimpleStruct: Codable, Equatable {
             let name: String
-            let notes: Text
+            let notes: AutomergeText
         }
 
         let automergeEncoder = AutomergeEncoder(doc: doc)
@@ -47,7 +47,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
         let sample = SimpleStruct(
             name: "henry",
-            notes: Text("Something wicked this way comes.")
+            notes: AutomergeText("Something wicked this way comes.")
         )
 
         let pathToTry: [AnyCodingKey] = [
@@ -59,7 +59,10 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         let decoded1 = try automergeDecoder.decode(String.self, from: AnyCodingKey.parsePath("example.[0].name"))
         XCTAssertEqual(decoded1, "henry")
 
-        let decoded2 = try automergeDecoder.decode(Text.self, from: AnyCodingKey.parsePath("example.[0].notes"))
+        let decoded2 = try automergeDecoder.decode(
+            AutomergeText.self,
+            from: AnyCodingKey.parsePath("example.[0].notes")
+        )
         XCTAssertEqual(decoded2.value, "Something wicked this way comes.")
     }
 

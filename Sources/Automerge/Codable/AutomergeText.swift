@@ -1,7 +1,7 @@
 import Foundation
 
 /// A type that presents a string backed by a Sequential CRDT
-public struct Text: Hashable, Codable {
+public struct AutomergeText: Hashable, Codable {
     public var value: String
 
     // NOTE(heckj): The version Automerge after 2.0 is adding support for "marks"
@@ -17,7 +17,7 @@ public struct Text: Hashable, Codable {
     }
 }
 
-extension Text: CustomStringConvertible {
+extension AutomergeText: CustomStringConvertible {
     public var description: String {
         value
     }

@@ -152,12 +152,12 @@ struct AutomergeUnkeyedDecodingContainer: UnkeyedDecodingContainer {
                     debugDescription: "Expected to decode \(T.self) from \(retrievedValue), but it wasn't a `.counter`."
                 ))
             }
-        case is Text.Type:
-            let retrievedValue = try getNextValue(ofType: Text.self)
+        case is AutomergeText.Type:
+            let retrievedValue = try getNextValue(ofType: AutomergeText.self)
             if case let Value.Object(objectId, .Text) = retrievedValue {
                 let stringValue = try impl.doc.text(obj: objectId)
                 currentIndex += 1
-                return Text(stringValue) as! T
+                return AutomergeText(stringValue) as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

@@ -25,7 +25,7 @@ final class AutomergeUnkeyedEncoderDecoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
-            let notes: Text
+            let notes: AutomergeText
         }
 
         let dateFormatter = ISO8601DateFormatter()
@@ -39,7 +39,7 @@ final class AutomergeUnkeyedEncoderDecoderTests: XCTestCase {
             date: earlyDate,
             data: Data("hello".utf8),
             uuid: UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!,
-            notes: Text("Something wicked this way comes.")
+            notes: AutomergeText("Something wicked this way comes.")
         )
         let topLevel = WrapperStruct(list: [sample])
 
@@ -236,10 +236,10 @@ final class AutomergeUnkeyedEncoderDecoderTests: XCTestCase {
 
     func testListOfTextEncodeDecode() throws {
         struct WrapperStruct: Codable, Equatable {
-            let list: [Text]
+            let list: [AutomergeText]
         }
 
-        let topLevel = WrapperStruct(list: [Text("hi")])
+        let topLevel = WrapperStruct(list: [AutomergeText("hi")])
 
         try encoder.encode(topLevel)
         let decodedStruct = try decoder.decode(WrapperStruct.self)
