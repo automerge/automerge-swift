@@ -26,6 +26,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
         case let .success(objId):
             if let lastCodingKey = codingPath.last {
                 objectId = objId
+                impl.objectIdForContainer = objId
                 codingkey = AnyCodingKey(lastCodingKey)
                 lookupError = nil
             } else {

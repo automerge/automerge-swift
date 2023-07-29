@@ -52,6 +52,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         ) {
         case let .success(objId):
             objectId = objId
+            impl.objectIdForContainer = objId
             lookupError = nil
         case let .failure(capturedError):
             objectId = nil
@@ -98,6 +99,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             throw reportBestError()
         }
         try document.put(obj: objectId, key: key.stringValue, value: .Null)
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Bool, forKey key: Self.Key) throws {
@@ -108,6 +110,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .bool)
         }
         try document.put(obj: objectId, key: key.stringValue, value: .Boolean(value))
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: String, forKey key: Self.Key) throws {
@@ -118,6 +121,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .string)
         }
         try document.put(obj: objectId, key: key.stringValue, value: .String(value))
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Double, forKey key: Self.Key) throws {
@@ -134,6 +138,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .double)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Float, forKey key: Self.Key) throws {
@@ -150,6 +155,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .double)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Int, forKey key: Self.Key) throws {
@@ -160,6 +166,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .int)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Int8, forKey key: Self.Key) throws {
@@ -170,6 +177,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .int)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Int16, forKey key: Self.Key) throws {
@@ -180,6 +188,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .int)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Int32, forKey key: Self.Key) throws {
@@ -190,6 +199,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .int)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: Int64, forKey key: Self.Key) throws {
@@ -200,6 +210,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .int)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: UInt, forKey key: Self.Key) throws {
@@ -210,6 +221,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: UInt8, forKey key: Self.Key) throws {
@@ -220,6 +232,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: UInt16, forKey key: Self.Key) throws {
@@ -230,6 +243,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: UInt32, forKey key: Self.Key) throws {
@@ -240,6 +254,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode(_ value: UInt64, forKey key: Self.Key) throws {
@@ -250,9 +265,13 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
         }
         try document.put(obj: objectId, key: key.stringValue, value: value.toScalarValue())
+        impl.mapKeysWritten.append(key.stringValue)
     }
 
     mutating func encode<T: Encodable>(_ value: T, forKey key: Self.Key) throws {
+        guard let objectId = objectId else {
+            throw reportBestError()
+        }
         let newPath = impl.codingPath + [key]
         // this is where we need to figure out what the encodable type is in order to create
         // the correct Automerge objectType underneath the covers.
@@ -270,17 +289,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         // the Codable method `encode` is called - because that's where a container is created. So while we
         // can set this "newPath", we don't have the deets to create (if needed) a new objectId until we
         // initialize a specific container type.
-        guard let objectId = objectId else {
-            throw reportBestError()
-        }
 
-        let newEncoder = AutomergeEncoderImpl(
-            userInfo: impl.userInfo,
-            codingPath: newPath,
-            doc: document,
-            strategy: impl.schemaStrategy,
-            cautiousWrite: impl.cautiousWrite
-        )
         switch T.self {
         case is Date.Type:
             // Capture and override the default encodable pathing for Date since
@@ -290,6 +299,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .timestamp)
             }
             try document.put(obj: objectId, key: key.stringValue, value: downcastDate.toScalarValue())
+            impl.mapKeysWritten.append(key.stringValue)
         case is Data.Type:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
@@ -298,6 +308,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .bytes)
             }
             try document.put(obj: objectId, key: key.stringValue, value: downcastData.toScalarValue())
+            impl.mapKeysWritten.append(key.stringValue)
         case is Counter.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
@@ -306,6 +317,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .counter)
             }
             try document.put(obj: objectId, key: key.stringValue, value: downcastCounter.toScalarValue())
+            impl.mapKeysWritten.append(key.stringValue)
         case is Text.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
@@ -336,8 +348,21 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                     try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
                 }
             }
+            impl.mapKeysWritten.append(key.stringValue)
         default:
+            let newEncoder = AutomergeEncoderImpl(
+                userInfo: impl.userInfo,
+                codingPath: newPath,
+                doc: document,
+                strategy: impl.schemaStrategy,
+                cautiousWrite: impl.cautiousWrite
+            )
+            // Create a link from the current AutomergeEncoderImpl to the child, which
+            // will be referenced from future containers and updated with status.
+            impl.childEncoders.append(newEncoder)
+
             try value.encode(to: newEncoder)
+            impl.mapKeysWritten.append(key.stringValue)
         }
     }
 

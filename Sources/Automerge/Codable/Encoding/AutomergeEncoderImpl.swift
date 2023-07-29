@@ -1,3 +1,5 @@
+/// Convenience marker within AutomergeEncoderImpl to indicate the kind of associated container
+
 /// The internal implementation of AutomergeEncoder.
 ///
 /// Instances of the class capture one of the various kinds of schema value types - single value, array, or object.
@@ -12,6 +14,16 @@ final class AutomergeEncoderImpl {
     // indicator that the singleValue has written a value
     var singleValueWritten: Bool = false
 
+    // Tracking details of what was written by Codable implementations
+    // working with the container encode() calls. The details captured
+    // in these variables allow us to "clean up" anything extraneous
+    // in the data store that wasn't overwritten by an encode.
+    var containerType: EncodingContainerType?
+    var childEncoders: [AutomergeEncoderImpl] = []
+    var highestUnkeyedIndexWritten: UInt64?
+    var mapKeysWritten: [String] = []
+    var objectIdForContainer: ObjId?
+
     init(
         userInfo: [CodingUserInfoKey: Any],
         codingPath: [CodingKey],
@@ -25,11 +37,59 @@ final class AutomergeEncoderImpl {
         schemaStrategy = strategy
         self.cautiousWrite = cautiousWrite
     }
+
+    func postencodeCleanup() {
+        precondition(objectIdForContainer != nil)
+        precondition(containerType != nil)
+        guard let objectIdForContainer, let containerType else {
+            return
+        }
+        switch containerType {
+        case .Key:
+            precondition(!mapKeysWritten.isEmpty)
+            // Remove keys that exist in this objectId that weren't
+            // written during encode. (clean up 'dead' keys from maps)
+            let extraAutomergeKeys = document.keys(obj: objectIdForContainer)
+                .filter { keyValue in
+                    !mapKeysWritten.contains(keyValue)
+                }
+            for extraKey in extraAutomergeKeys {
+                do {
+                    try document.delete(obj: objectIdForContainer, key: extraKey)
+                } catch {
+                    fatalError("Unable to delete extra key \(extraKey) during post-encode cleanup: \(error)")
+                }
+            }
+        case .Index:
+            precondition(highestUnkeyedIndexWritten != nil)
+            guard let highestUnkeyedIndexWritten else {
+                return
+            }
+            // Remove index elements that exist in this objectId beyond
+            // the max written during encode. (allow arrays to 'shrink')
+            var highestAutomergeIndex = document.length(obj: objectIdForContainer) - 1
+            while highestAutomergeIndex > highestUnkeyedIndexWritten {
+                do {
+                    try document.delete(obj: objectIdForContainer, index: highestAutomergeIndex)
+                    highestAutomergeIndex -= 1
+                } catch {
+                    fatalError(
+                        "Unable to delete index position \(highestAutomergeIndex) during post-encode cleanup: \(error)"
+                    )
+                }
+            }
+        case .Value:
+            return
+        }
+        // Recursively walk the encoded tree doing "cleanup".
+        for child in childEncoders {
+            child.postencodeCleanup()
+        }
+    }
 }
 
 // A bit of example code that someone might implement to provide Encodable conformance
 // for their own type.
-//
 //
 // extension Coordinate: Encodable {
 //    func encode(to encoder: Encoder) throws {
@@ -60,6 +120,7 @@ extension AutomergeEncoderImpl: Encoder {
             codingPath: codingPath,
             doc: document
         )
+        containerType = .Key
         return KeyedEncodingContainer(container)
     }
 
@@ -74,6 +135,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
+        containerType = .Index
         return AutomergeUnkeyedEncodingContainer(
             impl: self,
             codingPath: codingPath,
@@ -92,6 +154,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
+        containerType = .Value
         return AutomergeSingleValueEncodingContainer(
             impl: self,
             codingPath: codingPath,

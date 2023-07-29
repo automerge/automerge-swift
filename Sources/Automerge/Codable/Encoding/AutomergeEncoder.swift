@@ -28,6 +28,7 @@ public struct AutomergeEncoder {
             cautiousWrite: cautiousWrite
         )
         try value.encode(to: encoder)
+        encoder.postencodeCleanup()
     }
 
     public func encode<T: Encodable>(_ value: T, at path: [CodingKey]) throws {
@@ -39,5 +40,6 @@ public struct AutomergeEncoder {
             cautiousWrite: cautiousWrite
         )
         try value.encode(to: encoder)
+        encoder.postencodeCleanup()
     }
 }
