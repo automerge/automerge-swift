@@ -479,12 +479,15 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
                 }
                 XCTAssertNotNil(encoderImpl.highestUnkeyedIndexWritten)
                 XCTAssertTrue(encoderImpl.mapKeysWritten.isEmpty)
+                XCTAssertNotNil(encoderImpl.objectIdForContainer)
             case .some(.Key):
                 if shouldPrint { print("\(prefix)KEY ---> \(compactCodingPath) keys: \(encoderImpl.mapKeysWritten)") }
                 XCTAssertNil(encoderImpl.highestUnkeyedIndexWritten)
                 XCTAssertFalse(encoderImpl.mapKeysWritten.isEmpty)
+                XCTAssertNotNil(encoderImpl.objectIdForContainer)
             case .some(.Value):
                 if shouldPrint { print("\(prefix)VALUE -> \(compactCodingPath)") }
+                XCTAssertNotNil(encoderImpl.objectIdForContainer)
             }
             for child in encoderImpl.childEncoders {
                 walk(encoderImpl: child, indent: indent + 1, shouldPrint: shouldPrint)
