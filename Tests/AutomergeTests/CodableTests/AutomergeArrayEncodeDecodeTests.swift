@@ -10,23 +10,23 @@ final class AutomergeArrayEncodeDecodeTests: XCTestCase {
         doc = Document()
     }
 
-    func testSimpleKeyDecode() throws {
+    func testArrayShrinkingEncode() throws {
         // illustrates https://github.com/automerge/automerge-swift/issues/54
-        
+
         struct StructWithArray: Codable, Equatable {
             var names: [String] = []
         }
-        
+
         let encoder = AutomergeEncoder(doc: doc)
         let decoder = AutomergeDecoder(doc: doc)
         var sample = StructWithArray()
         sample.names.append("one")
         sample.names.append("two")
-        
+
         try encoder.encode(sample)
         let replica = try decoder.decode(StructWithArray.self)
         XCTAssertEqual(replica, sample)
-        
+
         _ = sample.names.popLast()
         try encoder.encode(sample)
         let secondReplica = try decoder.decode(StructWithArray.self)
@@ -35,5 +35,4 @@ final class AutomergeArrayEncodeDecodeTests: XCTestCase {
         // ("StructWithArray(names: ["one", "one", "two"])") is not equal to
         // ("StructWithArray(names: ["one"])")
     }
-
 }

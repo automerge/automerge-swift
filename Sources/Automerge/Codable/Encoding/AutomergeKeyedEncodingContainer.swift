@@ -255,6 +255,9 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
     }
 
     mutating func encode<T: Encodable>(_ value: T, forKey key: Self.Key) throws {
+        guard let objectId = objectId else {
+            throw reportBestError()
+        }
         let newPath = impl.codingPath + [key]
         // this is where we need to figure out what the encodable type is in order to create
         // the correct Automerge objectType underneath the covers.
@@ -272,9 +275,6 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         // the Codable method `encode` is called - because that's where a container is created. So while we
         // can set this "newPath", we don't have the deets to create (if needed) a new objectId until we
         // initialize a specific container type.
-        guard let objectId = objectId else {
-            throw reportBestError()
-        }
 
         let newEncoder = AutomergeEncoderImpl(
             userInfo: impl.userInfo,
@@ -284,6 +284,10 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             cautiousWrite: impl.cautiousWrite,
             logLevel: impl.reportingLogLevel
         )
+        // Create a link from the current AutomergeEncoderImpl to the child, which
+        // will be referenced from future containers and updated with status.
+        impl.childEncoders.append(newEncoder)
+
         switch T.self {
         case is Date.Type:
             // Capture and override the default encodable pathing for Date since

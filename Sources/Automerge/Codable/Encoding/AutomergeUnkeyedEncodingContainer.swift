@@ -18,7 +18,6 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
 
     init(impl: AutomergeEncoderImpl, codingPath: [CodingKey], doc: Document) {
         self.impl = impl
-        // array = impl.array!
         self.codingPath = codingPath
         document = doc
         switch doc.retrieveObjectId(
@@ -33,10 +32,14 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             objectId = nil
             lookupError = capturedError
         }
+        // Fix for issue #54 looks best here, but I'm not happy with it.
+        // We don't know the length of what's going to be encoded, nor do we get any
+        // signal when we're done, so the only path I can see is to pro-actively wipe
+        // out the extent of any array *before* we start writing back into it.
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
             if impl.reportingLogLevel >= LogVerbosity.debug {
-                logger.debug("Establishing Unkeyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
+                logger.debug("Established Unkeyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
             }
         }
     }
@@ -58,6 +61,9 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
     mutating func encodeNil() throws {}
 
     mutating func encode<T>(_ value: T) throws where T: Encodable {
+        guard let objectId = objectId else {
+            throw reportBestError()
+        }
         let newPath = impl.codingPath + [AnyCodingKey(UInt64(count))]
         let newEncoder = AutomergeEncoderImpl(
             userInfo: impl.userInfo,
@@ -67,9 +73,9 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             cautiousWrite: impl.cautiousWrite,
             logLevel: impl.reportingLogLevel
         )
-        guard let objectId = objectId else {
-            throw reportBestError()
-        }
+        // Create a link from the current AutomergeEncoderImpl to the child, which
+        // will be referenced from future containers and updated with status.
+        impl.childEncoders.append(newEncoder)
 
         switch T.self {
         case is Date.Type:

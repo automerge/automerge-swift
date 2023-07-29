@@ -1,5 +1,12 @@
 import os
 
+/// Convenience marker within AutomergeEncoderImpl to indicate the kind of associated container
+enum containerType {
+    case singleValue
+    case keyed
+    case unkeyed
+}
+
 /// The internal implementation of AutomergeEncoder.
 ///
 /// Instances of the class capture one of the various kinds of schema value types - single value, array, or object.
@@ -13,6 +20,11 @@ final class AutomergeEncoderImpl {
     let reportingLogLevel: LogVerbosity
     // indicator that the singleValue has written a value
     var singleValueWritten: Bool = false
+
+    var containerType: containerType?
+    var childEncoders: [AutomergeEncoderImpl] = []
+    var highestUnkeyedIndexWritten: UInt?
+    var mapKeysWritten: [String] = []
 
     init(
         userInfo: [CodingUserInfoKey: Any],
@@ -33,7 +45,6 @@ final class AutomergeEncoderImpl {
 
 // A bit of example code that someone might implement to provide Encodable conformance
 // for their own type.
-//
 //
 // extension Coordinate: Encodable {
 //    func encode(to encoder: Encoder) throws {
@@ -64,6 +75,7 @@ extension AutomergeEncoderImpl: Encoder {
             codingPath: codingPath,
             doc: document
         )
+        containerType = .keyed
         return KeyedEncodingContainer(container)
     }
 
@@ -78,6 +90,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
+        containerType = .unkeyed
         return AutomergeUnkeyedEncodingContainer(
             impl: self,
             codingPath: codingPath,
@@ -96,6 +109,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
+        containerType = .singleValue
         return AutomergeSingleValueEncodingContainer(
             impl: self,
             codingPath: codingPath,
