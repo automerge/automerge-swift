@@ -1,11 +1,6 @@
 import os
 
 /// Convenience marker within AutomergeEncoderImpl to indicate the kind of associated container
-enum containerType {
-    case singleValue
-    case keyed
-    case unkeyed
-}
 
 /// The internal implementation of AutomergeEncoder.
 ///
@@ -21,10 +16,15 @@ final class AutomergeEncoderImpl {
     // indicator that the singleValue has written a value
     var singleValueWritten: Bool = false
 
-    var containerType: containerType?
+    // Tracking details of what was written by Codable implementations
+    // working with the container encode() calls. The details captured
+    // in these variables allow us to "clean up" anything extraneous
+    // in the data store that wasn't overwritten by an encode.
+    var containerType: EncodingContainerType?
     var childEncoders: [AutomergeEncoderImpl] = []
-    var highestUnkeyedIndexWritten: UInt?
+    var highestUnkeyedIndexWritten: UInt64?
     var mapKeysWritten: [String] = []
+    var objectIdForContainer: ObjId?
 
     init(
         userInfo: [CodingUserInfoKey: Any],
@@ -75,7 +75,7 @@ extension AutomergeEncoderImpl: Encoder {
             codingPath: codingPath,
             doc: document
         )
-        containerType = .keyed
+        containerType = .Key
         return KeyedEncodingContainer(container)
     }
 
@@ -90,7 +90,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
-        containerType = .unkeyed
+        containerType = .Index
         return AutomergeUnkeyedEncodingContainer(
             impl: self,
             codingPath: codingPath,
@@ -109,7 +109,7 @@ extension AutomergeEncoderImpl: Encoder {
             preconditionFailure()
         }
 
-        containerType = .singleValue
+        containerType = .Value
         return AutomergeSingleValueEncodingContainer(
             impl: self,
             codingPath: codingPath,

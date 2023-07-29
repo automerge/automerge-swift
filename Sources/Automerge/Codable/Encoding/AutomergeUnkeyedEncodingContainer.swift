@@ -27,6 +27,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
         ) {
         case let .success(objId):
             objectId = objId
+            impl.objectIdForContainer = objId
             lookupError = nil
         case let .failure(capturedError):
             objectId = nil
@@ -97,6 +98,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                 )
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         case is Data.Type:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
@@ -117,6 +119,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             }
 
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         case is Counter.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
@@ -136,6 +139,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                 )
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         case is AutomergeText.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
@@ -166,8 +170,10 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                     try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
                 }
             }
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         default:
             try value.encode(to: newEncoder)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         }
         count += 1
     }
