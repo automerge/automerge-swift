@@ -5,7 +5,7 @@ import XCTest
 @available(macOS 12, *)
 class InteropTests: XCTestCase {
     var markdownData: Data? = nil
-    
+
     // DEVNOTE(heckj): Bundle based approaches for finding fixture files
     // work reasonably well with regular targets, but fail (or more specifically,
     // don't work as the docs assert) with resources embedded in test targets.
@@ -49,7 +49,7 @@ class InteropTests: XCTestCase {
         // print(fancy) // A basic print() provides a loose idea of runs within the multi-line output.
         let enc = JSONEncoder()
         let jsonencode = try enc.encode(fancy)
-        print(String(bytes: jsonencode, encoding: .utf8))
+        print(String(bytes: jsonencode, encoding: .utf8) as Any)
         // custom encoders built in to foundation:
         // fancy.encode(to: Encoder, configuration: AttributeScopeCodableConfiguration)
         // see: https://developer.apple.com/documentation/foundation/decodableattributedstringkey
@@ -59,7 +59,7 @@ class InteropTests: XCTestCase {
         // https://developer.apple.com/documentation/foundation/inlinepresentationintent includes
         // code, emphasis, line-break, strike-through, strong, etc.
     }
-    
+
     func testDescribeExistingPresentationIntents() throws {
         let foundation_presentation_types = [
             PresentationIntent.Kind.blockQuote,
@@ -68,12 +68,14 @@ class InteropTests: XCTestCase {
             PresentationIntent.Kind.listItem(ordinal: 1),
             PresentationIntent.Kind.orderedList,
             PresentationIntent.Kind.paragraph,
-            PresentationIntent.Kind.table(columns:
+            PresentationIntent.Kind.table(
+                columns:
                 [
-                PresentationIntent.TableColumn(alignment: .left),
-                PresentationIntent.TableColumn(alignment: .center),
-                PresentationIntent.TableColumn(alignment: .right)
-                ]),
+                    PresentationIntent.TableColumn(alignment: .left),
+                    PresentationIntent.TableColumn(alignment: .center),
+                    PresentationIntent.TableColumn(alignment: .right),
+                ]
+            ),
             PresentationIntent.Kind.tableCell(columnIndex: 1),
             PresentationIntent.Kind.tableHeaderRow,
             PresentationIntent.Kind.tableRow(rowIndex: 1),
@@ -85,23 +87,21 @@ class InteropTests: XCTestCase {
             let encoded = try encoder.encode(type)
             print("type: \(type.debugDescription) JSONencoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
         }
-        
-        
+
         let inline_intents = [
             "blockHTML":
-            InlinePresentationIntent.blockHTML,
-            "code":InlinePresentationIntent.code,
-            "emphasized":InlinePresentationIntent.emphasized,
-            "inlineHTML":InlinePresentationIntent.inlineHTML,
-            "lineBreak":InlinePresentationIntent.lineBreak,
-            "softBreak":InlinePresentationIntent.softBreak,
-            "strikethrough":InlinePresentationIntent.strikethrough,
-            "stronglyEmphasized":InlinePresentationIntent.stronglyEmphasized
-            ]
+                InlinePresentationIntent.blockHTML,
+            "code": InlinePresentationIntent.code,
+            "emphasized": InlinePresentationIntent.emphasized,
+            "inlineHTML": InlinePresentationIntent.inlineHTML,
+            "lineBreak": InlinePresentationIntent.lineBreak,
+            "softBreak": InlinePresentationIntent.softBreak,
+            "strikethrough": InlinePresentationIntent.strikethrough,
+            "stronglyEmphasized": InlinePresentationIntent.stronglyEmphasized,
+        ]
         print("Inline Presentation Types")
         for (name, type) in inline_intents {
             print("type: \(name) rawValue: \(type.rawValue)")
         }
-
     }
 }
