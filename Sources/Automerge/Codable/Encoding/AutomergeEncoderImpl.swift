@@ -41,6 +41,55 @@ final class AutomergeEncoderImpl {
         self.cautiousWrite = cautiousWrite
         reportingLogLevel = logLevel
     }
+
+    func postencodeCleanup() {
+        precondition(objectIdForContainer != nil)
+        precondition(containerType != nil)
+        guard let objectIdForContainer, let containerType else {
+            return
+        }
+        switch containerType {
+        case .Key:
+            precondition(!mapKeysWritten.isEmpty)
+            // Remove keys that exist in this objectId that weren't
+            // written during encode. (clean up 'dead' keys from maps)
+            let extraAutomergeKeys = document.keys(obj: objectIdForContainer)
+                .filter { keyValue in
+                    !mapKeysWritten.contains(keyValue)
+                }
+            for extraKey in extraAutomergeKeys {
+                do {
+                    try document.delete(obj: objectIdForContainer, key: extraKey)
+                } catch {
+                    fatalError("Unable to delete extra key \(extraKey) during post-encode cleanup: \(error)")
+                }
+            }
+        case .Index:
+            precondition(highestUnkeyedIndexWritten != nil)
+            guard let highestUnkeyedIndexWritten else {
+                return
+            }
+            // Remove index elements that exist in this objectId beyond
+            // the max written during encode. (allow arrays to 'shrink')
+            var highestAutomergeIndex = document.length(obj: objectIdForContainer) - 1
+            while highestAutomergeIndex > highestUnkeyedIndexWritten {
+                do {
+                    try document.delete(obj: objectIdForContainer, index: highestAutomergeIndex)
+                    highestAutomergeIndex -= 1
+                } catch {
+                    fatalError(
+                        "Unable to delete index position \(highestAutomergeIndex) during post-encode cleanup: \(error)"
+                    )
+                }
+            }
+        case .Value:
+            return
+        }
+        // Recursively walk the encoded tree doing "cleanup".
+        for child in childEncoders {
+            child.postencodeCleanup()
+        }
+    }
 }
 
 // A bit of example code that someone might implement to provide Encodable conformance

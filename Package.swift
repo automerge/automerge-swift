@@ -35,26 +35,26 @@ let FFIbinaryTarget: PackageDescription.Target
 //
 // The script `./scripts/build-xcframework.sh` _does_ expect that you have Rust
 // installed locally in order to function.
-if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
-    // We are using a local file reference to an XCFramework, which is functional
-    // on the tags for this package because the XCFramework.zip file is committed with
-    // those specific release points. This does, however, cause a few awkward issues,
-    // in particular it means that swift-docc-plugin doesn't operate correctly as the
-    // process to retrieve the symbols from this and the XCFramework fails within
-    // Swift Package Manager. Building documentation within Xcode works perfectly fine,
-    // but if you're attempting to generate HTML documentation, use the script
-    // `./scripts/build-ghpages-docs.sh`.
-    FFIbinaryTarget = .binaryTarget(
-        name: "automergeFFI",
-        path: "./automergeFFI.xcframework.zip"
-    )
-} else {
-    FFIbinaryTarget = .binaryTarget(
-        name: "automergeFFI",
-        url: "https://github.com/automerge/automerge-swift/releases/download/0.3.0/automergeFFI.xcframework.zip",
-        checksum: "8cf0b680ccbf7f97b8efac3d3defa84a06f3b3869d5c23e4535905d0f9c70e58"
-    )
-}
+// if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
+// We are using a local file reference to an XCFramework, which is functional
+// on the tags for this package because the XCFramework.zip file is committed with
+// those specific release points. This does, however, cause a few awkward issues,
+// in particular it means that swift-docc-plugin doesn't operate correctly as the
+// process to retrieve the symbols from this and the XCFramework fails within
+// Swift Package Manager. Building documentation within Xcode works perfectly fine,
+// but if you're attempting to generate HTML documentation, use the script
+// `./scripts/build-ghpages-docs.sh`.
+FFIbinaryTarget = .binaryTarget(
+    name: "automergeFFI",
+    path: "./automergeFFI.xcframework.zip"
+)
+// } else {
+//    FFIbinaryTarget = .binaryTarget(
+//        name: "automergeFFI",
+//        url: "https://github.com/automerge/automerge-swift/releases/download/0.3.0/automergeFFI.xcframework.zip",
+//        checksum: "8cf0b680ccbf7f97b8efac3d3defa84a06f3b3869d5c23e4535905d0f9c70e58"
+//    )
+// }
 
 let package = Package(
     name: "Automerge",
