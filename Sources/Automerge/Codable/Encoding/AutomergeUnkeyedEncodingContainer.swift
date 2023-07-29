@@ -65,18 +65,6 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
         guard let objectId = objectId else {
             throw reportBestError()
         }
-        let newPath = impl.codingPath + [AnyCodingKey(UInt64(count))]
-        let newEncoder = AutomergeEncoderImpl(
-            userInfo: impl.userInfo,
-            codingPath: newPath,
-            doc: document,
-            strategy: impl.schemaStrategy,
-            cautiousWrite: impl.cautiousWrite,
-            logLevel: impl.reportingLogLevel
-        )
-        // Create a link from the current AutomergeEncoderImpl to the child, which
-        // will be referenced from future containers and updated with status.
-        impl.childEncoders.append(newEncoder)
 
         switch T.self {
         case is Date.Type:
@@ -172,6 +160,19 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             }
             impl.highestUnkeyedIndexWritten = UInt64(count)
         default:
+            let newPath = impl.codingPath + [AnyCodingKey(UInt64(count))]
+            let newEncoder = AutomergeEncoderImpl(
+                userInfo: impl.userInfo,
+                codingPath: newPath,
+                doc: document,
+                strategy: impl.schemaStrategy,
+                cautiousWrite: impl.cautiousWrite,
+                logLevel: impl.reportingLogLevel
+            )
+            // Create a link from the current AutomergeEncoderImpl to the child, which
+            // will be referenced from future containers and updated with status.
+            impl.childEncoders.append(newEncoder)
+
             try value.encode(to: newEncoder)
             impl.highestUnkeyedIndexWritten = UInt64(count)
         }

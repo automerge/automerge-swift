@@ -438,4 +438,57 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         let enc = rootKeyedContainer.superEncoder(forKey: .value)
         XCTAssertEqual(enc.codingPath.count, 0)
     }
+
+    func testEncoderImplTreeBuilding() throws {
+        let impl = AutomergeEncoderImpl(
+            userInfo: [:],
+            codingPath: [],
+            doc: doc,
+            strategy: .createWhenNeeded,
+            cautiousWrite: false,
+            logLevel: .errorOnly
+        )
+        // hand off to synthesized or provided logic
+        let thingToEncode = Samples.layered
+        try thingToEncode.encode(to: impl)
+        // And we're back - see what we've got...
+
+        // NOTE: change 'shouldPrint' to true if you want to see the
+        // detail of the tree.
+        walk(encoderImpl: impl, indent: 0, shouldPrint: false)
+
+        func walk(encoderImpl: AutomergeEncoderImpl, indent: Int, shouldPrint: Bool) {
+            let prefix = String(repeating: "  ", count: indent)
+            // let compactCodingPath = encoderImpl.codingPath.stringPath()
+
+            let compactCodingPath = encoderImpl.codingPath
+                .map { pathElement in
+                    AnyCodingKey(pathElement).description
+                }
+                .joined(separator: ".")
+
+            switch encoderImpl.containerType {
+            case .none:
+                if shouldPrint { print("\(prefix)*NIL* - \(compactCodingPath)") }
+                XCTFail("encountered encoderImpl without a defined type")
+            case .some(.Index):
+                if shouldPrint {
+                    print(
+                        "\(prefix)INDEX -> \(compactCodingPath) maxIndex: \(String(describing: encoderImpl.highestUnkeyedIndexWritten))"
+                    )
+                }
+                XCTAssertNotNil(encoderImpl.highestUnkeyedIndexWritten)
+                XCTAssertTrue(encoderImpl.mapKeysWritten.isEmpty)
+            case .some(.Key):
+                if shouldPrint { print("\(prefix)KEY ---> \(compactCodingPath) keys: \(encoderImpl.mapKeysWritten)") }
+                XCTAssertNil(encoderImpl.highestUnkeyedIndexWritten)
+                XCTAssertFalse(encoderImpl.mapKeysWritten.isEmpty)
+            case .some(.Value):
+                if shouldPrint { print("\(prefix)VALUE -> \(compactCodingPath)") }
+            }
+            for child in encoderImpl.childEncoders {
+                walk(encoderImpl: child, indent: indent + 1, shouldPrint: shouldPrint)
+            }
+        }
+    }
 }

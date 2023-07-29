@@ -292,18 +292,6 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         // can set this "newPath", we don't have the deets to create (if needed) a new objectId until we
         // initialize a specific container type.
 
-        let newEncoder = AutomergeEncoderImpl(
-            userInfo: impl.userInfo,
-            codingPath: newPath,
-            doc: document,
-            strategy: impl.schemaStrategy,
-            cautiousWrite: impl.cautiousWrite,
-            logLevel: impl.reportingLogLevel
-        )
-        // Create a link from the current AutomergeEncoderImpl to the child, which
-        // will be referenced from future containers and updated with status.
-        impl.childEncoders.append(newEncoder)
-
         switch T.self {
         case is Date.Type:
             // Capture and override the default encodable pathing for Date since
@@ -364,6 +352,18 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             }
             impl.mapKeysWritten.append(key.stringValue)
         default:
+            let newEncoder = AutomergeEncoderImpl(
+                userInfo: impl.userInfo,
+                codingPath: newPath,
+                doc: document,
+                strategy: impl.schemaStrategy,
+                cautiousWrite: impl.cautiousWrite,
+                logLevel: impl.reportingLogLevel
+            )
+            // Create a link from the current AutomergeEncoderImpl to the child, which
+            // will be referenced from future containers and updated with status.
+            impl.childEncoders.append(newEncoder)
+
             try value.encode(to: newEncoder)
             impl.mapKeysWritten.append(key.stringValue)
         }
