@@ -494,4 +494,30 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             }
         }
     }
+
+    func testEncoderImplLimitedCleanup() throws {
+        let fullEncoder = AutomergeEncoder(doc: doc)
+        let fullDecoder = AutomergeDecoder(doc: doc)
+
+        var thingToEncode = Samples.layered
+        try fullEncoder.encode(thingToEncode)
+
+        let decodedCopy = try fullDecoder.decode(ExampleModel.self)
+        XCTAssertEqual(decodedCopy, thingToEncode)
+
+        try fullEncoder.encode("Hello", at: [AnyCodingKey("title")])
+        let newlyDecoded = try fullDecoder.decode(ExampleModel.self)
+        XCTAssertEqual(newlyDecoded.notes.count, 12)
+        XCTAssertNotEqual(newlyDecoded, thingToEncode)
+
+        // change only Note 3 in the model
+        thingToEncode.notes[3].description = "new description"
+        let noteCopy = thingToEncode.notes[3]
+        try fullEncoder.encode(noteCopy, at: [AnyCodingKey("notes"), AnyCodingKey(3)])
+
+        let anotherDecoded = try fullDecoder.decode(ExampleModel.self)
+        XCTAssertEqual(anotherDecoded.title, "Hello")
+        XCTAssertEqual(anotherDecoded.notes[3], noteCopy)
+        XCTAssertEqual(anotherDecoded.notes.count, 12)
+    }
 }

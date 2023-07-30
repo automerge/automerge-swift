@@ -49,6 +49,6 @@ public struct AutomergeEncoder {
             logLevel: logLevel
         )
         try value.encode(to: encoder)
-        encoder.postencodeCleanup()
+        encoder.postencodeCleanup(below: path.map { AnyCodingKey($0) })
     }
 }
