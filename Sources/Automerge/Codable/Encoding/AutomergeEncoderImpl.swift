@@ -61,16 +61,20 @@ final class AutomergeEncoderImpl {
                 }
             }
         case .Index:
-            precondition(highestUnkeyedIndexWritten != nil)
-            guard let highestUnkeyedIndexWritten else {
-                return
+            var highestIndexWritten: Int64 = -1
+            if let highestUnkeyedIndexWritten {
+                // If highestUnkeyedIndexWritten is nil, then a list/array was encoded
+                // with no items within it.
+                highestIndexWritten = Int64(highestUnkeyedIndexWritten)
             }
-            // Remove index elements that exist in this objectId beyond
-            // the max written during encode. (allow arrays to 'shrink')
-            var highestAutomergeIndex = document.length(obj: objectIdForContainer) - 1
-            while highestAutomergeIndex > highestUnkeyedIndexWritten {
+            let lengthOfAutomergeContainer = document.length(obj: objectIdForContainer)
+            if lengthOfAutomergeContainer > 0 {
+                var highestAutomergeIndex = Int64(lengthOfAutomergeContainer - 1)
+                // Remove index elements that exist in this objectId beyond
+                // the max written during encode. (allow arrays to 'shrink')
+                while highestAutomergeIndex > highestIndexWritten {
                 do {
-                    try document.delete(obj: objectIdForContainer, index: highestAutomergeIndex)
+                    try document.delete(obj: objectIdForContainer, index: UInt64(highestAutomergeIndex))
                     highestAutomergeIndex -= 1
                 } catch {
                     fatalError(
@@ -78,6 +82,7 @@ final class AutomergeEncoderImpl {
                     )
                 }
             }
+        }
         case .Value:
             return
         }
