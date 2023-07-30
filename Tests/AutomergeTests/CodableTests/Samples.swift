@@ -34,7 +34,7 @@ public struct Note: Hashable, Codable {
     }
 }
 
-public struct ExampleModel: Codable {
+public struct ExampleModel: Codable, Equatable {
     var title: String
     var notes: [Note]
 
