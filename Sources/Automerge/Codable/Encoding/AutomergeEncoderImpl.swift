@@ -42,53 +42,56 @@ final class AutomergeEncoderImpl {
         reportingLogLevel = logLevel
     }
 
-    func postencodeCleanup() {
+    func postencodeCleanup(below prefix: [AnyCodingKey] = []) {
         precondition(objectIdForContainer != nil)
         precondition(containerType != nil)
         guard let objectIdForContainer, let containerType else {
             return
         }
-        switch containerType {
-        case .Key:
-            precondition(!mapKeysWritten.isEmpty)
-            // Remove keys that exist in this objectId that weren't
-            // written during encode. (clean up 'dead' keys from maps)
-            let extraAutomergeKeys = document.keys(obj: objectIdForContainer)
-                .filter { keyValue in
-                    !mapKeysWritten.contains(keyValue)
+        if codingPath.map({ AnyCodingKey($0) }).starts(with: prefix) {
+            switch containerType {
+            case .Key:
+                precondition(!mapKeysWritten.isEmpty)
+                // Remove keys that exist in this objectId that weren't
+                // written during encode. (clean up 'dead' keys from maps)
+                let extraAutomergeKeys = document.keys(obj: objectIdForContainer)
+                    .filter { keyValue in
+                        !mapKeysWritten.contains(keyValue)
+                    }
+                for extraKey in extraAutomergeKeys {
+                    do {
+                        try document.delete(obj: objectIdForContainer, key: extraKey)
+                    } catch {
+                        fatalError("Unable to delete extra key \(extraKey) during post-encode cleanup: \(error)")
+                    }
                 }
-            for extraKey in extraAutomergeKeys {
-                do {
-                    try document.delete(obj: objectIdForContainer, key: extraKey)
-                } catch {
-                    fatalError("Unable to delete extra key \(extraKey) during post-encode cleanup: \(error)")
+            case .Index:
+                var highestIndexWritten: Int64 = -1
+                if let highestUnkeyedIndexWritten {
+                    // If highestUnkeyedIndexWritten is nil, then a list/array was encoded
+                    // with no items within it.
+                    highestIndexWritten = Int64(highestUnkeyedIndexWritten)
                 }
-            }
-        case .Index:
-            var highestIndexWritten: Int64 = -1
-            if let highestUnkeyedIndexWritten {
-                // If highestUnkeyedIndexWritten is nil, then a list/array was encoded
-                // with no items within it.
-                highestIndexWritten = Int64(highestUnkeyedIndexWritten)
-            }
-            let lengthOfAutomergeContainer = document.length(obj: objectIdForContainer)
-            if lengthOfAutomergeContainer > 0 {
-                var highestAutomergeIndex = Int64(lengthOfAutomergeContainer - 1)
-                // Remove index elements that exist in this objectId beyond
-                // the max written during encode. (allow arrays to 'shrink')
-                while highestAutomergeIndex > highestIndexWritten {
-                do {
-                    try document.delete(obj: objectIdForContainer, index: UInt64(highestAutomergeIndex))
-                    highestAutomergeIndex -= 1
-                } catch {
-                    fatalError(
-                        "Unable to delete index position \(highestAutomergeIndex) during post-encode cleanup: \(error)"
-                    )
+                let lengthOfAutomergeContainer = document.length(obj: objectIdForContainer)
+                if lengthOfAutomergeContainer > 0 {
+                    var highestAutomergeIndex = Int64(lengthOfAutomergeContainer - 1)
+                    // Remove index elements that exist in this objectId beyond
+                    // the max written during encode. (allow arrays to 'shrink')
+                    while highestAutomergeIndex > highestIndexWritten {
+                        do {
+                            try document.delete(obj: objectIdForContainer, index: UInt64(highestAutomergeIndex))
+                            highestAutomergeIndex -= 1
+                        } catch {
+                            fatalError(
+                                "Unable to delete index position \(highestAutomergeIndex) during post-encode cleanup: \(error)"
+                            )
+                        }
+                    }
                 }
+            case .Value:
+                // no cleanup needed on a leaf node
+                return
             }
-        }
-        case .Value:
-            return
         }
         // Recursively walk the encoded tree doing "cleanup".
         for child in childEncoders {

@@ -35,7 +35,7 @@ final class AutomergeArrayEncodeDecodeTests: XCTestCase {
         // ("StructWithArray(names: ["one", "one", "two"])") is not equal to
         // ("StructWithArray(names: ["one"])")
     }
-    
+
     func testEmptyArrayEncode() throws {
         // illustrates https://github.com/automerge/automerge-swift/issues/54
 
