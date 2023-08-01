@@ -63,12 +63,23 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/Prop``
 - ``Automerge/ActorId``
 
-### Codable Error Types
+### Logging from Documents
+
+- ``LogVerbosity``
+
+### Codable Errors
 
 - ``Automerge/CodingKeyLookupError``
 - ``Automerge/PathParseError``
 
-### Conversion Error Types
+### Document Errors 
+
+- ``Automerge/DecodeSyncStateError``
+- ``Automerge/DocError``
+- ``Automerge/LoadError``
+- ``Automerge/ReceiveSyncError``
+
+### Type Conversion Errors
 
 - ``Automerge/BooleanScalarConversionError``
 - ``Automerge/BytesScalarConversionError``
@@ -79,9 +90,3 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/TimestampScalarConversionError``
 - ``Automerge/UIntScalarConversionError``
 
-### Error Types 
-
-- ``Automerge/DecodeSyncStateError``
-- ``Automerge/DocError``
-- ``Automerge/LoadError``
-- ``Automerge/ReceiveSyncError``

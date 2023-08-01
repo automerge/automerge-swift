@@ -6,6 +6,7 @@
 
 - ``init(logLevel:)``
 - ``init(_:logLevel:)``
+- ``LogVerbosity``
 
 ### Inspecting Documents
 
