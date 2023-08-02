@@ -17,7 +17,7 @@ final class AutomergeDocTests: XCTestCase {
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
         let sample = Note(
-            created: Date.now,
+            created: Date(),
             notes: "An example string to show encoding."
         )
         try automergeEncoder.encode(sample)
