@@ -65,6 +65,7 @@
 ### Reading a document's history
 
 - ``heads()``
+- ``getHistory()``
 
 ### Reading historical map values
 

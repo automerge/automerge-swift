@@ -571,7 +571,7 @@ public class Document: @unchecked Sendable {
     }
 
     /// Returns an list of change hashes that represent the causal sequence of changes to the document.
-    public func changes() -> [ChangeHash] {
+    public func getHistory() -> [ChangeHash] {
         queue.sync {
             self.doc.wrapErrors { $0.changes().map { ChangeHash(bytes: $0) } }
         }

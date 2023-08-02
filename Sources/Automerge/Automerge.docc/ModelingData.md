@@ -96,45 +96,9 @@ Methods that insert an object into the document are separate to those which inse
 The methods which insert an object return an ``ObjId`` of the newly created object, which you use to modify the contents of the new object. 
 See the documentation of ``Document`` for more details on the individual methods.
 
-### Heads and change hashes
-
-An Automerge document is a little like a git repository in that it is composed of a graph of changes, each identified by a hash. 
-Like a git repository, a point in the history of an Automerge document can be referenced by its hash. 
-_Unlike_ a git repository, an Automerge document can have multiple heads for a given point in time, representing a merge of concurrent changes. 
-
-From time to time you may want to refer to a particular point in the document history. 
-For example, you may want to read values as at that point in time, or get the changes since that time.
-Use ``Document/heads()`` to obtain the current heads of the document, which returns a set of ``ChangeHash``. 
-`Document` includes families of methods that accept `[ChangeHash]` to retrieve values or objects from that point in time.
-
-Unlike git, Automerge does not track additional metadata about the changes over time, such as who contributed any change, or at what time the change was initially created. 
-
-### Syncing documents
-
-Automerge provides methods to synchronize documents, passing compact messages between two peers to bring them up to date with each other's changes.
-To sync two documents, create a ``SyncState`` to represent the peer document you are connecting to, and
-generate messages to send to them using ``Document/generateSyncMessage(state:)``.
-Receive sync messages from that same peer and update the sync state using ``Document/receiveSyncMessage(state:message:)``.
-Repeatedly call, in order, `generateSyncMessage` and receive updates with `receiveSyncMessage` until a call to `generateSyncMessage` doesn't return any bytes for a sync message.
-At that point, the two documents are fully in sync.
-
-### Getting notified of what changed
-
-When you apply changes received from a remote document (or merged from a separate local document) you may want to know what changed within the `Document`, for example to update an app's user interface.
-To get this detail, use ``Document/receiveSyncMessageWithPatches(state:message:)``, which operates like `Document/receiveSyncMessage(state:message:)`, and additionally returns an array of patches, represented by the type ``Patch``.
-
-You can inspect a patch to see what action was applied using the ``Patch/action`` property (represented by the enumeration ``PatchAction``), and the path to the element (``Patch/path``) within the document that was updated, represented by ``PathElement``, which in turn includes ``Prop`` and ``ObjId``.
-`Prop` is an enumeration that represents either a key to a dictionary and it's value, or the index location within an array.
-
 ### Saving and loading Documents
 
 An Automerge document can be saved using ``Document/save()``. 
-This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``. 
-In many cases you know that the other end already has some set of changes and you just want to send "new" changes. 
-You can obtain these changes using ``Document/encodeNewChanges()`` and ``Document/encodeChangesSince(heads:)``. 
-On the other end of the wire you can apply changes using ``Document/applyEncodedChanges(encoded:)``.
+This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``.
 
 Automerge leaves the process of how you transfer, store, or load those bytes up to you.
-
-
-

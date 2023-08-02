@@ -25,7 +25,7 @@ final class AutomergeDocTests: XCTestCase {
         // Note(created: 2023-08-01 23:28:38 +0000, notes: "An example string to show encoding.")
 
         let automergeDecoder = AutomergeDecoder(doc: doc)
-
+        
         let decodedStruct = try automergeDecoder.decode(Note.self)
         print(decodedStruct)
 
