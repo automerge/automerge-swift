@@ -321,7 +321,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             try document.put(obj: objectId, key: key.stringValue, value: downcastCounter.toScalarValue())
             impl.mapKeysWritten.append(key.stringValue)
         case is AutomergeText.Type:
-            // Capture and override the default encodable pathing for Counter since
+            // Capture and override the default encodable pathing for AutomergeText since
             // Automerge supports it as a primitive value type.
             let downcastText = value as! AutomergeText
             let textNodeId: ObjId
@@ -337,20 +337,29 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                 textNodeId = try document.putObject(obj: objectId, key: key.stringValue, ty: .Text)
             }
 
-            // Iterate through
-            let currentText = try! document.text(obj: textNodeId).utf8
-            let diff: CollectionDifference<String.UTF8View.Element> = downcastText.value.utf8
-                .difference(from: currentText)
-            for change in diff {
-                switch change {
-                case let .insert(offset, element, _):
-                    let char = String(bytes: [element], encoding: .utf8)
-                    try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 0, value: char)
-                case let .remove(offset, _, _):
-                    try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
+            // AutomergeText is a reference type that, when bound, writes directly into the
+            // Automerge document, so no additional work is needed to write in the data unless
+            // the object is 'unbound' (for example, a new AutomergeText instance)
+            if downcastText.doc == nil || downcastText.objId == nil {
+                // instance is an unbound instance - implying a new reference into the Automerge
+                // document. Attempt to serialize the unboundStorage into place.
+                if !downcastText._unboundStorage.isEmpty {
+                    // Iterate through
+                    let currentText = try! document.text(obj: textNodeId).utf8
+                    let diff: CollectionDifference<String.UTF8View.Element> = downcastText._unboundStorage.utf8
+                        .difference(from: currentText)
+                    for change in diff {
+                        switch change {
+                        case let .insert(offset, element, _):
+                            let char = String(bytes: [element], encoding: .utf8)
+                            try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 0, value: char)
+                        case let .remove(offset, _, _):
+                            try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
+                        }
+                    }
+                    impl.mapKeysWritten.append(key.stringValue)
                 }
             }
-            impl.mapKeysWritten.append(key.stringValue)
         default:
             let newEncoder = AutomergeEncoderImpl(
                 userInfo: impl.userInfo,

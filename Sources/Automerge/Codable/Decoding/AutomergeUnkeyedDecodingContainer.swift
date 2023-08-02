@@ -155,9 +155,9 @@ struct AutomergeUnkeyedDecodingContainer: UnkeyedDecodingContainer {
         case is AutomergeText.Type:
             let retrievedValue = try getNextValue(ofType: AutomergeText.self)
             if case let Value.Object(objectId, .Text) = retrievedValue {
-                let stringValue = try impl.doc.text(obj: objectId)
                 currentIndex += 1
-                return AutomergeText(stringValue) as! T
+                let reference = try AutomergeText(doc: impl.doc, objId: objectId)
+                return reference as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

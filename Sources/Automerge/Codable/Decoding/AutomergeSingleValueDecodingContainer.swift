@@ -166,8 +166,9 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
                 ))
             }
         case is AutomergeText.Type:
-            if case let .Scalar(.String(stringValue)) = value {
-                return AutomergeText(stringValue) as! T
+            if case .Scalar(.String(_)) = value {
+                let reference = try AutomergeText(doc: impl.doc, objId: objectId)
+                return reference as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

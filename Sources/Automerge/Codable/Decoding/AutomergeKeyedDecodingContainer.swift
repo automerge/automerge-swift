@@ -151,8 +151,8 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
         case is AutomergeText.Type:
             let retrievedValue = try getValue(forKey: key)
             if case let Value.Object(objectId, .Text) = retrievedValue {
-                let stringValue = try impl.doc.text(obj: objectId)
-                return AutomergeText(stringValue) as! T
+                let reference = try AutomergeText(doc: impl.doc, objId: objectId)
+                return reference as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
