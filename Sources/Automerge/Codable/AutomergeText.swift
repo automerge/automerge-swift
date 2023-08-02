@@ -32,6 +32,16 @@ public final class AutomergeText: ObservableObject, Codable {
         try bind(doc: doc, path: path)
     }
 
+    public convenience init(doc: Document, objId: ObjId) throws {
+        self.init()
+        if doc.objectType(obj: objId) == .Text {
+            self.doc = doc
+            self.objId = objId
+        } else {
+            throw BindingError.NotText
+        }
+    }
+
     /// Binds a text reference instance info an Automerge document.
     ///
     /// If the instance has an initial value other than an empty string, binding update the string within the Automerge
@@ -152,7 +162,11 @@ public final class AutomergeText: ObservableObject, Codable {
 
 extension AutomergeText: Equatable {
     public static func == (lhs: AutomergeText, rhs: AutomergeText) -> Bool {
-        lhs.objId == rhs.objId
+        if lhs.objId != nil, rhs.objId != nil {
+            return lhs.objId == rhs.objId
+        } else {
+            return lhs.value == rhs.value
+        }
     }
 }
 
