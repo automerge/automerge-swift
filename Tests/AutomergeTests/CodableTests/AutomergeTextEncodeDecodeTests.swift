@@ -50,6 +50,26 @@ final class EncodeDecodeBugTests: XCTestCase {
         XCTAssertEqual(collectionAddedDecodeCheck.notes[0].discussion.value, "hello world")
         XCTAssertTrue(collectionAddedDecodeCheck.notes[0].discussion.isBound)
         XCTAssertTrue(collectionAddedDecodeCheck.notes[1].discussion.isBound)
+
+        // second encode - no change, verify it's all still there
+        let serialized = doc.save()
+
+        let newDoc = try Document(serialized)
+        let newDecoder = AutomergeDecoder(doc: newDoc)
+        var secondEncodeCheck = try newDecoder.decode(NoteCollection.self)
+        XCTAssertNotNil(secondEncodeCheck)
+        XCTAssertEqual(secondEncodeCheck.notes.count, 2)
+        XCTAssertEqual(secondEncodeCheck.notes[0].title, "one")
+        XCTAssertEqual(secondEncodeCheck.notes[0].discussion.value, "hello world")
+        XCTAssertTrue(secondEncodeCheck.notes[0].discussion.isBound)
+        XCTAssertTrue(secondEncodeCheck.notes[1].discussion.isBound)
+
+        secondEncodeCheck.notes[1].title = "fred"
+        secondEncodeCheck.notes[1].discussion.value = "new info here"
+        let newEncoder = AutomergeEncoder(doc: newDoc)
+        try newEncoder.encode(secondEncodeCheck)
+
+        let _ = try newDecoder.decode(NoteCollection.self)
     }
 
     func testNestedRawTextEncodeDecode() throws {
@@ -75,5 +95,15 @@ final class EncodeDecodeBugTests: XCTestCase {
         XCTAssertTrue(collectionAddedDecodeCheck.notes[0].isBound)
         XCTAssertEqual(collectionAddedDecodeCheck.notes[1].value, "")
         XCTAssertTrue(collectionAddedDecodeCheck.notes[1].isBound)
+
+        // second encode - no change, verify it's all still there
+        try encoder.encode(collection)
+        let secondEncodeCheck = try decoder.decode(RawNoteCollection.self)
+        XCTAssertNotNil(secondEncodeCheck)
+        XCTAssertEqual(secondEncodeCheck.notes.count, 2)
+        XCTAssertEqual(secondEncodeCheck.notes[0].value, "hello world")
+        XCTAssertTrue(secondEncodeCheck.notes[0].isBound)
+        XCTAssertEqual(secondEncodeCheck.notes[1].value, "")
+        XCTAssertTrue(secondEncodeCheck.notes[1].isBound)
     }
 }

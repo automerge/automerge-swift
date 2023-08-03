@@ -185,6 +185,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                 }
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
+            impl.singleValueWritten = true
         case is Data.Type:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
@@ -233,6 +234,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
 
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
+            impl.singleValueWritten = true
         case is Counter.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
@@ -279,6 +281,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                 }
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
+            impl.singleValueWritten = true
         case is AutomergeText.Type:
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
