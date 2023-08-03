@@ -358,8 +358,8 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                         }
                     }
                 }
-                impl.mapKeysWritten.append(key.stringValue)
             }
+            impl.mapKeysWritten.append(key.stringValue)
         default:
             let newEncoder = AutomergeEncoderImpl(
                 userInfo: impl.userInfo,
