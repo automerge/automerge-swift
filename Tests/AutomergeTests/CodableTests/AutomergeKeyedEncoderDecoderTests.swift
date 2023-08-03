@@ -42,6 +42,7 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
         let decodedStruct = try decoder.decode(SimpleStruct.self)
 
         XCTAssertEqual(sample, decodedStruct)
+        XCTAssertTrue(decodedStruct.notes.isBound)
     }
 
     func testSimpleCounterEncodeDecode() throws {
@@ -246,9 +247,11 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
         }
 
         let topLevel = WrapperStruct(thing: AutomergeText("hi"))
+        XCTAssertFalse(topLevel.thing.isBound)
 
         try encoder.encode(topLevel)
         let decodedStruct = try decoder.decode(WrapperStruct.self)
         XCTAssertEqual("hi", decodedStruct.thing.value)
+        XCTAssertTrue(decodedStruct.thing.isBound)
     }
 }

@@ -42,6 +42,10 @@ public final class AutomergeText: ObservableObject, Codable {
         }
     }
 
+    public var isBound: Bool {
+        doc != nil && objId != nil
+    }
+
     /// Binds a text reference instance info an Automerge document.
     ///
     /// If the instance has an initial value other than an empty string, binding update the string within the Automerge

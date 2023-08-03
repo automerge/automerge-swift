@@ -357,8 +357,8 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                             try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
                         }
                     }
-                    impl.mapKeysWritten.append(key.stringValue)
                 }
+                impl.mapKeysWritten.append(key.stringValue)
             }
         default:
             let newEncoder = AutomergeEncoderImpl(
