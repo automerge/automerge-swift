@@ -130,10 +130,10 @@ impl PatchAction {
     }
 }
 
-fn convert_marks(am_marks: Option<am::marks::MarkSet>) -> HashMap<String, Value> {
+fn convert_marks(am_richtext: Option<am::marks::RichText>) -> HashMap<String, Value> {
     let mut result = HashMap::new();
-    if let Some(am_marks) = am_marks {
-        for (name, value) in am_marks.iter() {
+    if let Some(richtext) = am_richtext {
+        for (name, value) in richtext.iter_marks() {
             result.insert(
                 name.to_string(),
                 Value::Scalar {
