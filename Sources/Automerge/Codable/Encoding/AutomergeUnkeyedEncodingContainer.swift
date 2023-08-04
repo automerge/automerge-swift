@@ -114,7 +114,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             if let testCurrentValue = try document.get(obj: objectId, index: UInt64(count)),
                TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
             {
-                // BLOW UP HERE
+                // BLOW UP HERE because of incorrect type
                 throw EncodingError.invalidValue(
                     value,
                     EncodingError
@@ -124,7 +124,12 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                         )
                 )
             }
-            try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            if case let .Scalar(.Counter(currentCounterValue)) = try document.get(obj: objectId, index: UInt64(count)) {
+                let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                try document.increment(obj: objectId, index: UInt64(count), by: counterDifference)
+            } else {
+                try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            }
             impl.highestUnkeyedIndexWritten = UInt64(count)
         case is Text.Type:
             // Capture and override the default encodable pathing for Counter since

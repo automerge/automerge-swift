@@ -316,7 +316,12 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .counter)
             }
-            try document.put(obj: objectId, key: key.stringValue, value: downcastCounter.toScalarValue())
+            if case let .Scalar(.Counter(currentCounterValue)) = try document.get(obj: objectId, key: key.stringValue) {
+                let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                try document.increment(obj: objectId, key: key.stringValue, by: counterDifference)
+            } else {
+                try document.put(obj: objectId, key: key.stringValue, value: downcastCounter.toScalarValue())
+            }
             impl.mapKeysWritten.append(key.stringValue)
         case is Text.Type:
             // Capture and override the default encodable pathing for Counter since
