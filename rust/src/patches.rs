@@ -34,13 +34,23 @@ pub enum PatchAction {
         obj: ObjId,
         index: u64,
         values: Vec<Value>,
-        marks: HashMap<String, Value>,
     },
     SpliceText {
         obj: ObjId,
         index: u64,
         value: String,
         marks: HashMap<String, Value>,
+    },
+    JoinBlock {
+        index: u64,
+        // ? cursor
+    },
+    SplitBlock {
+        index: u64,
+        // ? cursor
+    }, 
+    UpdateBlock {
+        //? patch
     },
     Increment {
         obj: ObjId,
@@ -84,7 +94,6 @@ impl PatchAction {
             am::PatchAction::Insert {
                 index,
                 values,
-                marks,
             } => PatchAction::Insert {
                 obj: obj.into(),
                 index: index as u64,
@@ -92,7 +101,24 @@ impl PatchAction {
                     .into_iter()
                     .map(|(v, id, _conflict)| Value::from((v.clone(), id.clone())))
                     .collect(),
-                marks: convert_marks(marks),
+            },
+            am::PatchAction::JoinBlock { 
+                index, 
+                cursor 
+            } => PatchAction::JoinBlock {
+                 index: index as u64 
+            },
+            am::PatchAction::SplitBlock {
+                 index, 
+                 cursor, 
+                 conflict 
+            } => PatchAction::SplitBlock {
+                     index: index as u64
+            },
+            am::PatchAction::UpdateBlock {
+                 patch 
+            } => PatchAction::UpdateBlock {    
+
             },
             am::PatchAction::SpliceText {
                 index,
