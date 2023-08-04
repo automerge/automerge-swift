@@ -48,15 +48,15 @@ checksum = "619743e34b5ba4e9703bba34deac3427c72507c7159f5fd030aea8cac0cfe341"
 
 [[package]]
 name = "automerge"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c01e49bfe4b5de9f8687a6f7a4a76fbe16270a978e1c4e784eb35f6665e8a4f"
+version = "0.5.1"
+source = "git+https://github.com/automerge/automerge.git?branch=blocks2#4a0595382138f305fbac11dcec77f36a31534ef6"
 dependencies = [
  "flate2",
  "fxhash",
  "hex",
  "itertools",
  "leb128",
+ "nonempty",
  "serde",
  "sha2",
  "smol_str",
@@ -344,6 +344,12 @@ dependencies = [
  "memchr",
  "minimal-lexical",
 ]
+
+[[package]]
+name = "nonempty"
+version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aeaf4ad7403de93e699c191202f017118df734d3850b01e13a3a8b2e6953d3c9"
 
 [[package]]
 name = "once_cell"
