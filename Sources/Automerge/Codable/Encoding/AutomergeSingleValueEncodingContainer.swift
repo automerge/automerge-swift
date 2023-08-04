@@ -262,7 +262,15 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         )
                     }
                 }
-                try document.insert(obj: objectId, index: UInt64(indexToWrite), value: valueToWrite)
+                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                    obj: objectId,
+                    index: UInt64(indexToWrite)
+                ) {
+                    let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                    try document.increment(obj: objectId, index: UInt64(indexToWrite), by: counterDifference)
+                } else {
+                    try document.insert(obj: objectId, index: UInt64(indexToWrite), value: valueToWrite)
+                }
             } else {
                 if impl.cautiousWrite {
                     if let testCurrentValue = try document.get(obj: objectId, key: codingkey.stringValue),
@@ -279,7 +287,15 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         )
                     }
                 }
-                try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
+                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                    obj: objectId,
+                    key: codingkey.stringValue
+                ) {
+                    let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                    try document.increment(obj: objectId, key: codingkey.stringValue, by: counterDifference)
+                } else {
+                    try document.put(obj: objectId, key: codingkey.stringValue, value: downcastCounter.toScalarValue())
+                }
             }
             impl.singleValueWritten = true
         case is AutomergeText.Type:
