@@ -48,9 +48,10 @@ pub enum PatchAction {
     SplitBlock {
         index: u64,
         // ? cursor
-    }, 
+        conflict: bool,
+    },
     UpdateBlock {
-        //? patch
+        // ? patch: Box<Patch>,
     },
     Increment {
         obj: ObjId,
@@ -91,10 +92,7 @@ impl PatchAction {
                 },
                 value: value.into(),
             },
-            am::PatchAction::Insert {
-                index,
-                values,
-            } => PatchAction::Insert {
+            am::PatchAction::Insert { index, values } => PatchAction::Insert {
                 obj: obj.into(),
                 index: index as u64,
                 values: values
@@ -102,23 +100,21 @@ impl PatchAction {
                     .map(|(v, id, _conflict)| Value::from((v.clone(), id.clone())))
                     .collect(),
             },
-            am::PatchAction::JoinBlock { 
-                index, 
-                cursor 
-            } => PatchAction::JoinBlock {
-                 index: index as u64 
+            am::PatchAction::JoinBlock { index, cursor } => PatchAction::JoinBlock {
+                index: index as u64,
+                // how should a cursor be exposed, and as what type (and how to convert it?)
             },
             am::PatchAction::SplitBlock {
-                 index, 
-                 cursor, 
-                 conflict 
+                index,
+                cursor,
+                conflict,
             } => PatchAction::SplitBlock {
-                     index: index as u64
+                index: index as u64,
+                // how should a cursor be exposed, and as what type (and how to convert it?)
+                conflict: conflict,
             },
-            am::PatchAction::UpdateBlock {
-                 patch 
-            } => PatchAction::UpdateBlock {    
-
+            am::PatchAction::UpdateBlock { patch } => PatchAction::UpdateBlock {
+                // patch: Patch.from(patch) // how do you convert this damned thing?
             },
             am::PatchAction::SpliceText {
                 index,

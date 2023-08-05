@@ -111,8 +111,8 @@ interface PatchAction {
     Insert( ObjId obj, u64 index, sequence<Value> values);
     SpliceText( ObjId obj, u64 index, string value, record<string, Value> marks);
     JoinBlock(u64 index);
-    SplitBlock(u64 index);
-    UpdateBlock();
+    SplitBlock(u64 index, boolean conflict);
+    UpdateBlock( );
     Increment( ObjId obj, Prop prop, i64 value);
     Conflict( ObjId obj, Prop prop);
     DeleteMap( ObjId obj, string key);
