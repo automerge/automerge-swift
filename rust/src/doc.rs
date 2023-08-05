@@ -384,6 +384,34 @@ impl Doc {
         Ok(())
     }
 
+    // ?? unsure if this is correct, or if these functions are hidden and used
+    // internally in the existing overlay that I haven't yet found or understood.
+    pub fn joinBlock(&self, obj: ObjId) -> Result<(), DocError> {
+        let obj = am::ObjId::from(obj);
+        let mut doc = self.0.write().unwrap();
+        assert_list(&*doc, &obj)?;
+
+        //doc.join_block(block)
+        // map through to the joinBlock function here
+        Ok(())
+    }
+
+    // ?? unsure if this is correct, or if these functions are hidden and used
+    // internally in the existing overlay that I haven't yet found or understood.
+    pub fn splitBlock(
+        &self,
+        obj: ObjId,
+        index: usize,
+        // ? block
+    ) -> Result<(ObjId), DocError> {
+        // map through to the splitBlock functions here, returning an ObjId
+        let obj = am::ObjId::from(obj);
+        let mut doc = self.0.write().unwrap();
+        assert_list(&*doc, &obj)?;
+        let new_obj = doc.split_block(obj, index).unwrap();
+        Ok(new_obj.into())
+    }
+
     pub fn mark(
         &self,
         obj: ObjId,
