@@ -95,6 +95,11 @@ dictionary Mark {
     Value value;
 };
 
+dictionary Block2 {
+    string name;
+    sequence<string> parents;
+};
+
 dictionary PathElement {
     Prop prop;
     ObjId obj;
