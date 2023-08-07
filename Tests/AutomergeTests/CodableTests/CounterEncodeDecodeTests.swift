@@ -3,7 +3,6 @@ import XCTest
 
 final class CounterEncodeDecodeTests: XCTestCase {
     var doc: Document!
-    
 
     override func setUp() {
         doc = Document()
@@ -18,7 +17,7 @@ final class CounterEncodeDecodeTests: XCTestCase {
         let decoder = AutomergeDecoder(doc: doc)
 
         let baselineBallot = Ballot(vote: Counter(0))
-        
+
         try encoder.encode(baselineBallot)
         let emptyDecodeCheck = try decoder.decode(Ballot.self)
         XCTAssertNotNil(emptyDecodeCheck)
@@ -43,7 +42,7 @@ final class CounterEncodeDecodeTests: XCTestCase {
         // remerge in both directions
         try docA.merge(other: docB)
         try docB.merge(other: docA)
-        
+
         // reload the ballots from the docs
         ballotA = try decoderA.decode(Ballot.self)
         ballotB = try decoderB.decode(Ballot.self)
