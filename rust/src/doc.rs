@@ -5,7 +5,7 @@ use automerge as am;
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
-use crate::block::Block2;
+use crate::block::Block;
 use crate::mark::{ExpandMark, Mark};
 use crate::patches::Patch;
 use crate::{ChangeHash, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value};
