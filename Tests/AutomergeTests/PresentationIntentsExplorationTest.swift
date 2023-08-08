@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import XCTest
 
+#if swift(>=5.9)
 @available(macOS 12, iOS 15, *)
 class PresentationIntentsExplorationTest: XCTestCase {
     func testDescribeExistingBlockPresentationIntents() throws {
@@ -201,3 +202,4 @@ class PresentationIntentsExplorationTest: XCTestCase {
         }
     }
 }
+#endif
