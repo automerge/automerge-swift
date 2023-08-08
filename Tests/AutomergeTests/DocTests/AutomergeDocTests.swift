@@ -94,7 +94,9 @@ final class AutomergeDocTests: XCTestCase {
 
         print(myColors.colors)
         // ["blue", "red", "green"]
-
+        
+        XCTAssertEqual(myColors.colors, ["blue", "red", "green"])
+        
         // Saving the Document
 
         let bytesToStore = doc.save()
@@ -118,6 +120,8 @@ final class AutomergeDocTests: XCTestCase {
 
         print(myColors.colors)
         // ["red", "green"]
+        
+        XCTAssertEqual(myColors.colors, ["red", "green"])
 
         XCTAssertNotNil(bytesToStore)
         XCTAssertNotNil(doc3)
