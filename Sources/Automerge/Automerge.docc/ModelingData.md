@@ -12,7 +12,7 @@ Because of this, a `Document` can be merged with any other `Document` in a manne
 ### Document-based Model
 
 Any type that supports the [Codable](https://developer.apple.com/documentation/swift/codable) protocol can be stored and retrieved from a Document using the ``AutomergeEncoder`` and ``AutomergeDecoder``.
-This encoder and decoder pair do the work to establish schema within your `Document`, as well as store and load the content into your Codable types.
+This encoder and decoder pair do the work to establish schema within your `Document`, as well as store and load the content into your `Codable` types.
 For example, you can create a new Automerge document, and an encoder to write into that document:
 
 ```swift
@@ -51,19 +51,23 @@ print(decodedStruct)
 // Note(created: 2023-08-01 23:28:38 +0000, notes: "An example string to show encoding.")
 ```
 
-The `Document` class also provides low-level methods to read and write values into an Automerge document.
+The `Document` class provides low-level methods to read and write values into an Automerge document.
 The data within an Automerge document is composed of objects, represented by the enumeration ``Value``.
 Objects that contain other objects are composed of an identifier: ``ObjId``, and the type: ``ObjType``.
-Like JSON, there are arrays (``ObjType/List``) and dictionaries (``ObjType/Map``).
-Also like JSON, Dictionaries within Automerge are keyed only by Strings.
-Unlike JSON, there is a special type ``ObjType/Text`` to represent a concurrently editable string, represented internally as a list of UTF-8 characters.
+Like JSON, Automerge includes objects that contain other objects: arrays (``ObjType/List``) and dictionaries (``ObjType/Map``).
+Also like JSON, dictionaries in Automerge are keyed only by Strings.
+
+Automerge goes further than JSON in representing a few types.
+For example, Automerge includes a special type ``ObjType/Text`` to represent a concurrently editable string, separate from a singular value update of a string, represented by ``ScalarValue/String(_:)``.
+The `Text` object type represents the value of the string as a list of UTF-8 characters.
 This special type encodes and decodes from the type ``AutomergeText``.
+When serialized by `AutomergeDecoder` or `AutomergeEncoder`, the type ``AutomergeText`` represents an ``ObjType/Text`` object, and handles updates into the Automerge document.
 
 ### Automerge Document Primitives
 
-Objects that don't contain other objects map to Automerge's primitive types, represented by the enumeration ``ScalarValue``.
-Automerge internally represents more discrete types than JSON.
-The AutomergeEncoder and AutomergeDecoder convert existing types into Automerge primitives.
+Objects within an Automerge document that don't contain other objects are made up of the primitive types for Automerge, represented by the enumeration ``ScalarValue``.
+Automerge maintains more type tracking than JSON, representing a number of different types internally.
+The `AutomergeEncoder` and `AutomergeDecoder` convert existing Swift types into and out of Automerge primitives.
 
 | Automerge primitive | Matching Swift type |
 | --- | --- |
@@ -77,13 +81,28 @@ The AutomergeEncoder and AutomergeDecoder convert existing types into Automerge 
 | timestamps (``ScalarValue/Timestamp(_:)``) | `Date` |
 | counters (``ScalarValue/Counter(_:)``) | ``Counter`` |
 
-`Counter` is another special type that is used to represent a concurrently updated counter that increments and decrements integer values, as opposed to a integer value that is set discretely.
+`Bytes` scalar values are a buffer of bytes, represented in Swift by `Data`.
+Byte arrays stored as `ScalarValue` can contain up to XXX-PROVIDE_NUMBER-XXX bytes.
 
-It's important to note that Automerge is a cross platform library, and an Automerge document's internal schema is dynamic.
-Although not supported by Swift arrays, an Automerge array can contain any other kind of Automerge object or primitive within it.
-Likewise dictionaries values can contain any other kind of Automerge object or primitive within it.
+`Timestamp` is a specific date/time location.
+The ``ScalarValue/Timestamp(_:)`` representation uses an `Int64` value to represent the number of seconds since epoch (UTC midnight, Jan 1, 1970).
+When using `AutomergeEncoder` or `AutomergeDecoder`, these values are converted into the type `Date`.
+Be aware that Swift's Date implementation represents timestamps as `Double`, so there is some less of value (sub-second) when writing into Automerge and reading a value back out. 
+Be aware that Date values may not be exactly equatable because of this difference. 
+
+`Counter` is another Automerge-specific primitive type that represents a concurrently updated counter.
+To update a counter directly within an Automerge document, use the ``Document/increment(obj:key:by:)`` or ``Document/increment(obj:index:by:)`` methods. 
+You can explicitly set a counter value, such as an initial value, using ``Document/put(obj:key:value:)`` or ``Document/put(obj:index:value:)``, but using these methods ignores any previously made increments or decrements.
+When serialized by `AutomergeDecoder` or `AutomergeEncoder`, the type ``Counter`` represents a counter value.
+
 When you use the `AutomergeEncoder` or `AutomergeDecoder` these follow the rules and conventions for Swift types.
 For example, an Automerge document with a list of mixed Integers and Strings would not be decodable by `AutomergeDecoder`, although it is a valid Automerge document.
+
+> Note: It's important to note that Automerge is a cross platform library, and an Automerge document's internal schema is dynamic.
+Although not supported by Swift arrays, an Automerge array can contain any other kind of Automerge object or primitive within it.
+Likewise dictionaries values can contain any other kind of Automerge object or primitive within it.
+When you merge another Automerge document, apply updates from an Automerge, or sync with another document, those updates can change the types of values anywhere within the Automerge document.
+This can potentially make the document invalid for Swift types you define and retrieve when you use `AutomergeDecoder`.
 
 ### Creating, Reading and Writing a document
 
@@ -94,11 +113,11 @@ For example, use ``Document/get(obj:key:)`` to get a value out of a dictionary a
 
 Methods that insert an object into the document are separate to those which insert primitive values. For example, ``Document/put(obj:key:value:)`` puts a value into a dictionary, while ``Document/putObject(obj:key:ty:)`` puts an object of the type you specify into the dictionary.
 The methods which insert an object return an ``ObjId`` of the newly created object, which you use to modify the contents of the new object. 
-See the documentation of ``Document`` for more details on the individual methods.
+See the documentation for ``Document`` for more detail on the individual methods.
 
 ### Saving and loading Documents
 
 An Automerge document can be saved using ``Document/save()``. 
 This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``.
 
-Automerge leaves the process of how you transfer, store, or load those bytes up to you.
+Automerge is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.
