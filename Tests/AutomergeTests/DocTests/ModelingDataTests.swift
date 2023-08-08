@@ -44,13 +44,34 @@ final class AutomergeDocTests: XCTestCase {
         )
         try automergeEncoder.encode(initial)
         
+        // Fork the document
         let pollingPlace1 = doc.fork()
         let place1decoder = AutomergeDecoder(doc: pollingPlace1)
+        // Decode the type from the document
         var place1 = try place1decoder.decode(Ballot.self)
-        print(place1.votes.value)
-        // 0
-        place1.votes.value = 2
+        // Update the value
+        place1.votes.value = 3
+        // Encode the value back into the document to persist it.
+        let place1encoder = AutomergeEncoder(doc: pollingPlace1)
+        try place1encoder.encode(place1)
+
+        // Repeat with a second Automerge document, forked and updated separately.
+        let pollingPlace2 = doc.fork()
+        let place2decoder = AutomergeDecoder(doc: pollingPlace2)
+        var place2 = try place2decoder.decode(Ballot.self)
+        place2.votes.value = -1
+        let place2encoder = AutomergeEncoder(doc: pollingPlace2)
+        try place2encoder.encode(place2)
         
+        // Merge the data from the document representing place2 into place1 to
+        // get a combined count
+        
+        try pollingPlace1.merge(other: pollingPlace2)
+        let updatedPlace1 = try place1decoder.decode(Ballot.self)
+        print(updatedPlace1.votes.value)
+        // 2
+        
+        XCTAssertEqual(updatedPlace1.votes.value, 2)
         
     }
 
