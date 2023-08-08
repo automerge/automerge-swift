@@ -57,6 +57,10 @@ public class Document: @unchecked Sendable {
     }
 
     /// Set or update the  value at `key` in the map `obj` to `value`
+    ///
+    /// If the object you update is a ``ScalarValue/Counter(_:)``, calling this function uniformly sets the value
+    /// and ignores any previous increments or decrements of the value. If you intent to update the counter by a fixed amount,
+    /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
         try queue.sync {
             try self.doc.wrapErrors { try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi()) }
@@ -64,6 +68,10 @@ public class Document: @unchecked Sendable {
     }
 
     /// Set or update the value at `index` in the sequence `obj` to `value`
+    ///
+    /// If the object you update is a ``ScalarValue/Counter(_:)``, calling this function uniformly sets the value
+    /// and ignores any previous increments or decrements of the value. If you intent to update the counter by a fixed amount,
+    /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try queue.sync {
             try self.doc.wrapErrors { try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi()) }
