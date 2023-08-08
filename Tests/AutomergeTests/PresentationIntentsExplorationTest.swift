@@ -77,7 +77,6 @@ class PresentationIntentsExplorationTest: XCTestCase {
          */
     }
 
-    @available(macOS 14, iOS 17, *)
     func testDescribeExistingSwiftUIAttributes() throws {
         // each type of attribute that conforms to CodableAttributedStringKey (which is most of the built-in ones)
         // includes a .name property on the attribute, as well as a Value type
@@ -126,76 +125,79 @@ class PresentationIntentsExplorationTest: XCTestCase {
 
         // Note: Text.LineStyle, Color, and Font are not publicly "codable"
 
-        let encoder = JSONEncoder()
+        // runtime to check prevent Xcode from hitting this section of the test in earlier OS versions
+        if #available(macOS 14, iOS 17, *) {
+            let encoder = JSONEncoder()
 
-        // ForegroundColor
-        var colorExample = AttributedString("color example")
-        var container = AttributeContainer()
-        container[AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = .red
-        colorExample.mergeAttributes(container, mergePolicy: .keepNew)
+            // ForegroundColor
+            var colorExample = AttributedString("color example")
+            var container = AttributeContainer()
+            container[AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = .red
+            colorExample.mergeAttributes(container, mergePolicy: .keepNew)
 
-        var encoded = try encoder.encode(
-            colorExample,
-            configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
-        )
-        print("instance: \(colorExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
+            var encoded = try encoder.encode(
+                colorExample,
+                configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
+            )
+            print("instance: \(colorExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
 
-        // BackgroundColor
-        var backgroundColorExample = AttributedString("background color example")
-        backgroundColorExample.backgroundColor = .green
-        encoded = try encoder.encode(
-            backgroundColorExample,
-            configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
-        )
-        print("instance: \(backgroundColorExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
+            // BackgroundColor
+            var backgroundColorExample = AttributedString("background color example")
+            backgroundColorExample.backgroundColor = .green
+            encoded = try encoder.encode(
+                backgroundColorExample,
+                configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
+            )
+            print("instance: \(backgroundColorExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
 
-        // UnderlineStyle
-        var underlineExample = AttributedString("underline example")
-        underlineExample.underlineStyle = .patternDashDotDot
-        underlineExample.underlineColor = .blue
-        encoded = try encoder.encode(
-            underlineExample,
-            configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
-        )
-        print("instance: \(underlineExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
+            // UnderlineStyle
+            var underlineExample = AttributedString("underline example")
+            underlineExample.underlineStyle = .patternDashDotDot
+            underlineExample.underlineColor = .blue
+            encoded = try encoder.encode(
+                underlineExample,
+                configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
+            )
+            print("instance: \(underlineExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
 
-        // Font
-        var fontExample = AttributedString("font example")
-        fontExample.font = Font(CTFont(.system, size: 24))
-        encoded = try encoder.encode(
-            fontExample,
-            configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
-        )
-        print("instance: \(fontExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
+            // Font
+            var fontExample = AttributedString("font example")
+            fontExample.font = Font(CTFont(.system, size: 24))
+            encoded = try encoder.encode(
+                fontExample,
+                configuration: SwiftUI.AttributeScopes.SwiftUIAttributes.encodingConfiguration
+            )
+            print("instance: \(fontExample) JSONEncoded: \(String(data: encoded, encoding: .utf8) ?? "??")")
 
-        /*
-         FontAttribute: SwiftUI.Font, data: Font
-         ForegroundColorAttribute: SwiftUI.ForegroundColor, data: Color
-         BackgroundColorAttributes: SwiftUI.BackgroundColor, data: Color
-         StrikethroughStyleAttribute: SwiftUI.StrikethroughStyle, data: LineStyle
-         UnderlineStyleAttribute: SwiftUI.UnderlineStyle, data: LineStyle
-         KerningAttribute: SwiftUI.Kern, data: CGFloat
-         TrackingAttribute: SwiftUI.Tracking, data: CGFloat
-         BaselineOffsetAttribute: SwiftUI.BaselineOffset, data: CGFloat
-         KerningAttribute: SwiftUI.Kern, data: CGFloat
-         KerningAttribute: SwiftUI.Kern, data: CGFloat
+            /*
+             FontAttribute: SwiftUI.Font, data: Font
+             ForegroundColorAttribute: SwiftUI.ForegroundColor, data: Color
+             BackgroundColorAttributes: SwiftUI.BackgroundColor, data: Color
+             StrikethroughStyleAttribute: SwiftUI.StrikethroughStyle, data: LineStyle
+             UnderlineStyleAttribute: SwiftUI.UnderlineStyle, data: LineStyle
+             KerningAttribute: SwiftUI.Kern, data: CGFloat
+             TrackingAttribute: SwiftUI.Tracking, data: CGFloat
+             BaselineOffsetAttribute: SwiftUI.BaselineOffset, data: CGFloat
+             KerningAttribute: SwiftUI.Kern, data: CGFloat
+             KerningAttribute: SwiftUI.Kern, data: CGFloat
 
-         instance: color example {
+             instance: color example {
              SwiftUI.ForegroundColor = red
-         } JSONEncoded: ["color example",{}]
+             } JSONEncoded: ["color example",{}]
 
-         instance: background color example {
+             instance: background color example {
              SwiftUI.BackgroundColor = green
-         } JSONEncoded: ["background color example",{}]
+             } JSONEncoded: ["background color example",{}]
 
-         instance: underline example {
+             instance: underline example {
              NSUnderlineColor = UIExtendedSRGBColorSpace 0 0 1 1
              NSUnderline = NSUnderlineStyle(rawValue: 1024)
-         } JSONEncoded: ["underline example",{}]
+             } JSONEncoded: ["underline example",{}]
 
-         instance: font example {
+             instance: font example {
              SwiftUI.Font = Font(provider: SwiftUI.(unknown context at $1122b9930).FontBox<SwiftUI.Font.(unknown context at $1123125e0).PlatformFontProvider>)
-         } JSONEncoded: ["font example",{}]
-         */
+             } JSONEncoded: ["font example",{}]
+             */
+        }
     }
 }
