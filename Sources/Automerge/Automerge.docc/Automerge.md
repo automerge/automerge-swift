@@ -26,10 +26,10 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 
 - ``Automerge/Document``
 - <doc:FiveMinuteQuickstart>
+- <doc:ExampleAppWalkthrough>
 
 ### Reading and Writing Codable Types
 
-- <doc:ExampleAppWalkthrough>
 - ``Automerge/AutomergeEncoder``
 - ``Automerge/SchemaStrategy``
 - ``Automerge/LogVerbosity``
@@ -43,6 +43,11 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/ExpandMark``
 - ``Automerge/Counter``
 
+### Synchronizing Documents
+
+- <doc:Sync>
+- ``Automerge/SyncState``
+
 ### Representing Objects and Values
 
 - <doc:ModelingData>
@@ -52,14 +57,9 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/ScalarValue``
 - <doc:AddressBookExample>
 
-### Converting Scalar Values to Local Types
-
-- ``Automerge/ScalarValueRepresentable``
-
-### Replicating Documents
+### Inspecting Documents as Changes
 
 - <doc:ChangesAndHistory>
-- ``Automerge/SyncState``
 - ``Automerge/ChangeHash``
 - ``Automerge/Patch``
 - ``Automerge/PatchAction``
@@ -67,6 +67,10 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/Prop``
 - ``Automerge/DeleteSeq``
 - ``Automerge/ActorId``
+
+### Converting Scalar Values to Local Types
+
+- ``Automerge/ScalarValueRepresentable``
 
 ### Codable Errors
 

@@ -1,6 +1,6 @@
 # Modeling Data with Automerge
 
-Model data in a document to share and synchronize it.
+Store, read, share, and synchronize complex data in an Automerge document.
 
 ## Overview
 
