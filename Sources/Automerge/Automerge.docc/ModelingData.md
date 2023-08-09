@@ -82,10 +82,10 @@ The `AutomergeEncoder` and `AutomergeDecoder` convert existing Swift types into 
 | counters (``ScalarValue/Counter(_:)``) | ``Counter`` |
 
 `Bytes` scalar values are a buffer of bytes, represented in Swift by `Data`.
-Byte arrays stored as `ScalarValue` can contain up to XXX-PROVIDE_NUMBER-XXX bytes.
 
 `Timestamp` is a specific date/time location.
-The ``ScalarValue/Timestamp(_:)`` representation uses an `Int64` value to represent the number of seconds since epoch (UTC midnight, Jan 1, 1970).
+The ``ScalarValue/Timestamp(_:)`` representation uses an `Int64` value to represent the number of milliseconds since epoch (UTC midnight, Jan 1, 1970).
+
 When using `AutomergeEncoder` or `AutomergeDecoder`, these values are converted into the type `Date`.
 Be aware that Swift's Date implementation represents timestamps as `Double`, so there is some less of value (sub-second) when writing into Automerge and reading a value back out. 
 Be aware that Date values may not be exactly equatable because of this difference. 
