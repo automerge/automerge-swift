@@ -32,12 +32,16 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - <doc:ExampleAppWalkthrough>
 - ``Automerge/AutomergeEncoder``
 - ``Automerge/SchemaStrategy``
+- ``Automerge/LogVerbosity``
 - ``Automerge/AutomergeDecoder``
+- ``Automerge/AnyCodingKey``
+
+### Automerge Collaborative Types
+
 - ``Automerge/AutomergeText``
 - ``Automerge/Mark``
 - ``Automerge/ExpandMark``
 - ``Automerge/Counter``
-- ``Automerge/AnyCodingKey``
 
 ### Representing Objects and Values
 

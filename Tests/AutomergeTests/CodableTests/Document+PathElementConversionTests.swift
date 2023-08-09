@@ -60,4 +60,10 @@ final class Document_PathElementConversionTests: XCTestCase {
         XCTAssertEqual(pathToList.stringPath(), converted.stringPath())
         XCTAssertEqual(converted.stringPath(), ".list.[0].notes")
     }
+
+    func testParsePathAnyCodingKey() throws {
+        let path = try AnyCodingKey.parsePath("example.[0].name")
+        XCTAssertEqual(path.count, 3)
+        // print(path)
+    }
 }
