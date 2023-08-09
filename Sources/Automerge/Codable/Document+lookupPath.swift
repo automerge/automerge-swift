@@ -4,7 +4,7 @@ public extension Document {
     /// - Returns: The objectId at the schema location you provide, or nil if the path is valid and no object exists in
     /// the document.
     ///
-    /// The method throws errors on invalid paths
+    /// The method throws errors when used with an invalid path.
     func lookupPath(path: String) throws -> ObjId? {
         let codingPath = try AnyCodingKey.parsePath(path)
         if codingPath.isEmpty {
