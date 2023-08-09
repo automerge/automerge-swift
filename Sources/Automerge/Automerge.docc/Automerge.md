@@ -61,16 +61,12 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - <doc:ChangesAndHistory>
 - ``Automerge/SyncState``
 - ``Automerge/ChangeHash``
-- ``Automerge/DeleteSeq``
 - ``Automerge/Patch``
 - ``Automerge/PatchAction``
 - ``Automerge/PathElement``
 - ``Automerge/Prop``
+- ``Automerge/DeleteSeq``
 - ``Automerge/ActorId``
-
-### Logging from Documents
-
-- ``LogVerbosity``
 
 ### Codable Errors
 

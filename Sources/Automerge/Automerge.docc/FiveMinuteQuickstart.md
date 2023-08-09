@@ -1,6 +1,6 @@
 # Five Minute Quick Start
 
-A quick-start guide to use Automerge in your iOS or macOS app. 
+A quick-start guide on how to use Automerge for your iOS or macOS app. 
 
 ## Overview
 
