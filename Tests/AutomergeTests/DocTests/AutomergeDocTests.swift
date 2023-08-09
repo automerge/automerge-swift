@@ -126,4 +126,18 @@ final class AutomergeDocTests: XCTestCase {
         XCTAssertNotNil(bytesToStore)
         XCTAssertNotNil(doc3)
     }
+
+    func testPathElementAnyCodingKey() throws {
+        let doc = Document()
+        let exampleList = try doc.putObject(obj: ObjId.ROOT, key: "example", ty: .List)
+        let listItem = try doc.insertObject(obj: exampleList, index: 0, ty: .Map)
+
+        let path = try doc.path(obj: listItem)
+        let stringFromPath = path.stringPath()
+
+        // print(stringFromPath)
+        // .example.[0]
+
+        XCTAssertEqual(stringFromPath, ".example.[0]")
+    }
 }

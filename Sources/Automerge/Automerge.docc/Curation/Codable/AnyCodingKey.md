@@ -29,6 +29,11 @@ The same string path format is used in ``Document/lookupPath(path:)`` to look up
 - ``AnyCodingKey/init(_:)-5azuh``
 - ``AnyCodingKey/ROOT``
 
+### Converting Automerge types into AnyCodingKey
+
+- ``AnyCodingKey/init(_:)-uo0``
+- ``AnyCodingKey/init(_:)-6lrn3``
+
 ### Parsing a string into a path of AnyCodingKey
 
 - ``AnyCodingKey/parsePath(_:)``

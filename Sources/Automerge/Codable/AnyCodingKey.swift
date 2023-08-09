@@ -10,13 +10,13 @@ public struct AnyCodingKey: Equatable {
 
     /// Creates a generalized Coding Key from an Automerge Property.
     /// - Parameter pathProperty: The Automerge property to convert.
-    init(_ pathProperty: Automerge.Prop) {
+    public init(_ pathProperty: Automerge.Prop) {
         pathElement = pathProperty
     }
 
     /// Creates a generalized Coding Key from an Automerge Path Element.
     /// - Parameter element: The Automerge path element to convert.
-    init(_ element: Automerge.PathElement) {
+    public init(_ element: Automerge.PathElement) {
         pathElement = element.prop
     }
 
@@ -162,7 +162,7 @@ extension AnyCodingKey: Hashable {
 
 extension Sequence where Element: CodingKey {
     /// Returns a string that represents the schema path.
-    func stringPath() -> String {
+    public func stringPath() -> String {
         let path = map { pathElement in
             AnyCodingKey(pathElement).description
         }
