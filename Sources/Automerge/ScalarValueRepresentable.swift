@@ -9,6 +9,8 @@ import Foundation
 /// to `ScalarValueRepresentable`. Implement ``ScalarValueRepresentable/toScalarValue()`` with your
 /// preferred encoding, returning ``ScalarValue/Bytes(_:)`` with the encoded data embedded,
 /// and ``ScalarValueRepresentable/fromValue(_:)`` to decode into your type.
+///
+/// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion issues arise.
 public protocol ScalarValueRepresentable {
     /// The error type associated with failed attempted conversion into or out of Automerge representation.
     associatedtype ConvertError: LocalizedError

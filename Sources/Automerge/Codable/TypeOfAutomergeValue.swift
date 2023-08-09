@@ -18,7 +18,7 @@ enum TypeOfAutomergeValue: Equatable, Hashable {
     case double
     /// An integer counter.
     case counter
-    /// A timestamp represented by the milliseconds since UNIX epoch.
+    /// A timestamp represented by the number of seconds since UNIX epoch.
     case timestamp
     /// A Boolean value.
     case bool
