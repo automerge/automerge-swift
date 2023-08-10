@@ -32,6 +32,8 @@ class TextTestCase: XCTestCase {
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try! doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
         
+        let heads = doc.heads()
+
         let c_hello = try! doc.cursor(obj: text, position: 0)
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 0)
 
@@ -47,6 +49,12 @@ class TextTestCase: XCTestCase {
         XCTAssertEqual(try! doc.text(obj: text), "Greetings wonderful world!")
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 9)
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 20)
+        XCTAssertEqual(try! doc.cursorPositionAt(obj: text, cursor: c_world, heads: heads), 6)
+
+        // let's time travel with cursor
+        let c_heads_world = try! doc.cursorAt(obj: text, position: 6, heads: heads)
+        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_heads_world), 20)
+        XCTAssertEqual(c_heads_world.description, c_world.description)
     }
     
     func testRepeatedTextInsertion() throws {
