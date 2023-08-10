@@ -31,9 +31,9 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 ### Reading and Writing Codable Types
 
 - ``Automerge/AutomergeEncoder``
+- ``Automerge/AutomergeDecoder``
 - ``Automerge/SchemaStrategy``
 - ``Automerge/LogVerbosity``
-- ``Automerge/AutomergeDecoder``
 - ``Automerge/AnyCodingKey``
 
 ### Automerge Collaborative Types
