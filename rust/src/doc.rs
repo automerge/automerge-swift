@@ -7,7 +7,7 @@ use automerge::{transaction::Transactable, ReadDoc};
 use crate::actor_id::ActorId;
 use crate::mark::{ExpandMark, Mark};
 use crate::patches::Patch;
-use crate::{ChangeHash, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value};
+use crate::{ChangeHash, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value, Cursor};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DocError {
@@ -331,6 +331,38 @@ impl Doc {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
         doc.object_type(obj).unwrap().into()
+    }
+
+    pub fn cursor(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        Ok(doc.get_cursor(obj, position as usize, None)?.into())
+    }
+
+    pub fn cursor_at(&self, obj: ObjId, position: u64, heads: Vec<ChangeHash>) -> Result<Cursor, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        Ok(doc.get_cursor(obj, position as usize, Some(&heads))?.into())
+    }
+    
+    pub fn cursor_position(&self, obj: ObjId, cursor: Cursor) -> Result<u64, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        Ok(doc.get_cursor_position(obj, &cursor.into(), None).unwrap() as u64)
+    }
+
+    pub fn cursor_position_at(&self, obj: ObjId, cursor: Cursor, heads: Vec<ChangeHash>) -> Result<u64, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        Ok(doc.get_cursor_position(obj, &cursor.into(), Some(&heads)).unwrap() as u64)
     }
 
     pub fn text(&self, obj: ObjId) -> Result<String, DocError> {

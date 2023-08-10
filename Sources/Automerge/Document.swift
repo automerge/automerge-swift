@@ -318,6 +318,38 @@ public class Document: @unchecked Sendable {
             try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
     }
+    
+    /// Get the `cursor` structure for a specific `position` in text object `obj`
+    public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
+        try queue.sync {
+            Cursor(bytes: try self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position)})
+        }
+    }
+
+    /// Get the `cursor` structure for a specific `position` in text object `obj` at `heads`
+    public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
+        try queue.sync {
+            Cursor(bytes: try self.doc.wrapErrors { try $0.cursorAt(obj: obj.bytes, position: position, heads: heads.map(\.bytes))})
+        }
+    }
+
+    /// Get the UInt64 position for a specific `cursor` in text object `obj`
+    public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.cursorPosition(obj: obj.bytes, cursor: cursor.bytes)
+            }
+        }
+    }
+
+    /// Get the UInt64 position for a specific `cursor` in text object `obj` at `heads`
+    public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
+        try queue.sync {
+            try self.doc.wrapErrors {
+                try $0.cursorPositionAt(obj: obj.bytes, cursor: cursor.bytes, heads: heads.map(\.bytes))
+            }
+        }
+    }
 
     /// Splice into the list `obj`
     ///

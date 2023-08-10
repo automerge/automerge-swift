@@ -191,6 +191,14 @@ void uniffi_automerge_fn_method_doc_apply_encoded_changes(void*_Nonnull ptr, Rus
 );
 RustBuffer uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_automerge_fn_method_doc_cursor_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
+);
+uint64_t uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustCallStatus *_Nonnull out_status
+);
+uint64_t uniffi_automerge_fn_method_doc_cursor_position_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustBuffer heads, RustCallStatus *_Nonnull out_status
+);
 RustBuffer uniffi_automerge_fn_func_root(RustCallStatus *_Nonnull out_status
     
 );
@@ -365,6 +373,18 @@ uint16_t uniffi_automerge_checksum_method_doc_apply_encoded_changes(void
     
 );
 uint16_t uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_cursor(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_cursor_at(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_cursor_position(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_cursor_position_at(void
     
 );
 uint16_t uniffi_automerge_checksum_constructor_syncstate_new(void
