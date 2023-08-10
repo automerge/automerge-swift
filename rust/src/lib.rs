@@ -2,6 +2,8 @@ uniffi::include_scaffolding!("automerge");
 
 mod actor_id;
 use actor_id::ActorId;
+mod cursor;
+use cursor::Cursor;
 mod change_hash;
 use change_hash::ChangeHash;
 mod doc;
