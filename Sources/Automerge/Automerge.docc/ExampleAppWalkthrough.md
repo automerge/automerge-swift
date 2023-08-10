@@ -4,9 +4,11 @@ A guided tour of MeetingNotes, a sample iOS and macOS SwiftUI app that uses Auto
 
 ## Overview
 
-The source for the MeetingNotes app is [available on Github](https://github.com/automerge/MeetingNotes).
 The Document-based SwiftUI app illustrates storing and loading a `Codable` model and integrating Automerge backed models with the SwiftUI controls.
 The app includes file merging capabilities and interactive peer-to-peer syncing of updates in near real time. 
+
+The source for the MeetingNotes app is [available on Github](https://github.com/automerge/MeetingNotes).
+The [documentation for MeetingNotes](https://automerge.org/MeetingNotes/documentation/meetingnotes/) is hosted at GitHub alongside the source.
 
 ### Using Automerge in a Document-based app
 
