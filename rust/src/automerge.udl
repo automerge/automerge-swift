@@ -11,6 +11,9 @@ typedef sequence<u8> ChangeHash;
 [Custom]
 typedef sequence<u8> ActorId;
 
+[Custom]
+typedef sequence<u8> Cursor;
+
 [Enum]
 interface ScalarValue {
     Bytes( sequence<u8> value);
@@ -237,5 +240,14 @@ interface Doc {
     void apply_encoded_changes(sequence<u8> changes);
     [Throws=DocError]
     sequence<Patch> apply_encoded_changes_with_patches(sequence<u8> changes);
-};
 
+    [Throws=DocError]
+    Cursor cursor(ObjId obj, u64 position);
+    [Throws=DocError]
+    Cursor cursor_at(ObjId obj, u64 position, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    u64 cursor_position(ObjId obj, Cursor cursor);
+    [Throws=DocError]
+    u64 cursor_position_at(ObjId obj, Cursor cursor, sequence<ChangeHash> heads);
+
+};
