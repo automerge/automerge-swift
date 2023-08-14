@@ -29,4 +29,3 @@ impl UniffiCustomTypeConverter for Cursor {
         obj.0
     }
 }
-
