@@ -18,7 +18,7 @@ import Foundation
 public class Document: @unchecked Sendable {
     private var doc: WrappedDoc
     fileprivate let queue = DispatchQueue(label: "automerge-sync-queue", qos: .userInteractive)
-    internal var reportingLogLevel: LogVerbosity
+    var reportingLogLevel: LogVerbosity
 
     /// The actor ID of this document
     public var actor: ActorId {
@@ -322,22 +322,39 @@ public class Document: @unchecked Sendable {
             try self.doc.wrapErrors { try $0.textAt(obj: obj.bytes, heads: heads.map(\.bytes)) }
         }
     }
-    
-    /// Get the `cursor` structure for a specific `position` in text object `obj`
+
+    /// Get a cursor at the position you specify in the list or text object you provide.
+    /// - Parameters:
+    ///   - obj: The object identifier of the list or text object.
+    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try queue.sync {
-            Cursor(bytes: try self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position)})
+            try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
         }
     }
 
-    /// Get the `cursor` structure for a specific `position` in text object `obj` at `heads`
+    /// Get a cursor at the position and point of time you specify in the list or text object you provide.
+    /// - Parameters:
+    ///   - obj: The object identifier of the list or text object.
+    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time within the document.
+    /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try queue.sync {
-            Cursor(bytes: try self.doc.wrapErrors { try $0.cursorAt(obj: obj.bytes, position: position, heads: heads.map(\.bytes))})
+            try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
+                obj: obj.bytes,
+                position: position,
+                heads: heads.map(\.bytes)
+            ) })
         }
     }
 
-    /// Get the UInt64 position for a specific `cursor` in text object `obj`
+    /// The current position of the cursor for the list or text object you provide.
+    /// - Parameters:
+    ///   - obj: The object identifier of the list or text object.
+    ///   - cursor: The cursor created for this list or text object
+    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
     public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try queue.sync {
             try self.doc.wrapErrors {
@@ -346,7 +363,12 @@ public class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the UInt64 position for a specific `cursor` in text object `obj` at `heads`
+    /// The current position of the cursor for the list or text object you provide.
+    /// - Parameters:
+    ///   - obj: The object identifier of the list or text object.
+    ///   - cursor: The cursor created for this list or text object
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time within the document.
+    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
     public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
         try queue.sync {
             try self.doc.wrapErrors {
@@ -625,18 +647,18 @@ struct WrappedDoc {
     }
 
     init(_ f: () throws -> Doc) throws {
-        self.doc = try wrappedErrors { try f() }
+        doc = try wrappedErrors { try f() }
     }
 
     func wrapErrors<T>(f: (Doc) throws -> T) throws -> T {
-        try wrappedErrors { try f(self.doc) }
+        try wrappedErrors { try f(doc) }
     }
 
     func wrapErrors<T>(f: (Doc) -> T) -> T {
-        f(self.doc)
+        f(doc)
     }
 
     func wrapErrorsWithOther<T>(other: Self, f: (Doc, Doc) throws -> T) throws -> T {
-        try wrappedErrors { try f(self.doc, other.doc) }
+        try wrappedErrors { try f(doc, other.doc) }
     }
 }
