@@ -3,18 +3,18 @@ import Foundation
 
 typealias FfiSyncState = AutomergeUniffi.SyncState
 
-/// A synchronisation session with another peer
+/// The state of a synchronisation session with another peer.
+///
+/// Use ``encode()`` to generate a byte representation of the SyncState to persist it, and use ``init(bytes:)`` to initialize a new instance from those bytes.
 ///
 /// The sync protocol is designed to run over a reliable in-order transport with
 /// the ``SyncState`` tracking the state between successive calls to
 /// ``Document/generateSyncMessage(state:)`` and
-/// ``Document/receiveSyncMessage(state:message:)``. Assuming the existence of some
-/// network infrastructure for sending and receiving messages on the transport a
-/// loop to stay in sync might look like the following
+/// ``Document/receiveSyncMessage(state:message:)``. 
 ///
-/// ```
-/// // somehow obtain the document, or create a new one if you have no data
-/// let doc: Document = ...
+/// The following code example illustrates using `SyncState` to generate and receive one side of a network sync.
+/// ```swift
+/// let doc = Document()
 /// let state = SyncState()
 /// repeat {
 ///    if let msg = doc.generateSyncMessage(state) {
@@ -26,8 +26,7 @@ typealias FfiSyncState = AutomergeUniffi.SyncState
 /// }
 /// ```
 ///
-/// Sync states can be persisted. If you know a peer might connect to you again
-/// you can use ``encode()`` to save the state and ``init(bytes:)`` to decode it.
+/// For a more thorough example of sync, see <doc:ChangesAndHistory>.
 public struct SyncState: @unchecked Sendable {
     fileprivate let queue = DispatchQueue(label: "automerge-syncstate-queue", qos: .userInteractive)
 
@@ -37,17 +36,24 @@ public struct SyncState: @unchecked Sendable {
     // in this wrapping type, and serializing the interaction with the type through a serial
     // dispatch queue in order to accommodate marking the wrapping class as `unchecked @Sendable`.
 
-    // The heads the other end last reported (`nil` if we haven't received anything from them yet)
+    /// The heads last reported by a peer.
+    ///
+    /// Use ``Document/receiveSyncMessage(state:message:)`` to update a sync state, which updates this value.
     public var theirHeads: Set<ChangeHash>? {
         queue.sync {
             ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
         }
     }
-
+    
+    /// Create a new, empty sync state.
     public init() {
         ffi_state = FfiSyncState()
     }
-
+    
+    /// Create a sync state from data.
+    /// - Parameter bytes: The data that represents a serialized sync state.
+    ///
+    /// Serialize a sync state using ``SyncState/encode()``.
     public init(bytes: Data) throws {
         self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: Array(bytes)) }
     }
@@ -67,7 +73,7 @@ public struct SyncState: @unchecked Sendable {
     /// Serialize this sync state
     ///
     /// The serialized representation does not include session data which
-    /// depends on reliable in-order delivery. I.e. you do not need to call
+    /// depends on reliable in-order delivery. That is, you don'o't need to call
     /// ``reset()`` on a decoded sync state.
     public func encode() -> Data {
         queue.sync {

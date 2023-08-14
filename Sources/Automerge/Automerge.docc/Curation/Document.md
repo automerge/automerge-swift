@@ -6,6 +6,7 @@
 
 - ``init(logLevel:)``
 - ``init(_:logLevel:)``
+- ``LogVerbosity``
 
 ### Inspecting Documents
 
@@ -56,6 +57,13 @@
 - ``spliceText(obj:start:delete:value:)``
 - ``mark(obj:start:end:expand:name:value:)``
 
+### Setting and Reading cursors
+
+- ``cursor(obj:position:)``
+- ``cursorAt(obj:position:heads:)``
+- ``cursorPosition(obj:cursor:)``
+- ``cursorPositionAt(obj:cursor:heads:)``
+
 ### Updating counters
 
 - ``increment(obj:key:by:)``
@@ -64,6 +72,7 @@
 ### Reading a document's history
 
 - ``heads()``
+- ``getHistory()``
 
 ### Reading historical map values
 

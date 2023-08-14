@@ -34,26 +34,26 @@ class HistoryTests: XCTestCase {
     func testChangeCountsInHeadsAndChanges() throws {
         let doc = Document()
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("one"))
-        XCTAssertEqual(doc.changes().count, 1)
+        XCTAssertEqual(doc.getHistory().count, 1)
 
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("two"))
-        XCTAssertEqual(doc.changes().count, 2)
+        XCTAssertEqual(doc.getHistory().count, 2)
 
         let replicaDoc = doc.fork()
         XCTAssertEqual(doc.heads(), replicaDoc.heads())
-        XCTAssertEqual(doc.changes(), replicaDoc.changes())
+        XCTAssertEqual(doc.getHistory(), replicaDoc.getHistory())
 
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("three"))
-        XCTAssertEqual(doc.changes().count, 3)
-        XCTAssertEqual(replicaDoc.changes().count, 2)
+        XCTAssertEqual(doc.getHistory().count, 3)
+        XCTAssertEqual(replicaDoc.getHistory().count, 2)
 
         try doc.put(obj: ObjId.ROOT, key: "newkey", value: .String("beta"))
         try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: .String("alpha"))
-        XCTAssertEqual(doc.changes().count, 4)
-        XCTAssertEqual(replicaDoc.changes().count, 3)
+        XCTAssertEqual(doc.getHistory().count, 4)
+        XCTAssertEqual(replicaDoc.getHistory().count, 3)
 
         try doc.merge(other: replicaDoc)
-        XCTAssertEqual(doc.changes().count, 5)
-        XCTAssertEqual(replicaDoc.changes().count, 3)
+        XCTAssertEqual(doc.getHistory().count, 5)
+        XCTAssertEqual(replicaDoc.getHistory().count, 3)
     }
 }

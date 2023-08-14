@@ -1,14 +1,19 @@
 import Foundation
 
-/// A type that can be represented within an Automerge document.
+/// A type that can be represented as an individual value within an Automerge document.
 ///
-/// The ``ScalarValue`` representation of a local type is an atomic update, as compared with ``Value/Object(_:_:)``
+/// The ``ScalarValue`` representation of a local type is an all-at-once update, as compared with ``Value/Object(_:_:)``
 /// types which represent types that can be incrementally updated by multiple collaborators.
 ///
-/// You can encode your own types to be used within ``ObjType/List`` or ``ObjType/Map`` by conforming your type
-/// to `ScalarValueRepresentable`. Implement ``ScalarValueRepresentable/toScalarValue()`` with your
-/// preferred encoding, returning ``ScalarValue/Bytes(_:)`` with the encoded data embedded,
-/// and ``ScalarValueRepresentable/fromValue(_:)`` to decode into your type.
+/// For more complex types, conform your type to the `Codable` protocol and consider using ``AutomergeEncoder`` and ``AutomergeDecoder`` to store those representations into an Automerge document.
+/// If your type is a simple representation, you can encode your own types as a scalar value by conforming your type to `ScalarValueRepresentable`.
+/// By doing so, you provide the functions needed to convert with one of the Automerge primitive types, represented by ``ScalarValue``.
+///
+/// Implement ``ScalarValueRepresentable/toScalarValue()`` to encode your type into a relevant Automerge primitive.
+/// For example, you can encode your type into a buffer of bytes, and store the result as a value by returning ``ScalarValue/Bytes(_:)`` with the data embedded.
+/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` and ``ScalarValueRepresentable/fromValue(_:)`` to decode the scalar value into your type.
+///
+/// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion issues arise.
 public protocol ScalarValueRepresentable {
     /// The error type associated with failed attempted conversion into or out of Automerge representation.
     associatedtype ConvertError: LocalizedError
