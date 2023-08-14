@@ -13,12 +13,15 @@ For more information on the conflict resolution approach, see [Managing Conflict
 When you make a change, or merge in a change from elsewhere, you get a new state object reflecting that change.
 
 - **Network-agnostic** Automerge is a pure data structure library that does not care about networks, protocols, or transports. 
-It works with any connection-oriented network protocol, which could be client/server (for example using WebSockets or HTTP), server-hosted peer-to-peer (for example, over WebRTC), or entirely local peer-to-peer (for example, Bonjour).
+It works with any connection-oriented network protocol, which could be client/server (for example using WebSockets or HTTP), server-hosted peer-to-peer (for example, over WebRTC), or entirely local peer-to-peer (for example, using Bonjour).
 It also works with unidirectional messaging: you can send an Automerge file as email attachment, or on a USB drive in the mail, and the recipient will be able to merge it with their version.
 
-- **Portable** Originally developed in JavaScript, Automerge runs from a core Rust implementation that compiles to WebAssembly for use with Node.js, Electron, and modern browsers.
-The Rust core exposes a C API for consumption within other languages, and is packaged as a static library using an XCFramework for use in iOS and macOS applications.
+- **Portable** Originally developed in JavaScript, Automerge runs from a core Rust implementation.
+The library runs on Node.js, Electron, and modern browsers using the Rust library compiled to WebAssembly.
+The Rust library exposes a C API for use with other languages, packaged as a static library within an XCFramework for use in iOS and macOS applications.
 The Swift Automerge library includes supplemental code to make using Automerge more idiomatic and easier.
+
+Read <doc:FiveMinuteQuickstart> to quick a quick taste of how to use Automerge, or read [Meeting Notes, a Document-based SwiftUI app using Automerge](https://automerge.org/MeetingNotes/documentation/meetingnotes/appwalkthrough/) for a more detailed walk through illustrating a demonstration app that uses Automerge.
 
 ## Topics
 
@@ -26,7 +29,6 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 
 - ``Automerge/Document``
 - <doc:FiveMinuteQuickstart>
-- <doc:ExampleAppWalkthrough>
 
 ### Reading and Writing Codable Types
 
