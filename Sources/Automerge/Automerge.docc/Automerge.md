@@ -36,11 +36,15 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 - ``Automerge/LogVerbosity``
 - ``Automerge/AnyCodingKey``
 
-### Automerge Collaborative Types
+### Collaborating with Text
 
 - ``Automerge/AutomergeText``
+- ``Automerge/Cursor``
 - ``Automerge/Mark``
 - ``Automerge/ExpandMark``
+
+### Collaborating with Counters
+
 - ``Automerge/Counter``
 
 ### Synchronizing Documents
@@ -76,6 +80,7 @@ The Swift Automerge library includes supplemental code to make using Automerge m
 
 - ``Automerge/CodingKeyLookupError``
 - ``Automerge/PathParseError``
+- ``Automerge/BindingError``
 
 ### Document Errors 
 

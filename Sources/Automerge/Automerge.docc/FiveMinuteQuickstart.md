@@ -4,23 +4,23 @@ A quick-start guide on how to use Automerge for your iOS or macOS app.
 
 ## Overview
 
-Use an Automerge document to store and merge changes to the types you sync between apps.
+Use an Automerge document to store and merge changes to the data.
 You can store individuals values or entire models within Automerge.
-You can store and retrieve any model that conforms to the [Codable protocol](https://developer.apple.com/documentation/swift/codable) into an Automerge document. 
+Encode and decide any model that conforms to the [Codable protocol](https://developer.apple.com/documentation/swift/codable) into an Automerge document. 
 
-For example, the following code illustrates the model `ColorList` that we use in this quick start.
+For example, the following code illustrates the model `ColorList`, that conforms to `Codable`, for this quick start:
+
 ```swift
 struct ColorList: Codable {
     var colors: [String]
 }
 ```
 
-See <doc:ModelingData> for more details of the types that Automerge stores, and how they are exposed to Swift. 
+See <doc:ModelingData> for more details on the types that Automerge stores and how the library exposes those types in Swift. 
 
 ### Creating a Document
 
-Create an Automerge document to store the model.
-The following example creates a new Automerge ``Document`` instance and uses ``AutomergeEncoder`` to store an instance of the model into the document:
+The following example creates a new Automerge ``Document`` instance and uses ``AutomergeEncoder`` to store an instance of the `ColorList` model into it:
 
 ```swift
 import Automerge
@@ -31,11 +31,9 @@ var myColors = ColorList(colors: ["blue", "red"])
 try encoder.encode(myColors)
 ```
 
-These bytes represent the entire model, and its history of updates.
-
 ### Making Changes
 
-As you make changes to your model, you can store those changes into the Automerge document by encoding the updated model:
+As you make changes, store them into the Automerge document by encoding the updated model:
 
 ```swift
 myColors.colors.append("green")
@@ -45,12 +43,10 @@ print(myColors.colors)
 // ["blue", "red", "green"]
 ```
 
-You can do this once with all your updates, or repeatedly with many updates.
-Automerge treats all the changes you make as happening concurrently up until you save the document using ``Document/save()``.
+Automerge treats the changes you make as concurrent up until you save the document using ``Document/save()``.
 Saving the document compacts all the recent concurrent changes.
 
-See the article <doc:ChangesAndHistory> for more information about tracking changes and more compact ways to synchronise document updates. 
-
+See <doc:ChangesAndHistory> for more information about tracking changes and a more compact way to synchronise document updates. 
 
 ### Saving the Document
 
@@ -59,28 +55,30 @@ In addition to compacting changes to an Automerge document, ``Document/save()`` 
 let bytesToStore = doc.save()
 ```
 
+These bytes represent the entire document model stored in `Document` and its history of updates.
+
 ### Forking and Merging Documents
 
-Use ``Document/init(_:logLevel:)`` to load the bytes of an Automerge document, which creates a copy of the document:
+Use ``Document/init(_:logLevel:)`` to load the bytes of an Automerge document, to create a copy of the document:
 
 ```swift
 let doc2 = try Document(bytesToStore)
 ```
 
-You can also use the ``Document/fork()`` to make a copy of the document in memory, without having the store and re-load the bytes:
+You can also use the ``Document/fork()`` to make a copy of the document in memory, without needing to store and re-load the bytes:
 
 ```swift
 let doc3 = doc.fork()
 ```
 
-With the copy of the document, use ``AutomergeDecoder`` to create an instance of your stored model:
+With a copy of the document, create an instance of ``AutomergeDecoder`` to retrieve and decode an instance of your model:
 
 ```swift
 let doc2decoder = AutomergeDecoder(doc: doc2)
 var copyOfColorList = try doc2decoder.decode(ColorList.self)
 ```
 
-You can then make changes to your model and encode those changes into the Automerge document.
+You can then make changes to your model and encode those changes into the Automerge document to store the updates.
 
 ```swift
 copyOfColorList.colors.removeFirst()
@@ -88,13 +86,14 @@ let doc2encoder = AutomergeEncoder(doc: doc2)
 try doc2encoder.encode(copyOfColorList)
 ```
 
-Use the ``Document/merge(other:)`` to merge changes made in the second document back into the first:
+Use the ``Document/merge(other:)`` to merge changes made in the copy of the document back into the initial document:
 
 ```swift
 try doc.merge(doc2)
 ```
 
-Use `AutomergeDecoder` to update your model from the Automerge document:
+Create an instance of `AutomergeDecoder` to decode and retrieve an instance of your model that reflects the updates stored in the Automerge document:
+
 ```swift
 let decoder = AutomergeDecoder(doc: doc)
 myColors = try decoder.decode(ColorList.self)
