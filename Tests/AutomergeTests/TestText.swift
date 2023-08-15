@@ -17,7 +17,7 @@ class TextTestCase: XCTestCase {
         let heads = doc.heads()
 
         let doc2 = doc.fork()
-        
+
         try! doc2.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
         try! doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
 
@@ -31,7 +31,7 @@ class TextTestCase: XCTestCase {
         let doc = Document()
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try! doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
-        
+
         let heads = doc.heads()
 
         let c_hello = try! doc.cursor(obj: text, position: 0)
@@ -56,7 +56,7 @@ class TextTestCase: XCTestCase {
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_heads_world), 20)
         XCTAssertEqual(c_heads_world.description, c_world.description)
     }
-    
+
     func testRepeatedTextInsertion() throws {
         let characterCollection: [String] =
             "a bcdef ghijk lmnop qrstu vwxyz ABCD EFGHI JKLMN OPQRS TUVWX YZ😀😎🤓⚁ ♛⛺︎🕰️⏰⏲️ ⏱️🧭".map { char in

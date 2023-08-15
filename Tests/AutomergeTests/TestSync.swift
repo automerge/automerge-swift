@@ -4,9 +4,11 @@ import XCTest
 class SyncTests: XCTestCase {
     func testSyncTwoDocs() {
         let doc1 = Document()
+        trackForMemoryLeak(instance: doc1)
         let syncState1 = SyncState()
 
         let doc2 = Document()
+        trackForMemoryLeak(instance: doc2)
         let syncState2 = SyncState()
 
         try! doc1.put(obj: ObjId.ROOT, key: "key1", value: .String("value1"))
