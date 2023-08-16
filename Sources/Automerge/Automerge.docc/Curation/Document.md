@@ -8,6 +8,11 @@
 - ``init(_:logLevel:)``
 - ``LogVerbosity``
 
+### Transfering Documents
+
+- ``Document/transferRepresentation``
+- ``Automerge/UniformTypeIdentifiers/UTType/automerge``
+
 ### Inspecting Documents
 
 - ``actor``
