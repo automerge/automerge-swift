@@ -29,6 +29,7 @@ Read <doc:FiveMinuteQuickstart> to quick a quick taste of how to use Automerge, 
 
 - ``Automerge/Document``
 - <doc:FiveMinuteQuickstart>
+- <doc:AutomergeType>
 
 ### Reading and Writing Codable Types
 
