@@ -26,7 +26,12 @@ BUILD_FOLDER="$RUST_FOLDER/target"
 
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
-RUST_NIGHTLY="nightly-2023-02-02"
+# The specific issue with an earlier nightly version and linking into an
+# XCFramework appears to be resolved with latest versions of +nightly toolchain
+# (as of 10/10/23), but leaving it open to float seems less useful than
+# moving the pinning forward, since Catalyst support (target macabi) still
+# requires an active, nightly toolchain.
+RUST_NIGHTLY="nightly-2023-10-09"
 
 echo "Install nightly and rust-src for Catalyst"
 rustup toolchain install ${RUST_NIGHTLY}
@@ -108,8 +113,6 @@ lipo -create  \
     "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
-# the line below fails on the post 2023-02-02 nightly with:
-# error: unable to determine the platform for the given binary '.../automerge-swift/rust/target/apple-macabi/release/libuniffi_automerge.a'; check your deployment version settings
 xcodebuild -create-xcframework \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
