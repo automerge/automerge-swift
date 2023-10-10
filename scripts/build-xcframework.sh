@@ -26,7 +26,7 @@ BUILD_FOLDER="$RUST_FOLDER/target"
 
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
-RUST_NIGHTLY="nightly-2023-02-02"
+RUST_NIGHTLY="nightly-2023-10-09"
 
 echo "Install nightly and rust-src for Catalyst"
 rustup toolchain install ${RUST_NIGHTLY}
