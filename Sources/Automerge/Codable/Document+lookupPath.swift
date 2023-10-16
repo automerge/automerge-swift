@@ -47,9 +47,9 @@ public extension Document {
     }
 }
 
-extension Sequence where Element == Automerge.PathElement {
+public extension Sequence where Element == Automerge.PathElement {
     /// Returns a string that represents the schema path.
-    public func stringPath() -> String {
+    func stringPath() -> String {
         let path = map { pathElement in
             switch pathElement.prop {
             case let .Index(idx):

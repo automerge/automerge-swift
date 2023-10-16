@@ -75,6 +75,8 @@ public final class Counter: ObservableObject, Codable {
                 if _unboundStorage != 0 {
                     let bindingDifference = counterValue - Int64(_unboundStorage)
                     try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
+                    objectWillChange.send()
+                    _unboundStorage = 0
                 }
             } else {
                 throw BindingError.NotCounter
@@ -88,6 +90,8 @@ public final class Counter: ObservableObject, Codable {
                 if _unboundStorage != 0 {
                     let bindingDifference = counterValue - Int64(_unboundStorage)
                     try doc.increment(obj: objId, key: key.stringValue, by: bindingDifference)
+                    objectWillChange.send()
+                    _unboundStorage = 0
                 }
             } else {
                 throw BindingError.NotCounter
@@ -100,48 +104,58 @@ public final class Counter: ObservableObject, Codable {
     /// The value of the counter.
     public var value: Int {
         get {
-            guard let doc, let objId, let codingkey else {
-                return _unboundStorage
-            }
-            do {
-                if let index = codingkey.intValue {
-                    if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
-                        return Int(counterValue)
-                    }
-                } else {
-                    if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
-                        return Int(counterValue)
-                    }
-                }
-            } catch {
-                fatalError("Error attempting to read text value from objectId \(objId): \(error)")
-            }
-            fatalError()
+            getCounterValue()
         }
         set {
-            guard let objId, let doc, let codingkey else {
-                _unboundStorage = newValue
-                return
-            }
-            do {
-                if let index = codingkey.intValue {
-                    if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
-                        let bindingDifference = counterValue - Int64(newValue)
-                        try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
-                    } else {
-                        throw BindingError.NotCounter
-                    }
-                } else {
-                    if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
-                        let bindingDifference = counterValue - Int64(newValue)
-                        try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
-                    } else {
-                        throw BindingError.NotCounter
-                    }
+            setCounterValue(newValue)
+        }
+    }
+
+    fileprivate func getCounterValue() -> Int {
+        guard let doc, let objId, let codingkey else {
+            return _unboundStorage
+        }
+        do {
+            if let index = codingkey.intValue {
+                if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
+                    return Int(counterValue)
                 }
-            } catch {
-                fatalError("Error attempting to write '\(newValue)' to objectId \(objId): \(error)")
+            } else {
+                if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
+                    return Int(counterValue)
+                }
             }
+        } catch {
+            fatalError("Error attempting to read text value from objectId \(objId): \(error)")
+        }
+        fatalError()
+    }
+
+    fileprivate func setCounterValue(_ intValue: Int) {
+        guard let objId, let doc, let codingkey else {
+            _unboundStorage = intValue
+            return
+        }
+        do {
+            if let index = codingkey.intValue {
+                if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
+                    let bindingDifference = counterValue - Int64(intValue)
+                    try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
+                    objectWillChange.send()
+                } else {
+                    throw BindingError.NotCounter
+                }
+            } else {
+                if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
+                    let bindingDifference = counterValue - Int64(intValue)
+                    try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
+                    objectWillChange.send()
+                } else {
+                    throw BindingError.NotCounter
+                }
+            }
+        } catch {
+            fatalError("Error attempting to write '\(intValue)' to objectId \(objId): \(error)")
         }
     }
 
@@ -154,12 +168,14 @@ public final class Counter: ObservableObject, Codable {
             if let index = codingkey.intValue {
                 if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(value))
+                    objectWillChange.send()
                 } else {
                     throw BindingError.NotCounter
                 }
             } else {
                 if case .Scalar(.Counter(_)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: Int64(value))
+                    objectWillChange.send()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -172,31 +188,16 @@ public final class Counter: ObservableObject, Codable {
     }
 
     /// Returns a binding to the string value of a text object within an Automerge document.
-    //    public func valueBinding() -> Binding<Int> {
-    //        Binding(
-    //            get: { () -> String in
-    //                guard let doc = self.doc, let objId = self.objId else {
-    //                    return self._unboundStorage
-    //                }
-    //                do {
-    //                    return try doc.text(obj: objId)
-    //                } catch {
-    //                    fatalError("Error attempting to read text value from objectId \(objId): \(error)")
-    //                }
-    //            },
-    //            set: { (newValue: String) in
-    //                guard let objId = self.objId, self.doc != nil else {
-    //                    self._unboundStorage = newValue
-    //                    return
-    //                }
-    //                do {
-    //                    try self.updateText(newText: newValue)
-    //                } catch {
-    //                    fatalError("Error attempting to write '\(newValue)' to objectId \(objId): \(error)")
-    //                }
-    //            }
-    //        )
-    //    }
+    public func valueBinding() -> Binding<Int> {
+        Binding(
+            get: { () -> Int in
+                self.getCounterValue()
+            },
+            set: { (newValue: Int) in
+                self.setCounterValue(newValue)
+            }
+        )
+    }
 
     // MARK: Codable conformance
 
@@ -215,49 +216,25 @@ public final class Counter: ObservableObject, Codable {
     }
 }
 
-// MARK: Counter Conversions
+extension Counter: Equatable {
+    public static func == (lhs: Counter, rhs: Counter) -> Bool {
+        if lhs.objId != nil, rhs.objId != nil {
+            return lhs.objId == rhs.objId
+        } else {
+            return lhs.value == rhs.value
+        }
+    }
+}
 
-/// A failure to convert an Automerge scalar value to or from a signer integer counter representation.
-// public enum CounterScalarConversionError: LocalizedError {
-//    case notCounterValue(_ val: Value)
-//    case notCounterScalarValue(_ val: ScalarValue)
-//
-//    /// A localized message describing what error occurred.
-//    public var errorDescription: String? {
-//        switch self {
-//        case let .notCounterValue(val):
-//            return "Failed to read the value \(val) as a signed integer counter."
-//        case let .notCounterScalarValue(val):
-//            return "Failed to read the scalar value \(val) as a signed integer counter."
-//        }
-//    }
-//
-//    /// A localized message describing the reason for the failure.
-//    public var failureReason: String? { nil }
-// }
+extension Counter: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(objId)
+        hasher.combine(value)
+    }
+}
 
-// extension Counter: ScalarValueRepresentable {
-//    public typealias ConvertError = CounterScalarConversionError
-//
-//    public static func fromValue(_ val: Value) -> Result<Counter, CounterScalarConversionError> {
-//        switch val {
-//        case let .Scalar(.Counter(d)):
-//            return .success(Counter(d))
-//        default:
-//            return .failure(CounterScalarConversionError.notCounterValue(val))
-//        }
-//    }
-//
-//    public static func fromScalarValue(_ val: ScalarValue) -> Result<Counter, CounterScalarConversionError> {
-//        switch val {
-//        case let .Counter(d):
-//            return .success(Counter(d))
-//        default:
-//            return .failure(CounterScalarConversionError.notCounterScalarValue(val))
-//        }
-//    }
-//
-//    public func toScalarValue() -> ScalarValue {
-//        .Counter(Int64(value))
-//    }
-// }
+extension Counter: CustomStringConvertible {
+    public var description: String {
+        String(value)
+    }
+}

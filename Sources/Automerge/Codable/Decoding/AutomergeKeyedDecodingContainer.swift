@@ -140,8 +140,9 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
             }
         case is Counter.Type:
             let retrievedValue = try getValue(forKey: key)
-            if case let Value.Scalar(.Counter(counterValue)) = retrievedValue {
-                return Counter(counterValue) as! T
+            if case Value.Scalar(.Counter) = retrievedValue {
+                let counterReference = try Counter(doc: impl.doc, path: codingPath.stringPath())
+                return counterReference as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

@@ -5,12 +5,13 @@ typealias FfiSyncState = AutomergeUniffi.SyncState
 
 /// The state of a synchronisation session with another peer.
 ///
-/// Use ``encode()`` to generate a byte representation of the SyncState to persist it, and use ``init(bytes:)`` to initialize a new instance from those bytes.
+/// Use ``encode()`` to generate a byte representation of the SyncState to persist it, and use ``init(bytes:)`` to
+/// initialize a new instance from those bytes.
 ///
 /// The sync protocol is designed to run over a reliable in-order transport with
 /// the ``SyncState`` tracking the state between successive calls to
 /// ``Document/generateSyncMessage(state:)`` and
-/// ``Document/receiveSyncMessage(state:message:)``. 
+/// ``Document/receiveSyncMessage(state:message:)``.
 ///
 /// The following code example illustrates using `SyncState` to generate and receive one side of a network sync.
 /// ```swift
@@ -44,18 +45,18 @@ public struct SyncState: @unchecked Sendable {
             ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
         }
     }
-    
+
     /// Create a new, empty sync state.
     public init() {
         ffi_state = FfiSyncState()
     }
-    
+
     /// Create a sync state from data.
     /// - Parameter bytes: The data that represents a serialized sync state.
     ///
     /// Serialize a sync state using ``SyncState/encode()``.
     public init(bytes: Data) throws {
-        self.ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: Array(bytes)) }
+        ffi_state = try wrappedErrors { try FfiSyncState.decode(bytes: Array(bytes)) }
     }
 
     /// Reset the state if the connection is interrupted
@@ -66,7 +67,7 @@ public struct SyncState: @unchecked Sendable {
     /// etc. etc.) then you must call ``reset()`` before continuing to synch.
     public func reset() {
         queue.sync {
-            self.ffi_state.reset()
+            ffi_state.reset()
         }
     }
 
@@ -77,7 +78,7 @@ public struct SyncState: @unchecked Sendable {
     /// ``reset()`` on a decoded sync state.
     public func encode() -> Data {
         queue.sync {
-            Data(self.ffi_state.encode())
+            Data(ffi_state.encode())
         }
     }
 }

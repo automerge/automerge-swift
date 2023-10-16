@@ -318,11 +318,22 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .counter)
             }
-            if case let .Scalar(.Counter(currentCounterValue)) = try document.get(obj: objectId, key: key.stringValue) {
-                let counterDifference = Int64(downcastCounter.value) - currentCounterValue
-                try document.increment(obj: objectId, key: key.stringValue, by: counterDifference)
-            } else {
-                try document.put(obj: objectId, key: key.stringValue, value: downcastCounter.toScalarValue())
+            if downcastCounter.doc == nil || downcastCounter.objId == nil {
+                // instance is an unbound instance - implying a new reference into the Automerge
+                // document. Attempt to serialize the unboundStorage into place.
+                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                    obj: objectId,
+                    key: key.stringValue
+                ) {
+                    let counterDifference = Int64(downcastCounter._unboundStorage) - currentCounterValue
+                    try document.increment(obj: objectId, key: key.stringValue, by: counterDifference)
+                } else {
+                    try document.put(
+                        obj: objectId,
+                        key: key.stringValue,
+                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                    )
+                }
             }
             impl.mapKeysWritten.append(key.stringValue)
         case is AutomergeText.Type:

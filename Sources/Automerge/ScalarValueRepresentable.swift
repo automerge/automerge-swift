@@ -5,15 +5,21 @@ import Foundation
 /// The ``ScalarValue`` representation of a local type is an all-at-once update, as compared with ``Value/Object(_:_:)``
 /// types which represent types that can be incrementally updated by multiple collaborators.
 ///
-/// For more complex types, conform your type to the `Codable` protocol and consider using ``AutomergeEncoder`` and ``AutomergeDecoder`` to store those representations into an Automerge document.
-/// If your type is a simple representation, you can encode your own types as a scalar value by conforming your type to `ScalarValueRepresentable`.
-/// By doing so, you provide the functions needed to convert with one of the Automerge primitive types, represented by ``ScalarValue``.
+/// For more complex types, conform your type to the `Codable` protocol and consider using ``AutomergeEncoder`` and
+/// ``AutomergeDecoder`` to store those representations into an Automerge document.
+/// If your type is a simple representation, you can encode your own types as a scalar value by conforming your type to
+/// `ScalarValueRepresentable`.
+/// By doing so, you provide the functions needed to convert with one of the Automerge primitive types, represented by
+/// ``ScalarValue``.
 ///
 /// Implement ``ScalarValueRepresentable/toScalarValue()`` to encode your type into a relevant Automerge primitive.
-/// For example, you can encode your type into a buffer of bytes, and store the result as a value by returning ``ScalarValue/Bytes(_:)`` with the data embedded.
-/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` and ``ScalarValueRepresentable/fromValue(_:)`` to decode the scalar value into your type.
+/// For example, you can encode your type into a buffer of bytes, and store the result as a value by returning
+/// ``ScalarValue/Bytes(_:)`` with the data embedded.
+/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` and ``ScalarValueRepresentable/fromValue(_:)`` to decode
+/// the scalar value into your type.
 ///
-/// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion issues arise.
+/// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion
+/// issues arise.
 public protocol ScalarValueRepresentable {
     /// The error type associated with failed attempted conversion into or out of Automerge representation.
     associatedtype ConvertError: LocalizedError

@@ -72,18 +72,8 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             // Automerge supports it as a primitive value type.
             let downcastDate = value as! Date
             let valueToWrite = downcastDate.toScalarValue()
-            if let testCurrentValue = try document.get(obj: objectId, index: UInt64(count)),
-               TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
-            {
-                // BLOW UP HERE
-                throw EncodingError.invalidValue(
-                    value,
-                    EncodingError
-                        .Context(
-                            codingPath: codingPath,
-                            debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.from(valueToWrite)))"
-                        )
-                )
+            if impl.cautiousWrite {
+                try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .timestamp)
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
             impl.highestUnkeyedIndexWritten = UInt64(count)
@@ -92,52 +82,45 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             // Automerge supports it as a primitive value type.
             let downcastData = value as! Data
             let valueToWrite = downcastData.toScalarValue()
-            if let testCurrentValue = try document.get(obj: objectId, index: UInt64(count)),
-               TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
-            {
-                // BLOW UP HERE
-                throw EncodingError.invalidValue(
-                    value,
-                    EncodingError
-                        .Context(
-                            codingPath: codingPath,
-                            debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.from(valueToWrite)))"
-                        )
-                )
+            if impl.cautiousWrite {
+                try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .bytes)
             }
-
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
             impl.highestUnkeyedIndexWritten = UInt64(count)
         case is Counter.Type:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
             let downcastCounter = value as! Counter
-            let valueToWrite = downcastCounter.toScalarValue()
-            if let testCurrentValue = try document.get(obj: objectId, index: UInt64(count)),
-               TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
-            {
-                // BLOW UP HERE because of incorrect type
-                throw EncodingError.invalidValue(
-                    value,
-                    EncodingError
-                        .Context(
-                            codingPath: codingPath,
-                            debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.from(valueToWrite)))"
-                        )
+            if impl.cautiousWrite {
+                try checkTypeMatch(
+                    value: downcastCounter.value,
+                    objectId: objectId,
+                    index: UInt64(count),
+                    type: .counter
                 )
             }
-            if case let .Scalar(.Counter(currentCounterValue)) = try document.get(obj: objectId, index: UInt64(count)) {
-                let counterDifference = Int64(downcastCounter.value) - currentCounterValue
-                try document.increment(obj: objectId, index: UInt64(count), by: counterDifference)
-            } else {
-                try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            if downcastCounter.doc == nil || downcastCounter.objId == nil {
+                // instance is an unbound instance - implying a new reference into the Automerge
+                // document. Attempt to serialize the unboundStorage into place.
+                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                    obj: objectId,
+                    index: UInt64(count)
+                ) {
+                    let counterDifference = Int64(downcastCounter._unboundStorage) - currentCounterValue
+                    try document.increment(obj: objectId, index: UInt64(count), by: counterDifference)
+                } else {
+                    try document.put(
+                        obj: objectId,
+                        index: UInt64(count),
+                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                    )
+                }
             }
             impl.highestUnkeyedIndexWritten = UInt64(count)
         case is AutomergeText.Type:
             // Capture and override the default encodable pathing for AutomergeText since
             // Automerge supports it as a primitive value type.
             let downcastText = value as! AutomergeText
-
             let textNodeId: ObjId
             if let existingNode = try document.get(obj: objectId, index: UInt64(count)) {
                 guard case let .Object(textId, .Text) = existingNode else {
@@ -192,6 +175,22 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             impl.highestUnkeyedIndexWritten = UInt64(count)
         }
         count += 1
+    }
+
+    fileprivate func checkTypeMatch<T>(value: T, objectId: ObjId, index: UInt64, type: TypeOfAutomergeValue) throws {
+        if let testCurrentValue = try document.get(obj: objectId, index: index),
+           TypeOfAutomergeValue.from(testCurrentValue) != type
+        {
+            // BLOW UP HERE
+            throw EncodingError.invalidValue(
+                value,
+                EncodingError
+                    .Context(
+                        codingPath: codingPath,
+                        debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(type))"
+                    )
+            )
+        }
     }
 
     mutating func nestedContainer<NestedKey>(keyedBy _: NestedKey.Type) ->

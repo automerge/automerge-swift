@@ -158,7 +158,7 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
             }
         case is Counter.Type:
             if case let .Scalar(.Counter(counterValue)) = value {
-                return Counter(counterValue) as! T
+                return Counter(Int(counterValue)) as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

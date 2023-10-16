@@ -28,7 +28,7 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
     /// A null.
     case Null
 
-    internal func toFfi() -> FFIScalar {
+    func toFfi() -> FFIScalar {
         switch self {
         case let .Bytes(b):
             return .bytes(value: Array(b))

@@ -57,7 +57,7 @@ public struct ReceiveSyncError: Error {
     }
 }
 
-internal func wrappedErrors<T>(_ f: () throws -> T) throws -> T {
+func wrappedErrors<T>(_ f: () throws -> T) throws -> T {
     do {
         return try f()
     } catch let error as FfiDocError {
