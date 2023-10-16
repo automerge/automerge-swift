@@ -53,6 +53,9 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
         let topLevel = WrapperStruct(counter: Counter(5))
 
         try encoder.encode(topLevel)
+        // DEBUGGING ONLY - walks the whole document that's been encoded
+        try doc.walk()
+
         let decodedStruct = try decoder.decode(WrapperStruct.self)
         XCTAssertEqual(decodedStruct.counter.value, 5)
     }
@@ -66,6 +69,10 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
         let topLevel = WrapperStruct(counter: Counter(5), anotherOptional: nil)
 
         try encoder.encode(topLevel)
+
+        // DEBUGGING ONLY - walks the whole document that's been encoded
+        try doc.walk()
+
         let decodedStruct = try decoder.decode(WrapperStruct.self)
         XCTAssertEqual(decodedStruct.counter?.value, 5)
         XCTAssertNil(decodedStruct.anotherOptional)
