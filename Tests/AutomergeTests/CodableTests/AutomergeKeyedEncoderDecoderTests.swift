@@ -61,6 +61,7 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
     }
 
     func testSimpleOptionalCounterEncodeDecode() throws {
+        doc = Document(logLevel: .tracing)
         struct WrapperStruct: Codable, Equatable {
             let counter: Counter?
             let anotherOptional: String?

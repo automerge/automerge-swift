@@ -1,14 +1,10 @@
-//
-//  Document+walk.swift
-//
-//
-//  Created by Joseph Heck on 10/16/23.
-//
-
-import Foundation
+import Automerge
 
 extension Document {
-    public func walk() throws {
+    /// A testing function that dumps the vaguely-typed contents of an Automerge document for the purposes of debugging.
+    ///
+    /// The output is all through print to STDOUT.
+    func walk() throws {
         print("{")
         try walk(self, from: ObjId.ROOT)
         print("}")

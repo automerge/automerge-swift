@@ -60,6 +60,15 @@ public final class Counter: ObservableObject, Codable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, path: String) throws {
+        // FIXME: heckj
+        //
+        // NOTES(heckj): lookupPath will always return 'nil' for a leaf node such as counter,
+        // so `doc.lookupPath` isn't the right thing to use here.
+        //
+        // That said, the function `retrieveObjectId` with a ContainerType of .value will hand back the
+        // relevant ObjectId - and then we can use the last element of the path as the key on it, since
+        // we know that's how Counter fits into the schema - as an Automerge 'value', not an 'object'.
+        #error("TEST FAILURE SOURCE")
         guard let objId = try doc.lookupPath(path: path) else {
             throw BindingError.InvalidPath(path)
         }
