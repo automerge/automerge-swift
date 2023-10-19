@@ -2,3 +2,4 @@
 .build
 .swiftpm
 *.xcframework*
+.vscode
