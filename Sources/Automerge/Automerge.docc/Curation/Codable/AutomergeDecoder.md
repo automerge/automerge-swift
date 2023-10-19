@@ -1,9 +1,6 @@
 # ``Automerge/AutomergeDecoder``
 
-<!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
-
 ## Overview
-
 
 Use `AutomergeDecoder` to decode your data from an Automerge document.
 

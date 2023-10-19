@@ -96,7 +96,6 @@ Read <doc:FiveMinuteQuickstart> to quick a quick taste of how to use Automerge, 
 
 - ``Automerge/BooleanScalarConversionError``
 - ``Automerge/BytesScalarConversionError``
-- ``Automerge/CounterScalarConversionError``
 - ``Automerge/IntScalarConversionError``
 - ``Automerge/FloatingPointScalarConversionError``
 - ``Automerge/StringScalarConversionError``
