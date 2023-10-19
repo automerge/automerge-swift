@@ -3,6 +3,13 @@ import Foundation
 import struct SwiftUI.Binding
 
 /// A type that represents the value of an Automerge counter.
+///
+/// Counter is a reference-type that you can create without an existing Automerge document, increment,
+/// and later save into an Automerge document be encoding using ``AutomergeEncoder``, or by
+/// calling the ``bind(doc:path:)`` function  to link the type into an existing Automerge document.
+///
+/// As a reference type, `Counter` updates the underlying Automerge document when a value is explicitly
+/// set, or ``increment(by:)`` is called on the instance.
 public final class Counter: ObservableObject, Codable {
     var doc: Document?
     var objId: ObjId?
@@ -17,16 +24,24 @@ public final class Counter: ObservableObject, Codable {
         _unboundStorage = initialValue
     }
 
-    /// Creates a new text reference instance bound within an Automerge document.
+    /// Creates a new Counter reference instance bound within an Automerge document.
     /// - Parameters:
     ///   - doc: The Automerge document associated with this reference.
-    ///   - path: A string path that represents a `Text` container within the Automerge document.
+    ///   - path: A string path that represents a `Counter` within the Automerge document.
     ///   - initialValue: An initial string value for the text reference.
+    ///
+    /// The initializer can throw an error if the `path` provided doesn't match to a counter type
+    /// stored in the Automerge document you provide.
     public convenience init(_ initialValue: Int = 0, doc: Document, path: String) throws {
         self.init(initialValue)
         try bind(doc: doc, path: path)
     }
 
+    /// Creates a new Counter reference instance bound within an Automerge document.
+    /// - Parameters:
+    ///   - doc: The Automerge document associated with this reference.
+    ///   - objId: A string path that represents the object that contains a `Value` within the Automerge document.
+    ///   - key: The key (index position or dictionary key) on the `objId` provided.
     public convenience init(doc: Document, objId: ObjId, key: any CodingKey) throws {
         self.init()
         if let index = key.intValue {
@@ -48,6 +63,7 @@ public final class Counter: ObservableObject, Codable {
         }
     }
 
+    /// Returns a Boolean value that indicates wether this reference type is actively updating an Automerge document.
     public var isBound: Bool {
         doc != nil && objId != nil
     }
@@ -167,6 +183,8 @@ public final class Counter: ObservableObject, Codable {
         }
     }
 
+    /// Updates the counter, incrementing or decrementing by the value you provide.
+    /// - Parameter value: The value to add (or subtract) from the counter.
     public func increment(by value: Int) {
         guard let objId, let doc, let codingkey else {
             _unboundStorage += value
@@ -213,11 +231,15 @@ public final class Counter: ObservableObject, Codable {
         case value
     }
 
+    /// Encodes the counter instance into the encoder instance you provide.
+    /// - Parameter encoder: The encoder instance to write into.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
     }
 
+    /// Decodes a counter instance from the decoder instance you provide.
+    /// - Parameter decoder: The decoder to read.
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         _unboundStorage = try container.decode(Int.self, forKey: .value)
@@ -225,6 +247,11 @@ public final class Counter: ObservableObject, Codable {
 }
 
 extension Counter: Equatable {
+    /// Returns a Boolean value that indicates whether value of two counters are equal.
+    /// - Parameters:
+    ///   - lhs: The first counter to compare.
+    ///   - rhs: The second counter to compare.
+    /// - Returns: Returns `true` if equal.
     public static func == (lhs: Counter, rhs: Counter) -> Bool {
         if lhs.objId != nil, rhs.objId != nil {
             return lhs.objId == rhs.objId
@@ -242,6 +269,7 @@ extension Counter: Hashable {
 }
 
 extension Counter: CustomStringConvertible {
+    /// A string representation of the value of the counter.
     public var description: String {
         String(value)
     }
