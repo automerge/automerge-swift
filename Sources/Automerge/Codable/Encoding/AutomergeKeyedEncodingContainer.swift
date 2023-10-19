@@ -325,7 +325,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                     obj: objectId,
                     key: key.stringValue
                 ) {
-                    let counterDifference = Int64(downcastCounter._unboundStorage) - currentCounterValue
+                    let counterDifference = currentCounterValue - Int64(downcastCounter._unboundStorage)
                     try document.increment(obj: objectId, key: key.stringValue, by: counterDifference)
                 } else {
                     try document.put(

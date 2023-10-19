@@ -27,21 +27,21 @@ public final class Counter: ObservableObject, Codable {
         try bind(doc: doc, path: path)
     }
 
-    public convenience init(doc: Document, objId: ObjId, key: AnyCodingKey) throws {
+    public convenience init(doc: Document, objId: ObjId, key: any CodingKey) throws {
         self.init()
         if let index = key.intValue {
             if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
                 self.doc = doc
                 self.objId = objId
-                codingkey = key
+                codingkey = AnyCodingKey(key)
             } else {
                 throw BindingError.NotCounter
             }
         } else {
-            if case .Scalar(.Counter(_)) = try doc.get(obj: objId, key: key.stringValue) {
+            if case .Scalar(.Counter) = try doc.get(obj: objId, key: key.stringValue) {
                 self.doc = doc
                 self.objId = objId
-                codingkey = key
+                codingkey = AnyCodingKey(key)
             } else {
                 throw BindingError.NotCounter
             }
@@ -60,30 +60,28 @@ public final class Counter: ObservableObject, Codable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, path: String) throws {
-        // FIXME: heckj
-        //
-        // NOTES(heckj): lookupPath will always return 'nil' for a leaf node such as counter,
-        // so `doc.lookupPath` isn't the right thing to use here.
-        //
-        // That said, the function `retrieveObjectId` with a ContainerType of .value will hand back the
-        // relevant ObjectId - and then we can use the last element of the path as the key on it, since
-        // we know that's how Counter fits into the schema - as an Automerge 'value', not an 'object'.
-        #error("TEST FAILURE SOURCE")
-        guard let objId = try doc.lookupPath(path: path) else {
-            throw BindingError.InvalidPath(path)
+        let objId: ObjId
+        let codingPath = try AnyCodingKey.parsePath(path)
+        let lookupResult = doc.retrieveObjectId(path: codingPath, containerType: .Value, strategy: .readonly)
+        switch lookupResult {
+        case let .success(success):
+            objId = success
+        case let .failure(failure):
+            throw failure
         }
-        guard let key = try AnyCodingKey.parsePath(path).last else {
+        guard let key = codingPath.last else {
             throw BindingError.InvalidPath(path)
         }
         if let index = key.intValue {
-            if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
+            if case .Scalar(.Counter) = try doc.get(obj: objId, index: UInt64(index)) {
                 self.doc = doc
                 self.objId = objId
                 codingkey = key
-                // Set an initial value on bind, if it's not zero
                 if _unboundStorage != 0 {
-                    let bindingDifference = counterValue - Int64(_unboundStorage)
-                    try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
+                    // If the unbound counter has been adjusted, positive or negative, use
+                    // that as an increment value on the existing counter to ensure that
+                    // all the counter changes are maintained and appended to each other.
+                    try doc.increment(obj: objId, index: UInt64(index), by: Int64(_unboundStorage))
                     objectWillChange.send()
                     _unboundStorage = 0
                 }
@@ -91,14 +89,15 @@ public final class Counter: ObservableObject, Codable {
                 throw BindingError.NotCounter
             }
         } else {
-            if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: key.stringValue) {
+            if case .Scalar(.Counter) = try doc.get(obj: objId, key: key.stringValue) {
                 self.doc = doc
                 self.objId = objId
                 codingkey = key
-                // Set an initial value on bind, if it's not zero
                 if _unboundStorage != 0 {
-                    let bindingDifference = counterValue - Int64(_unboundStorage)
-                    try doc.increment(obj: objId, key: key.stringValue, by: bindingDifference)
+                    // If the unbound counter has been adjusted, positive or negative, use
+                    // that as an increment value on the existing counter to ensure that
+                    // all the counter changes are maintained and appended to each other.
+                    try doc.increment(obj: objId, key: key.stringValue, by: Int64(_unboundStorage))
                     objectWillChange.send()
                     _unboundStorage = 0
                 }
@@ -148,7 +147,7 @@ public final class Counter: ObservableObject, Codable {
         do {
             if let index = codingkey.intValue {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
-                    let bindingDifference = counterValue - Int64(intValue)
+                    let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
                     objectWillChange.send()
                 } else {
@@ -156,7 +155,7 @@ public final class Counter: ObservableObject, Codable {
                 }
             } else {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
-                    let bindingDifference = counterValue - Int64(intValue)
+                    let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
                     objectWillChange.send()
                 } else {

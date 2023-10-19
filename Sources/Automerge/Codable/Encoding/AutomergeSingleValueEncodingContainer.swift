@@ -266,7 +266,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         obj: objectId,
                         index: UInt64(indexToWrite)
                     ) {
-                        let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                        let counterDifference = currentCounterValue - Int64(downcastCounter.value)
                         try document.increment(obj: objectId, index: UInt64(indexToWrite), by: counterDifference)
                     } else {
                         try document.insert(

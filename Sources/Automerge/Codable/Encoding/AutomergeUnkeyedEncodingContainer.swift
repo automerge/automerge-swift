@@ -102,14 +102,37 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             if downcastCounter.doc == nil || downcastCounter.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
+                // Check to see if the document already has a scalar at this location
+                if case .Scalar(.Counter) = try document.get(
+                    obj: objectId,
+                    index: UInt64(count)
+                ) {
+                    // an unbound counter value should be added to any existing
+                    // document-based counter in order to preserve
+                    // increments/decrement counts
+                    try document.increment(
+                        obj: objectId,
+                        index: UInt64(count),
+                        by: Int64(downcastCounter._unboundStorage)
+                    )
+                } else {
+                    // Otherwise the counter is new to the document, and should be
+                    // inserted with the value of it's unbound storage.
+                    try document.insert(
+                        obj: objectId,
+                        index: UInt64(count),
+                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                    )
+                }
+            } else {
                 if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
                     obj: objectId,
                     index: UInt64(count)
                 ) {
-                    let counterDifference = Int64(downcastCounter._unboundStorage) - currentCounterValue
+                    let counterDifference = currentCounterValue - Int64(downcastCounter._unboundStorage)
                     try document.increment(obj: objectId, index: UInt64(count), by: counterDifference)
                 } else {
-                    try document.put(
+                    try document.insert(
                         obj: objectId,
                         index: UInt64(count),
                         value: .Counter(Int64(downcastCounter._unboundStorage))
