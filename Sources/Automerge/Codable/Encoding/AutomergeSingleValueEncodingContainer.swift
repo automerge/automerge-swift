@@ -245,56 +245,66 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         "No coding key was found from looking up path \(codingPath) when encoding \(type(of: T.self))."
                     )
             }
-            let valueToWrite = downcastCounter.toScalarValue()
-            if let indexToWrite = codingkey.intValue {
-                if impl.cautiousWrite {
-                    if let testCurrentValue = try document.get(obj: objectId, index: UInt64(indexToWrite)),
-                       TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
-                    {
-                        // BLOW UP HERE
-                        throw EncodingError.invalidValue(
-                            value,
-                            EncodingError
-                                .Context(
-                                    codingPath: codingPath,
-                                    debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.from(valueToWrite)))"
-                                )
+            if !downcastCounter.isBound {
+                if let indexToWrite = codingkey.intValue {
+                    if impl.cautiousWrite {
+                        if let testCurrentValue = try document.get(obj: objectId, index: UInt64(indexToWrite)),
+                           TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.counter
+                        {
+                            // BLOW UP HERE
+                            throw EncodingError.invalidValue(
+                                value,
+                                EncodingError
+                                    .Context(
+                                        codingPath: codingPath,
+                                        debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.counter))"
+                                    )
+                            )
+                        }
+                    }
+                    if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                        obj: objectId,
+                        index: UInt64(indexToWrite)
+                    ) {
+                        let counterDifference = currentCounterValue - Int64(downcastCounter.value)
+                        try document.increment(obj: objectId, index: UInt64(indexToWrite), by: counterDifference)
+                    } else {
+                        try document.insert(
+                            obj: objectId,
+                            index: UInt64(indexToWrite),
+                            value: .Counter(Int64(downcastCounter._unboundStorage))
                         )
                     }
-                }
-                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
-                    obj: objectId,
-                    index: UInt64(indexToWrite)
-                ) {
-                    let counterDifference = Int64(downcastCounter.value) - currentCounterValue
-                    try document.increment(obj: objectId, index: UInt64(indexToWrite), by: counterDifference)
                 } else {
-                    try document.insert(obj: objectId, index: UInt64(indexToWrite), value: valueToWrite)
-                }
-            } else {
-                if impl.cautiousWrite {
-                    if let testCurrentValue = try document.get(obj: objectId, key: codingkey.stringValue),
-                       TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
-                    {
-                        // BLOW UP HERE
-                        throw EncodingError.invalidValue(
-                            value,
-                            EncodingError
-                                .Context(
-                                    codingPath: codingPath,
-                                    debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.from(valueToWrite)))"
-                                )
+                    if impl.cautiousWrite {
+                        if let testCurrentValue = try document.get(obj: objectId, key: codingkey.stringValue),
+                           TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.counter
+                        {
+                            // BLOW UP HERE
+                            throw EncodingError.invalidValue(
+                                value,
+                                EncodingError
+                                    .Context(
+                                        codingPath: codingPath,
+                                        debugDescription: "The type in the automerge document (\(TypeOfAutomergeValue.from(testCurrentValue))) doesn't match the type being written (\(TypeOfAutomergeValue.counter))"
+                                    )
+                            )
+                        }
+                    }
+                    if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
+                        obj: objectId,
+                        key: codingkey.stringValue
+                    ) {
+                        let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                        try document.increment(obj: objectId, key: codingkey.stringValue, by: counterDifference)
+                    } else {
+                        try document.put(
+                            obj: objectId,
+                            key: codingkey.stringValue,
+                            value:
+                            .Counter(Int64(downcastCounter._unboundStorage))
                         )
                     }
-                }
-                if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
-                    obj: objectId,
-                    key: codingkey.stringValue
-                ) {
-                    let counterDifference = Int64(downcastCounter.value) - currentCounterValue
-                    try document.increment(obj: objectId, key: codingkey.stringValue, by: counterDifference)
-                } else {
-                    try document.put(obj: objectId, key: codingkey.stringValue, value: downcastCounter.toScalarValue())
                 }
             }
             impl.singleValueWritten = true

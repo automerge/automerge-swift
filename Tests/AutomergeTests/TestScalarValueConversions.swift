@@ -76,14 +76,4 @@ class TestScalarValueConversions: XCTestCase {
 
         XCTAssertEqual(myDate.toScalarValue(), ScalarValue.Timestamp(1679517444))
     }
-
-    func testScalarCounterConversion() throws {
-        let initial: Value = .Scalar(.Counter(16))
-        let converted: Counter = try Counter.fromValue(initial).get()
-        XCTAssertEqual(Counter(16), converted)
-
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
-
-        XCTAssertEqual(Counter(16).toScalarValue(), ScalarValue.Counter(16))
-    }
 }

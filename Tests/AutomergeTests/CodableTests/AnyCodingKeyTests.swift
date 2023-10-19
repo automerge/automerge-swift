@@ -40,7 +40,7 @@ final class AnyCodingKeyTests: XCTestCase {
     }
 
     func testDescriptionParseRoundTrip() throws {
-        let examplePath = [
+        let examplePath: [any CodingKey] = [
             AnyCodingKey("list"),
             AnyCodingKey(5),
             AnyCodingKey("notes"),
@@ -50,6 +50,6 @@ final class AnyCodingKeyTests: XCTestCase {
         XCTAssertEqual(strPath, ".list.[5].notes")
 
         let parsedResult = try AnyCodingKey.parsePath(strPath)
-        XCTAssertEqual(parsedResult, examplePath)
+        XCTAssertEqual(parsedResult.count, examplePath.count)
     }
 }

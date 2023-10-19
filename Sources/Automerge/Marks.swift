@@ -63,7 +63,7 @@ public enum ExpandMark: Equatable, Hashable, Sendable {
         }
     }
 
-    internal func toFfi() -> FfiExpandMark {
+    func toFfi() -> FfiExpandMark {
         switch self {
         case .before:
             return FfiExpandMark.before

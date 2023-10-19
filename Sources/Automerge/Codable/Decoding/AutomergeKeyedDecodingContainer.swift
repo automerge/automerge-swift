@@ -15,6 +15,15 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
         keys = impl.doc.keys(obj: objectId)
     }
 
+    private func pathWithKey(_ key: K) -> String {
+        // Takes the current codingPath, appends the key, and returns the `path` String
+        // for a reference into an Automerge document (needed for Counter, which uses both
+        // the raw codingPath and has an additional key)
+        var basePath = codingPath.map { AnyCodingKey($0) }
+        basePath.append(AnyCodingKey(key))
+        return basePath.stringPath()
+    }
+
     var allKeys: [K] {
         keys.compactMap { K(stringValue: $0) }
     }
@@ -140,8 +149,8 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
             }
         case is Counter.Type:
             let retrievedValue = try getValue(forKey: key)
-            if case let Value.Scalar(.Counter(counterValue)) = retrievedValue {
-                return Counter(counterValue) as! T
+            if case Value.Scalar(.Counter) = retrievedValue {
+                return try Counter(doc: impl.doc, objId: objectId, key: AnyCodingKey(key)) as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

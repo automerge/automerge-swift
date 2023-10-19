@@ -255,6 +255,9 @@ final class AutomergeUnkeyedEncoderDecoderTests: XCTestCase {
         let topLevel = WrapperStruct(list: [Counter(3)])
 
         try encoder.encode(topLevel)
+
+        // try doc.walk()
+
         let decodedStruct = try decoder.decode(WrapperStruct.self)
         XCTAssertEqual(decodedStruct.list.count, 1)
         XCTAssertEqual(3, decodedStruct.list.first?.value)

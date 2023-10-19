@@ -157,8 +157,17 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
                 ))
             }
         case is Counter.Type:
-            if case let .Scalar(.Counter(counterValue)) = value {
-                return Counter(counterValue) as! T
+            guard let finalKey = codingPath.last else {
+                throw DecodingError.keyNotFound(
+                    codingPath as! CodingKey,
+                    .init(
+                        codingPath: codingPath,
+                        debugDescription: "coding path doesn't have a final key to decode into a counter"
+                    )
+                )
+            }
+            if case .Scalar(.Counter) = value {
+                return try Counter(doc: impl.doc, objId: objectId, key: AnyCodingKey(finalKey)) as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

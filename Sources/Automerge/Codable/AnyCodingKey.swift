@@ -160,11 +160,22 @@ extension AnyCodingKey: Hashable {
     }
 }
 
-extension Sequence where Element: CodingKey {
+public extension Sequence where Element == any CodingKey {
     /// Returns a string that represents the schema path.
-    public func stringPath() -> String {
+    func stringPath() -> String {
         let path = map { pathElement in
             AnyCodingKey(pathElement).description
+        }
+        .joined(separator: ".")
+        return ".\(path)"
+    }
+}
+
+public extension Sequence where Element == AnyCodingKey {
+    /// Returns a string that represents the schema path.
+    func stringPath() -> String {
+        let path = map { pathElement in
+            pathElement.description
         }
         .joined(separator: ".")
         return ".\(path)"

@@ -39,8 +39,8 @@ public struct Patch: Equatable {
     }
 
     init(_ ffi: FfiPatch) {
-        self.path = ffi.path.map(PathElement.fromFfi)
-        self.action = PatchAction.fromFfi(ffi.action)
+        path = ffi.path.map(PathElement.fromFfi)
+        action = PatchAction.fromFfi(ffi.action)
     }
 }
 

@@ -143,9 +143,14 @@ struct AutomergeUnkeyedDecodingContainer: UnkeyedDecodingContainer {
             }
         case is Counter.Type:
             let retrievedValue = try getNextValue(ofType: Counter.self)
-            if case let Value.Scalar(.Counter(counterValue)) = retrievedValue {
+            if case Value.Scalar(.Counter) = retrievedValue {
+                let counterReference = try Counter(
+                    doc: impl.doc,
+                    objId: objectId,
+                    key: AnyCodingKey(UInt64(currentIndex))
+                )
                 currentIndex += 1
-                return Counter(counterValue) as! T
+                return counterReference as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
