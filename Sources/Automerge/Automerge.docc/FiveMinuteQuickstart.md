@@ -18,6 +18,30 @@ struct ColorList: Codable {
 
 See <doc:ModelingData> for more details on the types that Automerge stores and how the library exposes those types in Swift. 
 
+### Add Automerge-swift as a dependency
+
+If you're working with a Swift package, add Automerge-swift as a dependency to Package.swift:
+
+```swift
+let package = Package(
+    ...
+    dependencies: [
+        ...
+        .package(url: "https://github.com/automerge/automerge-swift.git", from: "0.5.2")
+    ],
+    targets: [
+        .executableTarget(
+            ...
+            dependencies: [.product(name: "Automerge", package: "automerge-swift")],
+            ...
+        )
+    ]
+)
+```
+
+If you're working with an Xcode project, search for the swift package using the repository URL
+`github.com/automerge/automerge-swift` to add it as a dependency to iOS, macOS, or macCatalyst targets.
+
 ### Creating a Document
 
 The following example creates a new Automerge ``Document`` instance and uses ``AutomergeEncoder`` to store an instance of the `ColorList` model into it:
