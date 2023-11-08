@@ -21,7 +21,7 @@ The library runs on Node.js, Electron, and modern browsers using the Rust librar
 The Rust library exposes a C API for use with other languages, packaged as a static library within an XCFramework for use in iOS and macOS applications.
 The Swift Automerge library includes supplemental code to make using Automerge more idiomatic and easier.
 
-Read <doc:FiveMinuteQuickstart> to quick a quick taste of how to use Automerge, or read [Meeting Notes, a Document-based SwiftUI app using Automerge](https://automerge.org/MeetingNotes/documentation/meetingnotes/appwalkthrough/) for a more detailed walk through illustrating a demonstration app that uses Automerge.
+Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or read [Meeting Notes, a Document-based SwiftUI app using Automerge](https://automerge.org/MeetingNotes/documentation/meetingnotes/appwalkthrough/) for a more detailed walk through illustrating a demonstration app that uses Automerge.
 
 ## Topics
 
