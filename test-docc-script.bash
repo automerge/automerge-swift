@@ -42,13 +42,17 @@ export LOCAL_BUILD=YES
 #    --checkout-path ${PACKAGE_PATH}
 
 # Swift package plugin for hosted content - this _should_ work, but it's not generating
-# any symbols in the resulting documentation. Swift 5.6 to 5.9 don't support the plugin
+# any symbols in the resulting documentation. Swift 5.6 to 5.9 doesn't support the plugin
 # with a _local_ XCFframework reference.
 #   Bug filed: https://github.com/apple/swift-docc-plugin/issues/52
 # The workaround is to buld and extract the symbols to generate the documentation
 # manually.
 
-$(xcrun --find swift) package \
+export PATH=$PATH:~/src/swift-project/build/Ninja-RelWithDebInfoAssert/swift-macosx-arm64/bin/
+
+~/src/swift-project/build/Ninja-RelWithDebInfoAssert/swift-macosx-arm64/bin/swift package \
+#$(xcrun --find swift) package \
+    -v \
     --allow-writing-to-directory ./docs \
     generate-documentation \
     --fallback-bundle-identifier com.github.automerge.automerge-swift \
