@@ -23,7 +23,8 @@ class PatchesTestCase: XCTestCase {
     }
 
     func testPatchesInLoop() {
-        for _ in 1...100 {
+        for iteration in 1...1000 {
+            print("Checking iteration \(iteration)")
             _testReceiveSyncMessageWithPatches()
         }
     }
@@ -32,6 +33,7 @@ class PatchesTestCase: XCTestCase {
         let doc = Document()
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("value1"))
 
+        // create a second, identical, document
         let doc2 = doc.fork()
 
         // get in sync so that the next message we generate is the one which contains the next change
@@ -39,6 +41,9 @@ class PatchesTestCase: XCTestCase {
         let state2 = SyncState()
 
         sync(doc, state1, doc2, state2)
+        let doc1_serialized = doc.save()
+        let doc2_serialized = doc2.save()
+        XCTAssertEqual(doc1_serialized, doc2_serialized)
 
         try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
         // now generate the message
