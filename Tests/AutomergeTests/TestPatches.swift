@@ -22,7 +22,13 @@ class PatchesTestCase: XCTestCase {
         )
     }
 
-    func testReceiveSyncMessageWithPatches() {
+    func testPatchesInLoop() {
+        for _ in 1...100 {
+            _testReceiveSyncMessageWithPatches()
+        }
+    }
+    
+    func _testReceiveSyncMessageWithPatches() {
         let doc = Document()
         try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("value1"))
 
