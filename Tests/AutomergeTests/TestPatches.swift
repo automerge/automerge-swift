@@ -40,6 +40,7 @@ class PatchesTestCase: XCTestCase {
 
         let patches = try! doc.receiveSyncMessageWithPatches(state: state1, message: msg)
 
+        // CI Note: noticed a failed test at this point, but can't reproduce locally
         XCTAssertEqual(
             patches,
             [
