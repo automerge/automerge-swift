@@ -12,6 +12,10 @@ jobs:
           profile: minimal
           toolchain: 1.66.0
           default: true
+      - name: get xcode information
+        run: |
+         xcodebuild -version
+         swift --version
       - name: build xcframework
         run: ./scripts/build-xcframework.sh
       - name: Swift tests
