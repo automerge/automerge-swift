@@ -51,8 +51,8 @@ if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
 } else {
     FFIbinaryTarget = .binaryTarget(
         name: "automergeFFI",
-        url: "https://github.com/automerge/automerge-swift/releases/download/0.5.2/automergeFFI.xcframework.zip",
-        checksum: "bf4dc124dc669c77184e460e40df985e0b5bbfddf37a28c3922ff1b9c9ca67d2"
+        url: "https://github.com/automerge/automerge-swift/releases/download/0.5.4/automergeFFI.xcframework.zip",
+        checksum: "b5d98e4a3ad37804165bd5c0426f4d80721e1b5bc2953b0e5b73a79172384ca3"
     )
 }
 
