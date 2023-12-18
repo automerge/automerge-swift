@@ -79,4 +79,14 @@ class TextTestCase: XCTestCase {
         // flaky assertion, don't do it :: because length is in UTF-8 codepoints, not!!! grapheme clusters.
         // XCTAssertEqual(stringLength, 5)
     }
+
+    func testEmojiInsertUTF8Length() throws {
+        let emoji = "👨‍👩‍👧"
+        let doc = Automerge.Document()
+        let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: emoji)
+        let stringLength = doc.length(obj: textId)
+        XCTAssertEqual(stringLength, UInt64(emoji.utf8.count))
+    }
 }
