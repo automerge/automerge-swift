@@ -1,5 +1,7 @@
 import Foundation // for Date support
+#if canImport(os)
 import os // for structured logging
+#endif
 
 struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProtocol {
     typealias Key = K
@@ -58,12 +60,14 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             objectId = nil
             lookupError = capturedError
         }
+        #if canImport(os)
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
             if impl.reportingLogLevel >= LogVerbosity.debug {
                 logger.debug("Establishing Keyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
             }
         }
+        #endif
     }
 
     fileprivate func reportBestError() -> Error {

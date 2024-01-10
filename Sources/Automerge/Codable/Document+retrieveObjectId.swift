@@ -1,4 +1,6 @@
+#if canImport(os)
 import os // for structured logging
+#endif
 
 // // MARK: Cache for Object Id Lookups
 //
@@ -14,7 +16,7 @@ import os // for structured logging
 extension Document {
     @usableFromInline
     func tracePrint(indent: Int = 0, _ stringval: String) {
-        #if DEBUG
+        #if DEBUG && canImport(os)
         if reportingLogLevel >= .tracing {
             if #available(macOS 11, iOS 14, *) {
                 let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
