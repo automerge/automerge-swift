@@ -8,6 +8,7 @@ import Foundation
 #if canImport(automergeFFI)
 import automergeFFI
 #endif
+import automergeFFI
 
 private extension RustBuffer {
     // Allocate a new buffer, copying the contents of a `UInt8` array.
