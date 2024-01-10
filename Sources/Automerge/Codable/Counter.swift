@@ -1,6 +1,4 @@
-import Combine
 import Foundation
-import struct SwiftUI.Binding
 
 /// A type that represents the value of an Automerge counter.
 ///
@@ -10,7 +8,7 @@ import struct SwiftUI.Binding
 ///
 /// As a reference type, `Counter` updates the underlying Automerge document when a value is explicitly
 /// set, or ``increment(by:)`` is called on the instance.
-public final class Counter: ObservableObject, Codable {
+public final class Counter: Codable {
     var doc: Document?
     var objId: ObjId?
     var codingkey: AnyCodingKey?
@@ -98,7 +96,7 @@ public final class Counter: ObservableObject, Codable {
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(_unboundStorage))
-                    objectWillChange.send()
+                    sendObjectWillChange()
                     _unboundStorage = 0
                 }
             } else {
@@ -114,7 +112,7 @@ public final class Counter: ObservableObject, Codable {
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, key: key.stringValue, by: Int64(_unboundStorage))
-                    objectWillChange.send()
+                    sendObjectWillChange()
                     _unboundStorage = 0
                 }
             } else {
@@ -165,7 +163,7 @@ public final class Counter: ObservableObject, Codable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
-                    objectWillChange.send()
+                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -173,7 +171,7 @@ public final class Counter: ObservableObject, Codable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
-                    objectWillChange.send()
+                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -194,14 +192,14 @@ public final class Counter: ObservableObject, Codable {
             if let index = codingkey.intValue {
                 if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(value))
-                    objectWillChange.send()
+                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
             } else {
                 if case .Scalar(.Counter(_)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: Int64(value))
-                    objectWillChange.send()
+                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -211,18 +209,6 @@ public final class Counter: ObservableObject, Codable {
                 "Error attempting to increment counter by '\(value)' to objectId \(objId) key \(codingkey): \(error)"
             )
         }
-    }
-
-    /// Returns a binding to the string value of a text object within an Automerge document.
-    public func valueBinding() -> Binding<Int> {
-        Binding(
-            get: { () -> Int in
-                self.getCounterValue()
-            },
-            set: { (newValue: Int) in
-                self.setCounterValue(newValue)
-            }
-        )
     }
 
     // MARK: Codable conformance
@@ -274,3 +260,35 @@ extension Counter: CustomStringConvertible {
         String(value)
     }
 }
+
+#if canImport(Combine)
+import Combine
+
+extension Counter: ObservableObject {
+    fileprivate func sendObjectWillChange() {
+        objectWillChange.send()
+    }
+}
+#else
+extension Counter {
+    fileprivate func sendObjectWillChange() {}
+}
+#endif
+
+#if canImport(SwiftUI)
+import struct SwiftUI.Binding
+
+extension Counter {
+    /// Returns a binding to the string value of a text object within an Automerge document.
+    public func valueBinding() -> Binding<Int> {
+        Binding(
+            get: { () -> Int in
+                self.getCounterValue()
+            },
+            set: { (newValue: Int) in
+                self.setCounterValue(newValue)
+            }
+        )
+    }
+}
+#endif
