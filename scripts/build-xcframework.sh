@@ -89,8 +89,7 @@ $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --re
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 mkdir -p "${BUILD_FOLDER}/includes"
-cp "${SWIFT_FOLDER}/automergeFFI.h" "${BUILD_FOLDER}/includes"
-cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${BUILD_FOLDER}/includes/module.modulemap"
+touch "${BUILD_FOLDER}/includes/module.modulemap"
 
 echo "▸ Lipo (merge) x86 and arm simulator static libraries into a fat static binary"
 mkdir -p "${BUILD_FOLDER}/ios-simulator/release"

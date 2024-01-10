@@ -66,7 +66,15 @@ let package = Package(
         FFIbinaryTarget,
         .target(
             name: "AutomergeUniffi",
-            dependencies: ["automergeFFI", "_CAutomergeUniffi"],
+            dependencies: [
+              // On Apple platforms, link "./rust" library through XCFramework
+              // On other platforms, users need to build "./rust" library themselves
+              // and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
+              .target(name: "automergeFFI", condition: .when(platforms: [
+                .iOS, .macOS, .macCatalyst, .tvOS, .watchOS
+              ])),
+              "_CAutomergeUniffi"
+            ],
             path: "./AutomergeUniffi"
         ),
         .target(name: "_CAutomergeUniffi"),
