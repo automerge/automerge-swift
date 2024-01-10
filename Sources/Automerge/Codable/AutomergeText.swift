@@ -1,6 +1,4 @@
-import Combine
 import Foundation
-import struct SwiftUI.Binding
 
 // NOTE(heckj): The version Automerge after 2.0 is adding support for "marks"
 // that apply to runs of text within the .Text primitive. This should map
@@ -9,7 +7,7 @@ import struct SwiftUI.Binding
 // the flat `String` variations from the underlying data source in Automerge.
 
 /// A reference to a Text object within an Automerge document.
-public final class AutomergeText: ObservableObject, Codable {
+public final class AutomergeText: Codable {
     var doc: Document?
     var objId: ObjId?
     var _unboundStorage: String
@@ -96,33 +94,6 @@ public final class AutomergeText: ObservableObject, Codable {
         }
     }
 
-    /// Returns a binding to the string value of a text object within an Automerge document.
-    public func textBinding() -> Binding<String> {
-        Binding(
-            get: { () -> String in
-                guard let doc = self.doc, let objId = self.objId else {
-                    return self._unboundStorage
-                }
-                do {
-                    return try doc.text(obj: objId)
-                } catch {
-                    fatalError("Error attempting to read text value from objectId \(objId): \(error)")
-                }
-            },
-            set: { (newValue: String) in
-                guard let objId = self.objId, self.doc != nil else {
-                    self._unboundStorage = newValue
-                    return
-                }
-                do {
-                    try self.updateText(newText: newValue)
-                } catch {
-                    fatalError("Error attempting to write '\(newValue)' to objectId \(objId): \(error)")
-                }
-            }
-        )
-    }
-
     private func updateText(newText: String) throws {
         guard let objId, let doc else {
             throw BindingError.Unbound
@@ -143,7 +114,7 @@ public final class AutomergeText: ObservableObject, Codable {
             }
         }
         if updated {
-            objectWillChange.send()
+            sendObjectWillChange()
         }
     }
 
@@ -186,3 +157,50 @@ extension AutomergeText: CustomStringConvertible {
         value
     }
 }
+
+#if canImport(Combine)
+
+import Combine
+extension AutomergeText: ObservableObject {
+    fileprivate func sendObjectWillChange() {
+        objectWillChange.send()
+    }
+}
+#else
+extension AutomergeText {
+    fileprivate func sendObjectWillChange() {}
+}
+#endif
+
+#if canImport(SwiftUI)
+import struct SwiftUI.Binding
+
+extension AutomergeText {
+    /// Returns a binding to the string value of a text object within an Automerge document.
+    public func textBinding() -> Binding<String> {
+        Binding(
+            get: { () -> String in
+                guard let doc = self.doc, let objId = self.objId else {
+                    return self._unboundStorage
+                }
+                do {
+                    return try doc.text(obj: objId)
+                } catch {
+                    fatalError("Error attempting to read text value from objectId \(objId): \(error)")
+                }
+            },
+            set: { (newValue: String) in
+                guard let objId = self.objId, self.doc != nil else {
+                    self._unboundStorage = newValue
+                    return
+                }
+                do {
+                    try self.updateText(newText: newValue)
+                } catch {
+                    fatalError("Error attempting to write '\(newValue)' to objectId \(objId): \(error)")
+                }
+            }
+        )
+    }
+}
+#endif
