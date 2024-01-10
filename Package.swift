@@ -66,9 +66,10 @@ let package = Package(
         FFIbinaryTarget,
         .target(
             name: "AutomergeUniffi",
-            dependencies: ["automergeFFI"],
+            dependencies: ["automergeFFI", "_CAutomergeUniffi"],
             path: "./AutomergeUniffi"
         ),
+        .target(name: "_CAutomergeUniffi"),
         .target(
             name: "Automerge",
             dependencies: ["AutomergeUniffi"],
