@@ -1,4 +1,6 @@
+#if canImport(os)
 import os
+#endif
 
 /// Convenience marker within AutomergeEncoderImpl to indicate the kind of associated container
 

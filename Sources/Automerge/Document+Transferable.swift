@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(os)
 import os // for structured logging
+#endif
 #if canImport(UniformTypeIdentifiers)
 import UniformTypeIdentifiers
 
@@ -39,8 +41,10 @@ extension Document: Transferable {
             do {
                 return try Document(data)
             } catch {
+                #if canImport(os)
                 Logger(subsystem: "Automerge", category: "Document")
                     .error("Error decoding transfered Automerge data: \(error, privacy: .public)")
+                #endif
                 return Document()
             }
         }

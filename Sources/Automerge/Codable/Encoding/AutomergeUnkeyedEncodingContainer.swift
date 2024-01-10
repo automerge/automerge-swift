@@ -1,5 +1,7 @@
 import Foundation // for Date support
+#if canImport(os)
 import os // for structured logging
+#endif
 
 struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
     let impl: AutomergeEncoderImpl
@@ -33,6 +35,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             objectId = nil
             lookupError = capturedError
         }
+        #if canImport(os)
         // Fix for issue #54 looks best here, but I'm not happy with it.
         // We don't know the length of what's going to be encoded, nor do we get any
         // signal when we're done, so the only path I can see is to pro-actively wipe
@@ -43,6 +46,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                 logger.debug("Established Unkeyed Encoding Container for path \(codingPath.map { AnyCodingKey($0) })")
             }
         }
+        #endif
     }
 
     fileprivate func reportBestError() -> Error {

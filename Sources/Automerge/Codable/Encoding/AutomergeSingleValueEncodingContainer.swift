@@ -1,5 +1,7 @@
 import Foundation // for Date support
+#if canImport(os)
 import os // for structured logging
+#endif
 
 struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
     let impl: AutomergeEncoderImpl
@@ -40,6 +42,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
             codingkey = nil
             lookupError = capturedError
         }
+        #if canImport(os)
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeEncoder")
             if impl.reportingLogLevel >= LogVerbosity.debug {
@@ -49,6 +52,7 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                     )
             }
         }
+        #endif
     }
 
     mutating func encodeNil() throws {}
