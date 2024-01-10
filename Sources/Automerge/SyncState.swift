@@ -29,7 +29,16 @@ typealias FfiSyncState = AutomergeUniffi.SyncState
 ///
 /// For a more thorough example of sync, see <doc:ChangesAndHistory>.
 public struct SyncState: @unchecked Sendable {
+    #if !os(WASI)
     fileprivate let queue = DispatchQueue(label: "automerge-syncstate-queue", qos: .userInteractive)
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try queue.sync(execute: work)
+    }
+    #else
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try work()
+    }
+    #endif
 
     var ffi_state: FfiSyncState
     // NOTE(heckj): `FfiSyncState` is a fully generated reference type, which I would
@@ -41,7 +50,7 @@ public struct SyncState: @unchecked Sendable {
     ///
     /// Use ``Document/receiveSyncMessage(state:message:)`` to update a sync state, which updates this value.
     public var theirHeads: Set<ChangeHash>? {
-        queue.sync {
+        sync {
             ffi_state.theirHeads().map { Set($0.map { ChangeHash(bytes: $0) }) }
         }
     }
@@ -66,7 +75,7 @@ public struct SyncState: @unchecked Sendable {
     /// longer be relied (messages may have been lost, or may be redelivered
     /// etc. etc.) then you must call ``reset()`` before continuing to synch.
     public func reset() {
-        queue.sync {
+        sync {
             ffi_state.reset()
         }
     }
@@ -77,7 +86,7 @@ public struct SyncState: @unchecked Sendable {
     /// depends on reliable in-order delivery. That is, you don'o't need to call
     /// ``reset()`` on a decoded sync state.
     public func encode() -> Data {
-        queue.sync {
+        sync {
             Data(ffi_state.encode())
         }
     }
