@@ -100,11 +100,16 @@ extension ScalarValue: CustomStringConvertible {
         case let .Int(intValue):
             return "Int(\(intValue))"
         case let .F64(doubleValue):
+            #if canImport(Darwin)
             if #available(iOS 15.0, macOS 12.0, *) {
                 return "Double(\(doubleValue.formatted(.number.precision(.significantDigits(2)))))"
             } else {
                 return "Double(\(doubleValue))"
             }
+            #else
+            // swift-corelibs-foundation lacks `formatted` support
+            return "Double(\(doubleValue))"
+            #endif
         case let .Counter(intValue):
             return "Counter(\(intValue))"
         case let .Timestamp(intValue):
