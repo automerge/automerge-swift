@@ -6,7 +6,9 @@ leverage the Automerge-swift library specifically. If you want to use Automerge 
 With [pull request 92](https://github.com/automerge/automerge-swift/pull/92), the Automerge-swift repository now supports compilation into WebAssembly.
 This update adds a layer of indirection to the binary targets in Package.swift to allow for Apple platforms to utilize an XCFramework to load in the rust core library, and for other platforms (for example, WASM) to link and load the core automerge library independently.
 
-Swift-wasm with Swift package manager doesn't support invoking cargo to get the Rust library built up and linked, so the linking, in particular, is up to the person compiling this with swift-wasm. Yuta Saito created a demonstration example of this at https://github.com/kateinoigakukun/automerge-swift-wasm
+For code updates, its import to externalize the dependencies for Combine, SwiftUI, os.log, and libdispatch to work with WebAssembly. The merged pull request updated those to leverage `canImport()` to make the majority of those optional dependencies, and CI has been updated to verify that everything can be built through swift-wasm to insure we don't accidentally break that setup.
+
+Swift-wasm with Swift package manager doesn't support invoking cargo to get the Rust library built up and linked, so the linking, in particular, is up to the person compiling this with swift-wasm. Yuta Saito created a demonstration example of this at https://github.com/kateinoigakukun/automerge-swift-wasm.
 
 For example, the Rust core library (with the pieces needed to support Automerge-swift) can be built for wasm through Cargo using the command:
 
