@@ -1,5 +1,10 @@
 name: test
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
   build-test:
     runs-on: macos-latest
@@ -20,6 +25,26 @@ jobs:
         run: ./scripts/build-xcframework.sh
       - name: Swift tests
         run: swift test
+
+  build-wasm32-unknown-wasi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.66.0
+          default: true
+      - run: rustup target add wasm32-wasi
+      - uses: swiftwasm/setup-swiftwasm@v1
+        with:
+          swift-version: "wasm-5.8.0-RELEASE"
+      - run: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libuniffi_automerge-wasm32-unknown-wasi.a
+          path: ./rust/target/wasm32-wasi/release/libuniffi_automerge.a
+      - run: swift build --triple wasm32-unknown-wasi
 
   rustfmt:
     runs-on: macos-latest
