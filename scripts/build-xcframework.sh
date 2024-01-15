@@ -88,6 +88,10 @@ echo "▸ Building for x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
+# moves the generated header from AutomergeUniffi/automergeFFI.h to
+# Sources/_CAutomergeUniffi/include/automergeFFI.h within the project
+cp "${SWIFT_FOLDER}/automergeFFI.h" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include"
+cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include/module.modulemap"
 mkdir -p "${BUILD_FOLDER}/includes"
 touch "${BUILD_FOLDER}/includes/module.modulemap"
 

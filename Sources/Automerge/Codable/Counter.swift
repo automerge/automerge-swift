@@ -270,17 +270,17 @@ extension Counter: ObservableObject {
     }
 }
 #else
-extension Counter {
-    fileprivate func sendObjectWillChange() {}
+fileprivate extension Counter {
+    func sendObjectWillChange() {}
 }
 #endif
 
 #if canImport(SwiftUI)
 import struct SwiftUI.Binding
 
-extension Counter {
+public extension Counter {
     /// Returns a binding to the string value of a text object within an Automerge document.
-    public func valueBinding() -> Binding<Int> {
+    func valueBinding() -> Binding<Int> {
         Binding(
             get: { () -> Int in
                 self.getCounterValue()

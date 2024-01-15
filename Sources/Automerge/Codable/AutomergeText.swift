@@ -161,23 +161,24 @@ extension AutomergeText: CustomStringConvertible {
 #if canImport(Combine)
 
 import Combine
+
 extension AutomergeText: ObservableObject {
     fileprivate func sendObjectWillChange() {
         objectWillChange.send()
     }
 }
 #else
-extension AutomergeText {
-    fileprivate func sendObjectWillChange() {}
+fileprivate extension AutomergeText {
+    func sendObjectWillChange() {}
 }
 #endif
 
 #if canImport(SwiftUI)
 import struct SwiftUI.Binding
 
-extension AutomergeText {
+public extension AutomergeText {
     /// Returns a binding to the string value of a text object within an Automerge document.
-    public func textBinding() -> Binding<String> {
+    func textBinding() -> Binding<String> {
         Binding(
             get: { () -> String in
                 guard let doc = self.doc, let objId = self.objId else {
