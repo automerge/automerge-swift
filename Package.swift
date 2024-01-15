@@ -67,13 +67,14 @@ let package = Package(
         .target(
             name: "AutomergeUniffi",
             dependencies: [
-              // On Apple platforms, link "./rust" library through XCFramework
-              // On other platforms, users need to build "./rust" library themselves
-              // and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
-              .target(name: "automergeFFI", condition: .when(platforms: [
-                .iOS, .macOS, .macCatalyst, .tvOS, .watchOS
-              ])),
-              "_CAutomergeUniffi"
+                // On Apple platforms, this linkis the core Rust library through XCFramework.
+                // On other platforms (such as WASM), end users will need to build the library
+                // themselves and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
+                // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
+                .target(name: "automergeFFI", condition: .when(platforms: [
+                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS, .visionOS
+                ])),
+                "_CAutomergeUniffi",
             ],
             path: "./AutomergeUniffi"
         ),
