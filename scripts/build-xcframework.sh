@@ -45,6 +45,7 @@ rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
 rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
+rustup target add wasm32-wasi # WebAssembly
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
 cargo_build_nightly="cargo +${RUST_NIGHTLY} build --manifest-path $RUST_FOLDER/Cargo.toml"
 
@@ -86,6 +87,9 @@ $cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --r
 
 echo "▸ Building for x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
+
+echo "▸ Building for wasm32-wasi"
+$cargo_build --target wasm32-wasi --locked --release
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 # moves the generated header from AutomergeUniffi/automergeFFI.h to
@@ -132,3 +136,6 @@ ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOL
 
 echo "▸ Compute checksum"
 openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
+
+echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
+cp "${BUILD_FOLDER}/wasm32-wasi/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
