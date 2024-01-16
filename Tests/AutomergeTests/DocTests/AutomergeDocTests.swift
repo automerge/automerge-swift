@@ -144,4 +144,63 @@ final class AutomergeDocTests: XCTestCase {
 
         XCTAssertEqual(stringFromPath, ".example.[0]")
     }
+    
+    @inlinable func convertToUTF8Index(someString: String, index: String.Index) -> Int? {
+        guard let utf8index : String.UTF8View.Index = index.samePosition(in: someString.utf8) else {
+            return nil
+        }
+        let intPositionInUTF8 = someString.utf8.distance(from: someString.utf8.startIndex, to: utf8index)
+        return intPositionInUTF8
+    }
+
+    @inlinable func convertToUnicodeScalarsIndex(someString: String, index: String.Index) -> Int? {
+        guard let unicodeScalarIndex : String.UnicodeScalarView.Index = index.samePosition(in: someString.unicodeScalars) else {
+            return nil
+        }
+        let intPositionInUnicodeScalar = someString.unicodeScalars.distance(from: someString.unicodeScalars.startIndex, to: unicodeScalarIndex)
+        return intPositionInUnicodeScalar
+    }
+
+    func testTextIndexConversionsExample() throws {
+        let doc = Document()
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "🇬🇧👨‍👨‍👧‍👦😀")
+        
+        let start = UInt64("🇬🇧".unicodeScalars.count)
+        XCTAssertEqual(start, 2)
+        
+        let delete = Int64("👨‍👨‍👧‍👦".unicodeScalars.count)
+        XCTAssertEqual(delete, 7)
+        
+        let end = UInt64("😀".unicodeScalars.count)
+        XCTAssertEqual(end, 1)
+
+        let stringFromAutomerge = try XCTUnwrap(doc.text(obj: textId))
+        XCTAssertEqual(stringFromAutomerge.unicodeScalars.count, 10)
+        
+        let utf8IndexLength = stringFromAutomerge.utf8.distance(from: stringFromAutomerge.utf8.startIndex, to: stringFromAutomerge.utf8.endIndex)
+        print("UTF8 index length: \(utf8IndexLength)")
+        
+        let unicodeScalarIndexLength = stringFromAutomerge.unicodeScalars.distance(from: stringFromAutomerge.unicodeScalars.startIndex, to: stringFromAutomerge.unicodeScalars.endIndex)
+        print("unicodeScalar index length: \(unicodeScalarIndexLength)")
+        
+        let index🇬🇧: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "🇬🇧"))
+        let index👨‍👨‍👧‍👦: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "👨‍👨‍👧‍👦"))
+        let index😀: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "😀"))
+        print("utf8 index position of 🇬🇧: \(convertToUTF8Index(someString: stringFromAutomerge, index: index🇬🇧))") // 0
+        print("utf8 index position of 👨‍👨‍👧‍👦: \(convertToUTF8Index(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦))") // 8
+        print("utf8 index position of 😀: \(convertToUTF8Index(someString: stringFromAutomerge, index: index😀))") // 33
+
+        print("unicodescalar index position of 🇬🇧: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index🇬🇧))") // 0
+        print("unicodescalar index position of 👨‍👨‍👧‍👦: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦))") // 2
+        print("unicodescalar index position of 😀: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index😀))") // 9
+
+        try doc.spliceText(obj: textId, start: start, delete: delete) // delete "👨‍👨‍👧‍👦"
+
+        let stringLength = doc.length(obj: textId)
+        XCTAssertEqual(stringLength, start + end)
+
+        let text = try doc.text(obj: textId)
+        XCTAssertEqual(text, "🇬🇧😀")
+    }
 }
