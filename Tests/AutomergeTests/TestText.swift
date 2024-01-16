@@ -2,35 +2,45 @@ import Automerge
 import XCTest
 
 class TextTestCase: XCTestCase {
-    func testGetText() {
+    func testGetText() throws {
         let doc = Document()
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
-        try! doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
         XCTAssertEqual(try! doc.text(obj: text), "hello world!")
     }
 
-    func testGetTextAt() {
+    func testGetTextAt() throws {
         let doc = Document()
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
-        try! doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
 
         let heads = doc.heads()
 
         let doc2 = doc.fork()
 
-        try! doc2.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
-        try! doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
+        try doc2.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
+        try doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
 
-        try! doc.merge(other: doc2)
+        try doc.merge(other: doc2)
 
         XCTAssertEqual(try! doc.text(obj: text), "Greetings wonderful world!")
         XCTAssertEqual(try! doc.textAt(obj: text, heads: heads), "hello world!")
     }
 
-    func testTextCursor() {
+    func testTextUpdate() throws {
+        let doc = Document()
+        let text = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
+        XCTAssertEqual(try doc.text(obj: text), "hello world!")
+
+        try doc.updateText(obj: text, value: "A new text entry.")
+        XCTAssertEqual(try doc.text(obj: text), "A new text entry.")
+    }
+
+    func testTextCursor() throws {
         let doc = Document()
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
-        try! doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
 
         let heads = doc.heads()
 
@@ -40,12 +50,12 @@ class TextTestCase: XCTestCase {
         let c_world = try! doc.cursor(obj: text, position: 6)
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 6)
 
-        try! doc.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
+        try doc.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
         XCTAssertEqual(try! doc.text(obj: text), "hello wonderful world!")
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 0)
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 16)
 
-        try! doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
+        try doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
         XCTAssertEqual(try! doc.text(obj: text), "Greetings wonderful world!")
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 9)
         XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 20)
@@ -64,7 +74,7 @@ class TextTestCase: XCTestCase {
             }
 
         let doc = Automerge.Document()
-        let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        let text = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         var stringLength = doc.length(obj: text)
         XCTAssertEqual(stringLength, 0)
 
@@ -73,7 +83,7 @@ class TextTestCase: XCTestCase {
             stringLength = doc.length(obj: text)
             // print("Adding '\(stringToInsert)' at \(stringLength)")
             try! doc.spliceText(obj: text, start: stringLength, delete: 0, value: stringToInsert)
-            // print("Combined text: \(try! doc.text(obj: text))")
+            // print("Combined text: \(try doc.text(obj: text))")
         }
 
         // flaky assertion, don't do it :: because length is in UTF-8 codepoints, not!!! grapheme clusters.

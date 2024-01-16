@@ -111,6 +111,8 @@ RustBuffer uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Nonnull pt
 );
 void uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer chars, RustCallStatus *_Nonnull out_status
 );
+void uniffi_automerge_fn_method_doc_update_text(void*_Nonnull ptr, RustBuffer obj, RustBuffer chars, RustCallStatus *_Nonnull out_status
+);
 void uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer values, RustCallStatus *_Nonnull out_status
 );
 void uniffi_automerge_fn_method_doc_mark(void*_Nonnull ptr, RustBuffer obj, uint64_t start, uint64_t end, RustBuffer expand, RustBuffer name, RustBuffer value, RustCallStatus *_Nonnull out_status
@@ -253,6 +255,9 @@ uint16_t uniffi_automerge_checksum_method_doc_insert_object_in_list(void
     
 );
 uint16_t uniffi_automerge_checksum_method_doc_splice_text(void
+    
+);
+uint16_t uniffi_automerge_checksum_method_doc_update_text(void
     
 );
 uint16_t uniffi_automerge_checksum_method_doc_splice(void

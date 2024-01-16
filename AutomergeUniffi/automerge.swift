@@ -417,6 +417,7 @@ public protocol DocProtocol {
     func insertInList(obj: ObjId, index: UInt64, value: ScalarValue) throws
     func insertObjectInList(obj: ObjId, index: UInt64, objType: ObjType) throws -> ObjId
     func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String) throws
+    func updateText(obj: ObjId, chars: String) throws
     func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws
     func mark(obj: ObjId, start: UInt64, end: UInt64, expand: ExpandMark, name: String, value: ScalarValue) throws
     func marks(obj: ObjId) throws -> [Mark]
@@ -644,6 +645,19 @@ public class Doc: DocProtocol {
                     FfiConverterTypeObjId.lower(obj),
                     FfiConverterUInt64.lower(start),
                     FfiConverterInt64.lower(delete),
+                    FfiConverterString.lower(chars),
+                    $0
+                )
+            }
+    }
+
+    public func updateText(obj: ObjId, chars: String) throws {
+        try
+            rustCallWithError(FfiConverterTypeDocError.lift) {
+                uniffi_automerge_fn_method_doc_update_text(
+                    self.pointer,
+
+                    FfiConverterTypeObjId.lower(obj),
                     FfiConverterString.lower(chars),
                     $0
                 )
@@ -2680,6 +2694,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_automerge_checksum_method_doc_splice_text() != 50590 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_automerge_checksum_method_doc_update_text() != 28751 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_automerge_checksum_method_doc_splice() != 26727 {

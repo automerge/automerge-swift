@@ -60,6 +60,7 @@
 ### Updating Text values
 
 - ``spliceText(obj:start:delete:value:)``
+- ``updateText(obj:value:)``
 - ``mark(obj:start:end:expand:name:value:)``
 
 ### Setting and Reading cursors
