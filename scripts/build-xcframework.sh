@@ -94,7 +94,8 @@ $cargo_build --target wasm32-wasi --locked --release
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 # moves the generated header from AutomergeUniffi/automergeFFI.h to
 # Sources/_CAutomergeUniffi/include/automergeFFI.h within the project
-mv "${SWIFT_FOLDER}/automergeFFI.h" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include"
+cp "${SWIFT_FOLDER}/automergeFFI.h" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include"
+# cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include/module.modulemap"
 mkdir -p "${BUILD_FOLDER}/includes"
 touch "${BUILD_FOLDER}/includes/module.modulemap"
 
