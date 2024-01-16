@@ -72,7 +72,7 @@ let package = Package(
                 // themselves and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
                 // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
                 .target(name: "automergeFFI", condition: .when(platforms: [
-                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS
+                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS,
                 ])),
                 "_CAutomergeUniffi",
             ],

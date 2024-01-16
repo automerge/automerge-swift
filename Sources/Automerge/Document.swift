@@ -615,6 +615,23 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Updates the text object with the value you specify.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object to update.
+    ///   - value: The string value for the text
+    ///
+    /// You can use updateText as an alternative to spliceText for low-level text updates.
+    /// This method creates a diff of the text, using Grapheme clusters, to apply updates to change the stored text to
+    /// what you provide.
+    public func updateText(obj: ObjId, value: String) throws {
+        try sync {
+            try self.doc.wrapErrors { doc in
+                try doc.updateText(obj: obj.bytes, chars: value)
+            }
+        }
+    }
+
     /// Add or remove a mark to a given range of text
     ///
     /// - Parameters:
