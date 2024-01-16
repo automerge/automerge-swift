@@ -149,6 +149,8 @@ interface Doc {
 
     [Throws=DocError]
     void splice_text(ObjId obj, u64 start, i64 delete, string chars);
+    [Throws=DocError]
+    void update_text(ObjId obj, string chars);
 
     [Throws=DocError]
     void splice(ObjId obj, u64 start, i64 delete, sequence<ScalarValue> values);

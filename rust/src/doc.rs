@@ -409,6 +409,14 @@ impl Doc {
         Ok(())
     }
 
+    pub fn update_text(&self, obj: ObjId, value: String) -> Result<(), DocError> {
+        let obj = am::ObjId::from(obj);
+        let mut doc = self.0.write().unwrap();
+        assert_text(&*doc, &obj)?;
+        doc.update_text(&obj, value)?;        
+        Ok(())
+    }
+
     pub fn splice(
         &self,
         obj: ObjId,
