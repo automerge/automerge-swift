@@ -29,6 +29,8 @@ The part that you need to capture and save from the above example is:
 201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d
 ```
 
+> Note: The build script also creates a `libuniffi_automerge.a` file, which is the WebAssembly compilation that matches the XCFramework creation. It is used for linking as a WebAssembly library, but should be included in the released binaries.
+
 ## Update Package.swift
 
 - Switch the binary target in Package.swift for automergeFFI to an updated url and checksum reference.
@@ -74,6 +76,7 @@ git push origin --tags
   - Add a release title
   - Add in a description for the release
   - Drag the file `automergeFFI.xcframework.zip` from the repository directory onto the github page to attach the binary.
+  - Drag the file `libuniffi_automerge.a` from the repository directory onto the github page to attach the binary.
   - Wait for the upload to complete and verify the file is listed.
   - Select the checkout for a pre-release if relevant.
 
