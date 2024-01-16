@@ -28,6 +28,12 @@ if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
 }
 #endif
 
+// When we move to Swift 5.8 tools version, the above can be collapsed into:
+//
+// if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
+//     globalSwiftSettings.append(.enableExperimentalFeature("StrictConcurrency"))
+// }
+
 let FFIbinaryTarget: PackageDescription.Target
 // If the environment variable `LOCAL_BUILD` is set to any value, the packages uses
 // a local reference to the XCFramework file (built from `./scripts/build-xcframework.sh`)
