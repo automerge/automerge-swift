@@ -598,10 +598,10 @@ public final class Document: @unchecked Sendable {
     ///   If negative, the function deletes characters preceding `start` index, rather than following it.
     ///   - values: The characters to insert after the `start` index.
     ///
-    /// With `spliceText`, the `start` and `delete` parameters represent UTF-8
-    /// code point indexes. Swift string indexes represent grapheme clusters, but Automerge works
-    /// in terms of UTF-8 code points. This means if you receive indices from other parts
-    /// of the application which are swift string indices you need to convert them.
+    /// With `spliceText`, the `start` and `delete` parameters represent UTF-8 code point indexes, not the counts of Characters (or grapheme clusters).
+    /// A Swift string index represents the position of a grapheme cluster (or Character), but Automerge indexing works in terms of UTF-8 code points.
+    /// 
+    /// This means if you use or receive a Swift String.Index you need to convert them to an index position usable by Automerge.
     ///
     /// It can be convenient to access the `UTF8View` of the String through it's `utf8` property,
     /// or if you have a `String.Index` type,  you can convert that into a
