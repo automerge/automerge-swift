@@ -97,10 +97,9 @@ echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
 cp "${SWIFT_FOLDER}/automergeFFI.h" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include"
 cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${SWIFT_FOLDER}/../Sources/_CAutomergeUniffi/include/module.modulemap"
 # copies the generated header into the build folder structure for local XCFramework usage
+mkdir -p "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.h" "${BUILD_FOLDER}/includes"
 cp "${SWIFT_FOLDER}/automergeFFI.modulemap" "${BUILD_FOLDER}/includes/module.modulemap"
-mkdir -p "${BUILD_FOLDER}/includes"
-touch "${BUILD_FOLDER}/includes/module.modulemap"
 
 echo "▸ Lipo (merge) x86 and arm simulator static libraries into a fat static binary"
 mkdir -p "${BUILD_FOLDER}/ios-simulator/release"
