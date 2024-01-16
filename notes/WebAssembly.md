@@ -14,9 +14,11 @@ For example, the Rust core library (with the pieces needed to support Automerge-
 
     cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
 
-This builds libuniffi_automerge.a, an archive of WebAssembly that can be linked and loaded by the swift-wasm compiler.
+This builds libuniffi_automerge.a, an archive of WebAssembly that can be linked and loaded by the swift-wasm compiler. The following snippet is an example of how to pass the library to swift-wasm builder on the command line:
 
-An example of a Package.swift that adds the linker options:
+    swift build -Xlinker /path/to/libuniffi_automerge.a
+
+The following snippet is an example of a `Package.swift` file that adds the linker options, asserting that the `libuniffi_automerge.a` file is in the same directory as the `Package.swift` file:
 
 ```swift
 // swift-tools-version: 5.8
@@ -39,11 +41,3 @@ let package = Package(
     ]
 )
 ```
-
-For building on the command line, the equivalent would be something akin to:
-
-```
-swift build -Xlinker /path/to/libuniffi_automerge.a
-```
-
-
