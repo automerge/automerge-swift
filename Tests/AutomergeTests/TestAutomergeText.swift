@@ -65,16 +65,15 @@ class AutomergeTextTestCase: XCTestCase {
         // the schema in the document needs to exist before you can bind
         // AutomergeText
         let setuptextId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
-
-        let text = try AutomergeText(doc: doc, path: "text")
+        let text = try AutomergeText("🇬🇧👨‍👨‍👧‍👦😀", doc: doc, path: "text")
         XCTAssertTrue(text.isBound)
-        text.value = "🇬🇧👨‍👨‍👧‍👦😀"
+        text.value = "🇬🇧😀"
 
         let docValue = try doc.get(obj: ObjId.ROOT, key: "text")
         guard case let .Object(textId, .Text) = docValue else {
             XCTFail("value retrieved: \(String(describing: docValue)) isn't text")
             return
         }
-        XCTAssertEqual(try! doc.text(obj: textId), "🇬🇧👨‍👨‍👧‍👦😀")
+        XCTAssertEqual(try! doc.text(obj: textId), "🇬🇧😀")
     }
 }

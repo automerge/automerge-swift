@@ -98,22 +98,9 @@ public final class AutomergeText: Codable {
         guard let objId, let doc else {
             throw BindingError.Unbound
         }
-        let current = try! doc.text(obj: objId).utf8
-        let diff: CollectionDifference<String.UTF8View.Element> = newText.utf8.difference(from: current)
-        var updated = false
-        for change in diff {
-            updated = true
-            switch change {
-            case let .insert(offset, element, _):
-                let index = offset
-                let char = String(bytes: [element], encoding: .utf8)
-                try! doc.spliceText(obj: objId, start: UInt64(index), delete: 0, value: char)
-            case let .remove(offset, _, _):
-                let index = offset
-                try! doc.spliceText(obj: objId, start: UInt64(index), delete: 1)
-            }
-        }
-        if updated {
+        let current = try doc.text(obj: objId)
+        if current != newText {
+            try doc.updateText(obj: objId, value: newText)
             sendObjectWillChange()
         }
     }
