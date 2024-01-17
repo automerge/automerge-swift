@@ -593,20 +593,41 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to update.
-    ///   - start: The index position, in UTF-8 code points, where the function begins inserting or deleting.
-    ///   - delete: The number of UTF-8 code points to delete from the `start` index.
+    ///   - start: The distance from the start of the string in unicode scalars where the function begins inserting or
+    /// deleting.
+    ///   - delete: The number of unicode scalars to delete from the `start` index.
     ///   If negative, the function deletes characters preceding `start` index, rather than following it.
     ///   - values: The characters to insert after the `start` index.
     ///
-    /// With `spliceText`, the `start` and `delete` parameters represent UTF-8 code point indexes, not the counts of Characters (or grapheme clusters).
-    /// A Swift string index represents the position of a grapheme cluster (or Character), but Automerge indexing works in terms of UTF-8 code points.
-    /// 
-    /// This means if you use or receive a Swift String.Index you need to convert them to an index position usable by Automerge.
+    /// With `spliceText`, the `start` and `delete` parameters represent integer distances of unicode scalars of the
+    /// Swift strings, not the counts of Characters (or grapheme clusters).
     ///
-    /// It can be convenient to access the `UTF8View` of the String through it's `utf8` property,
-    /// or if you have a `String.Index` type,  you can convert that into a
-    /// `String.UTF8View.Index` position using `samePosition` on the index with
-    /// a reference to the UTF-8 view of the string through its `utf8` property.
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
+    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
+    /// To determine Automerge index position from a `String.Index`, convert the index position into a
+    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    ///
+    /// An example of deriving the automerge start position from a Swift string's index:
+    /// ```swift
+    /// extension String {
+    ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
+    ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
+    ///            return nil
+    ///        }
+    ///        let intPositionInUnicodeScalar = self.unicodeScalars.distance(
+    ///            from: self.unicodeScalars.startIndex,
+    ///            to: unicodeScalarIndex)
+    ///        return UInt64(intPositionInUnicodeScalar)
+    ///    }
+    /// }
+    /// ```
+    ///
+    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
+    /// `Int64`.
+    /// For example:
+    /// ```swift
+    /// Int64("🇬🇧".unicodeScalars.count)
+    /// ```
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try sync {
             try self.doc.wrapErrors {
@@ -636,14 +657,41 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to which to add the mark.
-    ///   - start: The index position, in UTF-8 code points, where the function starts the mark.
-    ///   - end: The index position, in UTF-8 code points, where the function starts the mark.
+    ///   - start: The distance from the start of the string in unicode scalars where the function starts the mark.
+    ///   - end: The distance from the start of the string in unicode scalars where the function ends the mark.
     ///   - expand: How the mark should expand when text is inserted at the beginning or end of the range
     ///   - name: The name of the mark, for example "bold".
     ///   - value: The scalar value to associate with the mark.
     ///
     /// To remove an existing mark between two index positions, set the name to the same value
     /// as the existing mark and set the value to the scalar value ``ScalarValue/Null``.
+    ///
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
+    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
+    /// To determine Automerge index position from a `String.Index`, convert the index position into a
+    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    ///
+    /// An example of deriving the automerge start position from a Swift string's index:
+    /// ```swift
+    /// extension String {
+    ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
+    ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
+    ///            return nil
+    ///        }
+    ///        let intPositionInUnicodeScalar = self.unicodeScalars.distance(
+    ///            from: self.unicodeScalars.startIndex,
+    ///            to: unicodeScalarIndex)
+    ///        return UInt64(intPositionInUnicodeScalar)
+    ///    }
+    /// }
+    /// ```
+    ///
+    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
+    /// `Int64`.
+    /// For example:
+    /// ```swift
+    /// Int64("🇬🇧".unicodeScalars.count)
+    /// ```
     public func mark(
         obj: ObjId,
         start: UInt64,
