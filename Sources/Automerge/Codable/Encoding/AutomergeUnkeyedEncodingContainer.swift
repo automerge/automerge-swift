@@ -169,17 +169,9 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                 // document. Attempt to serialize the unboundStorage into place.
                 if !downcastText._unboundStorage.isEmpty {
                     // Iterate through
-                    let currentText = try! document.text(obj: textNodeId).utf8
-                    let diff: CollectionDifference<String.UTF8View.Element> = downcastText._unboundStorage.utf8
-                        .difference(from: currentText)
-                    for change in diff {
-                        switch change {
-                        case let .insert(offset, element, _):
-                            let char = String(bytes: [element], encoding: .utf8)
-                            try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 0, value: char)
-                        case let .remove(offset, _, _):
-                            try document.spliceText(obj: textNodeId, start: UInt64(offset), delete: 1)
-                        }
+                    let currentText = try document.text(obj: textNodeId)
+                    if currentText != downcastText._unboundStorage {
+                        try document.updateText(obj: textNodeId, value: downcastText._unboundStorage)
                     }
                 }
             }
