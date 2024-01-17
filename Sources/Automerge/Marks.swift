@@ -10,15 +10,49 @@ typealias FfiExpandMark = AutomergeUniffi.ExpandMark
 /// the text at a specific location.
 /// The are identified by a string `name` and have an associated ``ScalarValue``.
 public struct Mark: Equatable, Hashable, Sendable {
-    /// The utf-8 codepoint index of the start of the mark
+    /// The distance from the start of the string in unicode scalars where the function starts the mark.
     public let start: UInt64
-    /// The utf-8 codepoint index of the end of the mark
+    /// The distance from the start of the string in unicode scalars where the function ends the mark.
     public let end: UInt64
-    /// The name of the mark
+    /// The name of the mark.
     public let name: String
-    /// The value associated with the mark
+    /// The value associated with the mark.
     public let value: Value
 
+    /// Creates a new mark.
+    ///
+    /// - Parameters:
+    ///   - start: The distance from the start of the string in unicode scalars where the function starts the mark.
+    ///   - end: The distance from the start of the string in unicode scalars where the function ends the mark.
+    ///   - name: The name of the mark.
+    ///   - value: The value associated with the mark.
+    ///
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
+    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
+    /// To determine Automerge index position from a `String.Index`, convert the index position into a
+    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    ///
+    /// An example of deriving the automerge start position from a Swift string's index:
+    /// ```swift
+    /// extension String {
+    ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
+    ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
+    ///            return nil
+    ///        }
+    ///        let intPositionInUnicodeScalar = self.unicodeScalars.distance(
+    ///            from: self.unicodeScalars.startIndex,
+    ///            to: unicodeScalarIndex)
+    ///        return UInt64(intPositionInUnicodeScalar)
+    ///    }
+    /// }
+    /// ```
+    ///
+    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
+    /// `Int64`.
+    /// For example:
+    /// ```swift
+    /// Int64("🇬🇧".unicodeScalars.count)
+    /// ```
     public init(start: UInt64, end: UInt64, name: String, value: Value) {
         self.start = start
         self.end = end
