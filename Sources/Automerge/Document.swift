@@ -852,6 +852,18 @@ public final class Document: @unchecked Sendable {
     /// Returns a set of change hashes that represents the current state of the document.
     ///
     /// The number of change hashes in the returned set represents the number of concurrent changes the document tracks.
+    /// The heads returned are the tips of the change graph managed by Automerge, so the number of heads is the number
+    /// of concurrent changes at the tips of the graph.
+    /// For example, if two peers make a change concurrently and sync with each other then the synced document will have
+    /// two heads, but as soon as one of them makes a change on top of the synced document it will return to one head,
+    /// because the new change is not concurrent with the previous changes but causally succeeding both of them.
+    /// In many ways Automerge heads are analogous to git heads in that the head hashes identify commits in a graph of
+    /// commits, the difference with git is that the heads can identify multiple points in the graph.
+    ///
+    /// The number of hashes in the document does increase linearly with the number of changes, but Automerge doesn't
+    /// encode the hashes into the output of that is provided when you invoke ``save()``.
+    /// Instead Automerge encodes the heads of the tips of the change graph and re-computes internal hashes, which means
+    /// there is no storage cost for these hashes.
     public func heads() -> Set<ChangeHash> {
         sync {
             Set(self.doc.wrapErrors { $0.heads().map { ChangeHash(bytes: $0) } })
