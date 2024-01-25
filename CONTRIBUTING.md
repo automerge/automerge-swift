@@ -2,7 +2,7 @@
 
 Issues for this library are tracked on GitHub: [https://github.com/automerge/automerge-swift/issues](https://github.com/automerge/automerge-swift/issues)
 
-There is a hosted [Automerge Slack](https://automerge.slack.com/join/shared_invite/zt-e4p3760n-kKh7r3KRH1YwwNfiZM8ktw#/shared-invite/email) that includes the channel `#automerge-swift`.
+Feel free to [join the Automerge Discord Server](https://discord.gg/XcbDtgJVdN), which includes a channel for `#automerge-swift`, for conversation about this library or Automerge in general.
 
 ## Building and Developing
 
