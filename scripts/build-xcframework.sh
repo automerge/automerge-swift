@@ -133,6 +133,17 @@ xcodebuild -create-xcframework \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
+# per feedback from Apple DTS, privacy manifests are 'resources' for the purpose
+# of including that manifest in an XCFramework - so there's two locations for
+# supporting iOS and macOS.
+# https://developer.apple.com/documentation/bundleresources/placing_content_in_a_bundle
+PRIVACY_FOLDER="${THIS_SCRIPT_DIR}/../privacy"
+mkdir -p ${XCFRAMEWORK_FOLDER}/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/Versions/A/Resources/
+
 echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
 
