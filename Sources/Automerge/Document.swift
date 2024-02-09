@@ -83,7 +83,10 @@ public final class Document: @unchecked Sendable {
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi()) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
+            }
         }
     }
 
@@ -103,7 +106,10 @@ public final class Document: @unchecked Sendable {
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi()) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi())
+            }
         }
     }
 
@@ -117,7 +123,8 @@ public final class Document: @unchecked Sendable {
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
-                try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
+                sendObjectWillChange()
+                return try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
             }
         }
     }
@@ -135,7 +142,8 @@ public final class Document: @unchecked Sendable {
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
-                try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+                sendObjectWillChange()
+                return try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
             }
         }
     }
@@ -149,6 +157,7 @@ public final class Document: @unchecked Sendable {
     public func insert(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try sync {
             try self.doc.wrapErrors {
+                sendObjectWillChange()
                 try $0.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
             }
         }
@@ -168,7 +177,8 @@ public final class Document: @unchecked Sendable {
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
-                try ObjId(bytes: $0.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+                sendObjectWillChange()
+                return try ObjId(bytes: $0.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
             }
         }
     }
@@ -179,7 +189,10 @@ public final class Document: @unchecked Sendable {
     ///   - key: The key to delete.
     public func delete(obj: ObjId, key: String) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.deleteInMap(obj: obj.bytes, key: key) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.deleteInMap(obj: obj.bytes, key: key)
+            }
         }
     }
 
@@ -192,7 +205,10 @@ public final class Document: @unchecked Sendable {
     /// This method shrinks the length of the array object.
     public func delete(obj: ObjId, index: UInt64) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.deleteInList(obj: obj.bytes, index: index) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.deleteInList(obj: obj.bytes, index: index)
+            }
         }
     }
 
@@ -204,7 +220,10 @@ public final class Document: @unchecked Sendable {
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, key: String, by: Int64) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.incrementInMap(obj: obj.bytes, key: key, by: by) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.incrementInMap(obj: obj.bytes, key: key, by: by)
+            }
         }
     }
 
@@ -216,7 +235,10 @@ public final class Document: @unchecked Sendable {
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.incrementInList(obj: obj.bytes, index: index, by: by) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.incrementInList(obj: obj.bytes, index: index, by: by)
+            }
         }
     }
 
@@ -521,7 +543,8 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try sync {
-            try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
+            sendObjectWillChange() // this may not be correct
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
         }
     }
 
@@ -534,7 +557,8 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try sync {
-            try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
+            sendObjectWillChange() // this may not be correct
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
                 obj: obj.bytes,
                 position: position,
                 heads: heads.map(\.bytes)
@@ -582,6 +606,7 @@ public final class Document: @unchecked Sendable {
     public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try sync {
             try self.doc.wrapErrors {
+                sendObjectWillChange()
                 try $0.splice(
                     obj: obj.bytes, start: start, delete: delete, values: values.map { $0.toFfi() }
                 )
@@ -631,6 +656,7 @@ public final class Document: @unchecked Sendable {
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try sync {
             try self.doc.wrapErrors {
+                sendObjectWillChange()
                 try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
             }
         }
@@ -648,6 +674,7 @@ public final class Document: @unchecked Sendable {
     public func updateText(obj: ObjId, value: String) throws {
         try sync {
             try self.doc.wrapErrors { doc in
+                sendObjectWillChange()
                 try doc.updateText(obj: obj.bytes, chars: value)
             }
         }
@@ -702,6 +729,7 @@ public final class Document: @unchecked Sendable {
     ) throws {
         try sync {
             try self.doc.wrapErrors {
+                sendObjectWillChange()
                 try $0.mark(
                     obj: obj.bytes,
                     start: start,
@@ -748,7 +776,10 @@ public final class Document: @unchecked Sendable {
     /// ``heads()``, which indicates a specific point in time for the history of the document.
     public func save() -> Data {
         sync {
-            self.doc.wrapErrors { Data($0.save()) }
+            self.doc.wrapErrors {
+                sendObjectWillChange()
+                return Data($0.save())
+            }
         }
     }
 
@@ -783,6 +814,7 @@ public final class Document: @unchecked Sendable {
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
         try sync {
             try self.doc.wrapErrors {
+                sendObjectWillChange()
                 try $0.receiveSyncMessage(state: state.ffi_state, msg: Array(message))
             }
         }
@@ -798,7 +830,8 @@ public final class Document: @unchecked Sendable {
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
         try sync {
             let patches = try self.doc.wrapErrors {
-                try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
+                sendObjectWillChange()
+                return try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
             }
             return patches.map { Patch($0) }
         }
@@ -820,7 +853,9 @@ public final class Document: @unchecked Sendable {
     /// specify.
     public func forkAt(heads: Set<ChangeHash>) throws -> Document {
         try sync {
-            try self.doc.wrapErrors { try Document(doc: $0.forkAt(heads: heads.map(\.bytes))) }
+            try self.doc.wrapErrors {
+                try Document(doc: $0.forkAt(heads: heads.map(\.bytes)))
+            }
         }
     }
 
@@ -832,6 +867,7 @@ public final class Document: @unchecked Sendable {
     /// the merge, use the method ``mergeWithPatches(other:)`` instead.
     public func merge(other: Document) throws {
         try sync {
+            sendObjectWillChange()
             try self.doc.wrapErrorsWithOther(other: other.doc) { try $0.merge(other: $1) }
         }
     }
@@ -843,7 +879,8 @@ public final class Document: @unchecked Sendable {
     public func mergeWithPatches(other: Document) throws -> [Patch] {
         try sync {
             let patches = try self.doc.wrapErrorsWithOther(other: other.doc) {
-                try $0.mergeWithPatches(other: $1)
+                sendObjectWillChange()
+                return try $0.mergeWithPatches(other: $1)
             }
             return patches.map { Patch($0) }
         }
@@ -855,7 +892,8 @@ public final class Document: @unchecked Sendable {
     /// The heads returned are the tips of the change graph managed by Automerge, so the number of heads is the number
     /// of concurrent changes at the tips of the graph.
     ///
-    /// For example, if two peers make a change concurrently and sync with each other then the synced document will have two heads.
+    /// For example, if two peers make a change concurrently and sync with each other then the synced document will have
+    /// two heads.
     /// As soon as one of them makes a change on top of the synced document it will return to one head,
     /// because the new change is not concurrent with the previous changes but causally succeeds them.
     ///
@@ -912,7 +950,9 @@ public final class Document: @unchecked Sendable {
     /// applying to another document using ``applyEncodedChanges(encoded:)``.
     public func encodeChangesSince(heads: Set<ChangeHash>) throws -> Data {
         try sync {
-            try self.doc.wrapErrors { try Data($0.encodeChangesSince(heads: heads.map(\.bytes))) }
+            try self.doc.wrapErrors {
+                try Data($0.encodeChangesSince(heads: heads.map(\.bytes)))
+            }
         }
     }
 
@@ -928,7 +968,10 @@ public final class Document: @unchecked Sendable {
     /// the applied changes try using ``applyEncodedChangesWithPatches(encoded:)``
     public func applyEncodedChanges(encoded: Data) throws {
         try sync {
-            try self.doc.wrapErrors { try $0.applyEncodedChanges(changes: Array(encoded)) }
+            try self.doc.wrapErrors {
+                sendObjectWillChange()
+                try $0.applyEncodedChanges(changes: Array(encoded))
+            }
         }
     }
 
@@ -943,7 +986,8 @@ public final class Document: @unchecked Sendable {
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
         try sync {
             let patches = try self.doc.wrapErrors {
-                try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
+                sendObjectWillChange()
+                return try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
             }
             return patches.map { Patch($0) }
         }
@@ -978,3 +1022,19 @@ struct WrappedDoc {
         try wrappedErrors { try f(doc, other.doc) }
     }
 }
+
+// Observable Object conformance for Document
+
+#if canImport(Combine)
+import Combine
+
+extension Document: ObservableObject {
+    fileprivate func sendObjectWillChange() {
+        objectWillChange.send()
+    }
+}
+#else
+fileprivate extension Document {
+    func sendObjectWillChange() {}
+}
+#endif

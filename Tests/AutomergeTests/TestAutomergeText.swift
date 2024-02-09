@@ -64,7 +64,7 @@ class AutomergeTextTestCase: XCTestCase {
         let doc = Document()
         // the schema in the document needs to exist before you can bind
         // AutomergeText
-        let setuptextId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        let _ = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         let text = try AutomergeText("🇬🇧👨‍👨‍👧‍👦😀", doc: doc, path: "text")
         XCTAssertTrue(text.isBound)
         text.value = "🇬🇧😀"
