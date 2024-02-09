@@ -211,18 +211,24 @@ final class AutomergeDocTests: XCTestCase {
         let index🇬🇧: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "🇬🇧"))
         let index👨‍👨‍👧‍👦: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "👨‍👨‍👧‍👦"))
         let index😀: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "😀"))
-        print("utf8 index position of 🇬🇧: \(convertToUTF8Index(someString: stringFromAutomerge, index: index🇬🇧))") // 0
-        print("utf8 index position of 👨‍👨‍👧‍👦: \(convertToUTF8Index(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦))") // 8
-        print("utf8 index position of 😀: \(convertToUTF8Index(someString: stringFromAutomerge, index: index😀))") // 33
-
         print(
-            "unicodescalar index position of 🇬🇧: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index🇬🇧))"
+            "utf8 index position of 🇬🇧: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index🇬🇧)))"
         ) // 0
         print(
-            "unicodescalar index position of 👨‍👨‍👧‍👦: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦))"
+            "utf8 index position of 👨‍👨‍👧‍👦: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦)))"
+        ) // 8
+        print(
+            "utf8 index position of 😀: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index😀)))"
+        ) // 33
+
+        print(
+            "unicodescalar index position of 🇬🇧: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index🇬🇧)))"
+        ) // 0
+        print(
+            "unicodescalar index position of 👨‍👨‍👧‍👦: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦)))"
         ) // 2
         print(
-            "unicodescalar index position of 😀: \(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index😀))"
+            "unicodescalar index position of 😀: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index😀)))"
         ) // 9
 
         try doc.spliceText(obj: textId, start: start, delete: delete) // delete "👨‍👨‍👧‍👦"
