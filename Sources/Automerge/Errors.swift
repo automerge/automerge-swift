@@ -2,6 +2,7 @@ import enum AutomergeUniffi.DecodeSyncStateError
 import enum AutomergeUniffi.DocError
 import enum AutomergeUniffi.LoadError
 import enum AutomergeUniffi.ReceiveSyncError
+import Foundation
 
 typealias FfiDocError = AutomergeUniffi.DocError
 typealias FfiDecodeSyncStateError = AutomergeUniffi.DecodeSyncStateError
@@ -16,11 +17,26 @@ typealias FfiReceiveSyncError = AutomergeUniffi.ReceiveSyncError
 /// An general document error.
 ///
 /// The error is specific to the Rust language binding infrastructure.
-public struct DocError: Error {
+public struct DocError: LocalizedError {
     let inner: FfiDocError
 
     init(_ inner: FfiDocError) {
         self.inner = inner
+    }
+
+    public var errorDescription: String? {
+        inner.errorDescription
+    }
+}
+
+extension FfiDocError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .WrongObjectType(message: msg):
+            return "WrongObjectType: \(msg)"
+        case let .Internal(message: msg):
+            return "AutomergeCore Internal Error: \(msg)"
+        }
     }
 }
 
