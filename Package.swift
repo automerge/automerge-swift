@@ -92,9 +92,14 @@ let package = Package(
             dependencies: ["AutomergeUniffi"],
             swiftSettings: globalSwiftSettings
         ),
+        .target(
+            name: "AutomergeUtilities",
+            dependencies: ["Automerge"],
+            swiftSettings: globalSwiftSettings
+        ),
         .testTarget(
             name: "AutomergeTests",
-            dependencies: ["Automerge"],
+            dependencies: ["Automerge", "AutomergeUtilities"],
             exclude: ["Fixtures"]
         ),
     ]
