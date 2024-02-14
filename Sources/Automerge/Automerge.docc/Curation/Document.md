@@ -8,11 +8,6 @@
 - ``init(_:logLevel:)``
 - ``LogVerbosity``
 
-### Transfering Documents
-
-- ``Document/transferRepresentation``
-- ``Automerge/UniformTypeIdentifiers/UTType/automerge``
-
 ### Inspecting Documents
 
 - ``actor``
@@ -119,3 +114,12 @@
 - ``generateSyncMessage(state:)``
 - ``receiveSyncMessage(state:message:)``
 - ``receiveSyncMessageWithPatches(state:message:)``
+
+### Observing Documents
+
+- ``objectWillChange``
+
+### Transfering Documents
+
+- ``Document/transferRepresentation``
+- ``Automerge/UniformTypeIdentifiers/UTType/automerge``
