@@ -66,7 +66,7 @@ let package = Package(
     name: "Automerge",
     platforms: [.iOS(.v13), .macOS(.v10_15)],
     products: [
-        .library(name: "Automerge", targets: ["Automerge"]),
+        .library(name: "Automerge", targets: ["Automerge", "AutomergeUtilities"]),
     ],
     targets: [
         FFIbinaryTarget,
