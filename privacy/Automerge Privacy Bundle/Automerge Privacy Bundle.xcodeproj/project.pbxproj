@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A54BC7E2B7EBF4700A423DE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A54BC7D2B7EBF4700A423DE /* Info.plist */; };
 		1AE545602B7EB8060037BD68 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5455F2B7EB8060037BD68 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A54BC7D2B7EBF4700A423DE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AE545582B7EB7EA0037BD68 /* Automerge Privacy Bundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Automerge Privacy Bundle.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AE5455F2B7EB8060037BD68 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = ../PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -29,6 +31,7 @@
 		1AE5454F2B7EB7EA0037BD68 = {
 			isa = PBXGroup;
 			children = (
+				1A54BC7D2B7EBF4700A423DE /* Info.plist */,
 				1AE5455F2B7EB8060037BD68 /* PrivacyInfo.xcprivacy */,
 				1AE545592B7EB7EA0037BD68 /* Products */,
 			);
@@ -99,6 +102,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A54BC7E2B7EBF4700A423DE /* Info.plist in Resources */,
 				1AE545602B7EB8060037BD68 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,9 +242,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BDV4VC27D3;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2023, Automerge contributors";
-				INFOPLIST_KEY_NSPrincipalClass = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.automerge.automerge-swift.Automerge-Privacy-Bundle";
@@ -258,9 +262,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BDV4VC27D3;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2023, Automerge contributors";
-				INFOPLIST_KEY_NSPrincipalClass = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.automerge.automerge-swift.Automerge-Privacy-Bundle";
