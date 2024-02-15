@@ -12,6 +12,11 @@ public final class AutomergeText: Codable {
     var objId: ObjId?
     var _unboundStorage: String
 
+    #if canImport(Combine)
+    private var sinkFromDocument: Cancellable?
+    public var objectWillChange = PassthroughSubject<Void, Never>()
+    #endif
+    
     // MARK: Initializers and Bind
 
     /// Creates a new, unbound text reference instance.
@@ -38,6 +43,11 @@ public final class AutomergeText: Codable {
         } else {
             throw BindingError.NotText
         }
+        #if canImport(Combine)
+        sinkFromDocument = doc.objectWillChange.sink {
+            self.objectWillChange.send()
+        }
+        #endif
     }
 
     public var isBound: Bool {
@@ -65,6 +75,11 @@ public final class AutomergeText: Codable {
             try updateText(newText: _unboundStorage)
             _unboundStorage = ""
         }
+        #if canImport(Combine)
+        sinkFromDocument = doc.objectWillChange.sink {
+            self.objectWillChange.send()
+        }
+        #endif
     }
 
     // MARK: Exposing String value and Binding<String>
