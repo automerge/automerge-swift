@@ -1,10 +1,8 @@
 import Automerge
 
 extension Document {
-    /// A testing function that dumps the vaguely-typed contents of an Automerge document for the purposes of debugging.
-    ///
-    /// The output is all through print to STDOUT.
-    func walk() throws {
+    /// A testing function that prints the contents  of an Automerge document with annotations for the type associated with each object and/or value  for the purposes of debugging.
+    public func walk() throws {
         print("{")
         try walk(self, from: ObjId.ROOT)
         print("}")
