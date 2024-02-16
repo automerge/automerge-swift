@@ -23,6 +23,8 @@ jobs:
          swift --version
       - name: build xcframework
         run: ./scripts/build-xcframework.sh
+      - name: compress framework
+        run: ./scripts/compress-framework.sh
       - name: Swift tests
         run: swift test
 
