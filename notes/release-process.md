@@ -16,6 +16,9 @@ This example uses the version `0.1.0`.
 - Run `./scripts/build-xcframework.sh` to build the XCFramework.
 Doing this regenerates the Swift wrappers from UniFFI, so the low-level wrapper swift needs to be aligned with the XCFramework that this script generates.
 
+- Sign and compress the resulting framework: `./scripts/sign-compress-framework.sh`.
+The signing requires a matching developer ID and certificates from Apple on the machine where the framework is being replaced.
+
 - Capture the build hash (sha256) of the XCFramework that the script prints out at the end of it's process.
 It will look something like:
 
@@ -52,6 +55,9 @@ FFIbinaryTarget = .binaryTarget(
         checksum: "201a464b1585c0b424a1100f506c12368b3e7473afe5907befc95468147f482d"
 )
 ```
+
+**NOTE:**
+> If you use a SemVer v2.0 release with a patch build, such as 0.5.7+3, the `+` sign needs to be URLEncoded within the string of the URL for the build product download. For example, the string for the `0.5.7+3` tag is `https://github.com/automerge/automerge-swift/releases/download/0.5.7%2B3/automergeFFI.xcframework.zip`
 
 - Set the checksum to the one you just captured for the build of the XCFramework.
 
