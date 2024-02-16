@@ -11,8 +11,9 @@
 # WARNING this build script to work requires pinned rust version due a known issue with Catalyst build
 # that was later introduced https://github.com/rust-lang/rust/issues/106021
 
-set -e # immediately terminate script on any failure conditions
-set -x # echo script commands for easier debugging
+# bash "strict" mode
+# https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+set -euxo pipefail
 
 THIS_SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 PACKAGE_NAME="AutomergeUniffi"
@@ -159,13 +160,3 @@ cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_6
 
 echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
 cp "${BUILD_FOLDER}/wasm32-wasi/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
-
-echo "▸ Codesign the XCFramework"
-codesign --timestamp -v --sign "Apple Development: Joseph Heck (RGF7P769P6)" automergeFFI.xcframework
-
-echo "▸ Compress xcframework"
-ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
-
-echo "▸ Compute checksum"
-openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
-
