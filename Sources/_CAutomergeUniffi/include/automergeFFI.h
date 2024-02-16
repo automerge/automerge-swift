@@ -31,18 +31,6 @@ typedef struct RustBuffer
 
 typedef int32_t (*ForeignCallback)(uint64_t, int32_t, const uint8_t *_Nonnull, int32_t, RustBuffer *_Nonnull);
 
-// Task defined in Rust that Swift executes
-typedef void (*UniFfiRustTaskCallback)(const void * _Nullable);
-
-// Callback to execute Rust tasks using a Swift Task
-//
-// Args:
-//   executor: ForeignExecutor lowered into a size_t value
-//   delay: Delay in MS
-//   task: UniFfiRustTaskCallback to call
-//   task_data: data to pass the task callback
-typedef void (*UniFfiForeignExecutorCallback)(size_t, uint32_t, UniFfiRustTaskCallback _Nullable, const void * _Nullable);
-
 typedef struct ForeignBytes
 {
     int32_t len;
@@ -59,355 +47,459 @@ typedef struct RustCallStatus {
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
 
-// Callbacks for UniFFI Futures
-typedef void (*UniFfiFutureCallbackUInt8)(const void * _Nonnull, uint8_t, RustCallStatus);
-typedef void (*UniFfiFutureCallbackUInt64)(const void * _Nonnull, uint64_t, RustCallStatus);
-typedef void (*UniFfiFutureCallbackUnsafeMutableRawPointer)(const void * _Nonnull, void*_Nonnull, RustCallStatus);
-typedef void (*UniFfiFutureCallbackUnsafeMutableRawPointer)(const void * _Nonnull, void*_Nonnull, RustCallStatus);
-typedef void (*UniFfiFutureCallbackRustBuffer)(const void * _Nonnull, RustBuffer, RustCallStatus);
+// Continuation callback for UniFFI Futures
+typedef void (*UniFfiRustFutureContinuation)(void * _Nonnull, int8_t);
 
 // Scaffolding functions
-void uniffi_automerge_fn_free_syncstate(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_clone_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_constructor_syncstate_new(RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_free_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_load(RustBuffer bytes, RustCallStatus *_Nonnull out_status
+);
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new(RustCallStatus *_Nonnull out_status
     
 );
-void*_Nonnull uniffi_automerge_fn_constructor_syncstate_decode(RustBuffer bytes, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new_with_actor(RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_syncstate_encode(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_actor_id(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_syncstate_reset(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_syncstate_their_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_free_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_constructor_doc_new(RustCallStatus *_Nonnull out_status
-    
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_constructor_doc_new_with_actor(RustBuffer actor, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_constructor_doc_load(RustBuffer bytes, RustCallStatus *_Nonnull out_status
+uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_actor_id(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_set_actor(void*_Nonnull ptr, RustBuffer actor, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_delete_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_method_doc_fork(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_delete_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
-void*_Nonnull uniffi_automerge_fn_method_doc_fork_at(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_encode_changes_since(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_put_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer value, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_encode_new_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_put_object_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_method_doc_fork(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_put_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_method_doc_fork_at(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_put_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_generate_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_insert_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer chars, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_update_text(void*_Nonnull ptr, RustBuffer obj, RustBuffer chars, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer values, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_mark(void*_Nonnull ptr, RustBuffer obj, uint64_t start, uint64_t end, RustBuffer expand, RustBuffer name, RustBuffer value, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_marks(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_marks_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_delete_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_delete_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_increment_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, int64_t by, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_increment_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, int64_t by, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_increment_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, int64_t by, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_increment_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, int64_t by, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_insert_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
+uint64_t uniffi_uniffi_automerge_fn_method_doc_length(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
+uint64_t uniffi_uniffi_automerge_fn_method_doc_length_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_entries(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_all_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_entries_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_all_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_keys(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_all_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_keys_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_get_all_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_mark(void*_Nonnull ptr, RustBuffer obj, uint64_t start, uint64_t end, RustBuffer expand, RustBuffer name, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_text(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_text_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_map_keys(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_merge(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_map_keys_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_merge_with_patches(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_map_entries(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_object_type(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_map_entries_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_path(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_values(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_put_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_values_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_put_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
-uint64_t uniffi_automerge_fn_method_doc_length(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_put_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
-uint64_t uniffi_automerge_fn_method_doc_length_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_put_object_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_object_type(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_receive_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_path(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_save(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_set_actor(void*_Nonnull ptr, RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_save(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer values, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_merge(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer chars, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_merge_with_patches(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_text(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_generate_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_text_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_receive_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_update_text(void*_Nonnull ptr, RustBuffer obj, RustBuffer chars, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_values(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_encode_new_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_values_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_encode_changes_since(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_clone_syncstate(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-void uniffi_automerge_fn_method_doc_apply_encoded_changes(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_free_syncstate(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_syncstate_decode(RustBuffer bytes, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_syncstate_new(RustCallStatus *_Nonnull out_status
+    
 );
-RustBuffer uniffi_automerge_fn_method_doc_cursor_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_syncstate_encode(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-uint64_t uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_syncstate_reset(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-uint64_t uniffi_automerge_fn_method_doc_cursor_position_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustBuffer heads, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_syncstate_their_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_automerge_fn_func_root(RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_func_root(RustCallStatus *_Nonnull out_status
     
+);
+RustBuffer ffi_uniffi_automerge_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_uniffi_automerge_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_uniffi_automerge_rustbuffer_reserve(RustBuffer buf, int32_t additional, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_u8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_u8(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_u8(void* _Nonnull handle
+);
+uint8_t ffi_uniffi_automerge_rust_future_complete_u8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_i8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_i8(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_i8(void* _Nonnull handle
+);
+int8_t ffi_uniffi_automerge_rust_future_complete_i8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_u16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_u16(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_u16(void* _Nonnull handle
+);
+uint16_t ffi_uniffi_automerge_rust_future_complete_u16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_i16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_i16(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_i16(void* _Nonnull handle
+);
+int16_t ffi_uniffi_automerge_rust_future_complete_i16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_u32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_u32(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_u32(void* _Nonnull handle
+);
+uint32_t ffi_uniffi_automerge_rust_future_complete_u32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_i32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_i32(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_i32(void* _Nonnull handle
+);
+int32_t ffi_uniffi_automerge_rust_future_complete_i32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_u64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_u64(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_u64(void* _Nonnull handle
+);
+uint64_t ffi_uniffi_automerge_rust_future_complete_u64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_i64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_i64(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_i64(void* _Nonnull handle
+);
+int64_t ffi_uniffi_automerge_rust_future_complete_i64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_f32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_f32(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_f32(void* _Nonnull handle
+);
+float ffi_uniffi_automerge_rust_future_complete_f32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_f64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_f64(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_f64(void* _Nonnull handle
+);
+double ffi_uniffi_automerge_rust_future_complete_f64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_pointer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_pointer(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_pointer(void* _Nonnull handle
+);
+void*_Nonnull ffi_uniffi_automerge_rust_future_complete_pointer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+);
+void ffi_uniffi_automerge_rust_future_poll_rust_buffer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+);
+void ffi_uniffi_automerge_rust_future_cancel_rust_buffer(void* _Nonnull handle
+);
+void ffi_uniffi_automerge_rust_future_free_rust_buffer(void* _Nonnull handle
+);
+RustBuffer ffi_uniffi_automerge_rust_future_complete_rust_buffer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
 );
-RustBuffer ffi_automerge_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
+void ffi_uniffi_automerge_rust_future_poll_void(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
 );
-RustBuffer ffi_automerge_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
+void ffi_uniffi_automerge_rust_future_cancel_void(void* _Nonnull handle
 );
-void ffi_automerge_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
+void ffi_uniffi_automerge_rust_future_free_void(void* _Nonnull handle
 );
-RustBuffer ffi_automerge_rustbuffer_reserve(RustBuffer buf, int32_t additional, RustCallStatus *_Nonnull out_status
+void ffi_uniffi_automerge_rust_future_complete_void(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
 );
-uint16_t uniffi_automerge_checksum_func_root(void
+uint16_t uniffi_uniffi_automerge_checksum_func_root(void
     
 );
-uint16_t uniffi_automerge_checksum_method_syncstate_encode(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_actor_id(void
     
 );
-uint16_t uniffi_automerge_checksum_method_syncstate_reset(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes(void
     
 );
-uint16_t uniffi_automerge_checksum_method_syncstate_their_heads(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_actor_id(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_changes(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_set_actor(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_fork(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_fork_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_put_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_put_object_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_put_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_put_object_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_encode_changes_since(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_insert_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_encode_new_changes(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_insert_object_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_fork(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_splice_text(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_fork_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_update_text(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_generate_sync_message(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_splice(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_at_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_mark(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_at_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_marks(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_marks_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_delete_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_at_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_delete_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_at_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_increment_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_increment_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_heads(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_increment_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_at_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_increment_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_at_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_insert_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_all_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_insert_object_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_all_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_length(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_all_at_in_map(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_length_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_get_all_at_in_list(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_entries(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_text(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_entries_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_text_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_keys(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_map_keys(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_keys_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_map_keys_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_mark(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_map_entries(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_map_entries_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_values(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_merge(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_values_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_merge_with_patches(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_length(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_object_type(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_length_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_path(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_object_type(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_path(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_heads(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_object_in_list(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_changes(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_object_in_map(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_save(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_receive_sync_message(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_merge(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_receive_sync_message_with_patches(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_merge_with_patches(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_save(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_generate_sync_message(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_set_actor(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_receive_sync_message(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_receive_sync_message_with_patches(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice_text(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_encode_new_changes(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_text(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_encode_changes_since(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_text_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_apply_encoded_changes(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_update_text(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_values(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_cursor(void
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_values_at(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_cursor_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_encode(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_cursor_position(void
+uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_reset(void
     
 );
-uint16_t uniffi_automerge_checksum_method_doc_cursor_position_at(void
+uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_their_heads(void
     
 );
-uint16_t uniffi_automerge_checksum_constructor_syncstate_new(void
+uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_load(void
     
 );
-uint16_t uniffi_automerge_checksum_constructor_syncstate_decode(void
+uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new(void
     
 );
-uint16_t uniffi_automerge_checksum_constructor_doc_new(void
+uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new_with_actor(void
     
 );
-uint16_t uniffi_automerge_checksum_constructor_doc_new_with_actor(void
+uint16_t uniffi_uniffi_automerge_checksum_constructor_syncstate_decode(void
     
 );
-uint16_t uniffi_automerge_checksum_constructor_doc_load(void
+uint16_t uniffi_uniffi_automerge_checksum_constructor_syncstate_new(void
     
 );
-uint32_t ffi_automerge_uniffi_contract_version(void
+uint32_t ffi_uniffi_automerge_uniffi_contract_version(void
     
 );
 

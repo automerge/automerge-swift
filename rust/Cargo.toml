@@ -15,8 +15,8 @@ required-features = ["uniffi/cli"]
 [dependencies]
 automerge = "0.5.7"
 thiserror = "1.0.38"
-uniffi = "0.24.1"
+uniffi = "0.26.1"
 
 [build-dependencies]
-uniffi = {version = "0.24.1", features = ["build"] }
+uniffi = {version = "0.26.1", features = ["build"] }
 
