@@ -138,11 +138,30 @@ xcodebuild -create-xcframework \
 # supporting iOS and macOS.
 # https://developer.apple.com/documentation/bundleresources/placing_content_in_a_bundle
 PRIVACY_FOLDER="${THIS_SCRIPT_DIR}/../privacy"
-mkdir -p ${XCFRAMEWORK_FOLDER}/Versions
-mkdir -p ${XCFRAMEWORK_FOLDER}/Versions/A
-mkdir -p ${XCFRAMEWORK_FOLDER}/Versions/A/Resources
-cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/
-cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/Versions/A/Resources/
+
+# macOS
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A/Resources
+
+# Mac Catalyst
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A/Resources
+
+# iOS
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64/
+
+# iOS simulator
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-simulator/
+
+echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
+cp "${BUILD_FOLDER}/wasm32-wasi/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
+
+echo "▸ Codesign the XCFramework"
+codesign --timestamp -v --sign "Apple Development: Joseph Heck (RGF7P769P6)" automergeFFI.xcframework
 
 echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
@@ -150,5 +169,3 @@ ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOL
 echo "▸ Compute checksum"
 openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
 
-echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
-cp "${BUILD_FOLDER}/wasm32-wasi/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
