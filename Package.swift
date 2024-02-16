@@ -86,7 +86,7 @@ let package = Package(
             ],
             path: "./AutomergeUniffi"
         ),
-        .target(name: "_CAutomergeUniffi"),
+        .systemLibrary(name: "_CAutomergeUniffi"),
         .target(
             name: "Automerge",
             dependencies: ["AutomergeUniffi"],
