@@ -11,8 +11,9 @@
 # WARNING this build script to work requires pinned rust version due a known issue with Catalyst build
 # that was later introduced https://github.com/rust-lang/rust/issues/106021
 
-set -e # immediately terminate script on any failure conditions
-set -x # echo script commands for easier debugging
+# bash "strict" mode
+# https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+set -euxo pipefail
 
 THIS_SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 PACKAGE_NAME="AutomergeUniffi"
@@ -133,11 +134,29 @@ xcodebuild -create-xcframework \
     -headers "${BUILD_FOLDER}/includes" \
     -output "${XCFRAMEWORK_FOLDER}"
 
-echo "▸ Compress xcframework"
-ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
+# per feedback from Apple DTS, privacy manifests are 'resources' for the purpose
+# of including that manifest in an XCFramework - so there's two locations for
+# supporting iOS and macOS.
+# https://developer.apple.com/documentation/bundleresources/placing_content_in_a_bundle
+PRIVACY_FOLDER="${THIS_SCRIPT_DIR}/../privacy"
 
-echo "▸ Compute checksum"
-openssl dgst -sha256 "$XCFRAMEWORK_FOLDER.zip"
+# macOS
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/macos-arm64_x86_64/Versions/A/Resources
+
+# Mac Catalyst
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A/Resources
+
+# iOS
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64/
+
+# iOS simulator
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-simulator/
 
 echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
 cp "${BUILD_FOLDER}/wasm32-wasi/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
