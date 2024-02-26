@@ -1,15 +1,17 @@
-# The Dynamic Schema in Automerge
+# Core Automerge API
 
-Store, read, share, and synchronize complex data in an Automerge document.
+Create, Update, and Synchronize data for collaborative applications.
 
 ## Overview
 
-The central data type of Automerge is a ``Document`` which presents a data model similar to a JSON document. 
-The structure is composed of arrays and string keyed maps, nested within one another. 
-Unlike JSON, a `Document` is backed by a set of nested CRDTs. 
-Because of this, a `Document` can be merged with any other `Document` in a manner which preserves user intent as much as possible.
 
-### Document-based Model
+
+Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or read [Meeting Notes, a Document-based SwiftUI app using Automerge](https://automerge.org/MeetingNotes/documentation/meetingnotes/appwalkthrough/) for a more detailed walk through illustrating a demonstration app that uses Automerge.
+
+## Topics
+
+### Types
+
 
 The `Document` class provides low-level methods to read and write values into an Automerge document.
 The data within an Automerge document is composed of objects, represented by the enumeration ``Value``.
@@ -81,3 +83,61 @@ An Automerge document can be saved using ``Document/save()``.
 This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``.
 
 Automerge is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.
+
+
+### Essentials
+
+- ``Automerge/Document``
+- <doc:FiveMinuteQuickstart>
+
+### Text
+- ``Automerge/Cursor``
+- ``Automerge/Mark``
+- ``Automerge/ExpandMark``
+
+### Collaborating with Counters
+
+- ``Automerge/Counter``
+
+### Synchronizing Documents
+
+- <doc:Sync>
+- ``Automerge/SyncState``
+
+### Representing Objects and Values
+
+- <doc:ModelingData>
+- ``Automerge/ObjType``
+- ``Automerge/ObjId``
+- ``Automerge/Value``
+- ``Automerge/ScalarValue``
+- <doc:AddressBookExample>
+
+### Inspecting Documents as Changes
+
+- <doc:ChangesAndHistory>
+- ``Automerge/ChangeHash``
+- ``Automerge/Patch``
+- ``Automerge/PatchAction``
+- ``Automerge/PathElement``
+- ``Automerge/Prop``
+- ``Automerge/DeleteSeq``
+- ``Automerge/ActorId``
+
+### Document Errors 
+
+- ``Automerge/DecodeSyncStateError``
+- ``Automerge/DocError``
+- ``Automerge/LoadError``
+- ``Automerge/ReceiveSyncError``
+
+### Type Conversion Errors
+
+- ``Automerge/BooleanScalarConversionError``
+- ``Automerge/BytesScalarConversionError``
+- ``Automerge/IntScalarConversionError``
+- ``Automerge/FloatingPointScalarConversionError``
+- ``Automerge/StringScalarConversionError``
+- ``Automerge/TimestampScalarConversionError``
+- ``Automerge/UIntScalarConversionError``
+
