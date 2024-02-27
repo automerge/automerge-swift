@@ -53,7 +53,6 @@ final class AutomergeEncoderImpl {
         if codingPath.map({ AnyCodingKey($0) }).starts(with: prefix) {
             switch containerType {
             case .Key:
-                precondition(!mapKeysWritten.isEmpty)
                 // Remove keys that exist in this objectId that weren't
                 // written during encode. (clean up 'dead' keys from maps)
                 let extraAutomergeKeys = document.keys(obj: objectIdForContainer)
