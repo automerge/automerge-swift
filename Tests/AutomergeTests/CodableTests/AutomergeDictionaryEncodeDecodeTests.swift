@@ -19,24 +19,36 @@ final class AutomergeDictionaryEncodeDecodeTests: XCTestCase {
         }
 
         let encoder = AutomergeEncoder(doc: doc)
-        let decoder = AutomergeDecoder(doc: doc)
 
         var wrapper = Wrapper()
         wrapper.exampleDictionary[1] = "one"
         wrapper.exampleDictionary[2] = "two"
 
-        // I don't get this nice error message, get:
+        XCTAssertThrowsError(try encoder.encode(wrapper))
+        // Automerge throws a DocError because it only supports
+        // Strings as keys for dictionaries.
         // DocError(inner: AutomergeUniffi.DocError.WrongObjectType(message: "WrongObjectType"))
-        XCTExpectFailure("Automerge encoder can't encode keys other than strings.")
-        try encoder.encode(wrapper)
+    }
 
+    func testEmptyDictionaryEncode() throws {
+        // example of Dictionary with keys other than a string
+
+        struct Wrapper: Codable, Equatable {
+            var exampleDictionary: [String: Int] = [:]
+        }
+
+        let encoder = AutomergeEncoder(doc: doc)
+        let decoder = AutomergeDecoder(doc: doc)
+        let wrapper = Wrapper()
+
+        try encoder.encode(wrapper)
         let replica = try decoder.decode(Wrapper.self)
         XCTAssertEqual(replica, wrapper)
     }
-    
-    func testEmptyDictionaryEncode() throws {
-        var exampleDictionary: [String: Int] = [:]
-        
+
+    func testEmptyDictionaryEncodeAtRoot() throws {
+        let exampleDictionary: [String: Int] = [:]
+
         let encoder = AutomergeEncoder(doc: doc)
         let decoder = AutomergeDecoder(doc: doc)
 
