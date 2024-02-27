@@ -37,15 +37,15 @@ Now you can create a document and do all sorts of Automerge things with it
 ```swift
 let doc = Document()
 let list = try! doc.putObject(obj: ObjId.ROOT, key: "colours", ty: .List)
-try! doc.insert(obj: list, index: 0, .String("blue"))
-try! doc.insert(obj: list, index: 1, .String("red"))
+try! doc.insert(obj: list, index: 0, value: .String("blue"))
+try! doc.insert(obj: list, index: 1, value: .String("red"))
 
 let doc2 = doc.fork()
-try! doc2.insert(obj: list, index: 0, .String("green"))
+try! doc2.insert(obj: list, index: 0, value: .String("green"))
 
 try! doc.delete(obj: list, index: 0)
 
-try! doc.merge(doc2) // `doc` now contains {"colours": ["green", "red"]}
+try! doc.merge(other: doc2) // `doc` now contains {"colours": ["green", "red"]}
 ```
 
 For more details on the API, see the [Automerge-swift API documentation](https://automerge.org/automerge-swift/documentation/automerge/) and the articles within.
