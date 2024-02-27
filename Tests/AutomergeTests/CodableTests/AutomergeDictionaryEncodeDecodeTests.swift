@@ -25,14 +25,29 @@ final class AutomergeDictionaryEncodeDecodeTests: XCTestCase {
         wrapper.exampleDictionary[1] = "one"
         wrapper.exampleDictionary[2] = "two"
 
+        // I don't get this nice error message, get:
+        // DocError(inner: AutomergeUniffi.DocError.WrongObjectType(message: "WrongObjectType"))
         XCTExpectFailure("Automerge encoder can't encode keys other than strings.")
         try encoder.encode(wrapper)
 
         let replica = try decoder.decode(Wrapper.self)
         XCTAssertEqual(replica, wrapper)
     }
-
+    
     func testEmptyDictionaryEncode() throws {
+        var exampleDictionary: [String: Int] = [:]
+        
+        let encoder = AutomergeEncoder(doc: doc)
+        let decoder = AutomergeDecoder(doc: doc)
+
+        // this fails when you encode an empty dictionary
+        try encoder.encode(exampleDictionary)
+
+        let replica = try decoder.decode([String: Int].self)
+        XCTAssertEqual(replica, exampleDictionary)
+    }
+
+    func testWorkingDictionaryEncode() throws {
         var exampleDictionary: [String: Int] = [:]
 
         exampleDictionary["one"] = 1
