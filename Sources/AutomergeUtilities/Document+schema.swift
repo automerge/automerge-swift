@@ -33,8 +33,9 @@ public extension Document {
     func schema() throws -> AutomergeValue {
         try parseToSchema(self, from: ObjId.ROOT)
     }
-    
-    /// A function to walk an Automerge document from an initial object identifier that you provide, returning the schema below as a tree.
+
+    /// A function to walk an Automerge document from an initial object identifier that you provide, returning the
+    /// schema below as a tree.
     /// - Parameters:
     ///   - doc: The Automerge document to parse.
     ///   - objId: The object identifier at which to start the parse
