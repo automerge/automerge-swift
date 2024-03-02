@@ -24,3 +24,5 @@ mod sync_state;
 use sync_state::{DecodeSyncStateError, SyncState};
 mod value;
 use value::Value;
+mod change;
+use change::{valid_change};

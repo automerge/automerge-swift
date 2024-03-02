@@ -41,3 +41,8 @@ pub fn decode_change(bytes: Vec<u8>) -> Result<Change, DecodeChangeError> {
         .map(Change::from)
         .map_err(DecodeChangeError::from)
 }
+
+pub fn valid_change(bytes: Vec<u8>) -> bool {
+    let x = decode_change(bytes);
+    return x.is_ok();
+}
