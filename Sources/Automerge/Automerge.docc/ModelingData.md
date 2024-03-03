@@ -1,19 +1,19 @@
-# The Dynamic Schema in Automerge
+# Using the dynamic schema and core data model
 
 Store, read, share, and synchronize complex data in an Automerge document.
 
 ## Overview
 
-The central data type of Automerge is a ``Document`` which presents a data model similar to a JSON document. 
-The structure is composed of arrays and string keyed maps, nested within one another. 
-Unlike JSON, a `Document` is backed by a set of nested CRDTs. 
-Because of this, a `Document` can be merged with any other `Document` in a manner which preserves user intent as much as possible.
+The ``Document`` class provides access to the Automerge core API and low-level methods to read and write values into an Automerge document.
+The dynamic data model within an Automerge document is similar to a JSON document.
+Unlike JSON, a `Document` is backed by sets of nested CRDTs, which track the changes made within the data model.
+By using CRDTs, a `Document` can be consistently merged with other `Document` in a manner which preserves user intent as much as possible.
 
 ### Document-based Model
 
-The `Document` class provides low-level methods to read and write values into an Automerge document.
-The data within an Automerge document is composed of objects, represented by the enumeration ``Value``.
-Objects that contain other objects are composed of an identifier: ``ObjId``, and the type: ``ObjType``.
+The Automerge dynamic data model is composed of arrays and string keyed maps, nested within one another, with the root of the data model (represented by ``ObjId/ROOT``) which is a map.
+The data within an Automerge document is composed of nested objects, represented by the enumeration ``Value``.
+Objects that contain other objects are have a unique identifier: ``ObjId`` and a type: ``ObjType``.
 Like JSON, Automerge includes objects that contain other objects: arrays (``ObjType/List``) and dictionaries (``ObjType/Map``).
 Also like JSON, dictionaries in Automerge are keyed only by Strings.
 
@@ -26,8 +26,7 @@ When serialized by `AutomergeDecoder` or `AutomergeEncoder`, the type ``Automerg
 ### Automerge Document Primitives
 
 Objects within an Automerge document that don't contain other objects are made up of the primitive types for Automerge, represented by the enumeration ``ScalarValue``.
-Automerge maintains more type tracking than JSON, representing a number of different types internally.
-The `AutomergeEncoder` and `AutomergeDecoder` convert existing Swift types into and out of Automerge primitives.
+Automerge maintains more type information than JSON, representing a number of different types internally.
 
 | Automerge primitive | Matching Swift type |
 | --- | --- |
@@ -46,38 +45,87 @@ The `AutomergeEncoder` and `AutomergeDecoder` convert existing Swift types into 
 `Timestamp` is a specific date/time location.
 The ``ScalarValue/Timestamp(_:)`` representation uses an `Int64` value to represent the number of seconds since epoch (UTC midnight, Jan 1, 1970).
 
-When using `AutomergeEncoder` or `AutomergeDecoder`, these values are converted into the type `Date`.
-Be aware that Swift's Date implementation represents timestamps as `Double`, so there is some less of value (sub-second) when writing into Automerge and reading a value back out. 
-Be aware that Date values may not be exactly equatable because of this difference. 
+### Creating and updating the schema within an Automerge document
+
+When using the low level API directly, you are responsible for creating the nested objects that make up the schema.
+The top-level of an Automerge document, represented by ``ObjId/ROOT`` is an object of type ``ObjType/Map``.
+
+When interacting with a ``ObjType/Map`` object, use ``Document/putObject(obj:key:ty:)`` to nest another object.
+When you want to add a nested object into a ``ObjType/List``, use ``Document/putObject(obj:index:ty:)``.
+The methods which insert an object return an ``ObjId`` of the newly created object, which you use to modify the contents of the new object. 
+
+Automerge supports a special type for collaborative string editing, represented by ``ObjType/Text``.
+Use ``Document/updateText(obj:value:)`` or ``Document/spliceText(obj:start:delete:value:)`` to update the text.
+Automerge text also supports metadata about the text, represented by ``Mark``.
+Use ``Document/mark(obj:start:end:expand:name:value:)`` to set or update marks across ranges of text.
 
 `Counter` is another Automerge-specific primitive type that represents a concurrently updated counter.
 To update a counter directly within an Automerge document, use the ``Document/increment(obj:key:by:)`` or ``Document/increment(obj:index:by:)`` methods. 
 You can explicitly set a counter value, such as an initial value, using ``Document/put(obj:key:value:)`` or ``Document/put(obj:index:value:)``, but using these methods ignores any previously made increments or decrements.
-When serialized by `AutomergeDecoder` or `AutomergeEncoder`, the type ``Counter`` represents a counter value.
 
-When you use the `AutomergeEncoder` or `AutomergeDecoder` these follow the rules and conventions for Swift types.
-For example, an Automerge document with a list of mixed Integers and Strings would not be decodable by `AutomergeDecoder`, although it is a valid Automerge document.
+This package does provide a custom encoder and decoder that lets you establish schema that matches to your own types that conform to Codable.
+You can use these encoders to create the nested object schema in an Automerge document.
+For more information on using your own Codable types with the custom encoder and decoder, see <doc:MappingData>.
 
-> Note: It's important to note that Automerge is a cross platform library, and an Automerge document's internal schema is dynamic.
-Although not supported by Swift arrays, an Automerge array can contain any other kind of Automerge object or primitive within it.
-Likewise dictionaries values can contain any other kind of Automerge object or primitive within it.
-When you merge another Automerge document, apply updates from an Automerge, or sync with another document, those updates can change the types of values anywhere within the Automerge document.
-This can potentially make the document invalid for Swift types you define and retrieve when you use `AutomergeDecoder`.
+### Reading from a document
 
-### Creating, Reading and Writing a document
+The core API requires you to know what kind of object you're reading from and use the relevant API.
+For maps, you'll need the parameter `key`, represented by a `String`.
+In the case of dictionaries, or the parameter `index`, represented by `UInt64`.
+Use ``Document/get(obj:key:)`` to get a value out of a dictionary and ``Document/get(obj:index:)`` to get a value out of an array. 
 
-If you're not using the encoder and decoder, you need to establish container objects yourself, and add and remove values within them.
-The methods are `Document` that support this require that you identify the relevant property for an object.
-This is either the parameter `key`, represented by a `String`, in the case of dictionaries, or the parameter `index`, represented by `UInt64`.
-For example, use ``Document/get(obj:key:)`` to get a value out of a dictionary and ``Document/get(obj:index:)`` to get a value out of an array. 
-
-Methods that insert an object into the document are separate to those which insert primitive values. For example, ``Document/put(obj:key:value:)`` puts a value into a dictionary, while ``Document/putObject(obj:key:ty:)`` puts an object of the type you specify into the dictionary.
-The methods which insert an object return an ``ObjId`` of the newly created object, which you use to modify the contents of the new object. 
 See the documentation for ``Document`` for more detail on the individual methods.
 
-### Saving and loading Documents
+### Reading maps
 
-An Automerge document can be saved using ``Document/save()``. 
-This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``.
+- ``Automerge/Document/get(obj:key:)``
+- ``Automerge/Document/getAll(obj:key:)``
+- ``Automerge/Document/keys(obj:)``
+- ``Automerge/Document/mapEntries(obj:)``
+- ``Automerge/Document/length(obj:)``
 
-Automerge is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.
+### Updating maps
+
+- ``Automerge/Document/put(obj:key:value:)``
+- ``Automerge/Document/putObject(obj:key:ty:)``
+- ``Automerge/Document/delete(obj:key:)`` 
+
+### Reading lists
+
+- ``Automerge/Document/get(obj:index:)``
+- ``Automerge/Document/getAll(obj:index:)``
+- ``Automerge/Document/values(obj:)``
+- ``Automerge/Document/length(obj:)``
+
+### Updating lists
+
+- ``Automerge/Document/insert(obj:index:value:)``
+- ``Automerge/Document/insertObject(obj:index:ty:)``
+- ``Automerge/Document/put(obj:index:value:)``
+- ``Automerge/Document/putObject(obj:index:ty:)``
+- ``Automerge/Document/delete(obj:index:)``
+- ``Automerge/Document/splice(obj:start:delete:values:)``
+
+### Reading Text
+
+- ``Automerge/Document/text(obj:)``
+- ``Automerge/Document/length(obj:)``
+- ``Automerge/Document/marks(obj:)``
+
+### Updating Text values
+
+- ``Automerge/Document/spliceText(obj:start:delete:value:)``
+- ``Automerge/Document/updateText(obj:value:)``
+- ``Automerge/Document/mark(obj:start:end:expand:name:value:)``
+
+### Setting and Reading cursors
+
+- ``Automerge/Document/cursor(obj:position:)``
+- ``Automerge/Document/cursorAt(obj:position:heads:)``
+- ``Automerge/Document/cursorPosition(obj:cursor:)``
+- ``Automerge/Document/cursorPositionAt(obj:cursor:heads:)``
+
+### Updating counters
+
+- ``Automerge/Document/increment(obj:key:by:)``
+- ``Automerge/Document/increment(obj:index:by:)``
