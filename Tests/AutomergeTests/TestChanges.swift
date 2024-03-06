@@ -29,6 +29,6 @@ class ChangeSetTests: XCTestCase {
         // verify no-op
         let data = doc.save()
         XCTAssertEqual(bytes, data)
-        print(data.hexEncodedString())
+        // print(data.hexEncodedString())
     }
 }
