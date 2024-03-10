@@ -4,7 +4,7 @@ import Foundation
 import PackageDescription
 
 var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
-#if swift(>=5.7)
+#if swift(>=5.9)
 // Only enable these additional checker settings if the environment variable
 // `LOCAL_BUILD` is set. Previous value of `CI` was a poor choice because iOS
 // apps in GitHub Actions would trigger this as unsafe flags and fail builds
