@@ -1,16 +1,15 @@
 # Saving, loading, and sharing Automerge documents as Data
 
-Define the automerge uniform type identifier in your app to share Automerge documents. 
+Define the Automerge uniform type identifier in your app to share Automerge documents. 
 
 ## Overview
 
 This library defines the Uniform Type Identifier ``Automerge/UniformTypeIdentifiers/UTType/automerge``  for the bytes that make up an Automerge document.
-This type is used in the ``Automerge/Document/transferRepresentation`` property of an Automerge document, which conforms to the [Transferable protocol](https://developer.apple.com/documentation/coretransferable/transferable).
-You can conform your own data types to this type when sharing Automerge documents as on disk representations.
+This type is used in the ``Automerge/Document/transferRepresentation`` property of an Automerge document, to conform Automerge documents to the [Transferable protocol](https://developer.apple.com/documentation/coretransferable/transferable).
 
 ### Defining a type for your file format
 
-The identifier for the `automerge` type is `com.github.automerge`, and the provided type in this library conforms to the type `public.data`.
+The identifier for the `automerge` type is `com.github.automerge`, and the provided type conforms to the type `public.data`.
 When defining a type for your app, as described in [Defining file and data types for your app](https://developer.apple.com/documentation/uniformtypeidentifiers/defining_file_and_data_types_for_your_app), you may conform your own app's type to ``Automerge/UniformTypeIdentifiers/UTType/automerge`` if you are using the bytes from ``Automerge/Document/save()`` as the on-disk representation.
 If your file format wraps those bytes, then provide your own type definition that does not conform to the `automerge` type.
 
@@ -48,8 +47,9 @@ If you are editing the `Info.plist` file directly, the following stanza reflects
 
 ### Saving and loading Documents
 
-An Automerge document can be saved using ``Document/save()``. 
-This will produce a compressed encoding of the document which is extremely efficient and which can be loaded using ``Document/init(_:logLevel:)``.
+Use ``Document/save()`` to generate `Data` that represents a compacted version of the Automerge document.
+Calling `save` collapses concurrent changes applied since the last save, or when the document was loaded.
+The compressed encoding of the document which is efficient and can be used to initialize an Automerge document with ``Document/init(_:logLevel:)``.
 
-Automerge is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.
+The Automerge core library is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.
 

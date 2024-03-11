@@ -15,6 +15,6 @@ Automerge Utilities extends Automerge's `Document` type to make it easier to par
 - ``Automerge/Document/schema()``
 - ``AutomergeUtilities/AutomergeValue``
 
-### Debugging Automerge Documents
+### Debugging Methods
 
 - ``Automerge/Document/walk()``

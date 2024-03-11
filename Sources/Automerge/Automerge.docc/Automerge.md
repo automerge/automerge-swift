@@ -22,16 +22,19 @@ The core is packaged as a static library within an XCFramework for use on Apple 
 
 ### API Layers
 
-- The lowest layer lets you interact with the Automerge document, its history, and the dynamic data schema stored within a document.
+- The lowest layer lets you interact with the cross platform Automerge document API.
 For more information on the core API layer, read <doc:ModelingData> and <doc:ChangesAndHistory>, and the methods exposed on ``Automerge/Document``.
 
 - At a higher layer, this package provides a custom encoder and decoder that you can use to map Codable data types into the dynamic Automerge schema.
 For more information on the Codable layer, read <doc:MappingData> 
 
-- This package provides Transferrable conformation for Automerge documents and defines Uniform Type Identifiers that you can use in your app to load, save, or share Automerge documents. 
+### Additional Utilities
+
+The Automerge-swift package conforms an Automerge document to the [`Transferrable`](https://developer.apple.com/documentation/coretransferable/transferable) protocol.
+To aid in sharing Automerge documents as a base type, it also defines a Uniform Type Identifier that you can use in your app to load, save, or share Automerge documents.
 Read <doc:AutomergeDataType> for more information on the data types and saving an Automerge document directly.
 
-- A separate module, `AutomergeUtilities`, provides additional utility methods to assist with debugging your app when using Automerge, and convenience methods to walk and parse an Automerge document's internal schema.
+`AutomergeUtilities`, a separate module provided by the Automerge-swift package, provides additional methods to assist with debugging your app, and methods to walk and parse the Automerge document schema.
 
 Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or [Meeting Notes, a Document-based SwiftUI app using Automerge](https://automerge.org/MeetingNotes/documentation/meetingnotes/appwalkthrough/) for a walk-through that illustrates how to use Automerge within a demonstration app.
 
