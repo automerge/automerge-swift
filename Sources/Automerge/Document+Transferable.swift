@@ -12,7 +12,7 @@ public extension UTType {
     /// The string identifier is `com.github.automerge` and conforms to the type `UTType.data`.
     ///
     /// If your app shares data with this type, include the type definition in your app's `Info.plist` file as an
-    /// imported type, as described in <doc:AutomergeType>.
+    /// imported type, as described in <doc:AutomergeDataType>.
     static var automerge: UTType {
         UTType(importedAs: "com.github.automerge", conformingTo: UTType.data)
     }
@@ -30,7 +30,7 @@ extension Document: Transferable {
     /// The type associated with this representation is ``Automerge/UniformTypeIdentifiers/UTType/automerge``.
     ///
     /// If your app shares data with this type, include the type definition in your app's Info.plist for an imported or
-    /// exported type, as described in <doc:AutomergeType>.
+    /// exported type, as described in <doc:AutomergeDataType>.
     ///
     /// For more information on transfer representations, see [Core
     /// Transferable](https://developer.apple.com/documentation/coretransferable).

@@ -1,6 +1,6 @@
 # Synchronizing Automerge Documents
 
-Conveniently synchronize any two documents.
+Synchronize any Automerge documents to seamlessly share and merge changes.
 
 ## Overview
 

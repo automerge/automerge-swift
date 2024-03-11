@@ -11,8 +11,9 @@ _Unlike_ a git repository, an Automerge document can have multiple heads for a g
 ### Heads and change hashes
 
 From time to time you may want to refer to a particular point in the document history. 
-For example, you may want to read values as at that point in time, or get the changes since that time.
-Use ``Document/heads()`` to obtain the current heads of the document, which returns a set of ``ChangeHash``. 
+For example, you may want to read values at a past point in time, or get the changes since that time.
+Use ``Document/heads()`` to obtain the current heads of the document, which returns a set of ``ChangeHash``.
+The set of `ChangeHash` that Automerge returns represent a discrete point in time for an Automerge document.
 `Document` includes families of methods that accept `[ChangeHash]` to retrieve values or objects from that point in time.
 
 Unlike git, Automerge does not track additional metadata about the changes over time, such as who contributed any change, or at what time the change was initially created. 
