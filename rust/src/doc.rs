@@ -500,6 +500,14 @@ impl Doc {
         doc.save()
     }
 
+    pub fn save_with_options(&self, message: String, time: i64) -> Vec<u8> {
+        let mut doc = self.0.write().unwrap();
+        doc.commit_with(automerge::transaction::CommitOptions::default()
+            .with_message(message)
+            .with_time(time));
+        doc.save()
+    }
+
     pub fn load(bytes: Vec<u8>) -> Result<Self, LoadError> {
         let ac = automerge::AutoCommit::load(bytes.as_slice())?;
         Ok(Doc(RwLock::new(ac)))

@@ -223,6 +223,7 @@ interface Doc {
     sequence<ChangeHash> changes();
 
     sequence<u8> save();
+    sequence<u8> save_with_options(string msg, i64 time);
 
     [Throws=DocError]
     void merge(Doc other);

@@ -158,6 +158,8 @@ RustBuffer uniffi_uniffi_automerge_fn_method_doc_receive_sync_message_with_patch
 );
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_save(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_save_with_options(void*_Nonnull ptr, RustBuffer msg, int64_t time, RustCallStatus *_Nonnull out_status
+);
 void uniffi_uniffi_automerge_fn_method_doc_set_actor(void*_Nonnull ptr, RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
 void uniffi_uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer values, RustCallStatus *_Nonnull out_status
@@ -450,6 +452,9 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_receive_sync_message_with_p
 );
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_save(void
     
+);
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_save_with_options(void
+
 );
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_set_actor(void
     

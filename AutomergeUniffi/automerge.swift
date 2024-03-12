@@ -506,6 +506,8 @@ public protocol DocProtocol: AnyObject {
 
     func save() -> [UInt8]
 
+    func saveWithOptions(msg: String, time: Int64)  -> [UInt8]
+
     func setActor(actor: ActorId)
 
     func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws
@@ -521,6 +523,7 @@ public protocol DocProtocol: AnyObject {
     func values(obj: ObjId) throws -> [Value]
 
     func valuesAt(obj: ObjId, heads: [ChangeHash]) throws -> [Value]
+
 }
 
 public class Doc:
@@ -564,6 +567,7 @@ public class Doc:
             )
         })
     }
+
 
     public func actorId() -> ActorId {
         try! FfiConverterTypeActorId.lift(
@@ -1227,6 +1231,19 @@ public class Doc:
                     uniffi_uniffi_automerge_fn_method_doc_save(
                         self.uniffiClonePointer(),
                         $0
+                    )
+                }
+        )
+    }
+
+    public func saveWithOptions(msg: String, time: Int64)  -> [UInt8] {
+        try! FfiConverterSequenceUInt8.lift(
+            try!
+                rustCall {
+                    uniffi_uniffi_automerge_fn_method_doc_save_with_options(
+                        self.uniffiClonePointer(),
+                        FfiConverterString.lower(msg),
+                        FfiConverterInt64.lower(time),$0
                     )
                 }
         )
@@ -2968,6 +2985,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_save() != 20308 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_method_doc_save_with_options() != 11279 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_set_actor() != 64337 {
