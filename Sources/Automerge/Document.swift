@@ -783,6 +783,24 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Encode the Automerge document in a compressed binary format.
+    ///
+    /// - Parameters:
+    ///   - message: A message to attach to the auto-committed change (if any).
+    ///   - timestamp: The timestamp to attach to the auto-committed change (if any).
+    /// - Returns: The data that represents all the changes within this document.
+    ///
+    /// The `saveWithOptions` function also compacts the memory footprint of an Automerge document and increments the
+    /// result of ``heads()``, which indicates a specific point in time for the history of the document.
+    public func saveWithOptions(message: String, timestamp: Date) -> Data {
+        sync {
+            self.doc.wrapErrors {
+                sendObjectWillChange()
+                return Data($0.saveWithOptions(msg: message, time: Int64(timestamp.timeIntervalSince1970)))
+            }
+        }
+    }
+
     /// Update the sync state you provide and return a sync message to send to a peer.
     ///
     /// - Parameter state: The instance of ``SyncState`` that represents the peer you're syncing with.
@@ -919,6 +937,18 @@ public final class Document: @unchecked Sendable {
     public func getHistory() -> [ChangeHash] {
         sync {
             self.doc.wrapErrors { $0.changes().map { ChangeHash(bytes: $0) } }
+        }
+    }
+
+    /// Returns an list of changes that represent the causal sequence of changes to the document.
+    ///
+    /// - Returns: A``Change`` object for the given hash.
+    public func change(hash: ChangeHash) -> Change? {
+        sync {
+            guard let change = self.doc.wrapErrors(f: { $0.changeByHash(hash: hash.bytes) }) else {
+                return nil
+            }
+            return .init(change)
         }
     }
 

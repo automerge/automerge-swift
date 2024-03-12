@@ -36,6 +36,7 @@ pub enum DecodeChangeError {
     Internal(#[from] am::LoadChangeError),
 }
 
+#[allow(dead_code)]
 pub fn decode_change(bytes: Vec<u8>) -> Result<Change, DecodeChangeError> {
     am::Change::try_from(bytes.as_slice())
         .map(Change::from)

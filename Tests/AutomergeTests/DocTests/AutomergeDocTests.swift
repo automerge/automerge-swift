@@ -239,4 +239,34 @@ final class AutomergeDocTests: XCTestCase {
         let text = try doc.text(obj: textId)
         XCTAssertEqual(text, "🇬🇧😀")
     }
+
+    func testSaveWithOptions() throws {
+        struct ColorList: Codable {
+            var colors: [String]
+        }
+
+        // Create the document
+        let doc = Document()
+        let encoder = AutomergeEncoder(doc: doc)
+
+        // Make an initial change
+        var myColors = ColorList(colors: ["blue", "red"])
+        try encoder.encode(myColors)
+        _ = doc.saveWithOptions(message: "Change 1", timestamp: Date(timeIntervalSince1970: 10))
+
+        // Make another change
+        myColors.colors.append("green")
+        try encoder.encode(myColors)
+        _ = doc.saveWithOptions(message: "Change 2", timestamp: Date(timeIntervalSince1970: 20))
+
+        let history = doc.getHistory()
+        XCTAssertEqual(history.count, 2)
+
+        let changes = history.map({ doc.change(hash: $0) })
+        XCTAssertEqual(changes.count, 2)
+        XCTAssertEqual(changes[0]?.message, "Change 1")
+        XCTAssertEqual(changes[0]?.timestamp, Date(timeIntervalSince1970: 10))
+        XCTAssertEqual(changes[1]?.message, "Change 2")
+        XCTAssertEqual(changes[1]?.timestamp, Date(timeIntervalSince1970: 20))
+    }
 }

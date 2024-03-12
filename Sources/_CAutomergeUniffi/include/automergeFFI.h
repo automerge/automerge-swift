@@ -68,6 +68,8 @@ void uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes(void*_Nonnull p
 );
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_change_by_hash(void*_Nonnull ptr, RustBuffer hash, RustCallStatus *_Nonnull out_status
+);
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
@@ -318,6 +320,9 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes(void
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches(void
     
 );
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_change_by_hash(void
+    
+);
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_changes(void
     
 );
@@ -454,7 +459,7 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_save(void
     
 );
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_save_with_options(void
-
+    
 );
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_set_actor(void
     
