@@ -420,6 +420,8 @@ public protocol DocProtocol: AnyObject {
 
     func changeByHash(hash: ChangeHash) -> Change?
 
+    func commitWith(msg: String?, time: Int64)
+
     func cursor(obj: ObjId, position: UInt64) throws -> Cursor
 
     func cursorAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor
@@ -507,8 +509,6 @@ public protocol DocProtocol: AnyObject {
     func receiveSyncMessageWithPatches(state: SyncState, msg: [UInt8]) throws -> [Patch]
 
     func save() -> [UInt8]
-
-    func saveWithOptions(msg: String, time: Int64) -> [UInt8]
 
     func setActor(actor: ActorId)
 
@@ -1238,6 +1238,18 @@ public class Doc:
             }
         )
     }
+    public func commitWith(msg: String?, time: Int64) {
+        try!
+            rustCall {
+                uniffi_uniffi_automerge_fn_method_doc_commit_with(
+                    self.uniffiClonePointer(),
+
+                    FfiConverterOptionString.lower(msg),
+                    FfiConverterInt64.lower(time),
+                    $0
+                )
+        }
+    }
 
     public func save() -> [UInt8] {
         try! FfiConverterSequenceUInt8.lift(
@@ -1246,19 +1258,6 @@ public class Doc:
                     uniffi_uniffi_automerge_fn_method_doc_save(
                         self.uniffiClonePointer(),
                         $0
-                    )
-                }
-        )
-    }
-
-    public func saveWithOptions(msg: String, time: Int64) -> [UInt8] {
-        try! FfiConverterSequenceUInt8.lift(
-            try!
-                rustCall {
-                    uniffi_uniffi_automerge_fn_method_doc_save_with_options(
-                        self.uniffiClonePointer(),
-                        FfiConverterString.lower(msg),
-                        FfiConverterInt64.lower(time),$0
                     )
                 }
         )
@@ -3005,6 +3004,9 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_automerge_checksum_method_doc_changes() != 1878 {
         return InitializationResult.apiChecksumMismatch
     }
+    if uniffi_uniffi_automerge_checksum_method_doc_commit_with() != 65319 {
+        return InitializationResult.apiChecksumMismatch
+    }
     if uniffi_uniffi_automerge_checksum_method_doc_cursor() != 18441 {
         return InitializationResult.apiChecksumMismatch
     }
@@ -3135,9 +3137,6 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_save() != 20308 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_automerge_checksum_method_doc_save_with_options() != 11279 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_set_actor() != 64337 {

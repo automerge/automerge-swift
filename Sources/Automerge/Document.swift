@@ -768,6 +768,23 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Commit the auto-generated transaction with options.
+    ///
+    /// - Parameters:
+    ///   - message: An optional message to attach to the auto-committed change (if any).
+    ///   - timestamp: An optional timestamp to attach to the auto-committed change (if any).
+    ///
+    /// The `commitWith` function also compacts the memory footprint of an Automerge document and increments the
+    /// result of ``heads()``, which indicates a specific point in time for the history of the document.
+    public func commitWith(message: String? = nil, timestamp: Date = Date()) {
+        sync {
+            self.doc.wrapErrors {
+                sendObjectWillChange()
+                $0.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
+            }
+        }
+    }
+
     /// Encode the Automerge document in a compressed binary format.
     ///
     /// - Returns: The data that represents all the changes within this document.
@@ -779,24 +796,6 @@ public final class Document: @unchecked Sendable {
             self.doc.wrapErrors {
                 sendObjectWillChange()
                 return Data($0.save())
-            }
-        }
-    }
-
-    /// Encode the Automerge document in a compressed binary format.
-    ///
-    /// - Parameters:
-    ///   - message: A message to attach to the auto-committed change (if any).
-    ///   - timestamp: The timestamp to attach to the auto-committed change (if any).
-    /// - Returns: The data that represents all the changes within this document.
-    ///
-    /// The `saveWithOptions` function also compacts the memory footprint of an Automerge document and increments the
-    /// result of ``heads()``, which indicates a specific point in time for the history of the document.
-    public func saveWithOptions(message: String, timestamp: Date) -> Data {
-        sync {
-            self.doc.wrapErrors {
-                sendObjectWillChange()
-                return Data($0.saveWithOptions(msg: message, time: Int64(timestamp.timeIntervalSince1970)))
             }
         }
     }
@@ -940,9 +939,7 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Returns an list of changes that represent the causal sequence of changes to the document.
-    ///
-    /// - Returns: A``Change`` object for the given hash.
+    /// Returns the contents of the change associated with the change hash you provide.
     public func change(hash: ChangeHash) -> Change? {
         sync {
             guard let change = self.doc.wrapErrors(f: { $0.changeByHash(hash: hash.bytes) }) else {

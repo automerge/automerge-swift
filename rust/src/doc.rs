@@ -495,16 +495,18 @@ impl Doc {
         })
     }
 
-    pub fn save(&self) -> Vec<u8> {
+    pub fn commit_with(&self, message: Option<String>, time: i64) {
         let mut doc = self.0.write().unwrap();
-        doc.save()
+        let mut options = automerge::transaction::CommitOptions::default();
+        options.set_time(time);
+        if let Some(message) = message {
+            options.set_message(message);
+        }
+        doc.commit_with(options);
     }
 
-    pub fn save_with_options(&self, message: String, time: i64) -> Vec<u8> {
+    pub fn save(&self) -> Vec<u8> {
         let mut doc = self.0.write().unwrap();
-        doc.commit_with(automerge::transaction::CommitOptions::default()
-            .with_message(message)
-            .with_time(time));
         doc.save()
     }
 
