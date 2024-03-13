@@ -6,6 +6,10 @@ import AutomergeUniffi
 /// If you create your own `ActorId`, no concurrent changes should ever be made with the same `ActorId`.
 public struct ActorId: Equatable, Hashable, Sendable {
     var bytes: [UInt8]
+
+    public init(bytes: [UInt8]) {
+        self.bytes = bytes
+    }
 }
 
 extension ActorId: CustomStringConvertible {
