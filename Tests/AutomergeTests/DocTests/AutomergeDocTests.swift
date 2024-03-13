@@ -21,6 +21,12 @@ final class AutomergeDocTests: XCTestCase {
         doc = Document()
     }
 
+    func testActor() throws {
+        let doc = Document()
+        doc.actor = ActorId(bytes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        XCTAssertEqual(doc.actor.description, "000102030405060708090A0B0C0D0E0F")
+    }
+
     func testNoteEncodeDecode() throws {
         struct Note: Codable, Equatable {
             let created: Date
