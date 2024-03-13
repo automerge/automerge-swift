@@ -7,7 +7,9 @@ use automerge::{transaction::Transactable, ReadDoc};
 use crate::actor_id::ActorId;
 use crate::mark::{ExpandMark, Mark};
 use crate::patches::Patch;
-use crate::{Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value};
+use crate::{
+    Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value
+};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DocError {
