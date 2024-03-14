@@ -772,10 +772,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - message: An optional message to attach to the auto-committed change (if any).
-    ///   - timestamp: An optional timestamp to attach to the auto-committed change (if any).
-    ///
-    /// The `commitWith` function also compacts the memory footprint of an Automerge document and increments the
-    /// result of ``heads()``, which indicates a specific point in time for the history of the document.
+    ///   - timestamp: A timestamp to attach to the auto-committed change (if any), defaulting to Date().
     public func commitWith(message: String? = nil, timestamp: Date = Date()) {
         sync {
             self.doc.wrapErrors {
