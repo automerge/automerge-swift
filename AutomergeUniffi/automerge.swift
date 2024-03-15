@@ -418,6 +418,10 @@ public protocol DocProtocol: AnyObject {
 
     func changes() -> [ChangeHash]
 
+    func changeByHash(hash: ChangeHash) -> Change?
+
+    func commitWith(msg: String?, time: Int64)
+
     func cursor(obj: ObjId, position: UInt64) throws -> Cursor
 
     func cursorAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor
@@ -521,6 +525,7 @@ public protocol DocProtocol: AnyObject {
     func values(obj: ObjId) throws -> [Value]
 
     func valuesAt(obj: ObjId, heads: [ChangeHash]) throws -> [Value]
+
 }
 
 public class Doc:
@@ -608,6 +613,20 @@ public class Doc:
                 rustCall {
                     uniffi_uniffi_automerge_fn_method_doc_changes(
                         self.uniffiClonePointer(),
+                        $0
+                    )
+                }
+        )
+    }
+
+    public func changeByHash(hash: ChangeHash) -> Change? {
+        try! FfiConverterOptionTypeChange.lift(
+            try!
+                rustCall {
+                    uniffi_uniffi_automerge_fn_method_doc_change_by_hash(
+                        self.uniffiClonePointer(),
+
+                        FfiConverterTypeChangeHash.lower(hash),
                         $0
                     )
                 }
@@ -1219,6 +1238,18 @@ public class Doc:
             }
         )
     }
+    public func commitWith(msg: String?, time: Int64) {
+        try!
+            rustCall {
+                uniffi_uniffi_automerge_fn_method_doc_commit_with(
+                    self.uniffiClonePointer(),
+
+                    FfiConverterOptionString.lower(msg),
+                    FfiConverterInt64.lower(time),
+                    $0
+                )
+        }
+    }
 
     public func save() -> [UInt8] {
         try! FfiConverterSequenceUInt8.lift(
@@ -1493,6 +1524,96 @@ public func FfiConverterTypeSyncState_lift(_ pointer: UnsafeMutableRawPointer) t
 
 public func FfiConverterTypeSyncState_lower(_ value: SyncState) -> UnsafeMutableRawPointer {
     FfiConverterTypeSyncState.lower(value)
+}
+
+public struct Change {
+    public var actorId: ActorId
+    public var message: String?
+    public var deps: [ChangeHash]
+    public var timestamp: Int64
+    public var bytes: [UInt8]
+    public var hash: ChangeHash
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(
+        actorId: ActorId,
+        message: String?,
+        deps: [ChangeHash],
+        timestamp: Int64,
+        bytes: [UInt8],
+        hash: ChangeHash
+    ) {
+        self.actorId = actorId
+        self.message = message
+        self.deps = deps
+        self.timestamp = timestamp
+        self.bytes = bytes
+        self.hash = hash
+    }
+}
+
+extension Change: Equatable, Hashable {
+    public static func == (lhs: Change, rhs: Change) -> Bool {
+        if lhs.actorId != rhs.actorId {
+            return false
+        }
+        if lhs.message != rhs.message {
+            return false
+        }
+        if lhs.deps != rhs.deps {
+            return false
+        }
+        if lhs.timestamp != rhs.timestamp {
+            return false
+        }
+        if lhs.bytes != rhs.bytes {
+            return false
+        }
+        if lhs.hash != rhs.hash {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(actorId)
+        hasher.combine(message)
+        hasher.combine(deps)
+        hasher.combine(timestamp)
+        hasher.combine(bytes)
+        hasher.combine(hash)
+    }
+}
+
+public struct FfiConverterTypeChange: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Change {
+        try Change(
+            actorId: FfiConverterTypeActorId.read(from: &buf),
+            message: FfiConverterOptionString.read(from: &buf),
+            deps: FfiConverterSequenceTypeChangeHash.read(from: &buf),
+            timestamp: FfiConverterInt64.read(from: &buf),
+            bytes: FfiConverterSequenceUInt8.read(from: &buf),
+            hash: FfiConverterTypeChangeHash.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: Change, into buf: inout [UInt8]) {
+        FfiConverterTypeActorId.write(value.actorId, into: &buf)
+        FfiConverterOptionString.write(value.message, into: &buf)
+        FfiConverterSequenceTypeChangeHash.write(value.deps, into: &buf)
+        FfiConverterInt64.write(value.timestamp, into: &buf)
+        FfiConverterSequenceUInt8.write(value.bytes, into: &buf)
+        FfiConverterTypeChangeHash.write(value.hash, into: &buf)
+    }
+}
+
+public func FfiConverterTypeChange_lift(_ buf: RustBuffer) throws -> Change {
+    try FfiConverterTypeChange.lift(buf)
+}
+
+public func FfiConverterTypeChange_lower(_ value: Change) -> RustBuffer {
+    FfiConverterTypeChange.lower(value)
 }
 
 public struct KeyValue {
@@ -2391,6 +2512,48 @@ public func FfiConverterTypeValue_lower(_ value: Value) -> RustBuffer {
 
 extension Value: Equatable, Hashable {}
 
+private struct FfiConverterOptionString: FfiConverterRustBuffer {
+    typealias SwiftType = String?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterString.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterString.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
+
+private struct FfiConverterOptionTypeChange: FfiConverterRustBuffer {
+    typealias SwiftType = Change?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterTypeChange.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterTypeChange.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
+
 private struct FfiConverterOptionTypeValue: FfiConverterRustBuffer {
     typealias SwiftType = Value?
 
@@ -2835,7 +2998,13 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches() != 63928 {
         return InitializationResult.apiChecksumMismatch
     }
+    if uniffi_uniffi_automerge_checksum_method_doc_change_by_hash() != 44577 {
+        return InitializationResult.apiChecksumMismatch
+    }
     if uniffi_uniffi_automerge_checksum_method_doc_changes() != 1878 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_method_doc_commit_with() != 65319 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_cursor() != 18441 {

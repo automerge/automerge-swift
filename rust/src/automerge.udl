@@ -103,6 +103,15 @@ dictionary PathElement {
     ObjId obj;
 };
 
+dictionary Change {
+    ActorId actor_id;
+    string? message;
+    sequence<ChangeHash> deps;
+    i64 timestamp;
+    sequence<u8> bytes;
+    ChangeHash hash;
+};
+
 dictionary Patch {
     sequence<PathElement> path;
     PatchAction action;
@@ -221,6 +230,10 @@ interface Doc {
     sequence<ChangeHash> heads();
 
     sequence<ChangeHash> changes();
+
+    Change? change_by_hash(ChangeHash hash);
+
+    void commit_with(string? msg, i64 time);
 
     sequence<u8> save();
 

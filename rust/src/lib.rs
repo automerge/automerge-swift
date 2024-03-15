@@ -4,6 +4,8 @@ mod actor_id;
 use actor_id::ActorId;
 mod cursor;
 use cursor::Cursor;
+mod change;
+use change::Change;
 mod change_hash;
 use change_hash::ChangeHash;
 mod doc;
