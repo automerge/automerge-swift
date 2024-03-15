@@ -113,6 +113,7 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity",
@@ -311,6 +312,20 @@
   "title" : "LogVerbosity",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/logverbosity"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/MappingData": {
+  "abstract" : [
+    {
+      "text" : "Conveniently read or write Codable types in Automerge documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Storing and loading your types in Automerge documents",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/mappingdata"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/SchemaStrategy": {
   "abstract" : [

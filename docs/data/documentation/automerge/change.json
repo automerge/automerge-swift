@@ -1,0 +1,739 @@
+{
+  "abstract" : [
+    {
+      "text" : "A type that encapsulates a change, and any associated metadata, to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge6ChangeV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Change"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Change"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "Change"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Change"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/SQ"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Patch",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Prop",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
+      ],
+      "title" : "Inspecting Document History and Changes"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/hash",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/actorId",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/deps",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/bytes",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash\/debugDescription"
+      ],
+      "title" : "Inspecting a Change"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/message",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/timestamp"
+      ],
+      "title" : "Inspecting Change Metadata"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/change"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/SQ": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId": {
+  "abstract" : [
+    {
+      "text" : "The identifier for collaborators contributing to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ActorId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ActorId"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ActorId",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change": {
+  "abstract" : [
+    {
+      "text" : "A type that encapsulates a change, and any associated metadata, to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Change",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/equatable-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/actorId": {
+  "abstract" : [
+    {
+      "text" : "The identity of the actor that made the change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "actorId"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge7ActorIdV",
+      "text" : "ActorId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/actorId",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "actorId",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/bytes": {
+  "abstract" : [
+    {
+      "text" : "The encoded bytes of the change operation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bytes"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DataV",
+      "text" : "Data"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/bytes",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bytes",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/bytes"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/deps": {
+  "abstract" : [
+    {
+      "text" : "The list of changes that this change depends upon.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "deps"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/deps",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "deps",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/deps"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/hash": {
+  "abstract" : [
+    {
+      "text" : "The identity of the change, its hash.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "hash"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/hash",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "hash",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/hash"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/message": {
+  "abstract" : [
+    {
+      "text" : "An optional message associated with the change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "message"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/message",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "message",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/message"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change/timestamp": {
+  "abstract" : [
+    {
+      "text" : "The timestamp of the change.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "timestamp"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/timestamp",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "timestamp",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change\/timestamp"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash": {
+  "abstract" : [
+    {
+      "text" : "An opaque hash that represents a change within an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ChangeHash"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ChangeHash"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ChangeHash",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/changehash"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash/debugDescription": {
+  "abstract" : [
+    {
+      "text" : "The hex value of the change hash.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "debugDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash\/debugDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "debugDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/changehash\/debugdescription"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangesAndHistory": {
+  "abstract" : [
+    {
+      "text" : "Track, inspect, and synchronize the changes within Automerge documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Tracking Changes and History",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/changesandhistory"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/DeleteSeq": {
+  "abstract" : [
+    {
+      "text" : "A sequence of deletions.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "DeleteSeq"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "DeleteSeq"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "DeleteSeq",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/deleteseq"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Patch": {
+  "abstract" : [
+    {
+      "text" : "A collection of updates applied to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Patch"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Patch",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Patch"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Patch",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/patch"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/PatchAction": {
+  "abstract" : [
+    {
+      "text" : "The type of change the library applied to an Automerge document, along with the data that changed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PatchAction"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PatchAction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PatchAction",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/patchaction"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/PathElement": {
+  "abstract" : [
+    {
+      "text" : "A component of the path to an object within a document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PathElement"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PathElement"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PathElement",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/pathelement"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Prop": {
+  "abstract" : [
+    {
+      "text" : "A type that represents a property on an object within an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Prop"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Prop",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Prop"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Prop",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/prop"
+}
+}
+}

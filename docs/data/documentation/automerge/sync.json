@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Conveniently synchronize any two documents.",
+      "text" : "Synchronize any Automerge documents to seamlessly share and merge changes.",
       "type" : "text"
     }
   ],

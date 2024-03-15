@@ -104,6 +104,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Patch",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement",
@@ -111,7 +112,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
       ],
-      "title" : "Inspecting Documents as Changes"
+      "title" : "Inspecting Document History and Changes"
     }
   ],
   "topicSections" : [
@@ -200,6 +201,40 @@
   "title" : "ActorId",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change": {
+  "abstract" : [
+    {
+      "text" : "A type that encapsulates a change, and any associated metadata, to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Change",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash": {
   "abstract" : [

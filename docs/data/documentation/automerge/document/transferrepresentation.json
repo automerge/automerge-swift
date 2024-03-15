@@ -212,7 +212,7 @@
               "type" : "text"
             },
             {
-              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType",
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType",
               "isActive" : true,
               "type" : "reference"
             },
@@ -281,19 +281,19 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeType": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDataType": {
   "abstract" : [
     {
-      "text" : "Define the automerge uniform type identifier in your app to share Automerge documents.",
+      "text" : "Define the Automerge uniform type identifier in your app to share Automerge documents.",
       "type" : "text"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType",
   "kind" : "article",
   "role" : "article",
-  "title" : "Importing the Automerge Type in your app",
+  "title" : "Saving, loading, and sharing Automerge documents as Data",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/automergetype"
+  "url" : "\/documentation\/automerge\/automergedatatype"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document": {
   "abstract" : [

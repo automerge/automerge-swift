@@ -527,7 +527,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType"
       ],
       "title" : "Essentials"
     }
@@ -547,6 +547,20 @@
   "title" : "Automerge",
   "type" : "topic",
   "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDataType": {
+  "abstract" : [
+    {
+      "text" : "Define the Automerge uniform type identifier in your app to share Automerge documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Saving, loading, and sharing Automerge documents as Data",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergedatatype"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDecoder": {
   "abstract" : [
@@ -615,20 +629,6 @@
   "title" : "AutomergeEncoder",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergeencoder"
-},
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeType": {
-  "abstract" : [
-    {
-      "text" : "Define the automerge uniform type identifier in your app to share Automerge documents.",
-      "type" : "text"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType",
-  "kind" : "article",
-  "role" : "article",
-  "title" : "Importing the Automerge Type in your app",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/automergetype"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangesAndHistory": {
   "abstract" : [
@@ -862,14 +862,14 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ModelingData": {
   "abstract" : [
     {
-      "text" : "Store, read, share, and synchronize complex data in an Automerge document.",
+      "text" : "Store into, and read from, an Automerge document.",
       "type" : "text"
     }
   ],
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
   "kind" : "article",
   "role" : "article",
-  "title" : "Modeling Data with Automerge",
+  "title" : "Using the dynamic schema and core data model",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/modelingdata"
 },

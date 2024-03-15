@@ -287,7 +287,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getHistory()"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getHistory()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/change(hash:)"
       ],
       "title" : "Reading a document’s history"
     }
@@ -387,6 +388,64 @@
   "title" : "Document",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/change(hash:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the contents of the change associated with the change hash you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "change"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "hash"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge6ChangeV",
+      "text" : "Change"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/change(hash:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "change(hash:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/change(hash:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/getHistory()": {
   "abstract" : [
