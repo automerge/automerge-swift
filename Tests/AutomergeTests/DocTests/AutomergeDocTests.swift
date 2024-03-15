@@ -21,12 +21,6 @@ final class AutomergeDocTests: XCTestCase {
         doc = Document()
     }
 
-    func testActor() throws {
-        let doc = Document()
-        doc.actor = ActorId(bytes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-        XCTAssertEqual(doc.actor.description, "000102030405060708090A0B0C0D0E0F")
-    }
-
     func testNoteEncodeDecode() throws {
         struct Note: Codable, Equatable {
             let created: Date
@@ -298,5 +292,37 @@ final class AutomergeDocTests: XCTestCase {
         XCTAssertEqual(changes[3]!.timestamp.timeIntervalSince1970, change4Time, accuracy: 3)
         XCTAssertNil(changes[4]!.message)
         XCTAssertEqual(changes[4]!.timestamp.timeIntervalSince1970, 0)
+    }
+
+    func testActor() throws {
+        struct Dog: Codable {
+            var name: String
+            var age: Int
+        }
+
+        let actor1 = ActorId(bytes: [0x00, 0x11, 0x22, 0x33])
+        let actor2 = ActorId(bytes: [0x44, 0x55, 0x66, 0x77])
+
+        // Create the document
+        let doc = Document()
+        let encoder = AutomergeEncoder(doc: doc)
+        doc.actor = actor1
+
+        // Make an initial change
+        var myDog = Dog(name: "Fido", age: 1)
+        try encoder.encode(myDog)
+        _ = doc.save()
+
+        // Change the actor and make another change
+        doc.actor = actor2
+        myDog.age = 2
+        try encoder.encode(myDog)
+        _ = doc.save()
+
+        // Verify the changes
+        let changes = doc.getHistory().map { doc.change(hash: $0) }
+        XCTAssertEqual(changes.count, 2)
+        XCTAssertEqual(changes[0]!.actorId, actor1)
+        XCTAssertEqual(changes[1]!.actorId, actor2)
     }
 }
