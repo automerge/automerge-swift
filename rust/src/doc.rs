@@ -8,7 +8,7 @@ use crate::actor_id::ActorId;
 use crate::mark::{ExpandMark, Mark};
 use crate::patches::Patch;
 use crate::{
-    Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value
+    Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
 };
 
 #[derive(Debug, thiserror::Error)]
