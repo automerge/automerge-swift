@@ -427,6 +427,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automerge\/document\/change(hash:)",
+                "title" : "func change(hash: ChangeHash) -> Change?",
+                "type" : "method"
+              },
+              {
                 "title" : "Reading historical map values",
                 "type" : "groupMarker"
               },
@@ -510,6 +515,11 @@
               {
                 "path" : "\/documentation\/automerge\/document\/save()",
                 "title" : "func save() -> Data",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/commitwith(message:timestamp:)",
+                "title" : "func commitWith(message: String?, timestamp: Date)",
                 "type" : "method"
               },
               {
@@ -636,13 +646,18 @@
             "type" : "article"
           },
           {
-            "path" : "\/documentation\/automerge\/automergetype",
-            "title" : "Importing the Automerge Type in your app",
+            "path" : "\/documentation\/automerge\/automergedatatype",
+            "title" : "Saving, loading, and sharing Automerge documents as Data",
             "type" : "article"
           },
           {
             "title" : "Reading and Writing Codable Types",
             "type" : "groupMarker"
+          },
+          {
+            "path" : "\/documentation\/automerge\/mappingdata",
+            "title" : "Storing and loading your types in Automerge documents",
+            "type" : "article"
           },
           {
             "children" : [
@@ -1271,6 +1286,288 @@
             "type" : "struct"
           },
           {
+            "title" : "Representing Objects and Values in a Document",
+            "type" : "groupMarker"
+          },
+          {
+            "path" : "\/documentation\/automerge\/modelingdata",
+            "title" : "Using the dynamic schema and core data model",
+            "type" : "article"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Types of Automerge objects",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/objtype\/list",
+                "title" : "case List",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/objtype\/map",
+                "title" : "case Map",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/objtype\/text",
+                "title" : "case Text",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/objtype\/debugdescription",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/objtype\/customdebugstringconvertible-implementations",
+                "title" : "CustomDebugStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/objtype\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/objtype\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/objtype",
+            "title" : "ObjType",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Built-in Object Ids",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/objid\/root",
+                "title" : "static let ROOT: ObjId",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/objid\/debugdescription",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/objid\/customdebugstringconvertible-implementations",
+                "title" : "CustomDebugStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/objid\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/objid\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/objid",
+            "title" : "ObjId",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Automerge Values",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/value\/object(_:_:)",
+                "title" : "case Object(ObjId, ObjType)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/value\/scalar(_:)",
+                "title" : "case Scalar(ScalarValue)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/value\/debugdescription",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/value\/customdebugstringconvertible-implementations",
+                "title" : "CustomDebugStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/value\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/value\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/value",
+            "title" : "Value",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Automerge Primitives",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/null",
+                "title" : "case Null",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/boolean(_:)",
+                "title" : "case Boolean(Bool)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/uint(_:)",
+                "title" : "case Uint(UInt64)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/int(_:)",
+                "title" : "case Int(Int64)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/f64(_:)",
+                "title" : "case F64(Double)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/string(_:)",
+                "title" : "case String(String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/bytes(_:)",
+                "title" : "case Bytes(Data)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/timestamp(_:)",
+                "title" : "case Timestamp(Int64)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/counter(_:)",
+                "title" : "case Counter(Int64)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/scalarvalue\/unknown(typecode:data:)",
+                "title" : "case Unknown(typeCode: UInt8, data: Data)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalue\/description",
+                    "title" : "var description: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/scalarvalue\/customstringconvertible-implementations",
+                "title" : "CustomStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalue\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/scalarvalue\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/scalarvalue",
+            "title" : "ScalarValue",
+            "type" : "enum"
+          },
+          {
+            "path" : "\/documentation\/automerge\/addressbookexample",
+            "title" : "Address Book Example",
+            "type" : "article"
+          },
+          {
             "title" : "Collaborating with Text",
             "type" : "groupMarker"
           },
@@ -1777,289 +2074,7 @@
             "type" : "struct"
           },
           {
-            "title" : "Representing Objects and Values",
-            "type" : "groupMarker"
-          },
-          {
-            "path" : "\/documentation\/automerge\/modelingdata",
-            "title" : "Modeling Data with Automerge",
-            "type" : "article"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Types of Automerge objects",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/objtype\/list",
-                "title" : "case List",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/objtype\/map",
-                "title" : "case Map",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/objtype\/text",
-                "title" : "case Text",
-                "type" : "case"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/objtype\/debugdescription",
-                    "title" : "var debugDescription: String",
-                    "type" : "property"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/objtype\/customdebugstringconvertible-implementations",
-                "title" : "CustomDebugStringConvertible Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/objtype\/!=(_:_:)",
-                    "title" : "static func != (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/objtype\/equatable-implementations",
-                "title" : "Equatable Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/automerge\/objtype",
-            "title" : "ObjType",
-            "type" : "enum"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Built-in Object Ids",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/objid\/root",
-                "title" : "static let ROOT: ObjId",
-                "type" : "property"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/objid\/debugdescription",
-                    "title" : "var debugDescription: String",
-                    "type" : "property"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/objid\/customdebugstringconvertible-implementations",
-                "title" : "CustomDebugStringConvertible Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/objid\/!=(_:_:)",
-                    "title" : "static func != (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/objid\/equatable-implementations",
-                "title" : "Equatable Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/automerge\/objid",
-            "title" : "ObjId",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Automerge Values",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/value\/object(_:_:)",
-                "title" : "case Object(ObjId, ObjType)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/value\/scalar(_:)",
-                "title" : "case Scalar(ScalarValue)",
-                "type" : "case"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/value\/debugdescription",
-                    "title" : "var debugDescription: String",
-                    "type" : "property"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/value\/customdebugstringconvertible-implementations",
-                "title" : "CustomDebugStringConvertible Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/value\/!=(_:_:)",
-                    "title" : "static func != (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/value\/equatable-implementations",
-                "title" : "Equatable Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/automerge\/value",
-            "title" : "Value",
-            "type" : "enum"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Automerge Primitives",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/null",
-                "title" : "case Null",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/boolean(_:)",
-                "title" : "case Boolean(Bool)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/uint(_:)",
-                "title" : "case Uint(UInt64)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/int(_:)",
-                "title" : "case Int(Int64)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/f64(_:)",
-                "title" : "case F64(Double)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/string(_:)",
-                "title" : "case String(String)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/bytes(_:)",
-                "title" : "case Bytes(Data)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/timestamp(_:)",
-                "title" : "case Timestamp(Int64)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/counter(_:)",
-                "title" : "case Counter(Int64)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvalue\/unknown(typecode:data:)",
-                "title" : "case Unknown(typeCode: UInt8, data: Data)",
-                "type" : "case"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/scalarvalue\/description",
-                    "title" : "var description: String",
-                    "type" : "property"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/scalarvalue\/customstringconvertible-implementations",
-                "title" : "CustomStringConvertible Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/scalarvalue\/!=(_:_:)",
-                    "title" : "static func != (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/scalarvalue\/equatable-implementations",
-                "title" : "Equatable Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/automerge\/scalarvalue",
-            "title" : "ScalarValue",
-            "type" : "enum"
-          },
-          {
-            "path" : "\/documentation\/automerge\/addressbookexample",
-            "title" : "Address Book Example",
-            "type" : "article"
-          },
-          {
-            "title" : "Inspecting Documents as Changes",
+            "title" : "Inspecting Document History and Changes",
             "type" : "groupMarker"
           },
           {
@@ -2101,6 +2116,76 @@
             ],
             "path" : "\/documentation\/automerge\/changehash",
             "title" : "ChangeHash",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Inspecting a Change",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/hash",
+                "title" : "let hash: ChangeHash",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/actorid",
+                "title" : "let actorId: ActorId",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/deps",
+                "title" : "let deps: [ChangeHash]",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/bytes",
+                "title" : "let bytes: Data",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/changehash\/debugdescription",
+                "title" : "var debugDescription: String",
+                "type" : "property"
+              },
+              {
+                "title" : "Inspecting Change Metadata",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/message",
+                "title" : "let message: String?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/change\/timestamp",
+                "title" : "let timestamp: Date",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/change\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/change\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/change",
+            "title" : "Change",
             "type" : "struct"
           },
           {
@@ -4065,8 +4150,18 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/doc\/changebyhash(hash:)",
+                "title" : "func changeByHash(hash: ChangeHash) -> Change?",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/doc\/changes()",
                 "title" : "func changes() -> [ChangeHash]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/commitwith(msg:time:)",
+                "title" : "func commitWith(msg: String?, time: Int64)",
                 "type" : "method"
               },
               {
@@ -4428,8 +4523,18 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/changebyhash(hash:)",
+                "title" : "func changeByHash(hash: ChangeHash) -> Change?",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/changes()",
                 "title" : "func changes() -> [ChangeHash]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/commitwith(msg:time:)",
+                "title" : "func commitWith(msg: String?, time: Int64)",
                 "type" : "method"
               },
               {
@@ -4730,6 +4835,97 @@
           {
             "children" : [
               {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/init(actorid:message:deps:timestamp:bytes:hash:)",
+                "title" : "init(actorId: ActorId, message: String?, deps: [ChangeHash], timestamp: Int64, bytes: [UInt8], hash: ChangeHash)",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/actorid",
+                "title" : "var actorId: ActorId",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/bytes",
+                "title" : "var bytes: [UInt8]",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/deps",
+                "title" : "var deps: [ChangeHash]",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/hash",
+                "title" : "var hash: ChangeHash",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/message",
+                "title" : "var message: String?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/change\/timestamp",
+                "title" : "var timestamp: Int64",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/change\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/change\/==(_:_:)",
+                    "title" : "static func == (Change, Change) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/change\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/change\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/change\/hashable-implementations",
+                "title" : "Hashable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automergeuniffi\/change",
+            "title" : "Change",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
                 "title" : "Type Methods",
                 "type" : "groupMarker"
               },
@@ -4756,6 +4952,27 @@
             ],
             "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid",
             "title" : "FfiConverterTypeActorId",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Change",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange\/write(_:into:)",
+                "title" : "static func write(Change, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange",
+            "title" : "FfiConverterTypeChange",
             "type" : "struct"
           },
           {
@@ -5523,6 +5740,16 @@
           {
             "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash_lower(_:)",
             "title" : "func FfiConverterTypeChangeHash_lower(ChangeHash) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lift(_:)",
+            "title" : "func FfiConverterTypeChange_lift(RustBuffer) throws -> Change",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lower(_:)",
+            "title" : "func FfiConverterTypeChange_lower(Change) -> RustBuffer",
             "type" : "func"
           },
           {

@@ -48,7 +48,9 @@
     },
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Change",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeActorId",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChangeHash",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeCursor",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeDecodeSyncStateError",
@@ -81,6 +83,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeActorId_lower(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChangeHash_lift(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChangeHash_lower(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange_lift(_:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange_lower(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeCursor_lift(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeCursor_lower(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeDoc_lift(_:)",
@@ -204,6 +208,37 @@
   "title" : "ActorId",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Change": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Change",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Change",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/change"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/ChangeHash": {
   "abstract" : [
@@ -569,6 +604,37 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid_lower(_:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/FfiConverterTypeChange": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeChange"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeChange"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "FfiConverterTypeChange",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/fficonvertertypechange"
+},
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/FfiConverterTypeChangeHash": {
   "abstract" : [
 
@@ -693,6 +759,100 @@
   "title" : "FfiConverterTypeChangeHash_lower(_:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash_lower(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/FfiConverterTypeChange_lift(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeChange_lift"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi6ChangeV",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange_lift(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeChange_lift(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lift(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/FfiConverterTypeChange_lower(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FfiConverterTypeChange_lower"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi6ChangeV",
+      "text" : "Change"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@RustBuffer",
+      "text" : "RustBuffer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeChange_lower(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "FfiConverterTypeChange_lower(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lower(_:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/FfiConverterTypeCursor": {
   "abstract" : [

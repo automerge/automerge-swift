@@ -16,9 +16,9 @@
 
     ],
     "severity" : 2,
-    "source" : "AutomergeType.md",
+    "source" : "AutomergeDataType.md",
     "start" : {
-      "column" : 34,
+      "column" : 62,
       "line" : 7
     },
     "summary" : "'UniformTypeIdentifiers' doesn't exist at '\/Automerge'"
@@ -28,10 +28,10 @@
 
     ],
     "severity" : 2,
-    "source" : "AutomergeType.md",
+    "source" : "AutomergeDataType.md",
     "start" : {
       "column" : 256,
-      "line" : 14
+      "line" : 13
     },
     "summary" : "'UniformTypeIdentifiers' doesn't exist at '\/Automerge'"
   },
@@ -43,7 +43,7 @@
     "source" : "Curation\/Document.md",
     "start" : {
       "column" : 15,
-      "line" : 125
+      "line" : 127
     },
     "summary" : "'UniformTypeIdentifiers' doesn't exist at '\/Automerge'"
   }

@@ -173,7 +173,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AddressBookExample"
       ],
-      "title" : "Representing Objects and Values"
+      "title" : "Representing Objects and Values in a Document"
     }
   ],
   "topicSections" : [
@@ -505,14 +505,14 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ModelingData": {
   "abstract" : [
     {
-      "text" : "Store, read, share, and synchronize complex data in an Automerge document.",
+      "text" : "Store into, and read from, an Automerge document.",
       "type" : "text"
     }
   ],
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
   "kind" : "article",
   "role" : "article",
-  "title" : "Modeling Data with Automerge",
+  "title" : "Using the dynamic schema and core data model",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/modelingdata"
 },
