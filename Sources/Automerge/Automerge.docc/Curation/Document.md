@@ -74,6 +74,7 @@
 
 - ``heads()``
 - ``getHistory()``
+- ``change(hash:)``
 
 ### Reading historical map values
 
@@ -100,6 +101,7 @@
 ### Saving, forking, and merging documents
 
 - ``save()``
+- ``commitWith(message:timestamp:)``
 - ``encodeNewChanges()``
 - ``encodeChangesSince(heads:)``
 - ``applyEncodedChanges(encoded:)``
