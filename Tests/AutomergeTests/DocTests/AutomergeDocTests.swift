@@ -280,7 +280,7 @@ final class AutomergeDocTests: XCTestCase {
         let history = doc.getHistory()
         XCTAssertEqual(history.count, 5)
 
-        let changes = history.map({ doc.change(hash: $0) })
+        let changes = history.map { doc.change(hash: $0) }
         XCTAssertEqual(changes.count, 5)
         XCTAssertEqual(changes[0]!.message, "Change 1")
         XCTAssertEqual(changes[0]!.timestamp, Date(timeIntervalSince1970: 10))
