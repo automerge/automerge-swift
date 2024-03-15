@@ -84,6 +84,7 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 
 - <doc:ChangesAndHistory>
 - ``Automerge/ChangeHash``
+- ``Automerge/Change``
 - ``Automerge/Patch``
 - ``Automerge/PatchAction``
 - ``Automerge/PathElement``
