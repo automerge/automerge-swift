@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Define the automerge uniform type identifier in your app to share Automerge documents.",
+      "text" : "Define the Automerge uniform type identifier in your app to share Automerge documents.",
       "type" : "text"
     }
   ],
@@ -14,7 +14,7 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType"
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType"
   },
   "kind" : "article",
   "metadata" : {
@@ -25,7 +25,7 @@
     ],
     "role" : "article",
     "roleHeading" : "Article",
-    "title" : "Importing the Automerge Type in your app"
+    "title" : "Saving, loading, and sharing Automerge documents as Data"
   },
   "primaryContentSections" : [
     {
@@ -39,7 +39,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "This library defines ",
+              "text" : "This library defines the Uniform Type Identifier ",
               "type" : "text"
             },
             {
@@ -47,7 +47,7 @@
               "type" : "codeVoice"
             },
             {
-              "text" : ", a Uniform Type Identifier for the bytes that make up an Automerge document.",
+              "text" : "  for the bytes that make up an Automerge document.",
               "type" : "text"
             },
             {
@@ -55,7 +55,7 @@
               "type" : "text"
             },
             {
-              "text" : "The definition is used in the ",
+              "text" : "This type is used in the ",
               "type" : "text"
             },
             {
@@ -64,15 +64,16 @@
               "type" : "reference"
             },
             {
-              "text" : " property of an Automerge document.",
+              "text" : " property of an Automerge document, to conform Automerge documents to the ",
               "type" : "text"
             },
             {
-              "text" : " ",
-              "type" : "text"
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text" : "You can conform to this type when sharing Automerge documents as on disk representations.",
+              "text" : ".",
               "type" : "text"
             }
           ],
@@ -103,7 +104,7 @@
               "type" : "codeVoice"
             },
             {
-              "text" : ", and the provided type in this library conforms to the type ",
+              "text" : ", and the provided type conforms to the type ",
               "type" : "text"
             },
             {
@@ -128,7 +129,7 @@
               "type" : "reference"
             },
             {
-              "text" : ", you can optionally conform your app to ",
+              "text" : ", you may conform your own app’s type to ",
               "type" : "text"
             },
             {
@@ -153,7 +154,7 @@
               "type" : "text"
             },
             {
-              "text" : "If your file format wraps those bytes, then you should provide the type definition independently of the ",
+              "text" : "If your file format wraps those bytes, then provide your own type definition that does not conform to the ",
               "type" : "text"
             },
             {
@@ -338,6 +339,80 @@
           ],
           "syntax" : "plist",
           "type" : "codeListing"
+        },
+        {
+          "anchor" : "Saving-and-loading-Documents",
+          "level" : 3,
+          "text" : "Saving and loading Documents",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/save()",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to generate ",
+              "type" : "text"
+            },
+            {
+              "code" : "Data",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " that represents a compacted version of the Automerge document.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Calling ",
+              "type" : "text"
+            },
+            {
+              "code" : "save",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " collapses concurrent changes applied since the last save, or when the document was loaded.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "The compressed encoding of the document which is efficient and can be used to initialize an Automerge document with ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(_:logLevel:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The Automerge core library is intentionally agnostic to how you transfer, store, or load the bytes that make up an Automerge document, or updates between documents.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -410,6 +485,60 @@
   "title" : "Document",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/init(_:logLevel:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a new document from the data that you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DataV",
+      "text" : "Data"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "logLevel"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge12LogVerbosityO",
+      "text" : "LogVerbosity"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(_:logLevel:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(_:logLevel:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/init(_:loglevel:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/save()": {
   "abstract" : [
@@ -514,6 +643,18 @@
   "title" : "Five Minute Quick Start",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/fiveminutequickstart"
+},
+"https://developer.apple.com/documentation/coretransferable/transferable": {
+  "identifier" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable",
+  "title" : "Transferable protocol",
+  "titleInlineContent" : [
+    {
+      "text" : "Transferable protocol",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable"
 },
 "https://developer.apple.com/documentation/uniformtypeidentifiers/defining_file_and_data_types_for_your_app": {
   "identifier" : "https:\/\/developer.apple.com\/documentation\/uniformtypeidentifiers\/defining_file_and_data_types_for_your_app",

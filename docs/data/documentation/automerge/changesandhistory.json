@@ -87,7 +87,7 @@
               "type" : "text"
             },
             {
-              "text" : "For example, you may want to read values as at that point in time, or get the changes since that time.",
+              "text" : "For example, you may want to read values at a past point in time, or get the changes since that time.",
               "type" : "text"
             },
             {
@@ -114,6 +114,22 @@
             },
             {
               "text" : ".",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "The set of ",
+              "type" : "text"
+            },
+            {
+              "code" : "ChangeHash",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " that Automerge returns represent a discrete point in time for an Automerge document.",
               "type" : "text"
             },
             {
@@ -384,6 +400,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Patch",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement",
@@ -391,7 +408,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
       ],
-      "title" : "Inspecting Documents as Changes"
+      "title" : "Inspecting Document History and Changes"
     }
   ]
 , 
@@ -443,6 +460,40 @@
   "title" : "ActorId",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change": {
+  "abstract" : [
+    {
+      "text" : "A type that encapsulates a change, and any associated metadata, to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Change",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash": {
   "abstract" : [

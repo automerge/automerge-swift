@@ -56,7 +56,7 @@
                     {
                       "inlineContent" : [
                         {
-                          "text" : "Automatic merging",
+                          "text" : "Seamless, consistent merging",
                           "type" : "text"
                         }
                       ],
@@ -120,7 +120,7 @@
                       "type" : "strong"
                     },
                     {
-                      "text" : " An Automerge object is an immutable snapshot of the application state at a point in time.",
+                      "text" : " Automerge provides an immutable snapshot of the application state at a point in time.",
                       "type" : "text"
                     },
                     {
@@ -128,7 +128,24 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "When you make a change, or merge in a change from elsewhere, you get a new state object reflecting that change.",
+                      "text" : "As you make changes to a Automerge document, or merge in changes from elsewhere, the document collects and organizes those changes.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "Read ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " for more information about accessing that history.",
                       "type" : "text"
                     }
                   ],
@@ -152,22 +169,6 @@
                     {
                       "text" : " Automerge is a pure data structure library that does not care about networks, protocols, or transports.",
                       "type" : "text"
-                    },
-                    {
-                      "text" : " ",
-                      "type" : "text"
-                    },
-                    {
-                      "text" : "It works with any connection-oriented network protocol, which could be client\/server (for example using WebSockets or HTTP), server-hosted peer-to-peer (for example, over WebRTC), or entirely local peer-to-peer (for example, using Bonjour).",
-                      "type" : "text"
-                    },
-                    {
-                      "text" : " ",
-                      "type" : "text"
-                    },
-                    {
-                      "text" : "It also works with unidirectional messaging: you can send an Automerge file as email attachment, or on a USB drive in the mail, and the recipient will be able to merge it with their version.",
-                      "type" : "text"
                     }
                   ],
                   "type" : "paragraph"
@@ -188,7 +189,16 @@
                       "type" : "strong"
                     },
                     {
-                      "text" : " Originally developed in JavaScript, Automerge runs from a core Rust implementation.",
+                      "text" : " Originally developed in JavaScript, Automerge uses ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "http:\/\/github.com\/automerge\/automerge",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " in the Rust language.",
                       "type" : "text"
                     },
                     {
@@ -196,7 +206,7 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "The library runs on Node.js, Electron, and modern browsers using the Rust library compiled to WebAssembly.",
+                      "text" : "Automerge runs on Node.js, Electron, and modern browsers using the core library compiled to WebAssembly.",
                       "type" : "text"
                     },
                     {
@@ -204,7 +214,7 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "The Rust library exposes a C API for use with other languages, packaged as a static library within an XCFramework for use in iOS and macOS applications.",
+                      "text" : "The Rust library exposes a C API for use with other languages.",
                       "type" : "text"
                     },
                     {
@@ -212,7 +222,7 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "The Swift Automerge library includes supplemental code to make using Automerge more idiomatic and easier.",
+                      "text" : "The core is packaged as a static library within an XCFramework for use on Apple platforms.",
                       "type" : "text"
                     }
                   ],
@@ -222,6 +232,153 @@
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "API-Layers",
+          "level" : 3,
+          "text" : "API Layers",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "The lowest layer lets you interact with the cross platform Automerge document API.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "For more information on the core API layer, read ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " and ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : ", and the methods exposed on ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : ".",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "At a higher layer, this package provides a custom encoder and decoder that you can use to map Codable data types into the dynamic Automerge schema.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "For more information on the Codable layer, read ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "Additional-Utilities",
+          "level" : 3,
+          "text" : "Additional Utilities",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The Automerge-swift package conforms an Automerge document to the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " protocol.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "To aid in sharing Automerge documents as a base type, it also defines a Uniform Type Identifier that you can use in your app to load, save, or share Automerge documents.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Read ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more information on the data types and saving an Automerge document directly.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "code" : "AutomergeUtilities",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", a separate module provided by the Automerge-swift package, provides additional methods to assist with debugging your app, and methods to walk and parse the Automerge document schema.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         },
         {
           "inlineContent" : [
@@ -235,7 +392,7 @@
               "type" : "reference"
             },
             {
-              "text" : " to get a quick taste of how to use Automerge, or read ",
+              "text" : " to get a quick taste of how to use Automerge, or ",
               "type" : "text"
             },
             {
@@ -244,7 +401,7 @@
               "type" : "reference"
             },
             {
-              "text" : " for a more detailed walk through illustrating a demonstration app that uses Automerge.",
+              "text" : " for a walk-through that illustrates how to use Automerge within a demonstration app.",
               "type" : "text"
             }
           ],
@@ -267,12 +424,13 @@
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/FiveMinuteQuickstart",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType"
       ],
       "title" : "Essentials"
     },
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SchemaStrategy",
@@ -280,6 +438,17 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AnyCodingKey"
       ],
       "title" : "Reading and Writing Codable Types"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AddressBookExample"
+      ],
+      "title" : "Representing Objects and Values in a Document"
     },
     {
       "identifiers" : [
@@ -305,19 +474,9 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AddressBookExample"
-      ],
-      "title" : "Representing Objects and Values"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Patch",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement",
@@ -325,7 +484,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
       ],
-      "title" : "Inspecting Documents as Changes"
+      "title" : "Inspecting Document History and Changes"
     },
     {
       "identifiers" : [
@@ -473,6 +632,20 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/anycodingkey"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDataType": {
+  "abstract" : [
+    {
+      "text" : "Define the Automerge uniform type identifier in your app to share Automerge documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDataType",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Saving, loading, and sharing Automerge documents as Data",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergedatatype"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDecoder": {
   "abstract" : [
     {
@@ -575,20 +748,6 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergetext"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeType": {
-  "abstract" : [
-    {
-      "text" : "Define the automerge uniform type identifier in your app to share Automerge documents.",
-      "type" : "text"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeType",
-  "kind" : "article",
-  "role" : "article",
-  "title" : "Importing the Automerge Type in your app",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/automergetype"
-},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/BindingError": {
   "abstract" : [
     {
@@ -690,6 +849,40 @@
   "title" : "BytesScalarConversionError",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/bytesscalarconversionerror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Change": {
+  "abstract" : [
+    {
+      "text" : "A type that encapsulates a change, and any associated metadata, to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Change"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Change",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/change"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash": {
   "abstract" : [
@@ -1169,6 +1362,20 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/logverbosity"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/MappingData": {
+  "abstract" : [
+    {
+      "text" : "Conveniently read or write Codable types in Automerge documents.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Storing and loading your types in Automerge documents",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/mappingdata"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Mark": {
   "abstract" : [
     {
@@ -1206,14 +1413,14 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ModelingData": {
   "abstract" : [
     {
-      "text" : "Store, read, share, and synchronize complex data in an Automerge document.",
+      "text" : "Store into, and read from, an Automerge document.",
       "type" : "text"
     }
   ],
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
   "kind" : "article",
   "role" : "article",
-  "title" : "Modeling Data with Automerge",
+  "title" : "Using the dynamic schema and core data model",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/modelingdata"
 },
@@ -1636,7 +1843,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Sync": {
   "abstract" : [
     {
-      "text" : "Conveniently synchronize any two documents.",
+      "text" : "Synchronize any Automerge documents to seamlessly share and merge changes.",
       "type" : "text"
     }
   ],
@@ -1783,6 +1990,18 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/value"
 },
+"http://github.com/automerge/automerge": {
+  "identifier" : "http:\/\/github.com\/automerge\/automerge",
+  "title" : "a core library written",
+  "titleInlineContent" : [
+    {
+      "text" : "a core library written",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "http:\/\/github.com\/automerge\/automerge"
+},
 "https://automerge.org": {
   "identifier" : "https:\/\/automerge.org",
   "title" : "Automerge site",
@@ -1830,6 +2049,18 @@
   ],
   "type" : "link",
   "url" : "https:\/\/crdt.tech"
+},
+"https://developer.apple.com/documentation/coretransferable/transferable": {
+  "identifier" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable",
+  "title" : "Transferrable",
+  "titleInlineContent" : [
+    {
+      "code" : "Transferrable",
+      "type" : "codeVoice"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/developer.apple.com\/documentation\/coretransferable\/transferable"
 }
 }
 }

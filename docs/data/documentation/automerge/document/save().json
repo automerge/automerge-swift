@@ -164,6 +164,7 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/commitWith(message:timestamp:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/encodeNewChanges()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/encodeChangesSince(heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/applyEncodedChanges(encoded:)",
@@ -356,6 +357,72 @@
   "title" : "applyEncodedChangesWithPatches(encoded:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/applyencodedchangeswithpatches(encoded:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/commitWith(message:timestamp:)": {
+  "abstract" : [
+    {
+      "text" : "Commit the auto-generated transaction with options.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "commitWith"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "message"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "timestamp"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/commitWith(message:timestamp:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "commitWith(message:timestamp:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/commitwith(message:timestamp:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/encodeChangesSince(heads:)": {
   "abstract" : [

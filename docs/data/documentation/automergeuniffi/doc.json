@@ -102,7 +102,9 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/actorId()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/applyEncodedChanges(changes:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/applyEncodedChangesWithPatches(changes:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/changeByHash(hash:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/changes()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/commitWith(msg:time:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/cursor(obj:position:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/cursorAt(obj:position:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/cursorPosition(obj:cursor:)",
@@ -370,6 +372,61 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc\/applyencodedchangeswithpatches(changes:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/changeByHash(hash:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "changeByHash"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "hash"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi10ChangeHasha",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi6ChangeV",
+      "text" : "Change"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/changeByHash(hash:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "changeByHash(hash:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/changebyhash(hash:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/changes()": {
   "abstract" : [
 
@@ -407,6 +464,69 @@
   "title" : "changes()",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc\/changes()"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/commitWith(msg:time:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "commitWith"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "msg"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "time"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5Int64V",
+      "text" : "Int64"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/commitWith(msg:time:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "commitWith(msg:time:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/commitwith(msg:time:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/cursor(obj:position:)": {
   "abstract" : [
