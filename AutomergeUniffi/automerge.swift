@@ -416,9 +416,9 @@ public protocol DocProtocol: AnyObject {
 
     func applyEncodedChangesWithPatches(changes: [UInt8]) throws -> [Patch]
 
-    func changes() -> [ChangeHash]
-
     func changeByHash(hash: ChangeHash) -> Change?
+
+    func changes() -> [ChangeHash]
 
     func commitWith(msg: String?, time: Int64)
 
@@ -525,7 +525,6 @@ public protocol DocProtocol: AnyObject {
     func values(obj: ObjId) throws -> [Value]
 
     func valuesAt(obj: ObjId, heads: [ChangeHash]) throws -> [Value]
-
 }
 
 public class Doc:
@@ -607,18 +606,6 @@ public class Doc:
         )
     }
 
-    public func changes() -> [ChangeHash] {
-        try! FfiConverterSequenceTypeChangeHash.lift(
-            try!
-                rustCall {
-                    uniffi_uniffi_automerge_fn_method_doc_changes(
-                        self.uniffiClonePointer(),
-                        $0
-                    )
-                }
-        )
-    }
-
     public func changeByHash(hash: ChangeHash) -> Change? {
         try! FfiConverterOptionTypeChange.lift(
             try!
@@ -631,6 +618,31 @@ public class Doc:
                     )
                 }
         )
+    }
+
+    public func changes() -> [ChangeHash] {
+        try! FfiConverterSequenceTypeChangeHash.lift(
+            try!
+                rustCall {
+                    uniffi_uniffi_automerge_fn_method_doc_changes(
+                        self.uniffiClonePointer(),
+                        $0
+                    )
+                }
+        )
+    }
+
+    public func commitWith(msg: String?, time: Int64) {
+        try!
+            rustCall {
+                uniffi_uniffi_automerge_fn_method_doc_commit_with(
+                    self.uniffiClonePointer(),
+
+                    FfiConverterOptionString.lower(msg),
+                    FfiConverterInt64.lower(time),
+                    $0
+                )
+            }
     }
 
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
@@ -1237,18 +1249,6 @@ public class Doc:
                 )
             }
         )
-    }
-    public func commitWith(msg: String?, time: Int64) {
-        try!
-            rustCall {
-                uniffi_uniffi_automerge_fn_method_doc_commit_with(
-                    self.uniffiClonePointer(),
-
-                    FfiConverterOptionString.lower(msg),
-                    FfiConverterInt64.lower(time),
-                    $0
-                )
-        }
     }
 
     public func save() -> [UInt8] {
