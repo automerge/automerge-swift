@@ -300,8 +300,10 @@ final class AutomergeDocTests: XCTestCase {
             var age: Int
         }
 
-        let actor1 = ActorId(bytes: [0x00, 0x11, 0x22, 0x33])
-        let actor2 = ActorId(bytes: [0x44, 0x55, 0x66, 0x77])
+        let actor1 = ActorId(data: Data([0x00, 0x11, 0x22, 0x33]))
+        XCTAssertEqual(actor1.description, "00112233")
+        let actor2 = ActorId(data: Data([0xaa, 0xbb, 0xcc, 0xdd]))
+        XCTAssertEqual(actor2.description, "AABBCCDD")
 
         // Create the document
         let doc = Document()
