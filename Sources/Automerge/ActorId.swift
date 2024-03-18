@@ -8,6 +8,17 @@ import Foundation
 public struct ActorId: Equatable, Hashable, Sendable {
     var data: Data
 
+    // Creates a new, random actor.
+    public init() {
+        self.init(uuid: UUID())
+    }
+
+    // Creates an actor from a UUID.
+    public init(uuid: UUID) {
+        data = withUnsafeBytes(of: uuid.uuid, { Data($0) })
+    }
+
+    // Creates an actor from data.
     public init(data: Data) {
         self.data = data
     }
