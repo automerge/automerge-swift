@@ -1,5 +1,8 @@
 namespace automerge {
     ObjId root();
+
+    boolean valid_change(sequence<u8> bytes);
+
 };
 
 [Custom]
