@@ -19,7 +19,7 @@ public struct Change: Equatable {
     public let hash: ChangeHash
 
     init(_ ffi: FfiChange) {
-        actorId = ActorId(bytes: ffi.actorId)
+        actorId = ActorId(ffi: ffi.actorId)
         message = ffi.message
         deps = ffi.deps.map(ChangeHash.init(bytes:))
         timestamp = Date(timeIntervalSince1970: TimeInterval(ffi.timestamp))
