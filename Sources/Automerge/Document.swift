@@ -32,7 +32,7 @@ public final class Document: @unchecked Sendable {
     public var actor: ActorId {
         get {
             sync {
-                ActorId(data: self.doc.wrapErrors { Data($0.actorId()) })
+                ActorId(ffi: self.doc.wrapErrors { $0.actorId() })
             }
         }
         set {

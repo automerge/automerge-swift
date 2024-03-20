@@ -8,6 +8,10 @@ import Foundation
 public struct ActorId: Equatable, Hashable, Sendable {
     var data: Data
 
+    init(ffi: AutomergeUniffi.ActorId) {
+        data = Data(ffi)
+    }
+
     // Creates a new, random actor.
     public init() {
         self.init(uuid: UUID())
@@ -19,7 +23,10 @@ public struct ActorId: Equatable, Hashable, Sendable {
     }
 
     // Creates an actor from data.
-    public init(data: Data) {
+    public init?(data: Data) {
+        guard data.count <= 128 else {
+            return nil
+        }
         self.data = data
     }
 }
