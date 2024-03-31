@@ -296,54 +296,50 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         // can set this "newPath", we don't have the deets to create (if needed) a new objectId until we
         // initialize a specific container type.
 
-        switch T.self {
-        case is Date.Type:
+        switch value {
+        case let date as Date:
             // Capture and override the default encodable pathing for Date since
             // Automerge supports it as a primitive value type.
-            let downcastDate = value as! Date
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .timestamp)
             }
-            try document.put(obj: objectId, key: key.stringValue, value: downcastDate.toScalarValue())
+            try document.put(obj: objectId, key: key.stringValue, value: date.toScalarValue())
             impl.mapKeysWritten.append(key.stringValue)
-        case is Data.Type:
+        case let data as Data:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
-            let downcastData = value as! Data
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .bytes)
             }
-            try document.put(obj: objectId, key: key.stringValue, value: downcastData.toScalarValue())
+            try document.put(obj: objectId, key: key.stringValue, value: data.toScalarValue())
             impl.mapKeysWritten.append(key.stringValue)
-        case is Counter.Type:
+        case let counter as Counter:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
-            let downcastCounter = value as! Counter
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .counter)
             }
-            if downcastCounter.doc == nil || downcastCounter.objId == nil {
+            if counter.doc == nil || counter.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
                 if case let .Scalar(.Counter(currentCounterValue)) = try document.get(
                     obj: objectId,
                     key: key.stringValue
                 ) {
-                    let counterDifference = currentCounterValue - Int64(downcastCounter._unboundStorage)
+                    let counterDifference = currentCounterValue - Int64(counter._unboundStorage)
                     try document.increment(obj: objectId, key: key.stringValue, by: counterDifference)
                 } else {
                     try document.put(
                         obj: objectId,
                         key: key.stringValue,
-                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                        value: .Counter(Int64(counter._unboundStorage))
                     )
                 }
             }
             impl.mapKeysWritten.append(key.stringValue)
-        case is AutomergeText.Type:
+        case let text as AutomergeText:
             // Capture and override the default encodable pathing for AutomergeText since
             // Automerge supports it as a primitive value type.
-            let downcastText = value as! AutomergeText
             let textNodeId: ObjId
             if let existingNode = try document.get(obj: objectId, key: key.stringValue) {
                 guard case let .Object(textId, .Text) = existingNode else {
@@ -360,24 +356,23 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
             // AutomergeText is a reference type that, when bound, writes directly into the
             // Automerge document, so no additional work is needed to write in the data unless
             // the object is 'unbound' (for example, a new AutomergeText instance)
-            if downcastText.doc == nil || downcastText.objId == nil {
+            if text.doc == nil || text.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
-                if !downcastText._unboundStorage.isEmpty {
+                if !text._unboundStorage.isEmpty {
                     // Iterate through
                     let currentText = try document.text(obj: textNodeId)
-                    if currentText != downcastText._unboundStorage {
-                        try document.updateText(obj: textNodeId, value: downcastText._unboundStorage)
+                    if currentText != text._unboundStorage {
+                        try document.updateText(obj: textNodeId, value: text._unboundStorage)
                     }
                 }
             }
             impl.mapKeysWritten.append(key.stringValue)
-        case is URL.Type:
-            let downcastData = value as! URL
+        case let url as URL:
             if impl.cautiousWrite {
                 try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
             }
-            try document.put(obj: objectId, key: key.stringValue, value: downcastData.toScalarValue())
+            try document.put(obj: objectId, key: key.stringValue, value: url.toScalarValue())
             impl.mapKeysWritten.append(key.stringValue)
         default:
             let newEncoder = AutomergeEncoderImpl(
