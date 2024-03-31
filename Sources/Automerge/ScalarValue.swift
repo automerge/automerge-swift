@@ -121,3 +121,22 @@ extension ScalarValue: CustomStringConvertible {
         }
     }
 }
+
+extension ScalarValue: ExpressibleByStringLiteral, ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByNilLiteral {
+
+    public init(stringLiteral value: StringLiteralType) {
+        self = .String(value)
+    }
+
+    public init(booleanLiteral value: BooleanLiteralType) {
+        self = .Boolean(value)
+    }
+
+    public init(integerLiteral value: IntegerLiteralType) {
+        self = .Int(Int64(value))
+    }
+
+    public init(nilLiteral: ()) {
+        self = .Null
+    }
+}
