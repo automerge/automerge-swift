@@ -168,6 +168,16 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
                     debugDescription: "Expected to decode \(T.self) from \(retrievedValue), but it wasn't a `.text` object."
                 ))
             }
+        case is URL.Type:
+            let retrievedValue = try getValue(forKey: key)
+            guard case let .Scalar(.String(urlString)) = retrievedValue, let url = URL(string: urlString) else {
+                throw DecodingError.typeMismatch(T.self, .init(
+                    codingPath: codingPath,
+                    debugDescription: "Expected to decode \(URL.self) from \(retrievedValue), but it wasn't a `URL` type."
+                ))
+            }
+
+            return url as! T
         default:
             let decoder = try decoderForKey(key)
             return try T(from: decoder)

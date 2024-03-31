@@ -91,6 +91,63 @@ extension Bool: ScalarValueRepresentable {
     }
 }
 
+// MARK: URL Conversions
+
+/// A failure to convert an Automerge scalar value to or from a Boolean representation.
+public enum URLScalarConversionError: LocalizedError {
+    case notStringValue(_ val: Value)
+    case notStringScalarValue(_ val: ScalarValue)
+    case notMatchingURLScheme(String)
+
+    /// A localized message describing what error occurred.
+    public var errorDescription: String? {
+        switch self {
+        case .notStringScalarValue(let scalarValue):
+            return "Failed to read the scalar value \(scalarValue) as a String before converting to URL."
+        case .notStringValue(let value):
+            return "Failed to read the value \(value) as a String before converting to URL."
+        case .notMatchingURLScheme(let string):
+            return "Failed to convert the string \(string) to URL."
+        }
+    }
+
+    /// A localized message describing the reason for the failure.
+    public var failureReason: String? { nil }
+}
+
+extension URL: ScalarValueRepresentable {
+
+    public static func fromValue(_ value: Value) -> Result<Self, URLScalarConversionError> {
+        if case .Scalar(.String(let urlString)) = value {
+            if let url = URL(string: urlString) {
+                return .success(url)
+            } else {
+                return .failure(.notMatchingURLScheme(urlString))
+            }
+        } else {
+            return .failure(.notStringValue(value))
+        }
+    }
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<URL, URLScalarConversionError> {
+        switch val {
+        case let .String(urlString):
+            if let url = URL(string: urlString) {
+                return .success(url)
+            } else {
+                return .failure(.notMatchingURLScheme(urlString))
+            }
+        default:
+            return .failure(.notStringScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .String(self.absoluteString)
+    }
+}
+
+
 // MARK: String Conversions
 
 /// A failure to convert an Automerge scalar value to or from a String representation.
