@@ -37,11 +37,11 @@ Now you can create a document and do all sorts of Automerge things with it
 ```swift
 let doc = Document()
 let list = try! doc.putObject(obj: ObjId.ROOT, key: "colours", ty: .List)
-try! doc.insert(obj: list, index: 0, value: .String("blue"))
-try! doc.insert(obj: list, index: 1, value: .String("red"))
+try! doc.insert(obj: list, index: 0, value: "blue")
+try! doc.insert(obj: list, index: 1, value: "red")
 
 let doc2 = doc.fork()
-try! doc2.insert(obj: list, index: 0, value: .String("green"))
+try! doc2.insert(obj: list, index: 0, value: "green")
 
 try! doc.delete(obj: list, index: 0)
 

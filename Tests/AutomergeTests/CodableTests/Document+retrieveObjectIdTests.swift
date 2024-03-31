@@ -9,7 +9,7 @@ final class RetrieveObjectIdTests: XCTestCase {
         setupCache = [:]
         doc = Document()
 
-        let _ = try! doc.put(obj: ObjId.ROOT, key: "name", value: .String("joe"))
+        let _ = try! doc.put(obj: ObjId.ROOT, key: "name", value: "joe")
 
         let topMap = try! doc.putObject(obj: ObjId.ROOT, key: "topMap", ty: .Map)
         setupCache["topMap"] = topMap
@@ -26,7 +26,7 @@ final class RetrieveObjectIdTests: XCTestCase {
         let nestedText = try! doc.insertObject(obj: list, index: 1, ty: .Text)
         setupCache["nestedText"] = nestedText
 
-        let _ = try! doc.insert(obj: list, index: 2, value: .String("alex"))
+        let _ = try! doc.insert(obj: list, index: 2, value: "alex")
 
         try! doc.put(obj: nestedMap, key: "image", value: .Bytes(Data()))
         let deeplyNestedText = try! doc.putObject(obj: nestedMap, key: "notes", ty: .Text)

@@ -101,7 +101,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
 
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "url"), .Scalar(.String("http://url.com")))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "url"), .Scalar("http://url.com"))
         try debugPrint(doc.get(obj: ObjId.ROOT, key: "notes") as Any)
     }
 
@@ -157,7 +157,7 @@ final class AutomergeEncoderTests: XCTestCase {
             } else {
                 try XCTFail("Didn't find: \(String(describing: doc.get(obj: container_id, key: "count")))")
             }
-            XCTAssertEqual(try doc.get(obj: container_id, key: "url"), .Scalar(.String("http://url.com")))
+            XCTAssertEqual(try doc.get(obj: container_id, key: "url"), .Scalar("http://url.com"))
         } else {
             try XCTFail("Didn't find: \(String(describing: doc.get(obj: ObjId.ROOT, key: "example")))")
         }
@@ -176,9 +176,9 @@ final class AutomergeEncoderTests: XCTestCase {
 
         if case let .Object(container_id, container_type) = try doc.get(obj: ObjId.ROOT, key: "numbers") {
             XCTAssertEqual(container_type, ObjType.List)
-            XCTAssertEqual(try doc.get(obj: container_id, index: 0), .Scalar(.Int(1)))
-            XCTAssertEqual(try doc.get(obj: container_id, index: 1), .Scalar(.Int(2)))
-            XCTAssertEqual(try doc.get(obj: container_id, index: 2), .Scalar(.Int(3)))
+            XCTAssertEqual(try doc.get(obj: container_id, index: 0), .Scalar(1))
+            XCTAssertEqual(try doc.get(obj: container_id, index: 1), .Scalar(2))
+            XCTAssertEqual(try doc.get(obj: container_id, index: 2), .Scalar(3))
         } else {
             try XCTFail("Didn't find: \(String(describing: doc.get(obj: ObjId.ROOT, key: "example")))")
         }

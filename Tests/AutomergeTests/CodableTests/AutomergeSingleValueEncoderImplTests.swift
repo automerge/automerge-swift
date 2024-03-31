@@ -34,10 +34,10 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
 
     func testSimpleKeyEncode_Bool() throws {
         try singleValueContainer.encode(true)
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Boolean(true)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(true))
 
         try cautiousSingleValueContainer.encode(false)
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Boolean(false)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(false))
     }
 
     func testSimpleKeyEncode_Bool_CautiousFailure() throws {
@@ -76,7 +76,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Double_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .Int(40))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: 40)
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(Double(3.4))
         )
@@ -88,14 +88,14 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
 
     func testSimpleKeyEncode_Int8() throws {
         try singleValueContainer.encode(Int8(4))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(4)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(4))
 
         try cautiousSingleValueContainer.encode(Int8(5))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(5)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(5))
     }
 
     func testSimpleKeyEncode_Int_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: "40")
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(Int(4))
         )
@@ -115,26 +115,26 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
 
     func testSimpleKeyEncode_Int16() throws {
         try singleValueContainer.encode(Int16(4))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(4)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(4))
 
         try cautiousSingleValueContainer.encode(Int16(5))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(5)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(5))
     }
 
     func testSimpleKeyEncode_Int32() throws {
         try singleValueContainer.encode(Int32(4))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(4)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(4))
 
         try cautiousSingleValueContainer.encode(Int32(5))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(5)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(5))
     }
 
     func testSimpleKeyEncode_Int64() throws {
         try singleValueContainer.encode(Int64(4))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(4)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(4))
 
         try cautiousSingleValueContainer.encode(Int64(5))
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Int(5)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(5))
     }
 
     func testSimpleKeyEncode_UInt() throws {
@@ -178,7 +178,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_UInt_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: "40")
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(UInt(4))
         )
@@ -207,7 +207,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Date_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: "40")
         let dateFormatter = ISO8601DateFormatter()
         let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         XCTAssertThrowsError(
@@ -224,7 +224,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Data_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: "40")
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(Data("World".utf8))
         )
@@ -248,7 +248,7 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Counter_CautiousFailure() throws {
-        try doc.put(obj: ObjId.ROOT, key: "value", value: .String("40"))
+        try doc.put(obj: ObjId.ROOT, key: "value", value: "40")
         XCTAssertThrowsError(
             try cautiousSingleValueContainer.encode(Counter(443))
         )

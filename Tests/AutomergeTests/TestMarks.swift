@@ -12,11 +12,11 @@ class MarksTestCase: XCTestCase {
             end: 5,
             expand: ExpandMark.none,
             name: "bold",
-            value: ScalarValue.Boolean(true)
+            value: true
         )
         let marks = try! doc.marks(obj: text)
         let expectedMarks = [
-            Mark(start: 0, end: 5, name: "bold", value: Value.Scalar(ScalarValue.Boolean(true))),
+            Mark(start: 0, end: 5, name: "bold", value: .Scalar(true)),
         ]
         XCTAssertEqual(marks, expectedMarks)
 
@@ -24,7 +24,7 @@ class MarksTestCase: XCTestCase {
         let heads = doc.heads()
 
         // Now remove the mark
-        try! doc.mark(obj: text, start: 0, end: 5, expand: ExpandMark.none, name: "bold", value: ScalarValue.Null)
+        try! doc.mark(obj: text, start: 0, end: 5, expand: ExpandMark.none, name: "bold", value: nil)
         let marksAfterDelete = try! doc.marks(obj: text)
         XCTAssertEqual(marksAfterDelete.count, 0)
 
@@ -46,11 +46,11 @@ class MarksTestCase: XCTestCase {
             end: 5,
             expand: ExpandMark.none,
             name: "bold",
-            value: ScalarValue.Boolean(true)
+            value: true
         )
         let patches = try! doc.mergeWithPatches(other: fork)
         let expectedMarks = [
-            Mark(start: 0, end: 5, name: "bold", value: Value.Scalar(ScalarValue.Boolean(true))),
+            Mark(start: 0, end: 5, name: "bold", value: .Scalar(true)),
         ]
         XCTAssertEqual(patches, [Patch(
             action: .Marks(text, expectedMarks),
@@ -61,7 +61,7 @@ class MarksTestCase: XCTestCase {
         try! fork.spliceText(obj: text, start: 4, delete: 0, value: "oo")
         let patchesAfterSplice = try! doc.mergeWithPatches(other: fork)
         XCTAssertEqual(patchesAfterSplice, [Patch(
-            action: .SpliceText(obj: text, index: 4, value: "oo", marks: ["bold": .Scalar(.Boolean(true))]),
+            action: .SpliceText(obj: text, index: 4, value: "oo", marks: ["bold": .Scalar(true)]),
             path: [PathElement(obj: ObjId.ROOT, prop: .Key("text"))]
         )])
     }

@@ -3,23 +3,23 @@ import XCTest
 
 class TestScalarValueConversions: XCTestCase {
     func testScalarBooleanConversion() throws {
-        let initial: Value = .Scalar(.Boolean(true))
+        let initial: Value = .Scalar(true)
         let converted: Bool = try Bool.fromValue(initial).get()
         XCTAssertEqual(true, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try Bool.fromValue(.Scalar(1)).get())
 
-        XCTAssertEqual(true.toScalarValue(), ScalarValue.Boolean(true))
+        XCTAssertEqual(true.toScalarValue(), true)
     }
 
     func testScalarStringConversion() throws {
-        let initial: Value = .Scalar(.String("hello"))
+        let initial: Value = .Scalar("hello")
         let converted: String = try String.fromValue(initial).get()
         XCTAssertEqual("hello", converted)
 
-        XCTAssertThrowsError(try String.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try String.fromValue(.Scalar(1)).get())
 
-        XCTAssertEqual("hello".toScalarValue(), ScalarValue.String("hello"))
+        XCTAssertEqual("hello".toScalarValue(), "hello")
     }
 
     func testScalarBytesConversion() throws {
@@ -29,7 +29,7 @@ class TestScalarValueConversions: XCTestCase {
         let converted: Data = try Data.fromValue(initial).get()
         XCTAssertEqual(myData, converted)
 
-        XCTAssertThrowsError(try Data.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try Data.fromValue(.Scalar(1)).get())
 
         XCTAssertEqual(myData.toScalarValue(), ScalarValue.Bytes(myData))
     }
@@ -39,20 +39,20 @@ class TestScalarValueConversions: XCTestCase {
         let converted: UInt = try UInt.fromValue(initial).get()
         XCTAssertEqual(5, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try Bool.fromValue(.Scalar(1)).get())
 
         let explicitUInt: UInt = 5
         XCTAssertEqual(explicitUInt.toScalarValue(), ScalarValue.Uint(5))
     }
 
     func testScalarIntConversion() throws {
-        let initial: Value = .Scalar(.Int(5))
+        let initial: Value = .Scalar(5)
         let converted: Int = try Int.fromValue(initial).get()
         XCTAssertEqual(5, converted)
 
         XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
 
-        XCTAssertEqual(5.toScalarValue(), ScalarValue.Int(5))
+        XCTAssertEqual(5.toScalarValue(), 5)
     }
 
     func testScalarDoubleConversion() throws {

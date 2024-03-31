@@ -10,10 +10,10 @@ extension Data {
 class PatchesTestCase: XCTestCase {
     func testMergeReturningPatches() {
         let doc = Document()
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("value1"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "value1")
 
         let doc2 = doc.fork()
-        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
+        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: "value2")
 
         let patches = try! doc.mergeWithPatches(other: doc2)
 
@@ -21,7 +21,7 @@ class PatchesTestCase: XCTestCase {
             patches,
             [
                 Patch(
-                    action: .Put(ObjId.ROOT, .Key("key2"), .Scalar(.String("value2"))),
+                    action: .Put(ObjId.ROOT, .Key("key2"), .Scalar("value2")),
                     path: []
                 ),
             ]
@@ -30,7 +30,7 @@ class PatchesTestCase: XCTestCase {
 
     func testReceiveSyncMessageWithPatches() throws {
         let doc = Document()
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("value1"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "value1")
 
         // create a second, identical, document
         let doc2 = doc.fork()
@@ -46,7 +46,7 @@ class PatchesTestCase: XCTestCase {
 
         let msg_before_update = doc2.generateSyncMessage(state: state2)
 
-        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
+        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: "value2")
         // now generate the message
         let optional_msg = doc2.generateSyncMessage(state: state2)
         XCTAssertNotEqual(msg_before_update, optional_msg)
@@ -70,7 +70,7 @@ class PatchesTestCase: XCTestCase {
                 patches,
                 [
                     Patch(
-                        action: .Put(ObjId.ROOT, .Key("key2"), .Scalar(.String("value2"))),
+                        action: .Put(ObjId.ROOT, .Key("key2"), .Scalar("value2")),
                         path: []
                     ),
                 ]
@@ -80,12 +80,12 @@ class PatchesTestCase: XCTestCase {
 
     func testApplyEncodedChangesWithPatches() {
         let doc = Document()
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("value1"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "value1")
 
         let doc2 = doc.fork()
         let heads = doc2.heads()
 
-        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
+        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: "value2")
         let encoded = try! doc2.encodeChangesSince(heads: heads)
 
         let patches = try! doc.applyEncodedChangesWithPatches(encoded: encoded)
@@ -94,7 +94,7 @@ class PatchesTestCase: XCTestCase {
             patches,
             [
                 Patch(
-                    action: .Put(ObjId.ROOT, .Key("key2"), .Scalar(.String("value2"))),
+                    action: .Put(ObjId.ROOT, .Key("key2"), .Scalar("value2")),
                     path: []
                 ),
             ]

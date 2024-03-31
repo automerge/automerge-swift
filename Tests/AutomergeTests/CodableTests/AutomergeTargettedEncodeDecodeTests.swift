@@ -107,7 +107,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         let doc = Document()
         trackForMemoryLeak(instance: doc)
 
-        try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
+        try doc.put(obj: ObjId.ROOT, key: "int", value: 34)
 
         let automergeDecoder = AutomergeDecoder(doc: doc)
 
@@ -149,7 +149,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         let doc = Document()
         trackForMemoryLeak(instance: doc)
 
-        try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
+        try doc.put(obj: ObjId.ROOT, key: "int", value: 34)
 
         let automergeDecoder = AutomergeDecoder(doc: doc)
 

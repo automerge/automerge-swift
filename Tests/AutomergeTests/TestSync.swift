@@ -11,14 +11,14 @@ class SyncTests: XCTestCase {
         trackForMemoryLeak(instance: doc2)
         let syncState2 = SyncState()
 
-        try! doc1.put(obj: ObjId.ROOT, key: "key1", value: .String("value1"))
-        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: .String("value2"))
+        try! doc1.put(obj: ObjId.ROOT, key: "key1", value: "value1")
+        try! doc2.put(obj: ObjId.ROOT, key: "key2", value: "value2")
 
         sync(doc1, syncState1, doc2, syncState2)
 
         for doc in [doc1, doc2] {
-            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key1")!, .Scalar(.String("value1")))
-            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key2")!, .Scalar(.String("value2")))
+            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key1")!, .Scalar("value1"))
+            XCTAssertEqual(try! doc.get(obj: ObjId.ROOT, key: "key2")!, .Scalar("value2"))
         }
 
         XCTAssertNotNil(syncState1.theirHeads)

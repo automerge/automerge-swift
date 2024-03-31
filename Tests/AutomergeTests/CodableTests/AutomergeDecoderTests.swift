@@ -9,12 +9,12 @@ final class AutomergeDecoderTests: XCTestCase {
         setupCache = [:]
         doc = Document()
 
-        try! doc.put(obj: ObjId.ROOT, key: "name", value: .String("Joe"))
+        try! doc.put(obj: ObjId.ROOT, key: "name", value: "Joe")
         try! doc.put(obj: ObjId.ROOT, key: "duration", value: .F64(3.14159))
-        try! doc.put(obj: ObjId.ROOT, key: "flag", value: .Boolean(true))
-        try! doc.put(obj: ObjId.ROOT, key: "count", value: .Int(5))
-        try! doc.put(obj: ObjId.ROOT, key: "uuid", value: .String("99CEBB16-1062-4F21-8837-CF18EC09DCD7"))
-        try! doc.put(obj: ObjId.ROOT, key: "url", value: .String("http://url.com"))
+        try! doc.put(obj: ObjId.ROOT, key: "flag", value: true)
+        try! doc.put(obj: ObjId.ROOT, key: "count", value: 5)
+        try! doc.put(obj: ObjId.ROOT, key: "uuid", value: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")
+        try! doc.put(obj: ObjId.ROOT, key: "url", value: "http://url.com")
         try! doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(-905182980))
         try! doc.put(obj: ObjId.ROOT, key: "data", value: .Bytes(Data("hello".utf8)))
 
@@ -24,9 +24,9 @@ final class AutomergeDecoderTests: XCTestCase {
 
         let votes = try! doc.putObject(obj: ObjId.ROOT, key: "votes", ty: .List)
         setupCache["votes"] = votes
-        try! doc.insert(obj: votes, index: 0, value: .Int(3))
-        try! doc.insert(obj: votes, index: 1, value: .Int(4))
-        try! doc.insert(obj: votes, index: 2, value: .Int(5))
+        try! doc.insert(obj: votes, index: 0, value: 3)
+        try! doc.insert(obj: votes, index: 1, value: 4)
+        try! doc.insert(obj: votes, index: 2, value: 5)
 
         let list = try! doc.putObject(obj: ObjId.ROOT, key: "list", ty: .List)
         setupCache["list"] = list

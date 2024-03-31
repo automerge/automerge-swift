@@ -4,10 +4,10 @@ import XCTest
 class HistoryTests: XCTestCase {
     func testHeadsDuringChanges() throws {
         let doc = Document()
-        try doc.put(obj: ObjId.ROOT, key: "key", value: .String("one"))
+        try doc.put(obj: ObjId.ROOT, key: "key", value: "one")
         XCTAssertEqual(doc.heads().count, 1)
 
-        try doc.put(obj: ObjId.ROOT, key: "key", value: .String("two"))
+        try doc.put(obj: ObjId.ROOT, key: "key", value: "two")
         XCTAssertEqual(doc.heads().count, 1)
 
         let replicaDoc = doc.fork()
@@ -15,8 +15,8 @@ class HistoryTests: XCTestCase {
         XCTAssertEqual(replicaDoc.heads().count, 1)
         XCTAssertEqual(doc.heads(), replicaDoc.heads())
 
-        try doc.put(obj: ObjId.ROOT, key: "newkey", value: .String("beta"))
-        try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: .String("alpha"))
+        try doc.put(obj: ObjId.ROOT, key: "newkey", value: "beta")
+        try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: "alpha")
         XCTAssertEqual(doc.heads().count, 1)
         XCTAssertEqual(replicaDoc.heads().count, 1)
         XCTAssertNotEqual(doc.heads(), replicaDoc.heads())
@@ -33,22 +33,22 @@ class HistoryTests: XCTestCase {
 
     func testChangeCountsInHeadsAndChanges() throws {
         let doc = Document()
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("one"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "one")
         XCTAssertEqual(doc.getHistory().count, 1)
 
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("two"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "two")
         XCTAssertEqual(doc.getHistory().count, 2)
 
         let replicaDoc = doc.fork()
         XCTAssertEqual(doc.heads(), replicaDoc.heads())
         XCTAssertEqual(doc.getHistory(), replicaDoc.getHistory())
 
-        try! doc.put(obj: ObjId.ROOT, key: "key", value: .String("three"))
+        try! doc.put(obj: ObjId.ROOT, key: "key", value: "three")
         XCTAssertEqual(doc.getHistory().count, 3)
         XCTAssertEqual(replicaDoc.getHistory().count, 2)
 
-        try doc.put(obj: ObjId.ROOT, key: "newkey", value: .String("beta"))
-        try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: .String("alpha"))
+        try doc.put(obj: ObjId.ROOT, key: "newkey", value: "beta")
+        try replicaDoc.put(obj: ObjId.ROOT, key: "newkey", value: "alpha")
         XCTAssertEqual(doc.getHistory().count, 4)
         XCTAssertEqual(replicaDoc.getHistory().count, 3)
 
