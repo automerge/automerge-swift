@@ -372,6 +372,13 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                 }
             }
             impl.mapKeysWritten.append(key.stringValue)
+        case is URL.Type:
+            let downcastData = value as! URL
+            if impl.cautiousWrite {
+                try checkTypeMatch(value: value, objectId: objectId, key: key, type: .uint)
+            }
+            try document.put(obj: objectId, key: key.stringValue, value: downcastData.toScalarValue())
+            impl.mapKeysWritten.append(key.stringValue)
         default:
             let newEncoder = AutomergeEncoderImpl(
                 userInfo: impl.userInfo,

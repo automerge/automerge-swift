@@ -14,6 +14,7 @@ final class AutomergeDecoderTests: XCTestCase {
         try! doc.put(obj: ObjId.ROOT, key: "flag", value: .Boolean(true))
         try! doc.put(obj: ObjId.ROOT, key: "count", value: .Int(5))
         try! doc.put(obj: ObjId.ROOT, key: "uuid", value: .String("99CEBB16-1062-4F21-8837-CF18EC09DCD7"))
+        try! doc.put(obj: ObjId.ROOT, key: "url", value: .String("http://url.com"))
         try! doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(-905182980))
         try! doc.put(obj: ObjId.ROOT, key: "data", value: .Bytes(Data("hello".utf8)))
 
@@ -47,6 +48,7 @@ final class AutomergeDecoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
+            let url: URL
             let notes: AutomergeText
         }
         let decoder = AutomergeDecoder(doc: doc)
@@ -59,6 +61,7 @@ final class AutomergeDecoderTests: XCTestCase {
         XCTAssertEqual(decodedStruct.duration, 3.14159, accuracy: 0.0001)
         XCTAssertTrue(decodedStruct.flag)
         XCTAssertEqual(decodedStruct.count, 5)
+        XCTAssertEqual(decodedStruct.url, URL(string: "http://url.com"))
 
         let expectedUUID = UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!
         XCTAssertEqual(decodedStruct.uuid, expectedUUID)
