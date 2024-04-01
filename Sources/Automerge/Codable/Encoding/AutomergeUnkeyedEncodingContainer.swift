@@ -71,6 +71,13 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
         }
 
         switch value {
+        case let url as URL:
+            let valueToWrite = url.toScalarValue()
+            if impl.cautiousWrite {
+                try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .string)
+            }
+            try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
         case let date as Date:
             // Capture and override the default encodable pathing for Date since
             // Automerge supports it as a primitive value type.

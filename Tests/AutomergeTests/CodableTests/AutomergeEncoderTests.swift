@@ -389,4 +389,22 @@ final class AutomergeEncoderTests: XCTestCase {
         let model: TestModel? = TestModel(notes: ["Hello"])
         XCTAssertNoThrow(try automergeEncoder.encode(model))
     }
+
+    func testURLListTypeEncode() throws {
+        let doc = Document()
+        let automergeEncoder = AutomergeEncoder(doc: doc)
+
+        struct TestModel: Codable {
+            var urls: [URL]
+        }
+
+        let model: TestModel? = TestModel(urls: [URL(string: "url.com")!])
+        try automergeEncoder.encode(model)
+        if case let .Object(listNode, .List) = try doc.get(obj: ObjId.ROOT, key: "urls")
+        {
+            XCTAssertEqual(try doc.get(obj: listNode, index: 0), .Scalar(.String("url.com")))
+        } else {
+            try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "urls")))")
+        }
+    }
 }
