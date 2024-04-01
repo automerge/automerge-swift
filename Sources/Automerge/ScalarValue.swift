@@ -17,7 +17,7 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
     case F64(Double)
     /// An integer counter.
     case Counter(Int64)
-    /// A 64-bit signed integer representing milliseconds since the unix epoch
+    /// A 64-bit signed integer that represents the number of milliseconds since the UNIX epoch.
     case Timestamp(Date)
     /// A Boolean value.
     case Boolean(Bool)
