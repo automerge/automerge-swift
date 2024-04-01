@@ -121,9 +121,9 @@ struct AutomergeUnkeyedDecodingContainer: UnkeyedDecodingContainer {
         switch T.self {
         case is Date.Type:
             let retrievedValue = try getNextValue(ofType: Date.self)
-            if case let Value.Scalar(.Timestamp(intValue)) = retrievedValue {
+            if case let Value.Scalar(.Timestamp(date)) = retrievedValue {
                 currentIndex += 1
-                return Date(timeIntervalSince1970: Double(intValue)) as! T
+                return date as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

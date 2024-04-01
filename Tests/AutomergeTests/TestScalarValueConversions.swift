@@ -68,12 +68,12 @@ class TestScalarValueConversions: XCTestCase {
     func testScalarTimestampConversion() throws {
         let myDate = Date(timeIntervalSince1970: 1679517444)
 
-        let initial: Value = .Scalar(.Timestamp(1679517444))
+        let initial: Value = .Scalar(.Timestamp(myDate))
         let converted: Date = try Date.fromValue(initial).get()
         XCTAssertEqual(myDate, converted)
 
         XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
 
-        XCTAssertEqual(myDate.toScalarValue(), ScalarValue.Timestamp(1679517444))
+        XCTAssertEqual(myDate.toScalarValue(), .Timestamp(myDate))
     }
 }

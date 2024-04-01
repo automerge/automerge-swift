@@ -33,15 +33,13 @@ final class AutomergeEncoderTests: XCTestCase {
         }
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
-        let dateFormatter = ISO8601DateFormatter()
-        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
 
         let sample = SimpleStruct(
             name: "henry",
             duration: 3.14159,
             flag: true,
             count: 5,
-            date: earlyDate,
+            date: Date(timeIntervalSince1970: 0),
             data: Data("hello".utf8),
             uuid: UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!,
             url: URL(string: "http://url.com")!,
@@ -75,7 +73,7 @@ final class AutomergeEncoderTests: XCTestCase {
         }
 
         if case let .Scalar(.Timestamp(timestamp_value)) = try doc.get(obj: ObjId.ROOT, key: "date") {
-            XCTAssertEqual(timestamp_value, -905182980)
+            XCTAssertEqual(timestamp_value, Date(timeIntervalSince1970: 0))
         } else {
             try XCTFail("Didn't find: \(String(describing: doc.get(obj: ObjId.ROOT, key: "date")))")
         }
