@@ -139,8 +139,8 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
     func decode<T>(_: T.Type) throws -> T where T: Decodable {
         switch T.self {
         case is Date.Type:
-            if case let .Scalar(.Timestamp(intValue)) = value {
-                return Date(timeIntervalSince1970: Double(intValue)) as! T
+            if case let .Scalar(.Timestamp(date)) = value {
+                return date as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,

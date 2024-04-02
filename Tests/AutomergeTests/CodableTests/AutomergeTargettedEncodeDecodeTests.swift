@@ -82,9 +82,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         let doc = Document()
         trackForMemoryLeak(instance: doc)
 
-        let dateFormatter = ISO8601DateFormatter()
-        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
-        try doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(-905182980))
+        let earlyDate = Date(timeIntervalSince1970: 0)
+        try doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(earlyDate))
 
         let automergeDecoder = AutomergeDecoder(doc: doc)
         let decodedDate = try automergeDecoder.decode(Date.self, from: [AnyCodingKey("date")])

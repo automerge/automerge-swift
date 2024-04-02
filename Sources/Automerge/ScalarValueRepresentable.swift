@@ -451,13 +451,13 @@ extension Date: ScalarValueRepresentable {
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Date, TimestampScalarConversionError> {
         switch val {
         case let .Timestamp(d):
-            return .success(Date(timeIntervalSince1970: TimeInterval(d)))
+            return .success(d)
         default:
-            return .failure(TimestampScalarConversionError.notTimetampScalarValue(val))
+            return .failure(.notTimetampScalarValue(val))
         }
     }
 
     public func toScalarValue() -> ScalarValue {
-        .Timestamp(Int64(timeIntervalSince1970))
+        .Timestamp(self)
     }
 }

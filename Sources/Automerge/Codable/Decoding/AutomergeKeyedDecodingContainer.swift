@@ -129,8 +129,8 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
         switch T.self {
         case is Date.Type:
             let retrievedValue = try getValue(forKey: key)
-            if case let Value.Scalar(.Timestamp(intValue)) = retrievedValue {
-                return Date(timeIntervalSince1970: Double(intValue)) as! T
+            if case let Value.Scalar(.Timestamp(date)) = retrievedValue {
+                return date as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
