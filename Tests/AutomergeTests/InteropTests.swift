@@ -1,6 +1,15 @@
-@testable import Automerge
+import Automerge
 import Foundation
 import XCTest
+
+extension Data {
+    /// Returns the data as a hex-encoded string.
+    /// - Parameter uppercase: A Boolean value that indicates whether the hex encoded string uses uppercase letters.
+    func hexEncodedString(uppercase: Bool = false) -> String {
+        let format = uppercase ? "%02hhX" : "%02hhx"
+        return map { String(format: format, $0) }.joined()
+    }
+}
 
 @available(macOS 12, iOS 16, *)
 class InteropTests: XCTestCase {
@@ -40,6 +49,48 @@ class InteropTests: XCTestCase {
 
     func testFixtureFileLoad() throws {
         XCTAssertNotNil(markdownData)
+    }
+    
+    struct ExemplarStructure: Codable, Equatable {
+        var title: String
+        var notes: AutomergeText
+        var timestamp: Date
+        var location: URL
+        var counter: Counter
+        var int: Int
+        var uint: UInt
+        var fp: Double
+        var bytes: Data
+        var bool: Bool
+    }
+    
+    func testExemplarAutomergeDocRepresentations() throws {
+        guard let data = try dataFrom(resource: "exemplar") else {
+            XCTFail("Unable to load exemplar fixture")
+            return
+        }
+        let doc = try Document(data)
+        let decoder = AutomergeDecoder(doc: doc)
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions.insert(.withFractionalSeconds)
+        let expectedDate = formatter.date(from: "1941-04-26T08:17:00.123Z")
+        
+        let magicValue: String = "856f4a83"
+        // hex values for the magic value of an Automerge document
+        
+        let exemplar = try decoder.decode(ExemplarStructure.self)
+        
+        XCTAssertEqual(exemplar.timestamp, expectedDate)
+        XCTAssertEqual(exemplar.title, "Hello 🇬🇧👨‍👨‍👧‍👦😀")
+        XCTAssertEqual(exemplar.notes.value, "🇬🇧👨‍👨‍👧‍👦😀")
+        XCTAssertEqual(exemplar.location, URL(string: "https://automerge.org/")!)
+        XCTAssertEqual(exemplar.counter.value, 5)
+        XCTAssertEqual(exemplar.int, -4)
+        XCTAssertEqual(exemplar.uint, UInt(UInt64.max))
+        XCTAssertEqual(exemplar.fp, 3.14159267, accuracy: 0.0000001)
+        XCTAssertEqual(exemplar.bytes.hexEncodedString(), magicValue)
+        XCTAssertEqual(exemplar.bool, true)
     }
 
     func testAttributedStringParse() throws {
