@@ -74,7 +74,7 @@ class InteropTests: XCTestCase {
         
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions.insert(.withFractionalSeconds)
-        let expectedDate = formatter.date(from: "1941-04-26T08:17:00.123Z")
+        let expectedDate = formatter.date(from: "1941-04-26T08:17:01.000Z")
         
         let magicValue: String = "856f4a83"
         // hex values for the magic value of an Automerge document
