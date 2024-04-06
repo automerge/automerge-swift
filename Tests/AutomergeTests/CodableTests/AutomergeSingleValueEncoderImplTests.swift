@@ -197,12 +197,11 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
     }
 
     func testSimpleKeyEncode_Date() throws {
-        let dateFormatter = ISO8601DateFormatter()
-        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
+        let earlyDate = Date(timeIntervalSince1970: 0)
         try singleValueContainer.encode(earlyDate)
-        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Timestamp(-905182980)))
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Timestamp(Date(timeIntervalSince1970: 0))))
 
-        let anotherDate = dateFormatter.date(from: "1942-04-26T08:17:00Z")!
+        let anotherDate = Date(timeIntervalSince1970: 10)
         try cautiousSingleValueContainer.encode(anotherDate)
     }
 

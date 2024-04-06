@@ -7,7 +7,9 @@ use automerge::{transaction::Transactable, ReadDoc};
 use crate::actor_id::ActorId;
 use crate::mark::{ExpandMark, Mark};
 use crate::patches::Patch;
-use crate::{ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value};
+use crate::{
+    Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
+};
 
 #[derive(Debug, thiserror::Error)]
 pub enum DocError {
@@ -495,6 +497,16 @@ impl Doc {
         })
     }
 
+    pub fn commit_with(&self, message: Option<String>, time: i64) {
+        let mut doc = self.0.write().unwrap();
+        let mut options = automerge::transaction::CommitOptions::default();
+        options.set_time(time);
+        if let Some(message) = message {
+            options.set_message(message);
+        }
+        doc.commit_with(options);
+    }
+
     pub fn save(&self) -> Vec<u8> {
         let mut doc = self.0.write().unwrap();
         doc.save()
@@ -571,6 +583,12 @@ impl Doc {
         let mut doc = self.0.write().unwrap();
         let changes = doc.get_changes(&empty_heads);
         changes.into_iter().map(|h| h.hash().into()).collect()
+    }
+
+    pub fn change_by_hash(&self, hash: ChangeHash) -> Option<Change> {
+        let doc = self.0.write().unwrap();
+        doc.get_change_by_hash(&am::ChangeHash::from(hash))
+            .map(|m| Change::from(m.clone()))
     }
 
     pub fn path(&self, obj: ObjId) -> Result<Vec<PathElement>, DocError> {

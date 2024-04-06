@@ -24,12 +24,10 @@
 
 typedef struct RustBuffer
 {
-    int32_t capacity;
-    int32_t len;
+    uint64_t capacity;
+    uint64_t len;
     uint8_t *_Nullable data;
 } RustBuffer;
-
-typedef int32_t (*ForeignCallback)(uint64_t, int32_t, const uint8_t *_Nonnull, int32_t, RustBuffer *_Nonnull);
 
 typedef struct ForeignBytes
 {
@@ -46,460 +44,1257 @@ typedef struct RustCallStatus {
 // ⚠️ Attention: If you change this #else block (ending in `#endif // def UNIFFI_SHARED_H`) you *must* ⚠️
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
+#ifndef UNIFFI_FFIDEF_RUST_FUTURE_CONTINUATION_CALLBACK
+#define UNIFFI_FFIDEF_RUST_FUTURE_CONTINUATION_CALLBACK
+typedef void (*UniffiRustFutureContinuationCallback)(uint64_t, int8_t
+    );
 
-// Continuation callback for UniFFI Futures
-typedef void (*UniFfiRustFutureContinuation)(void * _Nonnull, int8_t);
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_FREE
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_FREE
+typedef void (*UniffiForeignFutureFree)(uint64_t
+    );
 
-// Scaffolding functions
+#endif
+#ifndef UNIFFI_FFIDEF_CALLBACK_INTERFACE_FREE
+#define UNIFFI_FFIDEF_CALLBACK_INTERFACE_FREE
+typedef void (*UniffiCallbackInterfaceFree)(uint64_t
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE
+typedef struct UniffiForeignFuture {
+    uint64_t handle;
+    UniffiForeignFutureFree _Nonnull free;
+} UniffiForeignFuture;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U8
+typedef struct UniffiForeignFutureStructU8 {
+    uint8_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU8;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U8
+typedef void (*UniffiForeignFutureCompleteU8)(uint64_t, UniffiForeignFutureStructU8
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I8
+typedef struct UniffiForeignFutureStructI8 {
+    int8_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI8;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I8
+typedef void (*UniffiForeignFutureCompleteI8)(uint64_t, UniffiForeignFutureStructI8
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U16
+typedef struct UniffiForeignFutureStructU16 {
+    uint16_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU16;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U16
+typedef void (*UniffiForeignFutureCompleteU16)(uint64_t, UniffiForeignFutureStructU16
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I16
+typedef struct UniffiForeignFutureStructI16 {
+    int16_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI16;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I16
+typedef void (*UniffiForeignFutureCompleteI16)(uint64_t, UniffiForeignFutureStructI16
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U32
+typedef struct UniffiForeignFutureStructU32 {
+    uint32_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U32
+typedef void (*UniffiForeignFutureCompleteU32)(uint64_t, UniffiForeignFutureStructU32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I32
+typedef struct UniffiForeignFutureStructI32 {
+    int32_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I32
+typedef void (*UniffiForeignFutureCompleteI32)(uint64_t, UniffiForeignFutureStructI32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U64
+typedef struct UniffiForeignFutureStructU64 {
+    uint64_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U64
+typedef void (*UniffiForeignFutureCompleteU64)(uint64_t, UniffiForeignFutureStructU64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I64
+typedef struct UniffiForeignFutureStructI64 {
+    int64_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I64
+typedef void (*UniffiForeignFutureCompleteI64)(uint64_t, UniffiForeignFutureStructI64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F32
+typedef struct UniffiForeignFutureStructF32 {
+    float returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructF32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F32
+typedef void (*UniffiForeignFutureCompleteF32)(uint64_t, UniffiForeignFutureStructF32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F64
+typedef struct UniffiForeignFutureStructF64 {
+    double returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructF64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F64
+typedef void (*UniffiForeignFutureCompleteF64)(uint64_t, UniffiForeignFutureStructF64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_POINTER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_POINTER
+typedef struct UniffiForeignFutureStructPointer {
+    void*_Nonnull returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructPointer;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_POINTER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_POINTER
+typedef void (*UniffiForeignFutureCompletePointer)(uint64_t, UniffiForeignFutureStructPointer
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_RUST_BUFFER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_RUST_BUFFER
+typedef struct UniffiForeignFutureStructRustBuffer {
+    RustBuffer returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructRustBuffer;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_RUST_BUFFER
+typedef void (*UniffiForeignFutureCompleteRustBuffer)(uint64_t, UniffiForeignFutureStructRustBuffer
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_VOID
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_VOID
+typedef struct UniffiForeignFutureStructVoid {
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructVoid;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_VOID
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_VOID
+typedef void (*UniffiForeignFutureCompleteVoid)(uint64_t, UniffiForeignFutureStructVoid
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_DOC
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_DOC
 void*_Nonnull uniffi_uniffi_automerge_fn_clone_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_DOC
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_DOC
 void uniffi_uniffi_automerge_fn_free_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_LOAD
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_LOAD
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_load(RustBuffer bytes, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new(RustCallStatus *_Nonnull out_status
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new_with_actor(RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ACTOR_ID
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ACTOR_ID
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_actor_id(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_APPLY_ENCODED_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_APPLY_ENCODED_CHANGES
 void uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_APPLY_ENCODED_CHANGES_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_APPLY_ENCODED_CHANGES_WITH_PATCHES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(void*_Nonnull ptr, RustBuffer changes, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CHANGE_BY_HASH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CHANGE_BY_HASH
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_change_by_hash(void*_Nonnull ptr, RustBuffer hash, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CHANGES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_COMMIT_WITH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_COMMIT_WITH
+void uniffi_uniffi_automerge_fn_method_doc_commit_with(void*_Nonnull ptr, RustBuffer msg, int64_t time, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION
 uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION_AT
 uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DELETE_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DELETE_IN_LIST
 void uniffi_uniffi_automerge_fn_method_doc_delete_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DELETE_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DELETE_IN_MAP
 void uniffi_uniffi_automerge_fn_method_doc_delete_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_CHANGES_SINCE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_CHANGES_SINCE
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_encode_changes_since(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_NEW_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_NEW_CHANGES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_encode_new_changes(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_FORK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_FORK
 void*_Nonnull uniffi_uniffi_automerge_fn_method_doc_fork(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_FORK_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_FORK_AT
 void*_Nonnull uniffi_uniffi_automerge_fn_method_doc_fork_at(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GENERATE_SYNC_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GENERATE_SYNC_MESSAGE
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_generate_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_AT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_AT_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_AT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_AT_IN_MAP
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_ALL_IN_MAP
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_all_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_AT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_AT_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_at_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_AT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_AT_IN_MAP
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_at_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_GET_IN_MAP
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_get_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_HEADS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_HEADS
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INCREMENT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INCREMENT_IN_LIST
 void uniffi_uniffi_automerge_fn_method_doc_increment_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, int64_t by, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INCREMENT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INCREMENT_IN_MAP
 void uniffi_uniffi_automerge_fn_method_doc_increment_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, int64_t by, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INSERT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INSERT_IN_LIST
 void uniffi_uniffi_automerge_fn_method_doc_insert_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INSERT_OBJECT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_INSERT_OBJECT_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH
 uint64_t uniffi_uniffi_automerge_fn_method_doc_length(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH_AT
 uint64_t uniffi_uniffi_automerge_fn_method_doc_length_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_ENTRIES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_ENTRIES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_entries(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_ENTRIES_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_ENTRIES_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_entries_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_KEYS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_KEYS
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_keys(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_KEYS_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MAP_KEYS_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_map_keys_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARK
 void uniffi_uniffi_automerge_fn_method_doc_mark(void*_Nonnull ptr, RustBuffer obj, uint64_t start, uint64_t end, RustBuffer expand, RustBuffer name, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE
 void uniffi_uniffi_automerge_fn_method_doc_merge(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE_WITH_PATCHES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_merge_with_patches(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_OBJECT_TYPE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_OBJECT_TYPE
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_object_type(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PATH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PATH
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_path(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_IN_LIST
 void uniffi_uniffi_automerge_fn_method_doc_put_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_IN_MAP
 void uniffi_uniffi_automerge_fn_method_doc_put_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer value, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_OBJECT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_OBJECT_IN_LIST
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_put_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_OBJECT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_PUT_OBJECT_IN_MAP
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_put_object_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_RECEIVE_SYNC_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_RECEIVE_SYNC_MESSAGE
 void uniffi_uniffi_automerge_fn_method_doc_receive_sync_message(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_RECEIVE_SYNC_MESSAGE_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_RECEIVE_SYNC_MESSAGE_WITH_PATCHES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(void*_Nonnull ptr, void*_Nonnull state, RustBuffer msg, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SAVE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SAVE
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_save(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SET_ACTOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SET_ACTOR
 void uniffi_uniffi_automerge_fn_method_doc_set_actor(void*_Nonnull ptr, RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE
 void uniffi_uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer values, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE_TEXT
 void uniffi_uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer chars, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_text(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_text_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_UPDATE_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_UPDATE_TEXT
 void uniffi_uniffi_automerge_fn_method_doc_update_text(void*_Nonnull ptr, RustBuffer obj, RustBuffer chars, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_VALUES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_VALUES
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_values(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_VALUES_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_VALUES_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_values_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_SYNCSTATE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_SYNCSTATE
 void*_Nonnull uniffi_uniffi_automerge_fn_clone_syncstate(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_SYNCSTATE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_SYNCSTATE
 void uniffi_uniffi_automerge_fn_free_syncstate(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_SYNCSTATE_DECODE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_SYNCSTATE_DECODE
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_syncstate_decode(RustBuffer bytes, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_SYNCSTATE_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_SYNCSTATE_NEW
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_syncstate_new(RustCallStatus *_Nonnull out_status
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_ENCODE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_ENCODE
 RustBuffer uniffi_uniffi_automerge_fn_method_syncstate_encode(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_RESET
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_RESET
 void uniffi_uniffi_automerge_fn_method_syncstate_reset(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_THEIR_HEADS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_SYNCSTATE_THEIR_HEADS
 RustBuffer uniffi_uniffi_automerge_fn_method_syncstate_their_heads(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FUNC_ROOT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FUNC_ROOT
 RustBuffer uniffi_uniffi_automerge_fn_func_root(RustCallStatus *_Nonnull out_status
     
 );
-RustBuffer ffi_uniffi_automerge_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_ALLOC
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_ALLOC
+RustBuffer ffi_uniffi_automerge_rustbuffer_alloc(uint64_t size, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_FROM_BYTES
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_FROM_BYTES
 RustBuffer ffi_uniffi_automerge_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_FREE
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_FREE
 void ffi_uniffi_automerge_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
 );
-RustBuffer ffi_uniffi_automerge_rustbuffer_reserve(RustBuffer buf, int32_t additional, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_RESERVE
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUSTBUFFER_RESERVE
+RustBuffer ffi_uniffi_automerge_rustbuffer_reserve(RustBuffer buf, uint64_t additional, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_u8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U8
+void ffi_uniffi_automerge_rust_future_poll_u8(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_u8(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U8
+void ffi_uniffi_automerge_rust_future_cancel_u8(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_u8(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U8
+void ffi_uniffi_automerge_rust_future_free_u8(uint64_t handle
 );
-uint8_t ffi_uniffi_automerge_rust_future_complete_u8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U8
+uint8_t ffi_uniffi_automerge_rust_future_complete_u8(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_i8(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I8
+void ffi_uniffi_automerge_rust_future_poll_i8(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_i8(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I8
+void ffi_uniffi_automerge_rust_future_cancel_i8(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_i8(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I8
+void ffi_uniffi_automerge_rust_future_free_i8(uint64_t handle
 );
-int8_t ffi_uniffi_automerge_rust_future_complete_i8(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I8
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I8
+int8_t ffi_uniffi_automerge_rust_future_complete_i8(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_u16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U16
+void ffi_uniffi_automerge_rust_future_poll_u16(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_u16(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U16
+void ffi_uniffi_automerge_rust_future_cancel_u16(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_u16(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U16
+void ffi_uniffi_automerge_rust_future_free_u16(uint64_t handle
 );
-uint16_t ffi_uniffi_automerge_rust_future_complete_u16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U16
+uint16_t ffi_uniffi_automerge_rust_future_complete_u16(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_i16(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I16
+void ffi_uniffi_automerge_rust_future_poll_i16(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_i16(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I16
+void ffi_uniffi_automerge_rust_future_cancel_i16(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_i16(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I16
+void ffi_uniffi_automerge_rust_future_free_i16(uint64_t handle
 );
-int16_t ffi_uniffi_automerge_rust_future_complete_i16(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I16
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I16
+int16_t ffi_uniffi_automerge_rust_future_complete_i16(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_u32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U32
+void ffi_uniffi_automerge_rust_future_poll_u32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_u32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U32
+void ffi_uniffi_automerge_rust_future_cancel_u32(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_u32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U32
+void ffi_uniffi_automerge_rust_future_free_u32(uint64_t handle
 );
-uint32_t ffi_uniffi_automerge_rust_future_complete_u32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U32
+uint32_t ffi_uniffi_automerge_rust_future_complete_u32(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_i32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I32
+void ffi_uniffi_automerge_rust_future_poll_i32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_i32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I32
+void ffi_uniffi_automerge_rust_future_cancel_i32(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_i32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I32
+void ffi_uniffi_automerge_rust_future_free_i32(uint64_t handle
 );
-int32_t ffi_uniffi_automerge_rust_future_complete_i32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I32
+int32_t ffi_uniffi_automerge_rust_future_complete_i32(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_u64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_U64
+void ffi_uniffi_automerge_rust_future_poll_u64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_u64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_U64
+void ffi_uniffi_automerge_rust_future_cancel_u64(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_u64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_U64
+void ffi_uniffi_automerge_rust_future_free_u64(uint64_t handle
 );
-uint64_t ffi_uniffi_automerge_rust_future_complete_u64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_U64
+uint64_t ffi_uniffi_automerge_rust_future_complete_u64(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_i64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_I64
+void ffi_uniffi_automerge_rust_future_poll_i64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_i64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_I64
+void ffi_uniffi_automerge_rust_future_cancel_i64(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_i64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_I64
+void ffi_uniffi_automerge_rust_future_free_i64(uint64_t handle
 );
-int64_t ffi_uniffi_automerge_rust_future_complete_i64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_I64
+int64_t ffi_uniffi_automerge_rust_future_complete_i64(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_f32(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_F32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_F32
+void ffi_uniffi_automerge_rust_future_poll_f32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_f32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_F32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_F32
+void ffi_uniffi_automerge_rust_future_cancel_f32(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_f32(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_F32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_F32
+void ffi_uniffi_automerge_rust_future_free_f32(uint64_t handle
 );
-float ffi_uniffi_automerge_rust_future_complete_f32(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_F32
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_F32
+float ffi_uniffi_automerge_rust_future_complete_f32(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_f64(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_F64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_F64
+void ffi_uniffi_automerge_rust_future_poll_f64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_f64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_F64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_F64
+void ffi_uniffi_automerge_rust_future_cancel_f64(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_f64(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_F64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_F64
+void ffi_uniffi_automerge_rust_future_free_f64(uint64_t handle
 );
-double ffi_uniffi_automerge_rust_future_complete_f64(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_F64
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_F64
+double ffi_uniffi_automerge_rust_future_complete_f64(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_pointer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_POINTER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_POINTER
+void ffi_uniffi_automerge_rust_future_poll_pointer(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_pointer(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_POINTER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_POINTER
+void ffi_uniffi_automerge_rust_future_cancel_pointer(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_pointer(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_POINTER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_POINTER
+void ffi_uniffi_automerge_rust_future_free_pointer(uint64_t handle
 );
-void*_Nonnull ffi_uniffi_automerge_rust_future_complete_pointer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_POINTER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_POINTER
+void*_Nonnull ffi_uniffi_automerge_rust_future_complete_pointer(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_rust_buffer(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_RUST_BUFFER
+void ffi_uniffi_automerge_rust_future_poll_rust_buffer(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_rust_buffer(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_RUST_BUFFER
+void ffi_uniffi_automerge_rust_future_cancel_rust_buffer(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_rust_buffer(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_RUST_BUFFER
+void ffi_uniffi_automerge_rust_future_free_rust_buffer(uint64_t handle
 );
-RustBuffer ffi_uniffi_automerge_rust_future_complete_rust_buffer(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_RUST_BUFFER
+RustBuffer ffi_uniffi_automerge_rust_future_complete_rust_buffer(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
-void ffi_uniffi_automerge_rust_future_poll_void(void* _Nonnull handle, UniFfiRustFutureContinuation _Nonnull callback, void* _Nonnull callback_data
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_VOID
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_POLL_VOID
+void ffi_uniffi_automerge_rust_future_poll_void(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
 );
-void ffi_uniffi_automerge_rust_future_cancel_void(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_VOID
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_CANCEL_VOID
+void ffi_uniffi_automerge_rust_future_cancel_void(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_free_void(void* _Nonnull handle
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_VOID
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_FREE_VOID
+void ffi_uniffi_automerge_rust_future_free_void(uint64_t handle
 );
-void ffi_uniffi_automerge_rust_future_complete_void(void* _Nonnull handle, RustCallStatus *_Nonnull out_status
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_VOID
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_RUST_FUTURE_COMPLETE_VOID
+void ffi_uniffi_automerge_rust_future_complete_void(uint64_t handle, RustCallStatus *_Nonnull out_status
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_FUNC_ROOT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_FUNC_ROOT
 uint16_t uniffi_uniffi_automerge_checksum_func_root(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ACTOR_ID
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ACTOR_ID
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_actor_id(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_APPLY_ENCODED_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_APPLY_ENCODED_CHANGES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_APPLY_ENCODED_CHANGES_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_APPLY_ENCODED_CHANGES_WITH_PATCHES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_apply_encoded_changes_with_patches(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CHANGE_BY_HASH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CHANGE_BY_HASH
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_change_by_hash(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CHANGES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_changes(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_COMMIT_WITH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_COMMIT_WITH
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_commit_with(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ENCODE_CHANGES_SINCE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ENCODE_CHANGES_SINCE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_encode_changes_since(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ENCODE_NEW_CHANGES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_ENCODE_NEW_CHANGES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_encode_new_changes(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_FORK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_FORK
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_fork(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_FORK_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_FORK_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_fork_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GENERATE_SYNC_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GENERATE_SYNC_MESSAGE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_generate_sync_message(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_AT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_AT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_at_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_AT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_AT_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_at_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_ALL_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_all_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_AT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_AT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_at_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_AT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_AT_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_at_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_GET_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_get_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_HEADS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_HEADS
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_heads(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INCREMENT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INCREMENT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_increment_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INCREMENT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INCREMENT_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_increment_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INSERT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INSERT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_insert_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INSERT_OBJECT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_INSERT_OBJECT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_insert_object_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_length(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_length_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_ENTRIES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_ENTRIES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_entries(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_ENTRIES_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_ENTRIES_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_entries_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_KEYS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_KEYS
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_keys(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_KEYS_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MAP_KEYS_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_map_keys_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARK
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_mark(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MERGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MERGE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_merge(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MERGE_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MERGE_WITH_PATCHES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_merge_with_patches(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_OBJECT_TYPE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_OBJECT_TYPE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_object_type(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PATH
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PATH
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_path(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_OBJECT_IN_LIST
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_OBJECT_IN_LIST
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_object_in_list(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_OBJECT_IN_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_PUT_OBJECT_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_put_object_in_map(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_RECEIVE_SYNC_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_RECEIVE_SYNC_MESSAGE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_receive_sync_message(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_RECEIVE_SYNC_MESSAGE_WITH_PATCHES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_RECEIVE_SYNC_MESSAGE_WITH_PATCHES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_receive_sync_message_with_patches(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SAVE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SAVE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_save(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SET_ACTOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SET_ACTOR
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_set_actor(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE_TEXT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice_text(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_text(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_text_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_UPDATE_TEXT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_UPDATE_TEXT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_update_text(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_VALUES
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_VALUES
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_values(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_VALUES_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_VALUES_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_values_at(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_ENCODE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_ENCODE
 uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_encode(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_RESET
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_RESET
 uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_reset(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_THEIR_HEADS
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_THEIR_HEADS
 uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_their_heads(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_LOAD
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_LOAD
 uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_load(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW
 uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
 uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new_with_actor(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_SYNCSTATE_DECODE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_SYNCSTATE_DECODE
 uint16_t uniffi_uniffi_automerge_checksum_constructor_syncstate_decode(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_SYNCSTATE_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_SYNCSTATE_NEW
 uint16_t uniffi_uniffi_automerge_checksum_constructor_syncstate_new(void
     
 );
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_UNIFFI_CONTRACT_VERSION
+#define UNIFFI_FFIDEF_FFI_UNIFFI_AUTOMERGE_UNIFFI_CONTRACT_VERSION
 uint32_t ffi_uniffi_automerge_uniffi_contract_version(void
     
 );
+#endif
 

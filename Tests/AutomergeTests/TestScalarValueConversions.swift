@@ -3,77 +3,77 @@ import XCTest
 
 class TestScalarValueConversions: XCTestCase {
     func testScalarBooleanConversion() throws {
-        let initial: Value = .Scalar(.Boolean(true))
-        let converted: Bool = try Bool.fromValue(initial).get()
+        let initial: ScalarValue = .Boolean(true)
+        let converted: Bool = try Bool.fromScalarValue(initial).get()
         XCTAssertEqual(true, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try Bool.fromScalarValue(.Int(1)).get())
 
-        XCTAssertEqual(true.toScalarValue(), ScalarValue.Boolean(true))
+        XCTAssertEqual(true.toScalarValue(), .Boolean(true))
     }
 
     func testScalarStringConversion() throws {
-        let initial: Value = .Scalar(.String("hello"))
-        let converted: String = try String.fromValue(initial).get()
+        let initial: ScalarValue = .String("hello")
+        let converted: String = try String.fromScalarValue(initial).get()
         XCTAssertEqual("hello", converted)
 
-        XCTAssertThrowsError(try String.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try String.fromScalarValue(.Int(1)).get())
 
-        XCTAssertEqual("hello".toScalarValue(), ScalarValue.String("hello"))
+        XCTAssertEqual("hello".toScalarValue(), .String("hello"))
     }
 
     func testScalarBytesConversion() throws {
         let myData = "Hello There!".data(using: .utf8)!
 
-        let initial: Value = .Scalar(.Bytes(myData))
-        let converted: Data = try Data.fromValue(initial).get()
+        let initial: ScalarValue = .Bytes(myData)
+        let converted: Data = try Data.fromScalarValue(initial).get()
         XCTAssertEqual(myData, converted)
 
-        XCTAssertThrowsError(try Data.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try Data.fromScalarValue(.Int(1)).get())
 
         XCTAssertEqual(myData.toScalarValue(), ScalarValue.Bytes(myData))
     }
 
     func testScalarUIntConversion() throws {
-        let initial: Value = .Scalar(.Uint(5))
-        let converted: UInt = try UInt.fromValue(initial).get()
+        let initial: ScalarValue = .Uint(5)
+        let converted: UInt = try UInt.fromScalarValue(initial).get()
         XCTAssertEqual(5, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Int(1))).get())
+        XCTAssertThrowsError(try UInt.fromScalarValue(.String("1")).get())
 
         let explicitUInt: UInt = 5
         XCTAssertEqual(explicitUInt.toScalarValue(), ScalarValue.Uint(5))
     }
 
     func testScalarIntConversion() throws {
-        let initial: Value = .Scalar(.Int(5))
-        let converted: Int = try Int.fromValue(initial).get()
+        let initial: ScalarValue = .Int(5)
+        let converted: Int = try Int.fromScalarValue(initial).get()
         XCTAssertEqual(5, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
+        XCTAssertThrowsError(try Int.fromScalarValue(.String("1")).get())
 
-        XCTAssertEqual(5.toScalarValue(), ScalarValue.Int(5))
+        XCTAssertEqual(5.toScalarValue(), .Int(5))
     }
 
     func testScalarDoubleConversion() throws {
-        let initial: Value = .Scalar(.F64(5))
-        let converted: Double = try Double.fromValue(initial).get()
+        let initial: ScalarValue = .F64(5)
+        let converted: Double = try Double.fromScalarValue(initial).get()
         XCTAssertEqual(5.0, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
+        XCTAssertThrowsError(try Double.fromScalarValue(.String("1")).get())
 
-        XCTAssertEqual(5.0.toScalarValue(), ScalarValue.F64(5))
+        XCTAssertEqual(5.0.toScalarValue(), .F64(5))
     }
 
     func testScalarTimestampConversion() throws {
-        let myDate = Date(timeIntervalSince1970: 1679517444)
+        let myDate = Date()
 
-        let initial: Value = .Scalar(.Timestamp(1679517444))
-        let converted: Date = try Date.fromValue(initial).get()
+        let initial: ScalarValue = .Timestamp(myDate)
+        let converted: Date = try Date.fromScalarValue(initial).get()
         XCTAssertEqual(myDate, converted)
 
-        XCTAssertThrowsError(try Bool.fromValue(.Scalar(.Uint(1))).get())
+        XCTAssertThrowsError(try Date.fromScalarValue(.String("1")).get())
 
-        XCTAssertEqual(myDate.toScalarValue(), ScalarValue.Timestamp(1679517444))
+        XCTAssertEqual(myDate.toScalarValue(), .Timestamp(myDate))
     }
 }

@@ -25,16 +25,6 @@ public protocol ScalarValueRepresentable {
     associatedtype ConvertError: LocalizedError
 
     /// Converts the Automerge representation to a local type, or returns a failure.
-    /// - Parameter val: The Automerge ``Value`` to be converted as a scalar value into a local type.
-    /// - Returns: The type, converted to a local type, or an error indicating the reason for the failure to convert.
-    ///
-    /// The protocol accepts defines a function to accept a ``Value`` primarily for convenience.
-    /// ``Value`` is a higher level enumeration that also includes object types such as ``ObjType/List``,
-    /// ``ObjType/Map``,
-    /// and ``ObjType/Text``.
-    static func fromValue(_ val: Value) -> Result<Self, ConvertError>
-
-    /// Converts the Automerge representation to a local type, or returns a failure.
     /// - Parameter val: The Automerge ``ScalarValue`` to be converted into a local type.
     /// - Returns: The local type, or an error indicating the reason for the failure to convert.
     static func fromScalarValue(_ val: ScalarValue) -> Result<Self, ConvertError>
@@ -48,14 +38,11 @@ public protocol ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from a Boolean representation.
 public enum BooleanScalarConversionError: LocalizedError {
-    case notboolValue(_ val: Value)
     case notboolScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notboolValue(val):
-            return "Failed to read the value \(val) as a Boolean."
         case let .notboolScalarValue(val):
             return "Failed to read the scalar value \(val) as a Boolean."
         }
@@ -66,23 +53,13 @@ public enum BooleanScalarConversionError: LocalizedError {
 }
 
 extension Bool: ScalarValueRepresentable {
-    public typealias ConvertError = BooleanScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Self, BooleanScalarConversionError> {
-        switch val {
-        case let .Scalar(.Boolean(b)):
-            return .success(b)
-        default:
-            return .failure(BooleanScalarConversionError.notboolValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Bool, BooleanScalarConversionError> {
         switch val {
         case let .Boolean(b):
             return .success(b)
         default:
-            return .failure(BooleanScalarConversionError.notboolScalarValue(val))
+            return .failure(.notboolScalarValue(val))
         }
     }
 
@@ -91,18 +68,57 @@ extension Bool: ScalarValueRepresentable {
     }
 }
 
+// MARK: URL Conversions
+
+/// A failure to convert an Automerge scalar value to or from a Boolean representation.
+public enum URLScalarConversionError: LocalizedError {
+    case notStringScalarValue(_ val: ScalarValue)
+    case notMatchingURLScheme(String)
+
+    /// A localized message describing what error occurred.
+    public var errorDescription: String? {
+        switch self {
+        case .notStringScalarValue(let scalarValue):
+            return "Failed to read the scalar value \(scalarValue) as a String before converting to URL."
+        case .notMatchingURLScheme(let string):
+            return "Failed to convert the string \(string) to URL."
+        }
+    }
+
+    /// A localized message describing the reason for the failure.
+    public var failureReason: String? { nil }
+}
+
+extension URL: ScalarValueRepresentable {
+
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<URL, URLScalarConversionError> {
+        switch val {
+        case let .String(urlString):
+            if let url = URL(string: urlString) {
+                return .success(url)
+            } else {
+                return .failure(.notMatchingURLScheme(urlString))
+            }
+        default:
+            return .failure(.notStringScalarValue(val))
+        }
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        .String(self.absoluteString)
+    }
+}
+
+
 // MARK: String Conversions
 
 /// A failure to convert an Automerge scalar value to or from a String representation.
 public enum StringScalarConversionError: LocalizedError {
-    case notstringValue(_ val: Value)
     case notstringScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notstringValue(val):
-            return "Failed to read the value \(val) as a String."
         case let .notstringScalarValue(val):
             return "Failed to read the scalar value \(val) as a String."
         }
@@ -113,23 +129,13 @@ public enum StringScalarConversionError: LocalizedError {
 }
 
 extension String: ScalarValueRepresentable {
-    public typealias ConvertError = StringScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<String, StringScalarConversionError> {
-        switch val {
-        case let .Scalar(.String(s)):
-            return .success(s)
-        default:
-            return .failure(StringScalarConversionError.notstringValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<String, StringScalarConversionError> {
         switch val {
         case let .String(s):
             return .success(s)
         default:
-            return .failure(StringScalarConversionError.notstringScalarValue(val))
+            return .failure(.notstringScalarValue(val))
         }
     }
 
@@ -142,14 +148,11 @@ extension String: ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from a byte representation.
 public enum BytesScalarConversionError: LocalizedError {
-    case notbytesValue(_ val: Value)
     case notbytesScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notbytesValue(val):
-            return "Failed to read the value \(val) as a bytes."
         case let .notbytesScalarValue(val):
             return "Failed to read the scalar value \(val) as a bytes."
         }
@@ -160,16 +163,6 @@ public enum BytesScalarConversionError: LocalizedError {
 }
 
 extension Data: ScalarValueRepresentable {
-    public typealias ConvertError = BytesScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Data, BytesScalarConversionError> {
-        switch val {
-        case let .Scalar(.Bytes(d)):
-            return .success(d)
-        default:
-            return .failure(BytesScalarConversionError.notbytesValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Data, BytesScalarConversionError> {
         switch val {
@@ -189,14 +182,11 @@ extension Data: ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from an unsigned integer representation.
 public enum UIntScalarConversionError: LocalizedError {
-    case notUIntValue(_ val: Value)
     case notUIntScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notUIntValue(val):
-            return "Failed to read the value \(val) as an unsigned integer."
         case let .notUIntScalarValue(val):
             return "Failed to read the scalar value \(val) as an unsigned integer."
         }
@@ -207,16 +197,6 @@ public enum UIntScalarConversionError: LocalizedError {
 }
 
 extension UInt: ScalarValueRepresentable {
-    public typealias ConvertError = UIntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<UInt, UIntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Uint(d)):
-            return .success(UInt(d))
-        default:
-            return .failure(UIntScalarConversionError.notUIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt, UIntScalarConversionError> {
         switch val {
@@ -236,14 +216,11 @@ extension UInt: ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from a signed integer representation.
 public enum IntScalarConversionError: LocalizedError {
-    case notIntValue(_ val: Value)
     case notIntScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notIntValue(val):
-            return "Failed to read the value \(val) as a signed integer."
         case let .notIntScalarValue(val):
             return "Failed to read the scalar value \(val) as a signed integer."
         }
@@ -254,16 +231,6 @@ public enum IntScalarConversionError: LocalizedError {
 }
 
 extension Int: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Int, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(Int(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int, IntScalarConversionError> {
         switch val {
@@ -280,16 +247,6 @@ extension Int: ScalarValueRepresentable {
 }
 
 extension Int8: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Int8, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(Int8(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int8, IntScalarConversionError> {
         switch val {
@@ -306,16 +263,6 @@ extension Int8: ScalarValueRepresentable {
 }
 
 extension Int16: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Int16, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(Int16(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int16, IntScalarConversionError> {
         switch val {
@@ -332,16 +279,6 @@ extension Int16: ScalarValueRepresentable {
 }
 
 extension Int32: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Int32, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(Int32(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int32, IntScalarConversionError> {
         switch val {
@@ -358,16 +295,6 @@ extension Int32: ScalarValueRepresentable {
 }
 
 extension Int64: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Int64, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(Int64(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int64, IntScalarConversionError> {
         switch val {
@@ -386,16 +313,6 @@ extension Int64: ScalarValueRepresentable {
 // MARK: UInt types
 
 extension UInt8: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<UInt8, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Uint(d)):
-            return .success(UInt8(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt8, IntScalarConversionError> {
         switch val {
@@ -412,16 +329,6 @@ extension UInt8: ScalarValueRepresentable {
 }
 
 extension UInt16: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<UInt16, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Uint(d)):
-            return .success(UInt16(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt16, IntScalarConversionError> {
         switch val {
@@ -438,16 +345,6 @@ extension UInt16: ScalarValueRepresentable {
 }
 
 extension UInt32: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<UInt32, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Uint(d)):
-            return .success(UInt32(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt32, IntScalarConversionError> {
         switch val {
@@ -464,16 +361,6 @@ extension UInt32: ScalarValueRepresentable {
 }
 
 extension UInt64: ScalarValueRepresentable {
-    public typealias ConvertError = IntScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<UInt64, IntScalarConversionError> {
-        switch val {
-        case let .Scalar(.Int(d)):
-            return .success(UInt64(d))
-        default:
-            return .failure(IntScalarConversionError.notIntValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt64, IntScalarConversionError> {
         switch val {
@@ -493,14 +380,11 @@ extension UInt64: ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from a 64-bit floating-point value representation.
 public enum FloatingPointScalarConversionError: LocalizedError {
-    case notF64Value(_ val: Value)
     case notF64ScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notF64Value(val):
-            return "Failed to read the value \(val) as a 64-bit floating-point value."
         case let .notF64ScalarValue(val):
             return "Failed to read the scalar value \(val) as a 64-bit floating-point value."
         }
@@ -512,15 +396,6 @@ public enum FloatingPointScalarConversionError: LocalizedError {
 
 extension Double: ScalarValueRepresentable {
     public typealias ConvertError = FloatingPointScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Double, FloatingPointScalarConversionError> {
-        switch val {
-        case let .Scalar(.F64(d)):
-            return .success(Double(d))
-        default:
-            return .failure(FloatingPointScalarConversionError.notF64Value(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Double, FloatingPointScalarConversionError> {
         switch val {
@@ -538,15 +413,6 @@ extension Double: ScalarValueRepresentable {
 
 extension Float: ScalarValueRepresentable {
     public typealias ConvertError = FloatingPointScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Float, FloatingPointScalarConversionError> {
-        switch val {
-        case let .Scalar(.F64(d)):
-            return .success(Float(d))
-        default:
-            return .failure(FloatingPointScalarConversionError.notF64Value(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Float, FloatingPointScalarConversionError> {
         switch val {
@@ -566,14 +432,11 @@ extension Float: ScalarValueRepresentable {
 
 /// A failure to convert an Automerge scalar value to or from a timestamp representation.
 public enum TimestampScalarConversionError: LocalizedError {
-    case notTimetampValue(_ val: Value)
     case notTimetampScalarValue(_ val: ScalarValue)
 
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case let .notTimetampValue(val):
-            return "Failed to read the value \(val) as a timestamp value."
         case let .notTimetampScalarValue(val):
             return "Failed to read the scalar value \(val) as a timestamp value."
         }
@@ -584,27 +447,17 @@ public enum TimestampScalarConversionError: LocalizedError {
 }
 
 extension Date: ScalarValueRepresentable {
-    public typealias ConvertError = TimestampScalarConversionError
-
-    public static func fromValue(_ val: Value) -> Result<Date, TimestampScalarConversionError> {
-        switch val {
-        case let .Scalar(.Timestamp(d)):
-            return .success(Date(timeIntervalSince1970: TimeInterval(d)))
-        default:
-            return .failure(TimestampScalarConversionError.notTimetampValue(val))
-        }
-    }
 
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Date, TimestampScalarConversionError> {
         switch val {
         case let .Timestamp(d):
-            return .success(Date(timeIntervalSince1970: TimeInterval(d)))
+            return .success(d)
         default:
-            return .failure(TimestampScalarConversionError.notTimetampScalarValue(val))
+            return .failure(.notTimetampScalarValue(val))
         }
     }
 
     public func toScalarValue() -> ScalarValue {
-        .Timestamp(Int64(timeIntervalSince1970))
+        .Timestamp(self)
     }
 }

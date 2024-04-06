@@ -17,8 +17,8 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
     case F64(Double)
     /// An integer counter.
     case Counter(Int64)
-    /// A timestamp represented by the number of seconds since UNIX epoch (Jan 1st, 1970, 00:00 UTC).
-    case Timestamp(Int64)
+    /// A 64-bit signed integer that represents the number of milliseconds since the UNIX epoch.
+    case Timestamp(Date)
     /// A Boolean value.
     case Boolean(Bool)
     /// An unknown, raw scalar type.
@@ -42,8 +42,8 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
             return .f64(value: d)
         case let .Counter(i):
             return .counter(value: i)
-        case let .Timestamp(i):
-            return .timestamp(value: i)
+        case let .Timestamp(date):
+            return .timestamp(value: Int64(date.timeIntervalSince1970 * 1000))
         case let .Boolean(v):
             return .boolean(value: v)
         case let .Unknown(t, d):
@@ -68,7 +68,7 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
         case let .counter(value):
             return .Counter(value)
         case let .timestamp(value):
-            return .Timestamp(value)
+            return .Timestamp(Date(timeIntervalSince1970: Double(value) / 1000))
         case let .boolean(value):
             return .Boolean(value)
         case let .unknown(typeCode, data):

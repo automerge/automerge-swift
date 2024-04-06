@@ -1,8 +1,9 @@
 import Automerge
 
 extension Document {
-    /// A testing function that prints the contents  of an Automerge document with annotations for the type associated
-    /// with each object and/or value  for the purposes of debugging.
+    /// A function that iterates through an Automerge Document and prints the contents with annotations for the type
+    /// associated
+    /// with each object and/or value.
     public func walk() throws {
         print("{")
         try walk(self, from: ObjId.ROOT)

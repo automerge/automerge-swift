@@ -146,18 +146,17 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
         guard let objectId = objectId else {
             throw reportBestError()
         }
-        switch T.self {
-        case is Date.Type:
+        switch value {
+        case let date as Date:
             // Capture and override the default encodable pathing for Date since
             // Automerge supports it as a primitive value type.
-            let downcastDate = value as! Date
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
                     .NoPathForSingleValue(
                         "No coding key was found from looking up path \(codingPath) when encoding \(type(of: T.self))."
                     )
             }
-            let valueToWrite = downcastDate.toScalarValue()
+            let valueToWrite = date.toScalarValue()
             if let indexToWrite = codingkey.intValue {
                 if let testCurrentValue = try document.get(obj: objectId, index: UInt64(indexToWrite)),
                    TypeOfAutomergeValue.from(testCurrentValue) != TypeOfAutomergeValue.from(valueToWrite)
@@ -190,17 +189,16 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
             impl.singleValueWritten = true
-        case is Data.Type:
+        case let data as Data:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
-            let downcastData = value as! Data
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
                     .NoPathForSingleValue(
                         "No coding key was found from looking up path \(codingPath) when encoding \(type(of: T.self))."
                     )
             }
-            let valueToWrite = downcastData.toScalarValue()
+            let valueToWrite = data.toScalarValue()
             if let indexToWrite = codingkey.intValue {
                 if impl.cautiousWrite {
                     if let testCurrentValue = try document.get(obj: objectId, index: UInt64(indexToWrite)),
@@ -239,17 +237,16 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                 try document.put(obj: objectId, key: codingkey.stringValue, value: valueToWrite)
             }
             impl.singleValueWritten = true
-        case is Counter.Type:
+        case let counter as Counter:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
-            let downcastCounter = value as! Counter
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
                     .NoPathForSingleValue(
                         "No coding key was found from looking up path \(codingPath) when encoding \(type(of: T.self))."
                     )
             }
-            if !downcastCounter.isBound {
+            if !counter.isBound {
                 if let indexToWrite = codingkey.intValue {
                     if impl.cautiousWrite {
                         if let testCurrentValue = try document.get(obj: objectId, index: UInt64(indexToWrite)),
@@ -270,13 +267,13 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         obj: objectId,
                         index: UInt64(indexToWrite)
                     ) {
-                        let counterDifference = currentCounterValue - Int64(downcastCounter.value)
+                        let counterDifference = currentCounterValue - Int64(counter.value)
                         try document.increment(obj: objectId, index: UInt64(indexToWrite), by: counterDifference)
                     } else {
                         try document.insert(
                             obj: objectId,
                             index: UInt64(indexToWrite),
-                            value: .Counter(Int64(downcastCounter._unboundStorage))
+                            value: .Counter(Int64(counter._unboundStorage))
                         )
                     }
                 } else {
@@ -299,20 +296,20 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         obj: objectId,
                         key: codingkey.stringValue
                     ) {
-                        let counterDifference = Int64(downcastCounter.value) - currentCounterValue
+                        let counterDifference = Int64(counter.value) - currentCounterValue
                         try document.increment(obj: objectId, key: codingkey.stringValue, by: counterDifference)
                     } else {
                         try document.put(
                             obj: objectId,
                             key: codingkey.stringValue,
                             value:
-                            .Counter(Int64(downcastCounter._unboundStorage))
+                            .Counter(Int64(counter._unboundStorage))
                         )
                     }
                 }
             }
             impl.singleValueWritten = true
-        case is AutomergeText.Type:
+        case let text as AutomergeText:
             guard let codingkey = codingkey else {
                 throw CodingKeyLookupError
                     .NoPathForSingleValue(
@@ -322,8 +319,6 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
 
             // Capture and override the default encodable pathing for AutomergeText since
             // Automerge supports it as a primitive value type.
-            let downcastText = value as! AutomergeText
-
             let existingValue: Value?
             // get any existing value - type of `get` based on the key type
             if let indexToWrite = codingkey.intValue {
@@ -353,14 +348,14 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
             // AutomergeText is a reference type that, when bound, writes directly into the
             // Automerge document, so no additional work is needed to write in the data unless
             // the object is 'unbound' (for example, a new AutomergeText instance)
-            if downcastText.doc == nil || downcastText.objId == nil {
+            if text.doc == nil || text.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
-                if !downcastText._unboundStorage.isEmpty {
+                if !text._unboundStorage.isEmpty {
                     // Iterate through
                     let currentText = try document.text(obj: textNodeId)
-                    if currentText != downcastText._unboundStorage {
-                        try document.updateText(obj: textNodeId, value: downcastText._unboundStorage)
+                    if currentText != text._unboundStorage {
+                        try document.updateText(obj: textNodeId, value: text._unboundStorage)
                     }
                 }
             }

@@ -129,8 +129,8 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
         switch T.self {
         case is Date.Type:
             let retrievedValue = try getValue(forKey: key)
-            if case let Value.Scalar(.Timestamp(intValue)) = retrievedValue {
-                return Date(timeIntervalSince1970: Double(intValue)) as! T
+            if case let Value.Scalar(.Timestamp(date)) = retrievedValue {
+                return date as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
@@ -168,6 +168,16 @@ struct AutomergeKeyedDecodingContainer<K: CodingKey>: KeyedDecodingContainerProt
                     debugDescription: "Expected to decode \(T.self) from \(retrievedValue), but it wasn't a `.text` object."
                 ))
             }
+        case is URL.Type:
+            let retrievedValue = try getValue(forKey: key)
+            guard case let .Scalar(.String(urlString)) = retrievedValue, let url = URL(string: urlString) else {
+                throw DecodingError.typeMismatch(T.self, .init(
+                    codingPath: codingPath,
+                    debugDescription: "Expected to decode \(URL.self) from \(retrievedValue), but it wasn't a `URL` type."
+                ))
+            }
+
+            return url as! T
         default:
             let decoder = try decoderForKey(key)
             return try T(from: decoder)

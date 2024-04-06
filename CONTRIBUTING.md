@@ -25,17 +25,20 @@ The moving parts here then are:
 * The `rust/src/*`files which implement the Automerge specific parts of the rust binding.
 * The `rust/uniffi-bindgen.rs` script, which uses Uniffi to output a Swift wrapper around the interface.
 * The source files in `./Sources` and `./Tests` which implement the handwritten swift wrappers.
-* The `./scripts/build-xcframework.sh` script, which builds the rust project and packages it into an XCFramework.
+* The `./scripts/build-xcframework.sh` script, followed by `./scripts/compress-framework.sh`, which builds the rust project and packages it into an XCFramework.
 Actually, the `build-xcframework.sh` script does a bit more than this.
-It builds the rust framework, generates the swift package and copies it into `./AutomergeUniffi`, and generates the XCFramework and places it in `automergeFFI.xcframework.zip`.
+It builds the rust framework, generates the swift package and copies it into `./AutomergeUniffi`, and generates the XCFramework directory.
+The follow-on script `./scripts/compress-framework.sh` compresses that into a zip file and places it in `automergeFFI.xcframework.zip`.
 
 The default Package.swift uses the latest, pre-compiled version of the XCFramework to make it easy to directly use this package.
-If you are developing at the Rust or FFI interface level, set the environment variable `LOCAL_BUILD` to any value, and use the script `./scripts/build-xcframework.sh` to compile the Rust, regenerate the associated Swift wrappers, and recreate a local copy of the XCFramework file.
+If you are developing at the Rust or FFI interface level, set the environment variable `LOCAL_BUILD` to any value, and use the script `./scripts/build-xcframework.sh` to rebuild the core library.
+Then run `./scripts/compress-framework.sh` to fully set up a local version of the XCFramework file.
 For example:
 
 ```bash
 export LOCAL_BUILD=true
-./scripts/build-xcframework
+./scripts/build-xcframework.sh
+./scripts/compress-framework.sh
 ```
 
 What this means is that the typical development cycle usually looks like this:

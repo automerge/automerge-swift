@@ -70,40 +70,44 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             throw reportBestError()
         }
 
-        switch T.self {
-        case is Date.Type:
+        switch value {
+        case let url as URL:
+            let valueToWrite = url.toScalarValue()
+            if impl.cautiousWrite {
+                try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .string)
+            }
+            try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
+            impl.highestUnkeyedIndexWritten = UInt64(count)
+        case let date as Date:
             // Capture and override the default encodable pathing for Date since
             // Automerge supports it as a primitive value type.
-            let downcastDate = value as! Date
-            let valueToWrite = downcastDate.toScalarValue()
+            let valueToWrite = date.toScalarValue()
             if impl.cautiousWrite {
                 try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .timestamp)
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
             impl.highestUnkeyedIndexWritten = UInt64(count)
-        case is Data.Type:
+        case let data as Data:
             // Capture and override the default encodable pathing for Data since
             // Automerge supports it as a primitive value type.
-            let downcastData = value as! Data
-            let valueToWrite = downcastData.toScalarValue()
+            let valueToWrite = data.toScalarValue()
             if impl.cautiousWrite {
                 try checkTypeMatch(value: valueToWrite, objectId: objectId, index: UInt64(count), type: .bytes)
             }
             try document.insert(obj: objectId, index: UInt64(count), value: valueToWrite)
             impl.highestUnkeyedIndexWritten = UInt64(count)
-        case is Counter.Type:
+        case let counter as Counter:
             // Capture and override the default encodable pathing for Counter since
             // Automerge supports it as a primitive value type.
-            let downcastCounter = value as! Counter
             if impl.cautiousWrite {
                 try checkTypeMatch(
-                    value: downcastCounter.value,
+                    value: counter.value,
                     objectId: objectId,
                     index: UInt64(count),
                     type: .counter
                 )
             }
-            if downcastCounter.doc == nil || downcastCounter.objId == nil {
+            if counter.doc == nil || counter.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
                 // Check to see if the document already has a scalar at this location
@@ -117,7 +121,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                     try document.increment(
                         obj: objectId,
                         index: UInt64(count),
-                        by: Int64(downcastCounter._unboundStorage)
+                        by: Int64(counter._unboundStorage)
                     )
                 } else {
                     // Otherwise the counter is new to the document, and should be
@@ -125,7 +129,7 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                     try document.insert(
                         obj: objectId,
                         index: UInt64(count),
-                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                        value: .Counter(Int64(counter._unboundStorage))
                     )
                 }
             } else {
@@ -133,21 +137,20 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                     obj: objectId,
                     index: UInt64(count)
                 ) {
-                    let counterDifference = currentCounterValue - Int64(downcastCounter._unboundStorage)
+                    let counterDifference = currentCounterValue - Int64(counter._unboundStorage)
                     try document.increment(obj: objectId, index: UInt64(count), by: counterDifference)
                 } else {
                     try document.insert(
                         obj: objectId,
                         index: UInt64(count),
-                        value: .Counter(Int64(downcastCounter._unboundStorage))
+                        value: .Counter(Int64(counter._unboundStorage))
                     )
                 }
             }
             impl.highestUnkeyedIndexWritten = UInt64(count)
-        case is AutomergeText.Type:
+        case let text as AutomergeText:
             // Capture and override the default encodable pathing for AutomergeText since
             // Automerge supports it as a primitive value type.
-            let downcastText = value as! AutomergeText
             let textNodeId: ObjId
             if let existingNode = try document.get(obj: objectId, index: UInt64(count)) {
                 guard case let .Object(textId, .Text) = existingNode else {
@@ -164,14 +167,14 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
             // AutomergeText is a reference type that, when bound, writes directly into the
             // Automerge document, so no additional work is needed to write in the data unless
             // the object is 'unbound' (for example, a new AutomergeText instance)
-            if downcastText.doc == nil || downcastText.objId == nil {
+            if text.doc == nil || text.objId == nil {
                 // instance is an unbound instance - implying a new reference into the Automerge
                 // document. Attempt to serialize the unboundStorage into place.
-                if !downcastText._unboundStorage.isEmpty {
+                if !text._unboundStorage.isEmpty {
                     // Iterate through
                     let currentText = try document.text(obj: textNodeId)
-                    if currentText != downcastText._unboundStorage {
-                        try document.updateText(obj: textNodeId, value: downcastText._unboundStorage)
+                    if currentText != text._unboundStorage {
+                        try document.updateText(obj: textNodeId, value: text._unboundStorage)
                     }
                 }
             }

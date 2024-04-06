@@ -28,21 +28,21 @@ final class AutomergeEncoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
+            let url: URL
             let notes: AutomergeText
         }
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
-        let dateFormatter = ISO8601DateFormatter()
-        let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
 
         let sample = SimpleStruct(
             name: "henry",
             duration: 3.14159,
             flag: true,
             count: 5,
-            date: earlyDate,
+            date: Date(timeIntervalSince1970: 0),
             data: Data("hello".utf8),
             uuid: UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!,
+            url: URL(string: "http://url.com")!,
             notes: AutomergeText("Something wicked this way comes.")
         )
 
@@ -73,7 +73,7 @@ final class AutomergeEncoderTests: XCTestCase {
         }
 
         if case let .Scalar(.Timestamp(timestamp_value)) = try doc.get(obj: ObjId.ROOT, key: "date") {
-            XCTAssertEqual(timestamp_value, -905182980)
+            XCTAssertEqual(timestamp_value, Date(timeIntervalSince1970: 0))
         } else {
             try XCTFail("Didn't find: \(String(describing: doc.get(obj: ObjId.ROOT, key: "date")))")
         }
@@ -98,6 +98,8 @@ final class AutomergeEncoderTests: XCTestCase {
         } else {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "notes")))")
         }
+
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "url"), .Scalar(.String("http://url.com")))
         try debugPrint(doc.get(obj: ObjId.ROOT, key: "notes") as Any)
     }
 
@@ -107,6 +109,7 @@ final class AutomergeEncoderTests: XCTestCase {
             let duration: Double
             let flag: Bool
             let count: Int
+            let url: URL
         }
 
         struct RootModel: Codable {
@@ -115,7 +118,14 @@ final class AutomergeEncoderTests: XCTestCase {
 
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
-        let sample = RootModel(example: SimpleStruct(name: "henry", duration: 3.14159, flag: true, count: 5))
+        let sample = RootModel(
+            example: SimpleStruct(
+                name: "henry",
+                duration: 3.14159,
+                flag: true,
+                count: 5,
+                url: URL(string: "http://url.com")!)
+        )
 
         try automergeEncoder.encode(sample)
 
@@ -145,6 +155,7 @@ final class AutomergeEncoderTests: XCTestCase {
             } else {
                 try XCTFail("Didn't find: \(String(describing: doc.get(obj: container_id, key: "count")))")
             }
+            XCTAssertEqual(try doc.get(obj: container_id, key: "url"), .Scalar(.String("http://url.com")))
         } else {
             try XCTFail("Didn't find: \(String(describing: doc.get(obj: ObjId.ROOT, key: "example")))")
         }
@@ -375,5 +386,23 @@ final class AutomergeEncoderTests: XCTestCase {
 
         let model: TestModel? = TestModel(notes: ["Hello"])
         XCTAssertNoThrow(try automergeEncoder.encode(model))
+    }
+
+    func testURLListTypeEncode() throws {
+        let doc = Document()
+        let automergeEncoder = AutomergeEncoder(doc: doc)
+
+        struct TestModel: Codable {
+            var urls: [URL]
+        }
+
+        let model: TestModel? = TestModel(urls: [URL(string: "url.com")!])
+        try automergeEncoder.encode(model)
+        if case let .Object(listNode, .List) = try doc.get(obj: ObjId.ROOT, key: "urls")
+        {
+            XCTAssertEqual(try doc.get(obj: listNode, index: 0), .Scalar(.String("url.com")))
+        } else {
+            try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "urls")))")
+        }
     }
 }

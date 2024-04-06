@@ -32,12 +32,12 @@ public final class Document: @unchecked Sendable {
     public var actor: ActorId {
         get {
             sync {
-                ActorId(bytes: self.doc.wrapErrors { $0.actorId() })
+                ActorId(ffi: self.doc.wrapErrors { $0.actorId() })
             }
         }
         set {
             sync {
-                self.doc.wrapErrors { $0.setActor(actor: newValue.bytes) }
+                self.doc.wrapErrors { $0.setActor(actor: [UInt8](newValue.data)) }
             }
         }
     }
@@ -768,6 +768,20 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Commit the auto-generated transaction with options.
+    ///
+    /// - Parameters:
+    ///   - message: An optional message to attach to the auto-committed change (if any).
+    ///   - timestamp: A timestamp to attach to the auto-committed change (if any), defaulting to Date().
+    public func commitWith(message: String? = nil, timestamp: Date = Date()) {
+        sync {
+            self.doc.wrapErrors {
+                sendObjectWillChange()
+                $0.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
+            }
+        }
+    }
+
     /// Encode the Automerge document in a compressed binary format.
     ///
     /// - Returns: The data that represents all the changes within this document.
@@ -919,6 +933,16 @@ public final class Document: @unchecked Sendable {
     public func getHistory() -> [ChangeHash] {
         sync {
             self.doc.wrapErrors { $0.changes().map { ChangeHash(bytes: $0) } }
+        }
+    }
+
+    /// Returns the contents of the change associated with the change hash you provide.
+    public func change(hash: ChangeHash) -> Change? {
+        sync {
+            guard let change = self.doc.wrapErrors(f: { $0.changeByHash(hash: hash.bytes) }) else {
+                return nil
+            }
+            return .init(change)
         }
     }
 

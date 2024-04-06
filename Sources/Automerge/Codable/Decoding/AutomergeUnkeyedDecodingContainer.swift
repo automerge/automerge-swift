@@ -119,11 +119,22 @@ struct AutomergeUnkeyedDecodingContainer: UnkeyedDecodingContainer {
 
     mutating func decode<T>(_: T.Type) throws -> T where T: Decodable {
         switch T.self {
+        case is URL.Type:
+            let retrievedValue = try getNextValue(ofType: URL.self)
+            if case let Value.Scalar(.String(urlString)) = retrievedValue, let url = URL(string: urlString) {
+                currentIndex += 1
+                return url as! T
+            } else {
+                throw DecodingError.typeMismatch(T.self, .init(
+                    codingPath: codingPath,
+                    debugDescription: "Expected to decode \(T.self) from \(retrievedValue), but it wasn't a `.timestamp`."
+                ))
+            }
         case is Date.Type:
             let retrievedValue = try getNextValue(ofType: Date.self)
-            if case let Value.Scalar(.Timestamp(intValue)) = retrievedValue {
+            if case let Value.Scalar(.Timestamp(date)) = retrievedValue {
                 currentIndex += 1
-                return Date(timeIntervalSince1970: Double(intValue)) as! T
+                return date as! T
             } else {
                 throw DecodingError.typeMismatch(T.self, .init(
                     codingPath: codingPath,
@@ -230,27 +241,16 @@ extension AutomergeUnkeyedDecodingContainer {
     ///   can quite neatly remove whichever branch of the `if` is not taken during optimization, making doing it this
     ///   way _much_ more performant (for what little it matters given that it's only checked in case of an error).
     @inline(__always)
-    private func getNextValue<T>(ofType _: T.Type, isNested: Bool = false) throws -> Value {
+    private func getNextValue<T>(ofType _: T.Type) throws -> Value {
         guard !isAtEnd else {
-            if isNested {
-                throw DecodingError.valueNotFound(
-                    T.self,
-                    .init(
-                        codingPath: codingPath,
-                        debugDescription: "Cannot get nested keyed container -- unkeyed container is at end.",
-                        underlyingError: nil
-                    )
+            throw DecodingError.valueNotFound(
+                T.self,
+                .init(
+                    codingPath: [AnyCodingKey(UInt64(currentIndex))],
+                    debugDescription: "Unkeyed container is at end.",
+                    underlyingError: nil
                 )
-            } else {
-                throw DecodingError.valueNotFound(
-                    T.self,
-                    .init(
-                        codingPath: [AnyCodingKey(UInt64(currentIndex))],
-                        debugDescription: "Unkeyed container is at end.",
-                        underlyingError: nil
-                    )
-                )
-            }
+            )
         }
         if let value = try impl.doc.get(obj: objectId, index: UInt64(currentIndex)) {
             return value

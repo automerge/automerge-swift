@@ -239,4 +239,58 @@ final class AutomergeDocTests: XCTestCase {
         let text = try doc.text(obj: textId)
         XCTAssertEqual(text, "🇬🇧😀")
     }
+
+    func testCommitWith() throws {
+        struct Dog: Codable {
+            var name: String
+            var age: Int
+        }
+
+        // Create the document
+        let doc = Document()
+        let encoder = AutomergeEncoder(doc: doc)
+
+        // Make an initial change with a message and timestamp
+        var myDog = Dog(name: "Fido", age: 1)
+        try encoder.encode(myDog)
+        doc.commitWith(message: "Change 1", timestamp: Date(timeIntervalSince1970: 10))
+
+        // Make another change with the default timestamp
+        myDog.age = 2
+        try encoder.encode(myDog)
+        doc.commitWith(message: "Change 2")
+        let change2Time = Date().timeIntervalSince1970
+
+        // Make another change with no message
+        myDog.age = 3
+        try encoder.encode(myDog)
+        doc.commitWith(message: nil, timestamp: Date(timeIntervalSince1970: 20))
+
+        // Make another change with no message and the default timestamp
+        myDog.age = 4
+        try encoder.encode(myDog)
+        doc.commitWith()
+        let change4Time = Date().timeIntervalSince1970
+
+        // Make another change by just calling save() (meaning no commit options will be set)
+        myDog.age = 5
+        try encoder.encode(myDog)
+        _ = doc.save()
+
+        let history = doc.getHistory()
+        XCTAssertEqual(history.count, 5)
+
+        let changes = history.map { doc.change(hash: $0) }
+        XCTAssertEqual(changes.count, 5)
+        XCTAssertEqual(changes[0]!.message, "Change 1")
+        XCTAssertEqual(changes[0]!.timestamp, Date(timeIntervalSince1970: 10))
+        XCTAssertEqual(changes[1]!.message, "Change 2")
+        XCTAssertEqual(changes[1]!.timestamp.timeIntervalSince1970, change2Time, accuracy: 3)
+        XCTAssertNil(changes[2]!.message)
+        XCTAssertEqual(changes[2]!.timestamp, Date(timeIntervalSince1970: 20))
+        XCTAssertNil(changes[3]!.message)
+        XCTAssertEqual(changes[3]!.timestamp.timeIntervalSince1970, change4Time, accuracy: 3)
+        XCTAssertNil(changes[4]!.message)
+        XCTAssertEqual(changes[4]!.timestamp.timeIntervalSince1970, 0)
+    }
 }
