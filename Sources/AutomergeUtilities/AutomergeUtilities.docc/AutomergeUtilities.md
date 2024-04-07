@@ -8,12 +8,19 @@ Automerge Utilities extends Automerge's `Document` type to make it easier to par
 
 ## Topics
 
-### Walking and Parsing Automerge documents
+### Inspecting Automerge documents
 
 - ``Automerge/Document/isEmpty()``
-- ``Automerge/Document/parseToSchema(_:from:)``
 - ``Automerge/Document/schema()``
 - ``AutomergeUtilities/AutomergeValue``
+
+### Parsing the contents of an Automerge document
+
+- ``Automerge/Document/parseToSchema(_:from:)``
+
+### Comparing the contents of Automerge documents
+
+- ``Automerge/Document/equivalentContents(_:)``
 
 ### Debugging Methods
 
