@@ -10,7 +10,14 @@ import Foundation
 ///
 /// You can create an instance of this class and provide initial values before it is attached to an Automerge document.
 /// Changes that you make this instance will be local only to this class until it is explicitly attached (bound).
-/// For example, this allows you to create next Text fields in SwiftUI, and later encode them the data model for your app.
+/// Use ``bind(doc:path:)`` to associate this instance with a specific schema location within an Automerge document,
+/// or ``AutomergeEncoder/encode(_:)-7gbuh`` it as part of a larger document model into an Automerge document to store the value.
+///
+/// When you use ``AutomergeDecoder/decode(_:)`` into a type that uses `AutomergeText`, the instances returned from the
+/// decoder in your model are already bound to Automerge document.
+///
+/// For example, the initial non-bound state allows you to create next Text fields in SwiftUI,
+/// and at a later point encode them the data model for your app.
 ///
 /// In the [MeetingNotes demo app](https://github.com/automerge/MeetingNotes/), this is done when it creates a new
 /// agenda item [within the app](https://github.com/automerge/MeetingNotes/blob/main/MeetingNotes/Views/MeetingNotesDocumentView.swift):
@@ -22,9 +29,6 @@ import Foundation
 /// // Store the updated list of agenda items back into the document to save the value into the Document.
 /// updateDoc()
 /// ```
-///
-/// Use ``bind(doc:path:)`` to associate this instance with a specific schema location within an Automerge document,
-/// or encode it as part of a larger document model into an Automerge document to store the value.
 public final class AutomergeText: Codable {
     var doc: Document?
     var objId: ObjId?
