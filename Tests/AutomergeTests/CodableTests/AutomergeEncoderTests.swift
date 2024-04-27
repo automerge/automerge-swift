@@ -33,7 +33,6 @@ final class AutomergeEncoderTests: XCTestCase {
         }
         let automergeEncoder = AutomergeEncoder(doc: doc)
 
-
         let sample = SimpleStruct(
             name: "henry",
             duration: 3.14159,
@@ -124,7 +123,8 @@ final class AutomergeEncoderTests: XCTestCase {
                 duration: 3.14159,
                 flag: true,
                 count: 5,
-                url: URL(string: "http://url.com")!)
+                url: URL(string: "http://url.com")!
+            )
         )
 
         try automergeEncoder.encode(sample)
@@ -398,8 +398,7 @@ final class AutomergeEncoderTests: XCTestCase {
 
         let model: TestModel? = TestModel(urls: [URL(string: "url.com")!])
         try automergeEncoder.encode(model)
-        if case let .Object(listNode, .List) = try doc.get(obj: ObjId.ROOT, key: "urls")
-        {
+        if case let .Object(listNode, .List) = try doc.get(obj: ObjId.ROOT, key: "urls") {
             XCTAssertEqual(try doc.get(obj: listNode, index: 0), .Scalar(.String("url.com")))
         } else {
             try XCTFail("Didn't find an object at \(String(describing: doc.get(obj: ObjId.ROOT, key: "urls")))")
