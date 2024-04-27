@@ -7,6 +7,33 @@ import Foundation
 // the flat `String` variations from the underlying data source in Automerge.
 
 /// A reference to a Text object within an Automerge document.
+///
+/// You can create an instance of this class and provide initial values before it is attached to an Automerge document.
+/// Changes that you make this instance will be local only to this class until it is explicitly attached (bound).
+/// Use ``bind(doc:path:)`` to associate this instance with a specific schema location within an Automerge document,
+/// or ``AutomergeEncoder/encode(_:)-7gbuh`` it as part of a larger document model into an Automerge document to store
+/// the value.
+///
+/// When you use ``AutomergeDecoder/decode(_:)`` into a type that uses `AutomergeText`, the instances returned from the
+/// decoder in your model are already bound to Automerge document.
+///
+/// For example, the initial non-bound state allows you to create next Text fields in SwiftUI,
+/// and at a later point encode them the data model for your app.
+///
+/// In the [MeetingNotes demo app](https://github.com/automerge/MeetingNotes/), this is done when it creates a new
+/// agenda item [within the
+/// app](https://github.com/automerge/MeetingNotes/blob/main/MeetingNotes/Views/MeetingNotesDocumentView.swift):
+///
+/// ```swift
+/// // Add a new AgendaItem (which uses AutomergeText) with a new value, not yet reflected in the Document.
+/// document.model.agendas.append(AgendaItem(title: ""))
+///
+/// // Store the updated list of agenda items back into the document to save the value into the Document.
+/// updateDoc()
+/// ```
+///
+/// > Warning: Although `AutomergeText` conforms to `ObservableObject`, it does not send notifications of content
+/// changes until it has been bound to an Automerge document.
 public final class AutomergeText: Codable {
     var doc: Document?
     var objId: ObjId?
@@ -40,6 +67,13 @@ public final class AutomergeText: Codable {
         }
     }
 
+    /// Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.
+    ///
+    /// Before an instance is bound, changes made to the content of AutomergeText are local only to this class, and
+    /// and updates won't be reflected in an Automerge document.
+    ///
+    /// Use ``bind(doc:path:)`` to associate this instance with a specific schema location within an Automerge document,
+    /// or encode it as part of a larger document model into an Automerge document to store the value.
     public var isBound: Bool {
         doc != nil && objId != nil
     }
