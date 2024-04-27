@@ -16,12 +16,23 @@ public struct AutomergeDecoder {
     /// Returns the type you specify, decoded from the Automerge document referenced by the decoder.
     /// - Parameter _: _ The type of the value to decode from the Automerge document.
     @inlinable public func decode<T: Decodable>(_: T.Type) throws -> T {
-        let decoder = AutomergeDecoderImpl(
-            doc: doc,
-            userInfo: userInfo,
-            codingPath: []
-        )
-        return try decoder.decode(T.self)
+        if T.self == AutomergeText.self {
+            // Special case decoding AutomergeText - when it's the top level type being encoded,
+            // its content is placed as a keyed encoded location by the AutomergeEncoder
+            let decoder = AutomergeDecoderImpl(
+                doc: doc,
+                userInfo: userInfo,
+                codingPath: [AutomergeText.CodingKeys.value]
+            )
+            return try decoder.decode(T.self)
+        } else {
+            let decoder = AutomergeDecoderImpl(
+                doc: doc,
+                userInfo: userInfo,
+                codingPath: []
+            )
+            return try decoder.decode(T.self)
+        }
     }
 
     /// Returns the type you specify, decoded from the Automerge document referenced by the decoder.
