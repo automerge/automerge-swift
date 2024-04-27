@@ -78,7 +78,7 @@ public final class AutomergeText: Codable {
         doc != nil && objId != nil
     }
 
-    /// Binds a text reference instance info an Automerge document.
+    /// Binds a text reference instance info an Automerge document with the schema path you provide.
     ///
     /// If the instance has an initial value other than an empty string, binding update the string within the Automerge
     /// document.
@@ -92,6 +92,26 @@ public final class AutomergeText: Codable {
         if doc.objectType(obj: objId) == .Text {
             self.doc = doc
             self.objId = objId
+        } else {
+            throw BindingError.NotText
+        }
+        if !_unboundStorage.isEmpty {
+            try updateText(newText: _unboundStorage)
+            _unboundStorage = ""
+        }
+    }
+
+    /// Binds a text reference instance info an Automerge document at the object ID you provide.
+    ///
+    /// If the instance has an initial value other than an empty string, binding update the string within the Automerge
+    /// document.
+    /// - Parameters:
+    ///   - doc: The Automerge document associated with this reference.
+    ///   - path: A string path that represents a `Text` container within the Automerge document.
+    public func bind(doc: Document, id: ObjId) throws {
+        if doc.objectType(obj: id) == .Text {
+            self.doc = doc
+            objId = id
         } else {
             throw BindingError.NotText
         }
@@ -141,7 +161,7 @@ public final class AutomergeText: Codable {
 
     // MARK: Codable conformance
 
-    private enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case value
     }
 

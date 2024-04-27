@@ -349,8 +349,10 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
                         )
                 }
                 textNodeId = textId
+                try text.bind(doc: document, id: textNodeId)
             } else {
                 textNodeId = try document.putObject(obj: objectId, key: key.stringValue, ty: .Text)
+                try text.bind(doc: document, id: textNodeId)
             }
 
             // AutomergeText is a reference type that, when bound, writes directly into the
