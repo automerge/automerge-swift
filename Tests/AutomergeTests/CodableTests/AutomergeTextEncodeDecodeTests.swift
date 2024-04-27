@@ -106,4 +106,51 @@ final class EncodeDecodeBugTests: XCTestCase {
         XCTAssertEqual(secondEncodeCheck.notes[1].value, "")
         XCTAssertTrue(secondEncodeCheck.notes[1].isBound)
     }
+
+    func testBindOnEncodeList() throws {
+        let encoder = AutomergeEncoder(doc: doc)
+
+        var collection = RawNoteCollection(notes: [])
+        collection.notes.append(AutomergeText("hello world"))
+        collection.notes.append(AutomergeText(""))
+        XCTAssertFalse(collection.notes[0].isBound)
+        XCTAssertFalse(collection.notes[1].isBound)
+
+        try encoder.encode(collection)
+        XCTAssertTrue(collection.notes[0].isBound)
+        XCTAssertTrue(collection.notes[1].isBound)
+    }
+
+    func testBindOnEncodeNested() throws {
+        let encoder = AutomergeEncoder(doc: doc)
+
+        var collection = NoteCollection(notes: [])
+        let note1 = Note(title: "one", discussion: AutomergeText("hello world"))
+        let note2 = Note(title: "", discussion: AutomergeText())
+        collection.notes.append(note1)
+        collection.notes.append(note2)
+        XCTAssertFalse(note1.discussion.isBound)
+        XCTAssertFalse(note2.discussion.isBound)
+
+        try encoder.encode(collection)
+        XCTAssertTrue(note1.discussion.isBound)
+        XCTAssertTrue(note2.discussion.isBound)
+    }
+
+    func testBindOnEncodeDecodeDirect() throws {
+        let encoder = AutomergeEncoder(doc: doc)
+        let decoder = AutomergeDecoder(doc: doc)
+
+        let note = AutomergeText("something")
+        XCTAssertFalse(note.isBound)
+
+        try encoder.encode(note)
+        XCTAssertTrue(note.isBound)
+
+        let decodeCheck = try decoder.decode(AutomergeText.self)
+        XCTAssertEqual(decodeCheck.value, "something")
+        XCTAssertTrue(decodeCheck.isBound)
+
+        try doc.walk()
+    }
 }
