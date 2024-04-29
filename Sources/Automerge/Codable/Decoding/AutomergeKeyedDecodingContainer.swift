@@ -256,15 +256,21 @@ extension AutomergeKeyedDecodingContainer {
     ) throws -> T {
         let value = try getValue(forKey: key)
 
-        guard case let .Scalar(.F64(number)) = value else {
+        let description: String
+        switch value {
+        case let .Scalar(.F64(number)):
+            description = number.description
+        case let .Scalar(.Int(number)):
+            description = number.description
+        default:
             throw createTypeMismatchError(type: T.self, forKey: key, value: value)
         }
 
-        guard let floatingPoint = T(number.description) else {
+        guard let floatingPoint = T(description) else {
             throw DecodingError.dataCorruptedError(
                 forKey: key,
                 in: self,
-                debugDescription: "Parsed Automerge number <\(number)> does not fit in \(T.self)."
+                debugDescription: "Parsed Automerge number <\(description)> does not fit in \(T.self)."
             )
         }
 
