@@ -121,6 +121,19 @@ final class AutomergeDecoderTests: XCTestCase {
         XCTAssertEqual(decodedStruct.votes, [3, 4, 5])
     }
 
+    func testIntToDoubleDecode() throws {
+        struct StructWithDouble: Codable {
+            let count: Double
+        }
+        let decoder = AutomergeDecoder(doc: doc)
+
+        XCTAssertNoThrow(try decoder.decode(StructWithDouble.self))
+
+        let decodedStruct = try decoder.decode(StructWithDouble.self)
+
+        XCTAssertEqual(decodedStruct.count, 5)
+    }
+
     func testListOfTextDecode() throws {
         doc = Document()
         let list = try! doc.putObject(obj: ObjId.ROOT, key: "list", ty: .List)
