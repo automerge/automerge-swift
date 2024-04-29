@@ -37,6 +37,9 @@ import Foundation
 public final class AutomergeText: Codable {
     var doc: Document?
     var objId: ObjId?
+    #if canImport(Combine)
+    var observerHandle: AnyCancellable?
+    #endif
     var _unboundStorage: String
 
     // MARK: Initializers and Bind
@@ -54,7 +57,53 @@ public final class AutomergeText: Codable {
     ///   - initialValue: An initial string value for the text reference.
     public convenience init(_ initialValue: String = "", doc: Document, path: String) throws {
         self.init(initialValue)
-        try bind(doc: doc, path: path)
+        let codingPath = try AnyCodingKey.parsePath(path)
+        if codingPath.isEmpty {
+            throw BindingError.InvalidPath("Path can't be empty to bind an instance of AutomergeText")
+        }
+        if codingPath.count == 1 {
+            // first path element in an Automerge doc _must_ be a key/string, can't be an array/int
+            if codingPath[0].intValue != nil {
+                throw BindingError
+                    .InvalidPath("First path element in an Automerge document can't be an index position.")
+            }
+            let textObjId = try doc.putObject(obj: ObjId.ROOT, key: codingPath[0].stringValue, ty: .Text)
+            self.doc = doc
+            objId = textObjId
+        } else {
+            guard let lastPathElement = codingPath.last else {
+                throw BindingError.InvalidPath("Unable to request a final path element from path \(path)")
+            }
+            let result = doc.retrieveObjectId(
+                path: codingPath,
+                containerType: .Value,
+                strategy: .createWhenNeeded
+            )
+            switch result {
+            case let .success(secondToLastPathItemObjId):
+                if let indexLocation = lastPathElement.intValue {
+                    let textObjId = try doc.putObject(
+                        obj: secondToLastPathItemObjId,
+                        index: UInt64(indexLocation),
+                        ty: .Text
+                    )
+                    self.doc = doc
+                    objId = textObjId
+                } else {
+                    let textObjId = try doc.putObject(
+                        obj: secondToLastPathItemObjId,
+                        key: lastPathElement.stringValue,
+                        ty: .Text
+                    )
+                    self.doc = doc
+                    objId = textObjId
+                }
+            case let .failure(failure):
+                throw failure
+            }
+        }
+        try updateText(newText: initialValue)
+        observeDocForChanges()
     }
 
     public convenience init(doc: Document, objId: ObjId) throws {
@@ -65,6 +114,13 @@ public final class AutomergeText: Codable {
         } else {
             throw BindingError.NotText
         }
+        observeDocForChanges()
+    }
+
+    deinit {
+        #if canImport(Combine)
+        observerHandle?.cancel()
+        #endif
     }
 
     /// Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.
@@ -86,19 +142,56 @@ public final class AutomergeText: Codable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, path: String) throws {
-        guard let objId = try doc.lookupPath(path: path) else {
-            throw BindingError.InvalidPath(path)
+        let codingPath = try AnyCodingKey.parsePath(path)
+        if codingPath.isEmpty {
+            throw BindingError.InvalidPath("Path can't be empty to bind an instance of AutomergeText")
         }
-        if doc.objectType(obj: objId) == .Text {
+        if codingPath.count == 1 {
+            // first path element in an Automerge doc _must_ be a key/string, can't be an array/int
+            if codingPath[0].intValue != nil {
+                throw BindingError
+                    .InvalidPath("First path element in an Automerge document can't be an index position.")
+            }
+            let textObjId = try doc.putObject(obj: ObjId.ROOT, key: codingPath[0].stringValue, ty: .Text)
             self.doc = doc
-            self.objId = objId
+            objId = textObjId
         } else {
-            throw BindingError.NotText
+            guard let lastPathElement = codingPath.last else {
+                throw BindingError.InvalidPath("Unable to request a final path element from path \(path)")
+            }
+            let result = doc.retrieveObjectId(
+                path: codingPath,
+                containerType: .Value,
+                strategy: .createWhenNeeded
+            )
+            switch result {
+            case let .success(secondToLastPathItemObjId):
+                if let indexLocation = lastPathElement.intValue {
+                    let textObjId = try doc.putObject(
+                        obj: secondToLastPathItemObjId,
+                        index: UInt64(indexLocation),
+                        ty: .Text
+                    )
+                    self.doc = doc
+                    objId = textObjId
+                } else {
+                    let textObjId = try doc.putObject(
+                        obj: secondToLastPathItemObjId,
+                        key: lastPathElement.stringValue,
+                        ty: .Text
+                    )
+                    self.doc = doc
+                    objId = textObjId
+                }
+            case let .failure(failure):
+                throw failure
+            }
         }
         if !_unboundStorage.isEmpty {
             try updateText(newText: _unboundStorage)
             _unboundStorage = ""
         }
+        observeDocForChanges()
     }
 
     /// Binds a text reference instance info an Automerge document at the object ID you provide.
@@ -119,6 +212,32 @@ public final class AutomergeText: Codable {
             try updateText(newText: _unboundStorage)
             _unboundStorage = ""
         }
+        observeDocForChanges()
+    }
+
+    private func observeDocForChanges() {
+        #if canImport(Combine)
+        guard let doc = doc else {
+            return
+        }
+        // Admittedly, this is the _least_ efficient way to handle change update notifications
+        // from the Automerge document. As the number of AutomergeText instances grows on a single
+        // document, the amount of processing grows - each has to receive the signal from the
+        // document, and then (optimally) do any comparisons to determine if the local instance has
+        // changed.
+        //
+        // However, for a relatively few number of AutomergeText instances per document, there's not
+        // outrageous overhead, and this code is the easiest (most localized) to put in place to a
+        // change signal properly operational.
+        observerHandle = doc.objectWillChange.sink(receiveValue: { _ in
+            // TODO: There's no previous information tracked here, so revise this to look at
+            // some history marker of the last update and determine if this individual content
+            // has changed. Most likely, that will require (or notably benefit from) the exposure
+            // of the Diff api (https://github.com/automerge/automerge-swift/issues/148) that is not
+            // yet exposed as this is created.
+            self.sendObjectWillChange()
+        })
+        #endif
     }
 
     // MARK: Exposing String value and Binding<String>
