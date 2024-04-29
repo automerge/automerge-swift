@@ -12,6 +12,9 @@ public final class Counter: Codable {
     var doc: Document?
     var objId: ObjId?
     var codingkey: AnyCodingKey?
+    #if canImport(Combine)
+    var observerHandle: AnyCancellable?
+    #endif
     var _unboundStorage: Int
 
     // MARK: Initializers and Bind
@@ -42,6 +45,7 @@ public final class Counter: Codable {
     ///   - key: The key (index position or dictionary key) on the `objId` provided.
     public convenience init(doc: Document, objId: ObjId, key: any CodingKey) throws {
         self.init()
+        // TODO: convert this, akin to Text, to create an instance at the path provided
         if let index = key.intValue {
             if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
                 self.doc = doc
@@ -59,6 +63,13 @@ public final class Counter: Codable {
                 throw BindingError.NotCounter
             }
         }
+        observeDocForChanges()
+    }
+
+    deinit {
+        #if canImport(Combine)
+        observerHandle?.cancel()
+        #endif
     }
 
     /// Returns a Boolean value that indicates wether this reference type is actively updating an Automerge document.
@@ -119,6 +130,32 @@ public final class Counter: Codable {
                 throw BindingError.NotCounter
             }
         }
+        observeDocForChanges()
+    }
+
+    private func observeDocForChanges() {
+        #if canImport(Combine)
+        guard let doc = doc else {
+            return
+        }
+        // Admittedly, this is the _least_ efficient way to handle change update notifications
+        // from the Automerge document. As the number of AutomergeText instances grows on a single
+        // document, the amount of processing grows - each has to receive the signal from the
+        // document, and then (optimally) do any comparisons to determine if the local instance has
+        // changed.
+        //
+        // However, for a relatively few number of AutomergeText instances per document, there's not
+        // outrageous overhead, and this code is the easiest (most localized) to put in place to a
+        // change signal properly operational.
+        observerHandle = doc.objectWillChange.sink(receiveValue: { _ in
+            // TODO: There's no previous information tracked here, so revise this to look at
+            // some history marker of the last update and determine if this individual content
+            // has changed. Most likely, that will require (or notably benefit from) the exposure
+            // of the Diff api (https://github.com/automerge/automerge-swift/issues/148) that is not
+            // yet exposed as this is created.
+            self.sendObjectWillChange()
+        })
+        #endif
     }
 
     // MARK: Exposing Int value and Binding<Int>
