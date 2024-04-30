@@ -37,9 +37,9 @@ import Foundation
 public final class AutomergeText: Codable {
     var doc: Document?
     var objId: ObjId?
+    var _hashOfCurrentValue: Int
     #if canImport(Combine)
     var observerHandle: AnyCancellable?
-    var _hashOfCurrentValue: Int
     #endif
     var _unboundStorage: String
 
