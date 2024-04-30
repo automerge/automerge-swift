@@ -12,9 +12,9 @@ public final class Counter: Codable {
     var doc: Document?
     var objId: ObjId?
     var codingkey: AnyCodingKey?
+    var _hashOfCurrentValue: Int
     #if canImport(Combine)
     var observerHandle: AnyCancellable?
-    var _hashOfCurrentValue: Int
     #endif
     var _unboundStorage: Int
 
