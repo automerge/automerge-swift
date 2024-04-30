@@ -14,6 +14,7 @@ public final class Counter: Codable {
     var codingkey: AnyCodingKey?
     #if canImport(Combine)
     var observerHandle: AnyCancellable?
+    var _hashOfCurrentValue: Int
     #endif
     var _unboundStorage: Int
 
@@ -23,6 +24,7 @@ public final class Counter: Codable {
     /// - Parameter initialValue: An initial string value for the text reference.
     public init(_ initialValue: Int = 0) {
         _unboundStorage = initialValue
+        _hashOfCurrentValue = initialValue.hashValue
     }
 
     /// Creates a new Counter reference instance bound within an Automerge document.
@@ -153,7 +155,12 @@ public final class Counter: Codable {
             // has changed. Most likely, that will require (or notably benefit from) the exposure
             // of the Diff api (https://github.com/automerge/automerge-swift/issues/148) that is not
             // yet exposed as this is created.
-            self.sendObjectWillChange()
+            Task {
+                let currentValue = self.getCounterValue()
+                if currentValue.hashValue != self._hashOfCurrentValue {
+                    self.sendObjectWillChange()
+                }
+            }
         })
         #endif
     }
@@ -191,6 +198,7 @@ public final class Counter: Codable {
     }
 
     fileprivate func setCounterValue(_ intValue: Int) {
+        _hashOfCurrentValue = intValue.hashValue
         guard let objId, let doc, let codingkey else {
             _unboundStorage = intValue
             return
@@ -223,19 +231,22 @@ public final class Counter: Codable {
     public func increment(by value: Int) {
         guard let objId, let doc, let codingkey else {
             _unboundStorage += value
+            _hashOfCurrentValue = _unboundStorage.hashValue
             return
         }
         do {
             if let index = codingkey.intValue {
-                if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
+                if case let .Scalar(.Counter(currentValue)) = try doc.get(obj: objId, index: UInt64(index)) {
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(value))
+                    _hashOfCurrentValue = (Int(currentValue) + value).hashValue
                     sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
             } else {
-                if case .Scalar(.Counter(_)) = try doc.get(obj: objId, key: codingkey.stringValue) {
+                if case let .Scalar(.Counter(currentValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: Int64(value))
+                    _hashOfCurrentValue = (Int(currentValue) + value).hashValue
                     sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
@@ -266,6 +277,7 @@ public final class Counter: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         _unboundStorage = try container.decode(Int.self, forKey: .value)
+        _hashOfCurrentValue = _unboundStorage.hashValue
     }
 }
 
