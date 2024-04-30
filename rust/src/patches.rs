@@ -34,7 +34,6 @@ pub enum PatchAction {
         obj: ObjId,
         index: u64,
         values: Vec<Value>,
-        marks: HashMap<String, Value>,
     },
     SpliceText {
         obj: ObjId,
@@ -84,7 +83,6 @@ impl PatchAction {
             am::PatchAction::Insert {
                 index,
                 values,
-                marks,
             } => PatchAction::Insert {
                 obj: obj.into(),
                 index: index as u64,
@@ -92,7 +90,6 @@ impl PatchAction {
                     .into_iter()
                     .map(|(v, id, _conflict)| Value::from((v.clone(), id.clone())))
                     .collect(),
-                marks: convert_marks(marks),
             },
             am::PatchAction::SpliceText {
                 index,
