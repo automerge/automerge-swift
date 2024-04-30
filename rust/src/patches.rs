@@ -80,10 +80,7 @@ impl PatchAction {
                 },
                 value: value.into(),
             },
-            am::PatchAction::Insert {
-                index,
-                values,
-            } => PatchAction::Insert {
+            am::PatchAction::Insert { index, values } => PatchAction::Insert {
                 obj: obj.into(),
                 index: index as u64,
                 values: values
