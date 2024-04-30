@@ -231,10 +231,13 @@ public final class AutomergeText: Codable {
         // However, for a relatively few number of AutomergeText instances per document, there's not
         // outrageous overhead, and this code is the easiest (most localized) to put in place to a
         // change signal properly operational.
-        observerHandle = doc.objectWillChange.sink(receiveValue: { _ in
-            guard let objId = self.objId else {
+        observerHandle = doc.objectWillChange.sink(receiveValue: { [weak self] _ in
+            guard let self = self, let objId = self.objId else {
                 return
             }
+            // This is firing off in a concurrent task explicitly to leave the synchronous
+            // context that can happen when a doc is being updated and Combine is triggering
+            // a change notification.
             Task {
                 let valueFromDoc = try doc.text(obj: objId)
                 if valueFromDoc.hashValue != self._hashOfCurrentValue {

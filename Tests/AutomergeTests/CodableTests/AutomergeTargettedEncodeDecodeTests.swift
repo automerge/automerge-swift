@@ -4,9 +4,7 @@ import XCTest
 final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
     func testSimpleKeyEncode() throws {
         let doc = Document()
-        // AutomergeText maintains a reference to the document, so those existing at the end
-        // will cause the weak reference used for tracking potential memory leaks to not be clear.
-        // trackForMemoryLeak(instance: doc)
+        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -37,9 +35,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedSingleValueDecode() throws {
         let doc = Document()
-        // AutomergeText maintains a reference to the document, so those existing at the end
-        // will cause the weak reference used for tracking potential memory leaks to not be clear.
-        // trackForMemoryLeak(instance: doc)
+        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -96,9 +92,7 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfCounter() throws {
         let doc = Document()
-        // Counter maintains a reference to the document, so those existing at the end
-        // will cause the weak reference used for tracking potential memory leaks to not be clear.
-        // trackForMemoryLeak(instance: doc)
+        trackForMemoryLeak(instance: doc)
 
         let exampleCounter = Counter(342)
         try doc.put(obj: ObjId.ROOT, key: "counter", value: .Counter(342))
