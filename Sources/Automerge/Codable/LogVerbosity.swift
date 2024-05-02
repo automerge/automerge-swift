@@ -1,5 +1,5 @@
 /// A type that indicates the amount of logging to be exposed from the Automerge library.
-public enum LogVerbosity: Int, Comparable, Equatable {
+public enum LogVerbosity: Int, Comparable, Equatable, Sendable {
     // DEVNOTE(heckj): Using an internal/custom enumeration to indicate
     // these values because this library supports back to macOS 11.15
     // when Unified Logging wasn't available on related platforms.
