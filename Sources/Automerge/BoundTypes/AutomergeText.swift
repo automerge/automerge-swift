@@ -34,7 +34,7 @@ import Foundation
 ///
 /// > Warning: Although `AutomergeText` conforms to `ObservableObject`, it does not send notifications of content
 /// changes until it has been bound to an Automerge document.
-public final class AutomergeText: Codable {
+public final class AutomergeText: Codable, @unchecked Sendable {
     var doc: Document?
     var objId: ObjId?
     var _hashOfCurrentValue: Int
@@ -42,6 +42,17 @@ public final class AutomergeText: Codable {
     var observerHandle: AnyCancellable?
     #endif
     var _unboundStorage: String
+
+    #if !os(WASI)
+    fileprivate let queue = DispatchQueue(label: "automergetext-sync-queue", qos: .userInteractive)
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try queue.sync(execute: work)
+    }
+    #else
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try work()
+    }
+    #endif
 
     // MARK: Initializers and Bind
 
@@ -111,8 +122,10 @@ public final class AutomergeText: Codable {
     public convenience init(doc: Document, objId: ObjId) throws {
         self.init()
         if doc.objectType(obj: objId) == .Text {
-            self.doc = doc
-            self.objId = objId
+            sync {
+                self.doc = doc
+                self.objId = objId
+            }
         } else {
             throw BindingError.NotText
         }
@@ -133,7 +146,7 @@ public final class AutomergeText: Codable {
     /// Use ``bind(doc:path:)`` to associate this instance with a specific schema location within an Automerge document,
     /// or encode it as part of a larger document model into an Automerge document to store the value.
     public var isBound: Bool {
-        doc != nil && objId != nil
+        sync { doc != nil && objId != nil }
     }
 
     /// Binds a text reference instance info an Automerge document with the schema path you provide.
@@ -155,8 +168,10 @@ public final class AutomergeText: Codable {
                     .InvalidPath("First path element in an Automerge document can't be an index position.")
             }
             let textObjId = try doc.putObject(obj: ObjId.ROOT, key: codingPath[0].stringValue, ty: .Text)
-            self.doc = doc
-            objId = textObjId
+            sync {
+                self.doc = doc
+                objId = textObjId
+            }
         } else {
             guard let lastPathElement = codingPath.last else {
                 throw BindingError.InvalidPath("Unable to request a final path element from path \(path)")
@@ -174,16 +189,20 @@ public final class AutomergeText: Codable {
                         index: UInt64(indexLocation),
                         ty: .Text
                     )
-                    self.doc = doc
-                    objId = textObjId
+                    sync {
+                        self.doc = doc
+                        objId = textObjId
+                    }
                 } else {
                     let textObjId = try doc.putObject(
                         obj: secondToLastPathItemObjId,
                         key: lastPathElement.stringValue,
                         ty: .Text
                     )
-                    self.doc = doc
-                    objId = textObjId
+                    sync {
+                        self.doc = doc
+                        objId = textObjId
+                    }
                 }
             case let .failure(failure):
                 throw failure
@@ -191,7 +210,9 @@ public final class AutomergeText: Codable {
         }
         if !_unboundStorage.isEmpty {
             try updateText(newText: _unboundStorage)
-            _unboundStorage = ""
+            sync {
+                _unboundStorage = ""
+            }
         }
         observeDocForChanges()
     }
@@ -205,14 +226,18 @@ public final class AutomergeText: Codable {
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, id: ObjId) throws {
         if doc.objectType(obj: id) == .Text {
-            self.doc = doc
-            objId = id
+            sync {
+                self.doc = doc
+                objId = id
+            }
         } else {
             throw BindingError.NotText
         }
         if !_unboundStorage.isEmpty {
             try updateText(newText: _unboundStorage)
-            _unboundStorage = ""
+            sync {
+                _unboundStorage = ""
+            }
         }
         observeDocForChanges()
     }
@@ -240,7 +265,8 @@ public final class AutomergeText: Codable {
             // a change notification.
             Task {
                 let valueFromDoc = try doc.text(obj: objId)
-                if valueFromDoc.hashValue != self._hashOfCurrentValue {
+                let hashOfCurrentValue = self.sync { self._hashOfCurrentValue }
+                if valueFromDoc.hashValue != hashOfCurrentValue {
                     self.sendObjectWillChange()
                 }
             }
@@ -253,18 +279,22 @@ public final class AutomergeText: Codable {
     /// The string value of the text reference in an Automerge document.
     public var value: String {
         get {
-            guard let doc, let objId else {
-                return _unboundStorage
-            }
-            do {
-                return try doc.text(obj: objId)
-            } catch {
-                fatalError("Error attempting to read text value from objectId \(objId): \(error)")
+            sync {
+                guard let doc, let objId else {
+                    return _unboundStorage
+                }
+                do {
+                    return try doc.text(obj: objId)
+                } catch {
+                    fatalError("Error attempting to read text value from objectId \(objId): \(error)")
+                }
             }
         }
         set {
             guard let objId, doc != nil else {
-                _unboundStorage = newValue
+                sync {
+                    _unboundStorage = newValue
+                }
                 return
             }
             do {
@@ -281,7 +311,9 @@ public final class AutomergeText: Codable {
         }
         let current = try doc.text(obj: objId)
         if current != newText {
-            _hashOfCurrentValue = newText.hashValue
+            sync {
+                _hashOfCurrentValue = newText.hashValue
+            }
             try doc.updateText(obj: objId, value: newText)
             sendObjectWillChange()
         }
@@ -317,8 +349,10 @@ extension AutomergeText: Equatable {
 
 extension AutomergeText: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(objId)
-        hasher.combine(_unboundStorage)
+        sync {
+            hasher.combine(objId)
+            hasher.combine(_unboundStorage)
+        }
     }
 }
 
@@ -352,7 +386,7 @@ public extension AutomergeText {
         Binding(
             get: { () -> String in
                 guard let doc = self.doc, let objId = self.objId else {
-                    return self._unboundStorage
+                    return self.sync { self._unboundStorage }
                 }
                 do {
                     return try doc.text(obj: objId)
@@ -362,7 +396,9 @@ public extension AutomergeText {
             },
             set: { (newValue: String) in
                 guard let objId = self.objId, self.doc != nil else {
-                    self._unboundStorage = newValue
+                    self.sync {
+                        self._unboundStorage = newValue
+                    }
                     return
                 }
                 do {

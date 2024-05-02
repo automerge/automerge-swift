@@ -8,7 +8,7 @@ import Foundation
 ///
 /// As a reference type, `Counter` updates the underlying Automerge document when a value is explicitly
 /// set, or ``increment(by:)`` is called on the instance.
-public final class Counter: Codable {
+public final class Counter: Codable, @unchecked Sendable {
     var doc: Document?
     var objId: ObjId?
     var codingkey: AnyCodingKey?
@@ -17,6 +17,17 @@ public final class Counter: Codable {
     var observerHandle: AnyCancellable?
     #endif
     var _unboundStorage: Int
+
+    #if !os(WASI)
+    fileprivate let queue = DispatchQueue(label: "automergecounter-sync-queue", qos: .userInteractive)
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try queue.sync(execute: work)
+    }
+    #else
+    fileprivate func sync<T>(execute work: () throws -> T) rethrows -> T {
+        try work()
+    }
+    #endif
 
     // MARK: Initializers and Bind
 
@@ -49,18 +60,24 @@ public final class Counter: Codable {
         self.init()
         // TODO: convert this, akin to Text, to create an instance at the path provided
         if let index = key.intValue {
-            if case .Scalar(.Counter(_)) = try doc.get(obj: objId, index: UInt64(index)) {
-                self.doc = doc
-                self.objId = objId
-                codingkey = AnyCodingKey(key)
+            if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
+                sync {
+                    self.doc = doc
+                    self.objId = objId
+                    codingkey = AnyCodingKey(key)
+                    _hashOfCurrentValue = counterValue.hashValue
+                }
             } else {
                 throw BindingError.NotCounter
             }
         } else {
-            if case .Scalar(.Counter) = try doc.get(obj: objId, key: key.stringValue) {
-                self.doc = doc
-                self.objId = objId
-                codingkey = AnyCodingKey(key)
+            if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: key.stringValue) {
+                sync {
+                    self.doc = doc
+                    self.objId = objId
+                    codingkey = AnyCodingKey(key)
+                    _hashOfCurrentValue = counterValue.hashValue
+                }
             } else {
                 throw BindingError.NotCounter
             }
@@ -76,7 +93,9 @@ public final class Counter: Codable {
 
     /// Returns a Boolean value that indicates wether this reference type is actively updating an Automerge document.
     public var isBound: Bool {
-        doc != nil && objId != nil
+        sync {
+            doc != nil && objId != nil
+        }
     }
 
     /// Binds a text reference instance info an Automerge document.
@@ -101,32 +120,42 @@ public final class Counter: Codable {
         }
         if let index = key.intValue {
             if case .Scalar(.Counter) = try doc.get(obj: objId, index: UInt64(index)) {
-                self.doc = doc
-                self.objId = objId
-                codingkey = key
-                if _unboundStorage != 0 {
+                sync {
+                    self.doc = doc
+                    self.objId = objId
+                    codingkey = key
+                }
+                let currentUnboundValue = sync { self._unboundStorage }
+                if currentUnboundValue != 0 {
                     // If the unbound counter has been adjusted, positive or negative, use
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(_unboundStorage))
                     sendObjectWillChange()
-                    _unboundStorage = 0
+                    sync {
+                        _unboundStorage = 0
+                    }
                 }
             } else {
                 throw BindingError.NotCounter
             }
         } else {
             if case .Scalar(.Counter) = try doc.get(obj: objId, key: key.stringValue) {
-                self.doc = doc
-                self.objId = objId
-                codingkey = key
-                if _unboundStorage != 0 {
+                sync {
+                    self.doc = doc
+                    self.objId = objId
+                    codingkey = key
+                }
+                let currentUnboundValue = sync { self._unboundStorage }
+                if currentUnboundValue != 0 {
                     // If the unbound counter has been adjusted, positive or negative, use
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, key: key.stringValue, by: Int64(_unboundStorage))
                     sendObjectWillChange()
-                    _unboundStorage = 0
+                    sync {
+                        _unboundStorage = 0
+                    }
                 }
             } else {
                 throw BindingError.NotCounter
@@ -156,9 +185,10 @@ public final class Counter: Codable {
             // This is firing off in a concurrent task explicitly to leave the synchronous
             // context that can happen when a doc is being updated and Combine is triggering
             // a change notification.
+            let _hashOfCurrentValue = sync { self._hashOfCurrentValue }
             Task {
                 let currentValue = self.getCounterValue()
-                if currentValue.hashValue != self._hashOfCurrentValue {
+                if currentValue.hashValue != _hashOfCurrentValue {
                     self.sendObjectWillChange()
                 }
             }
@@ -180,7 +210,9 @@ public final class Counter: Codable {
 
     fileprivate func getCounterValue() -> Int {
         guard let doc, let objId, let codingkey else {
-            return _unboundStorage
+            return sync {
+                _unboundStorage
+            }
         }
         do {
             if let index = codingkey.intValue {
@@ -199,9 +231,9 @@ public final class Counter: Codable {
     }
 
     fileprivate func setCounterValue(_ intValue: Int) {
-        _hashOfCurrentValue = intValue.hashValue
+        _hashOfCurrentValue = sync { intValue.hashValue }
         guard let objId, let doc, let codingkey else {
-            _unboundStorage = intValue
+            sync { _unboundStorage = intValue }
             return
         }
         do {
@@ -231,15 +263,19 @@ public final class Counter: Codable {
     /// - Parameter value: The value to add (or subtract) from the counter.
     public func increment(by value: Int) {
         guard let objId, let doc, let codingkey else {
-            _unboundStorage += value
-            _hashOfCurrentValue = _unboundStorage.hashValue
+            sync {
+                _unboundStorage += value
+                _hashOfCurrentValue = _unboundStorage.hashValue
+            }
             return
         }
         do {
             if let index = codingkey.intValue {
                 if case let .Scalar(.Counter(currentValue)) = try doc.get(obj: objId, index: UInt64(index)) {
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(value))
-                    _hashOfCurrentValue = (Int(currentValue) + value).hashValue
+                    sync {
+                        _hashOfCurrentValue = (Int(currentValue) + value).hashValue
+                    }
                     sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
@@ -247,7 +283,9 @@ public final class Counter: Codable {
             } else {
                 if case let .Scalar(.Counter(currentValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: Int64(value))
-                    _hashOfCurrentValue = (Int(currentValue) + value).hashValue
+                    sync {
+                        _hashOfCurrentValue = (Int(currentValue) + value).hashValue
+                    }
                     sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
@@ -299,8 +337,10 @@ extension Counter: Equatable {
 
 extension Counter: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(objId)
-        hasher.combine(value)
+        sync {
+            hasher.combine(objId)
+            hasher.combine(value)
+        }
     }
 }
 
