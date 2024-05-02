@@ -13,7 +13,7 @@ public enum LogVerbosity: Int, Comparable, Equatable, Sendable {
     ///   - lhs: The first verbosity level to compare.
     ///   - rhs: The second verbosity level to compare.
     /// - Returns: Returns true if the first verbosity level is less than the second.
-    public static func < (lhs: LogVerbosity, rhs: LogVerbosity) -> Bool {
+    nonisolated public static func < (lhs: LogVerbosity, rhs: LogVerbosity) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 
@@ -24,4 +24,14 @@ public enum LogVerbosity: Int, Comparable, Equatable, Sendable {
     case debug = 6
     /// Logs include all debugging and additional tracing details.
     case tracing = 8
+    
+    /// Returns `true` if the verbosity level allows debug level logging, `false` otherwise.
+    nonisolated func canDebug() -> Bool {
+        self >= LogVerbosity.debug
+    }
+    
+    /// Returns `true` if the verbosity level allows trace level logging, `false` otherwise.
+    nonisolated func canTrace() -> Bool {
+        self >= LogVerbosity.debug
+    }
 }
