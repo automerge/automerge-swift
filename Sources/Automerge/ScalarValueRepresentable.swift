@@ -15,7 +15,7 @@ import Foundation
 /// Implement ``ScalarValueRepresentable/toScalarValue()`` to encode your type into a relevant Automerge primitive.
 /// For example, you can encode your type into a buffer of bytes, and store the result as a value by returning
 /// ``ScalarValue/Bytes(_:)`` with the data embedded.
-/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` and ``ScalarValueRepresentable/fromValue(_:)`` to decode
+/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` to decode
 /// the scalar value into your type.
 ///
 /// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion

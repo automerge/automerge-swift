@@ -13,25 +13,26 @@ public enum LogVerbosity: Int, Comparable, Equatable, Sendable {
     ///   - lhs: The first verbosity level to compare.
     ///   - rhs: The second verbosity level to compare.
     /// - Returns: Returns true if the first verbosity level is less than the second.
-    nonisolated public static func < (lhs: LogVerbosity, rhs: LogVerbosity) -> Bool {
+    public nonisolated static func < (lhs: LogVerbosity, rhs: LogVerbosity) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 
     // loosely matching the levels from https://datatracker.ietf.org/doc/html/rfc5424
+
     /// Log errors only.
     case errorOnly = 3
     /// Logs include debugging and informational detail.
     case debug = 6
     /// Logs include all debugging and additional tracing details.
     case tracing = 8
-    
+
     /// Returns `true` if the verbosity level allows debug level logging, `false` otherwise.
-    nonisolated func canDebug() -> Bool {
+    public nonisolated func canDebug() -> Bool {
         self >= LogVerbosity.debug
     }
-    
+
     /// Returns `true` if the verbosity level allows trace level logging, `false` otherwise.
-    nonisolated func canTrace() -> Bool {
+    public nonisolated func canTrace() -> Bool {
         self >= LogVerbosity.debug
     }
 }
