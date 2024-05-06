@@ -131,7 +131,6 @@ public final class Counter: Codable, @unchecked Sendable {
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, index: UInt64(index), by: Int64(_unboundStorage))
-                    sendObjectWillChange()
                     sync {
                         _unboundStorage = 0
                     }
@@ -152,7 +151,6 @@ public final class Counter: Codable, @unchecked Sendable {
                     // that as an increment value on the existing counter to ensure that
                     // all the counter changes are maintained and appended to each other.
                     try doc.increment(obj: objId, key: key.stringValue, by: Int64(_unboundStorage))
-                    sendObjectWillChange()
                     sync {
                         _unboundStorage = 0
                     }
@@ -178,21 +176,23 @@ public final class Counter: Codable, @unchecked Sendable {
         // However, for a relatively few number of AutomergeText instances per document, there's not
         // outrageous overhead, and this code is the easiest (most localized) to put in place to a
         // change signal properly operational.
-        observerHandle = doc.objectWillChange.sink(receiveValue: { [weak self] _ in
-            guard let self else {
-                return
-            }
-            // This is firing off in a concurrent task explicitly to leave the synchronous
-            // context that can happen when a doc is being updated and Combine is triggering
-            // a change notification.
-            let _hashOfCurrentValue = sync { self._hashOfCurrentValue }
-            Task {
-                let currentValue = self.getCounterValue()
-                if currentValue.hashValue != _hashOfCurrentValue {
-                    self.sendObjectWillChange()
+        if observerHandle == nil {
+            observerHandle = doc.objectWillChange.sink(receiveValue: { [weak self] _ in
+                guard let self else {
+                    return
                 }
-            }
-        })
+                // This is firing off in a concurrent task explicitly to leave the synchronous
+                // context that can happen when a doc is being updated and Combine is triggering
+                // a change notification.
+                let _hashOfCurrentValue = sync { self._hashOfCurrentValue }
+                Task {
+                    let currentValue = self.getCounterValue()
+                    if currentValue.hashValue != _hashOfCurrentValue {
+                        self.sendObjectWillChange()
+                    }
+                }
+            })
+        }
         #endif
     }
 
@@ -241,7 +241,6 @@ public final class Counter: Codable, @unchecked Sendable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
-                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -249,7 +248,6 @@ public final class Counter: Codable, @unchecked Sendable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
-                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -276,7 +274,6 @@ public final class Counter: Codable, @unchecked Sendable {
                     sync {
                         _hashOfCurrentValue = (Int(currentValue) + value).hashValue
                     }
-                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -286,7 +283,6 @@ public final class Counter: Codable, @unchecked Sendable {
                     sync {
                         _hashOfCurrentValue = (Int(currentValue) + value).hashValue
                     }
-                    sendObjectWillChange()
                 } else {
                     throw BindingError.NotCounter
                 }
