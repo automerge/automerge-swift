@@ -256,21 +256,23 @@ public final class AutomergeText: Codable, @unchecked Sendable {
         // However, for a relatively few number of AutomergeText instances per document, there's not
         // outrageous overhead, and this code is the easiest (most localized) to put in place to a
         // change signal properly operational.
-        observerHandle = doc.objectWillChange.sink(receiveValue: { [weak self] _ in
-            guard let self = self, let objId = self.objId else {
-                return
-            }
-            // This is firing off in a concurrent task explicitly to leave the synchronous
-            // context that can happen when a doc is being updated and Combine is triggering
-            // a change notification.
-            Task {
-                let valueFromDoc = try doc.text(obj: objId)
-                let hashOfCurrentValue = self.sync { self._hashOfCurrentValue }
-                if valueFromDoc.hashValue != hashOfCurrentValue {
-                    self.sendObjectWillChange()
+        if observerHandle == nil {
+            observerHandle = doc.objectWillChange.sink(receiveValue: { [weak self] _ in
+                guard let self = self, let objId = self.objId else {
+                    return
                 }
-            }
-        })
+                // This is firing off in a concurrent task explicitly to leave the synchronous
+                // context that can happen when a doc is being updated and Combine is triggering
+                // a change notification.
+                Task {
+                    let valueFromDoc = try doc.text(obj: objId)
+                    let hashOfCurrentValue = self.sync { self._hashOfCurrentValue }
+                    if valueFromDoc.hashValue != hashOfCurrentValue {
+                        self.sendObjectWillChange()
+                    }
+                }
+            })
+        }
         #endif
     }
 
@@ -315,7 +317,6 @@ public final class AutomergeText: Codable, @unchecked Sendable {
                 _hashOfCurrentValue = newText.hashValue
             }
             try doc.updateText(obj: objId, value: newText)
-            sendObjectWillChange()
         }
     }
 
