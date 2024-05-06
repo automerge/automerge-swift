@@ -157,7 +157,7 @@ public final class AutomergeText: Codable, @unchecked Sendable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, path: String) throws {
-        assert(self.doc == nil && self.objId == nil)
+        assert(self.doc == nil && objId == nil)
         let codingPath = try AnyCodingKey.parsePath(path)
         if codingPath.isEmpty {
             throw BindingError.InvalidPath("Path can't be empty to bind an instance of AutomergeText")
@@ -229,7 +229,7 @@ public final class AutomergeText: Codable, @unchecked Sendable {
         // this assert runs afoul of the encoder, which doesn't make sense right now, but
         // I don't want to second guess it at the moment.
         //
-        //assert(self.doc == nil && self.objId == nil)
+        // assert(self.doc == nil && self.objId == nil)
         if doc.objectType(obj: id) == .Text {
             sync {
                 self.doc = doc
@@ -291,7 +291,11 @@ public final class AutomergeText: Codable, @unchecked Sendable {
                     return _unboundStorage
                 }
                 do {
-                    return try doc.text(obj: objId)
+                    let content = try doc.text(obj: objId)
+                    if content.hashValue != self._hashOfCurrentValue {
+                        self._hashOfCurrentValue = content.hashValue
+                    }
+                    return content
                 } catch {
                     fatalError("Error attempting to read text value from objectId \(objId): \(error)")
                 }
@@ -408,7 +412,11 @@ public extension AutomergeText {
                     return self.sync { self._unboundStorage }
                 }
                 do {
-                    return try doc.text(obj: objId)
+                    let content = try doc.text(obj: objId)
+                    if content.hashValue != self._hashOfCurrentValue {
+                        self._hashOfCurrentValue = content.hashValue
+                    }
+                    return content
                 } catch {
                     fatalError("Error attempting to read text value from objectId \(objId): \(error)")
                 }

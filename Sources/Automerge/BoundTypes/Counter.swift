@@ -217,11 +217,19 @@ public final class Counter: Codable, @unchecked Sendable {
         do {
             if let index = codingkey.intValue {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
-                    return Int(counterValue)
+                    let converted = Int(counterValue)
+                    if _hashOfCurrentValue != converted.hashValue {
+                        _hashOfCurrentValue = converted.hashValue
+                    }
+                    return converted
                 }
             } else {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
-                    return Int(counterValue)
+                    let converted = Int(counterValue)
+                    if _hashOfCurrentValue != converted.hashValue {
+                        _hashOfCurrentValue = converted.hashValue
+                    }
+                    return converted
                 }
             }
         } catch {
@@ -241,6 +249,9 @@ public final class Counter: Codable, @unchecked Sendable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, index: UInt64(index)) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, index: UInt64(index), by: bindingDifference)
+                    if _hashOfCurrentValue != counterValue.hashValue {
+                        _hashOfCurrentValue = counterValue.hashValue
+                    }
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -248,6 +259,9 @@ public final class Counter: Codable, @unchecked Sendable {
                 if case let .Scalar(.Counter(counterValue)) = try doc.get(obj: objId, key: codingkey.stringValue) {
                     let bindingDifference = Int64(intValue) - counterValue
                     try doc.increment(obj: objId, key: codingkey.stringValue, by: bindingDifference)
+                    if _hashOfCurrentValue != counterValue.hashValue {
+                        _hashOfCurrentValue = counterValue.hashValue
+                    }
                 } else {
                     throw BindingError.NotCounter
                 }
@@ -369,7 +383,11 @@ public extension Counter {
     func valueBinding() -> Binding<Int> {
         Binding(
             get: { () -> Int in
-                self.getCounterValue()
+                let valueToReturn = self.getCounterValue()
+                if self._hashOfCurrentValue != valueToReturn.hashValue {
+                    self._hashOfCurrentValue = valueToReturn.hashValue
+                }
+                return valueToReturn
             },
             set: { (newValue: Int) in
                 if newValue.hashValue != self._hashOfCurrentValue {
