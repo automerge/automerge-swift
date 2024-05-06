@@ -157,6 +157,7 @@ public final class AutomergeText: Codable, @unchecked Sendable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, path: String) throws {
+        assert(self.doc == nil && self.objId == nil)
         let codingPath = try AnyCodingKey.parsePath(path)
         if codingPath.isEmpty {
             throw BindingError.InvalidPath("Path can't be empty to bind an instance of AutomergeText")
@@ -225,6 +226,7 @@ public final class AutomergeText: Codable, @unchecked Sendable {
     ///   - doc: The Automerge document associated with this reference.
     ///   - path: A string path that represents a `Text` container within the Automerge document.
     public func bind(doc: Document, id: ObjId) throws {
+        assert(self.doc == nil && self.objId == nil)
         if doc.objectType(obj: id) == .Text {
             sync {
                 self.doc = doc
@@ -366,9 +368,22 @@ extension AutomergeText: CustomStringConvertible {
 #if canImport(Combine)
 
 import Combine
+#if canImport(os)
+import os
+#endif
 
 extension AutomergeText: ObservableObject {
     fileprivate func sendObjectWillChange() {
+        #if canImport(os)
+        if #available(macOS 11, iOS 14, *) {
+            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
+            if let objId = self.objId {
+                logger.trace("AutomergeText (\(objId.debugDescription)) sending ObjectWillChange")
+            } else {
+                logger.trace("AutomergeText (unbound) sending ObjectWillChange")
+            }
+        }
+        #endif
         objectWillChange.send()
     }
 }
@@ -399,11 +414,14 @@ public extension AutomergeText {
                 guard let objId = self.objId, self.doc != nil else {
                     self.sync {
                         self._unboundStorage = newValue
+                        self._hashOfCurrentValue = newValue.hashValue
                     }
                     return
                 }
                 do {
-                    try self.updateText(newText: newValue)
+                    if newValue.hashValue != self._hashOfCurrentValue {
+                        try self.updateText(newText: newValue)
+                    }
                 } catch {
                     fatalError("Error attempting to write '\(newValue)' to objectId \(objId): \(error)")
                 }

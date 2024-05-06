@@ -372,7 +372,9 @@ public extension Counter {
                 self.getCounterValue()
             },
             set: { (newValue: Int) in
-                self.setCounterValue(newValue)
+                if newValue.hashValue != self._hashOfCurrentValue {
+                    self.setCounterValue(newValue)
+                }
             }
         )
     }
