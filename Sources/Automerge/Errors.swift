@@ -43,33 +43,56 @@ extension FfiDocError: LocalizedError {
 /// An error that indicates the synchronisation state could not be decoded.
 ///
 /// The error is specific to the Rust language binding infrastructure.
-public struct DecodeSyncStateError: Error {
+public struct DecodeSyncStateError: LocalizedError {
     let inner: FfiDecodeSyncStateError
 
     init(_ inner: FfiDecodeSyncStateError) {
         self.inner = inner
+    }
+
+    public var errorDescription: String? {
+        switch inner {
+        case let .Internal(message: msg):
+            return "Error decoding sync state: \(msg)"
+        }
     }
 }
 
 /// An error that indicates a problem loading the document.
 ///
 /// The error is specific to the Rust language binding infrastructure.
-public struct LoadError: Error {
+public struct LoadError: LocalizedError {
     let inner: FfiLoadError
 
     init(_ inner: FfiLoadError) {
         self.inner = inner
+    }
+
+    public var errorDescription: String? {
+        switch inner {
+        case let .Internal(message: msg):
+            return "Error loading a document: \(msg)"
+        }
     }
 }
 
 /// An error that indicates the received synchronisation could not be applied.
 ///
 /// The error is specific to the Rust language binding infrastructure.
-public struct ReceiveSyncError: Error {
+public struct ReceiveSyncError: LocalizedError {
     let inner: FfiReceiveSyncError
 
     init(_ inner: FfiReceiveSyncError) {
         self.inner = inner
+    }
+
+    public var errorDescription: String? {
+        switch inner {
+        case let .Internal(message: msg):
+            return "ReceiveSyncError: \(msg)"
+        case let .InvalidMessage(message: message):
+            return "Invalid message: \(message)"
+        }
     }
 }
 
