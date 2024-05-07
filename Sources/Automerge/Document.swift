@@ -1065,8 +1065,15 @@ extension Document: ObservableObject {
 //                ch.debugDescription
 //            }.joined(separator: ".")
 //            logger.trace("heads: \(headsString)")
-            for callStackFrame in Thread.callStackSymbols[0 ... 5] {
-                logger.trace(" - \(callStackFrame)")
+            let callStacks = Thread.callStackSymbols
+            if callStacks.count > 5 {
+                for callStackFrame in callStacks[0 ... 5] {
+                    logger.trace(" - \(callStackFrame)")
+                }
+            } else {
+                for callStackFrame in callStacks {
+                    logger.trace(" - \(callStackFrame)")
+                }
             }
         }
         #endif

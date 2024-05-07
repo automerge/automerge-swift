@@ -399,8 +399,15 @@ extension AutomergeText: ObservableObject {
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
             logger.trace("\(self.debugDescription) sending ObjectWillChange")
-            for callStackFrame in Thread.callStackSymbols[0 ... 6] {
-                logger.trace(" - \(callStackFrame)")
+            let callStacks = Thread.callStackSymbols
+            if callStacks.count > 5 {
+                for callStackFrame in callStacks[0 ... 5] {
+                    logger.trace(" - \(callStackFrame)")
+                }
+            } else {
+                for callStackFrame in callStacks {
+                    logger.trace(" - \(callStackFrame)")
+                }
             }
         }
         #endif
