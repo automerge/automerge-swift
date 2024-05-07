@@ -395,22 +395,23 @@ import os
 
 extension AutomergeText: ObservableObject {
     fileprivate func sendObjectWillChange() {
-        #if canImport(os)
-        if #available(macOS 11, iOS 14, *) {
-            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
-            logger.trace("\(self.debugDescription) sending ObjectWillChange")
-            let callStacks = Thread.callStackSymbols
-            if callStacks.count > 5 {
-                for callStackFrame in callStacks[0 ... 5] {
-                    logger.trace(" - \(callStackFrame)")
-                }
-            } else {
-                for callStackFrame in callStacks {
-                    logger.trace(" - \(callStackFrame)")
-                }
-            }
-        }
-        #endif
+// DEBUGGING / DIAGNOSTICS CODE to show where object changes are being initiated
+//        #if canImport(os)
+//        if #available(macOS 11, iOS 14, *) {
+//            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
+//            logger.trace("\(self.debugDescription) sending ObjectWillChange")
+//            let callStacks = Thread.callStackSymbols
+//            if callStacks.count > 5 {
+//                for callStackFrame in callStacks[0 ... 5] {
+//                    logger.trace(" - \(callStackFrame)")
+//                }
+//            } else {
+//                for callStackFrame in callStacks {
+//                    logger.trace(" - \(callStackFrame)")
+//                }
+//            }
+//        }
+//        #endif
         objectWillChange.send()
     }
 }
