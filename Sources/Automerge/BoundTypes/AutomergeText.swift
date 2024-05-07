@@ -372,6 +372,20 @@ extension AutomergeText: CustomStringConvertible {
     }
 }
 
+extension AutomergeText: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        guard let doc, let objId else {
+            return "AutomergeText(unbound): \(self._unboundStorage)"
+        }
+        do {
+            let path = try doc.path(obj: objId).stringPath()
+            return "AutomergeText(\(path)): \(value)"
+        } catch {
+            return "AutomergeText(\(objId.debugDescription)): \(value)"
+        }
+    }
+}
+
 #if canImport(Combine)
 
 import Combine
@@ -384,11 +398,7 @@ extension AutomergeText: ObservableObject {
         #if canImport(os)
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
-            if let objId = self.objId {
-                logger.trace("AutomergeText (\(objId.debugDescription)) sending ObjectWillChange")
-            } else {
-                logger.trace("AutomergeText (unbound) sending ObjectWillChange")
-            }
+            logger.trace("\(self.debugDescription) sending ObjectWillChange")
         }
         #endif
         objectWillChange.send()
