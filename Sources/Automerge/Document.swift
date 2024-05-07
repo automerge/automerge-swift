@@ -1051,9 +1051,25 @@ struct WrappedDoc {
 
 #if canImport(Combine)
 import Combine
+import OSLog
 
 extension Document: ObservableObject {
     fileprivate func sendObjectWillChange() {
+        #if canImport(os)
+        if #available(macOS 11, iOS 14, *) {
+            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
+
+            logger.trace("Document \(String(describing: self)) sending ObjectWillChange")
+            // concurrency violation
+//            let headsString = self.heads().map { ch in
+//                ch.debugDescription
+//            }.joined(separator: ".")
+//            logger.trace("heads: \(headsString)")
+            for callStackFrame in Thread.callStackSymbols[0 ... 5] {
+                logger.trace(" - \(callStackFrame)")
+            }
+        }
+        #endif
         objectWillChange.send()
     }
 }

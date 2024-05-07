@@ -375,7 +375,7 @@ extension AutomergeText: CustomStringConvertible {
 extension AutomergeText: CustomDebugStringConvertible {
     public var debugDescription: String {
         guard let doc, let objId else {
-            return "AutomergeText(unbound): \(self._unboundStorage)"
+            return "AutomergeText(unbound): \(_unboundStorage)"
         }
         do {
             let path = try doc.path(obj: objId).stringPath()
@@ -399,6 +399,9 @@ extension AutomergeText: ObservableObject {
         if #available(macOS 11, iOS 14, *) {
             let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
             logger.trace("\(self.debugDescription) sending ObjectWillChange")
+            for callStackFrame in Thread.callStackSymbols[0 ... 6] {
+                logger.trace(" - \(callStackFrame)")
+            }
         }
         #endif
         objectWillChange.send()
