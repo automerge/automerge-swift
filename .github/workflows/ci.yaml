@@ -15,7 +15,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.66.0
+          toolchain: 1.75.0
           default: true
       - name: get xcode information
         run: |
@@ -35,7 +35,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.66.0
+          toolchain: 1.75.0
           default: true
       - run: rustup target add wasm32-wasi
       - uses: swiftwasm/setup-swiftwasm@v1
@@ -55,7 +55,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.66.0
+          toolchain: 1.75.0
           default: true
           components: rustfmt
       - name: Clippy
@@ -68,7 +68,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.66.0
+          toolchain: 1.75.0
           default: true
           components: clippy
       - name: Clippy
