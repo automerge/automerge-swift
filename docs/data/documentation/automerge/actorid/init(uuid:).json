@@ -1,0 +1,253 @@
+{
+  "abstract" : [
+    {
+      "text" : "Creates an Actor Id from the contents of a UUID you provide.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
+      ],
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(uuid:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge7ActorIdV4uuidAC10Foundation4UUIDV_tcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "uuid"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10Foundation4UUIDV",
+        "text" : "UUID"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(uuid:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "uuid"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10Foundation4UUIDV",
+              "text" : "UUID"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/actorid\/init(uuid:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId": {
+  "abstract" : [
+    {
+      "text" : "The identifier for collaborators contributing to an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ActorId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ActorId"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ActorId",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/init(uuid:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Actor Id from the contents of a UUID you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "uuid"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(uuid:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(uuid:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid\/init(uuid:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document": {
+  "abstract" : [
+    {
+      "text" : "An Automerge document that provides an interface to the document-structured data it contains.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Document"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Document"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Document",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document"
+}
+}
+}

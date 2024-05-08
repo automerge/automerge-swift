@@ -1,0 +1,278 @@
+{
+  "abstract" : [
+    {
+      "text" : "This constructor can be used to instantiate a fake object.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(noPointer:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AutomergeUniffi3DocC9noPointerA2C02NoE0V_tcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "noPointer"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:15AutomergeUniffi3DocC9NoPointerV",
+        "text" : "NoPointer"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AutomergeUniffi"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(noPointer:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "noPointer"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:15AutomergeUniffi3DocC9NoPointerV",
+              "text" : "NoPointer"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Placeholder value so we can have a constructor separate from the default empty one that",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "may be implemented for classes extending [FFIObject].",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "noPointer"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automergeuniffi\/doc\/init(nopointer:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AutomergeUniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Doc",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/NoPointer": {
+  "abstract" : [
+    {
+      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Doc.NoPointer",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/nopointer"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/init(noPointer:)": {
+  "abstract" : [
+    {
+      "text" : "This constructor can be used to instantiate a fake object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "noPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi3DocC9NoPointerV",
+      "text" : "NoPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(noPointer:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(noPointer:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/init(nopointer:)"
+}
+}
+}

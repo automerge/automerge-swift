@@ -1,0 +1,210 @@
+{
+  "abstract" : [
+    {
+      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AutomergeUniffi9SyncStateC9NoPointerV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "NoPointer"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AutomergeUniffi"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "NoPointer"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "SyncState.NoPointer"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "NoPointer"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer\/init()"
+      ],
+      "title" : "Initializers"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automergeuniffi\/syncstate\/nopointer"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AutomergeUniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SyncState"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SyncState"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncState",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/NoPointer": {
+  "abstract" : [
+    {
+      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncState.NoPointer",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate\/nopointer"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/NoPointer/init()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate\/nopointer\/init()"
+}
+}
+}

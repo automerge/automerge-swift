@@ -93,7 +93,15 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init()"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init(noPointer:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init(unsafeFromRawPointer:)"
       ],
       "title" : "Initializers"
     },
@@ -168,6 +176,40 @@
   "title" : "SyncState",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/syncstate"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/NoPointer": {
+  "abstract" : [
+    {
+      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "SyncState.NoPointer",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate\/nopointer"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/decode(bytes:)": {
   "abstract" : [
@@ -294,6 +336,85 @@
   "title" : "init()",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/syncstate\/init()"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/init(noPointer:)": {
+  "abstract" : [
+    {
+      "text" : "This constructor can be used to instantiate a fake object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "noPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi9SyncStateC9NoPointerV",
+      "text" : "NoPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init(noPointer:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(noPointer:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate\/init(nopointer:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/init(unsafeFromRawPointer:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "unsafeFromRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init(unsafeFromRawPointer:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(unsafeFromRawPointer:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/syncstate\/init(unsafefromrawpointer:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/SyncState/reset()": {
   "abstract" : [

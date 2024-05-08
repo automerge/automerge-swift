@@ -182,7 +182,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/Se",
         "doc:\/\/com.github.automerge.automerge-swift\/SE",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
-        "doc:\/\/com.github.automerge.automerge-swift\/SH"
+        "doc:\/\/com.github.automerge.automerge-swift\/SH",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -934,6 +935,11 @@
 "doc://com.github.automerge.automerge-swift/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8SendableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",
+  "title" : "Swift.Sendable",
   "type" : "unresolvable"
 }
 }

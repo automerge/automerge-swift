@@ -105,6 +105,14 @@
           ],
           "tokens" : [
             {
+              "kind" : "attribute",
+              "text" : "nonisolated"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
               "kind" : "keyword",
               "text" : "static"
             },

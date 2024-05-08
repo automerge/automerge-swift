@@ -434,8 +434,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SchemaStrategy",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AnyCodingKey"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AnyCodingKey",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity"
       ],
       "title" : "Reading and Writing Codable Types"
     },
@@ -517,7 +517,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/FloatingPointScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/StringScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/UIntScalarConversionError"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/UIntScalarConversionError",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/URLScalarConversionError"
       ],
       "title" : "Type Conversion Errors"
     }
@@ -1955,6 +1956,40 @@
   "title" : "UIntScalarConversionError",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/uintscalarconversionerror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/URLScalarConversionError": {
+  "abstract" : [
+    {
+      "text" : "A failure to convert an Automerge scalar value to or from a Boolean representation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "URLScalarConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/URLScalarConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "URLScalarConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "URLScalarConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/urlscalarconversionerror"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Value": {
   "abstract" : [

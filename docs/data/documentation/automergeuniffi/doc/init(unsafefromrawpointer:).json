@@ -1,0 +1,215 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(unsafeFromRawPointer:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AutomergeUniffi3DocC20unsafeFromRawPointerACSv_tcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "unsafeFromRawPointer"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sv",
+        "text" : "UnsafeMutableRawPointer"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AutomergeUniffi"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(unsafeFromRawPointer:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "required"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "unsafeFromRawPointer"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "pointer"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sv",
+              "text" : "UnsafeMutableRawPointer"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automergeuniffi\/doc\/init(unsafefromrawpointer:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AutomergeUniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Doc",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/init(unsafeFromRawPointer:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "unsafeFromRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sv",
+      "text" : "UnsafeMutableRawPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(unsafeFromRawPointer:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(unsafeFromRawPointer:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/init(unsafefromrawpointer:)"
+}
+}
+}

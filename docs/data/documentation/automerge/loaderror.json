@@ -101,6 +101,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
         "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
         "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
       ],
@@ -130,9 +131,16 @@
   ],
   "topicSections" : [
     {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/errorDescription"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/Error-Implementations"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/Error-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/LocalizedError-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -151,6 +159,11 @@
   ]
 , 
 "references": {
+"doc://com.github.automerge.automerge-swift/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge": {
   "abstract" : [
     {
@@ -277,6 +290,55 @@
   "title" : "Error Implementations",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/loaderror\/error-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/LoadError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/loaderror\/localizederror-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/LoadError/errorDescription": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "errorDescription"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LoadError\/errorDescription",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "errorDescription",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/loaderror\/errordescription"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ReceiveSyncError": {
   "abstract" : [

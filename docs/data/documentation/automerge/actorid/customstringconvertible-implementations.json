@@ -96,7 +96,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/description": {
   "abstract" : [
-
+    {
+      "text" : "A hex-encoded string that represents the bytes of the Actor Id.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

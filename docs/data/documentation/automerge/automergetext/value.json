@@ -192,7 +192,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/isBound": {
   "abstract" : [
-
+    {
+      "text" : "Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

@@ -88,6 +88,208 @@
     {
       "content" : [
         {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "You can create an instance of this class and provide initial values before it is attached to an Automerge document.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Changes that you make this instance will be local only to this class until it is explicitly attached (bound).",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Use ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:path:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to associate this instance with a specific schema location within an Automerge document,",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "or ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder\/encode(_:)-7gbuh",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " it as part of a larger document model into an Automerge document to store",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "the value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "When you use ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder\/decode(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " into a type that uses ",
+              "type" : "text"
+            },
+            {
+              "code" : "AutomergeText",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", the instances returned from the",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "decoder in your model are already bound to Automerge document.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "For example, the initial non-bound state allows you to create next Text fields in SwiftUI,",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "and at a later point encode them the data model for your app.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "In the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/automerge\/MeetingNotes\/",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ", this is done when it creates a new",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "agenda item ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/automerge\/MeetingNotes\/blob\/main\/MeetingNotes\/Views\/MeetingNotesDocumentView.swift",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ":",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "\/\/ Add a new AgendaItem (which uses AutomergeText) with a new value, not yet reflected in the Document.",
+            "document.model.agendas.append(AgendaItem(title: \"\"))",
+            "",
+            "\/\/ Store the updated list of agenda items back into the document to save the value into the Document.",
+            "updateDoc()"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Although ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "AutomergeText",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " conforms to ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ObservableObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", it does not send notifications of content",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "changes until it has been bound to an Automerge document.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Warning",
+          "style" : "warning",
+          "type" : "aside"
+        },
+        {
           "anchor" : "Overview",
           "level" : 2,
           "text" : "Overview",
@@ -222,11 +424,13 @@
     {
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/7Combine16ObservableObjectP",
+        "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/Se",
         "doc:\/\/com.github.automerge.automerge-swift\/SE",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
-        "doc:\/\/com.github.automerge.automerge-swift\/SH"
+        "doc:\/\/com.github.automerge.automerge-swift\/SH",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -288,8 +492,21 @@
       "title" : "Encoding and Decoding AutomergeText"
     },
     {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:id:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys"
+      ],
+      "title" : "Enumerations"
+    },
+    {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CustomDebugStringConvertible-Implementations",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CustomStringConvertible-Implementations",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/Equatable-Implementations",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/Hashable-Implementations",
@@ -385,6 +602,121 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergedecoder"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeDecoder/decode(_:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the type you specify, decoded from the Automerge document referenced by the decoder.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "decode"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge0A7DecoderV6decodeyxxmKSeRzlF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge0A7DecoderV6decodeyxxmKSeRzlF1TL_xmfp",
+      "text" : "T"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder\/decode(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "decode(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergedecoder\/decode(_:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder/encode(_:)-7gbuh": {
+  "abstract" : [
+    {
+      "text" : "Encodes a value you provide into the encoder’s Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "encode"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge0A7EncoderV6encodeyyxKSERzlF1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder\/encode(_:)-7gbuh",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "encode(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergeencoder\/encode(_:)-7gbuh"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText": {
   "abstract" : [
     {
@@ -418,6 +750,48 @@
   "title" : "AutomergeText",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergetext"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/CodingKeys": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CodingKeys"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CodingKeys"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AutomergeText.CodingKeys",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergetext\/codingkeys"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/CustomDebugStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CustomDebugStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomDebugStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergetext\/customdebugstringconvertible-implementations"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/CustomStringConvertible-Implementations": {
   "abstract" : [
@@ -463,10 +837,80 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergetext\/observableobject-implementations"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/bind(doc:id:)": {
+  "abstract" : [
+    {
+      "text" : "Binds a text reference instance info an Automerge document at the object ID you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bind"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "doc"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8DocumentC",
+      "text" : "Document"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "id"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:id:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bind(doc:id:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergetext\/bind(doc:id:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/bind(doc:path:)": {
   "abstract" : [
     {
-      "text" : "Binds a text reference instance info an Automerge document.",
+      "text" : "Binds a text reference instance info an Automerge document with the schema path you provide.",
       "type" : "text"
     }
   ],
@@ -790,7 +1234,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/isBound": {
   "abstract" : [
-
+    {
+      "text" : "Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -1051,6 +1498,48 @@
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
   "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s28CustomDebugStringConvertibleP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
+  "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8SendableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+},
+"https://github.com/automerge/MeetingNotes/": {
+  "identifier" : "https:\/\/github.com\/automerge\/MeetingNotes\/",
+  "title" : "MeetingNotes demo app",
+  "titleInlineContent" : [
+    {
+      "text" : "MeetingNotes demo app",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/github.com\/automerge\/MeetingNotes\/"
+},
+"https://github.com/automerge/MeetingNotes/blob/main/MeetingNotes/Views/MeetingNotesDocumentView.swift": {
+  "identifier" : "https:\/\/github.com\/automerge\/MeetingNotes\/blob\/main\/MeetingNotes\/Views\/MeetingNotesDocumentView.swift",
+  "title" : "within the app",
+  "titleInlineContent" : [
+    {
+      "text" : "within the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "app",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/github.com\/automerge\/MeetingNotes\/blob\/main\/MeetingNotes\/Views\/MeetingNotesDocumentView.swift"
 }
 }
 }

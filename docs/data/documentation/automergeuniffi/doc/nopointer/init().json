@@ -1,0 +1,183 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer\/init()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AutomergeUniffi3DocC9NoPointerVAEycfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AutomergeUniffi"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automergeuniffi\/doc\/nopointer\/init()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AutomergeUniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Doc"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Doc",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/NoPointer": {
+  "abstract" : [
+    {
+      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "NoPointer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Doc.NoPointer",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/nopointer"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/NoPointer/init()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/nopointer\/init()"
+}
+}
+}
