@@ -107,7 +107,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/FloatingPointScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/StringScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/UIntScalarConversionError"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/UIntScalarConversionError",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/URLScalarConversionError"
       ],
       "title" : "Type Conversion Errors"
     }
@@ -115,8 +116,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError\/notbytesScalarValue(_:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError\/notbytesValue(_:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError\/notbytesScalarValue(_:)"
       ],
       "title" : "Enumeration Cases"
     },
@@ -379,44 +379,6 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/bytesscalarconversionerror\/notbytesscalarvalue(_:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/BytesScalarConversionError/notbytesValue(_:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "case"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "notbytesValue"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError\/notbytesValue(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "BytesScalarConversionError.notbytesValue(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/bytesscalarconversionerror\/notbytesvalue(_:)"
-},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/FloatingPointScalarConversionError": {
   "abstract" : [
     {
@@ -586,6 +548,40 @@
   "title" : "UIntScalarConversionError",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/uintscalarconversionerror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/URLScalarConversionError": {
+  "abstract" : [
+    {
+      "text" : "A failure to convert an Automerge scalar value to or from a Boolean representation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "URLScalarConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/URLScalarConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "URLScalarConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "URLScalarConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/urlscalarconversionerror"
 },
 "doc://com.github.automerge.automerge-swift/s5ErrorP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",

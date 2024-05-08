@@ -92,7 +92,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "Each separate instance of an Automerge document should have it’s own, unique, ",
+              "text" : "Each instance of an Automerge document should have its own, unique, ",
               "type" : "text"
             },
             {
@@ -108,27 +108,59 @@
               "type" : "text"
             },
             {
-              "text" : "If you create your own ",
-              "type" : "text"
-            },
-            {
-              "code" : "ActorId",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ", no concurrent changes should ever be made with the same ",
-              "type" : "text"
-            },
-            {
-              "code" : "ActorId",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ".",
+              "text" : "A new, or forked, Automerge document automatically creates its own ActorId.",
               "type" : "text"
             }
           ],
           "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "It is an error in Automerge to make two concurrent changes to an Automerge document with the same",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "ActorId.",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "When you create your own ActorIds, you are responsible to enforce that two concurrent changes on a document does not",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "happen.",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "Because of this, Automerge recommends that you use the default ActorId that it provides.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Warning",
+          "style" : "warning",
+          "type" : "aside"
         }
       ],
       "kind" : "content"
@@ -172,6 +204,14 @@
     }
   ],
   "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(data:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(uuid:)"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [
@@ -274,6 +314,112 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/actorid\/equatable-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/init()": {
+  "abstract" : [
+    {
+      "text" : "Creates a random Actor Id.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid\/init()"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/init(data:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Actor Id from the data you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "?("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "data"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DataV",
+      "text" : "Data"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(data:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(data:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid\/init(data:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/init(uuid:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an Actor Id from the contents of a UUID you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "uuid"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId\/init(uuid:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(uuid:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/actorid\/init(uuid:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Change": {
   "abstract" : [

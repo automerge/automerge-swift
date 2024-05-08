@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Binds a text reference instance info an Automerge document.",
+      "text" : "Binds a text reference instance info an Automerge document with the schema path you provide.",
       "type" : "text"
     }
   ],
@@ -300,7 +300,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/bind(doc:path:)": {
   "abstract" : [
     {
-      "text" : "Binds a text reference instance info an Automerge document.",
+      "text" : "Binds a text reference instance info an Automerge document with the schema path you provide.",
       "type" : "text"
     }
   ],

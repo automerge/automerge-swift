@@ -165,7 +165,8 @@
         "doc:\/\/com.github.automerge.automerge-swift\/SL",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/SH",
-        "doc:\/\/com.github.automerge.automerge-swift\/SY"
+        "doc:\/\/com.github.automerge.automerge-swift\/SY",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -213,6 +214,13 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/init(rawValue:)"
       ],
       "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canDebug()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canTrace()"
+      ],
+      "title" : "Instance Methods"
     },
     {
       "generated" : true,
@@ -542,6 +550,112 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/logverbosity\/_(_:_:)-5qdhi"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/LogVerbosity/canDebug()": {
+  "abstract" : [
+    {
+      "text" : "Returns ",
+      "type" : "text"
+    },
+    {
+      "code" : "true",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " if the verbosity level allows debug level logging, ",
+      "type" : "text"
+    },
+    {
+      "code" : "false",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " otherwise.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "canDebug"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canDebug()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "canDebug()",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/logverbosity\/candebug()"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/LogVerbosity/canTrace()": {
+  "abstract" : [
+    {
+      "text" : "Returns ",
+      "type" : "text"
+    },
+    {
+      "code" : "true",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " if the verbosity level allows trace level logging, ",
+      "type" : "text"
+    },
+    {
+      "code" : "false",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " otherwise.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "canTrace"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canTrace()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "canTrace()",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/logverbosity\/cantrace()"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/LogVerbosity/debug": {
   "abstract" : [
     {
@@ -719,6 +833,11 @@
   "title" : "SchemaStrategy",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/schemastrategy"
+},
+"doc://com.github.automerge.automerge-swift/s8SendableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
 }
 }
 }

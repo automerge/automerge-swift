@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -95,6 +101,60 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Before an instance is bound, changes made to the content of AutomergeText are local only to this class, and",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "and updates won’t be reflected in an Automerge document.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:path:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to associate this instance with a specific schema location within an Automerge document,",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "or encode it as part of a larger document model into an Automerge document to store the value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -176,9 +236,82 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/automergetext"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/bind(doc:path:)": {
+  "abstract" : [
+    {
+      "text" : "Binds a text reference instance info an Automerge document with the schema path you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bind"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "doc"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8DocumentC",
+      "text" : "Document"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "path"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:path:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bind(doc:path:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/automergetext\/bind(doc:path:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeText/isBound": {
   "abstract" : [
-
+    {
+      "text" : "Returns a Boolean value that indicates the AutomergeText instance is actively bound to an Automerge document.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

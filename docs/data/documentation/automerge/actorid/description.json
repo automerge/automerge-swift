@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "CustomStringConvertible.description",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A hex-encoded string that represents the bytes of the Actor Id.",
       "type" : "text"
     }
   ],
@@ -202,7 +194,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ActorId/description": {
   "abstract" : [
-
+    {
+      "text" : "A hex-encoded string that represents the bytes of the Actor Id.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

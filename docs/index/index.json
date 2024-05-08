@@ -63,6 +63,20 @@
                     "type" : "init"
                   },
                   {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/candebug()",
+                    "title" : "func canDebug() -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/cantrace()",
+                    "title" : "func canTrace() -> Bool",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Default Implementations",
                     "type" : "groupMarker"
                   },
@@ -174,6 +188,25 @@
               },
               {
                 "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/actorid\/init()",
+                    "title" : "init()",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/actorid\/init(data:)",
+                    "title" : "init?(data: Data)",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/actorid\/init(uuid:)",
+                    "title" : "init(uuid: UUID)",
+                    "type" : "init"
+                  },
                   {
                     "title" : "Default Implementations",
                     "type" : "groupMarker"
@@ -756,6 +789,20 @@
                     "type" : "init"
                   },
                   {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/candebug()",
+                    "title" : "func canDebug() -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/cantrace()",
+                    "title" : "func canTrace() -> Bool",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Default Implementations",
                     "type" : "groupMarker"
                   },
@@ -1002,146 +1049,6 @@
           {
             "children" : [
               {
-                "title" : "Log levels",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/logverbosity\/erroronly",
-                "title" : "case errorOnly",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/logverbosity\/debug",
-                "title" : "case debug",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/logverbosity\/tracing",
-                "title" : "case tracing",
-                "type" : "case"
-              },
-              {
-                "title" : "Operators",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/logverbosity\/_(_:_:)-5qdhi",
-                "title" : "static func < (LogVerbosity, LogVerbosity) -> Bool",
-                "type" : "op"
-              },
-              {
-                "title" : "Initializers",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/logverbosity\/init(rawvalue:)",
-                "title" : "init?(rawValue: Int)",
-                "type" : "init"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:)-1o73a",
-                    "title" : "static func ... (Self) -> PartialRangeFrom<Self>",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:)-nira",
-                    "title" : "static func ... (Self) -> PartialRangeThrough<Self>",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:_:)",
-                    "title" : "static func ... (Self, Self) -> ClosedRange<Self>",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/'.._(_:)",
-                    "title" : "static func ..< (Self) -> PartialRangeUpTo<Self>",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/'.._(_:_:)",
-                    "title" : "static func ..< (Self, Self) -> Range<Self>",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/_(_:_:)-1i3hg",
-                    "title" : "static func > (Self, Self) -> Bool",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/_=(_:_:)-329ct",
-                    "title" : "static func <= (Self, Self) -> Bool",
-                    "type" : "op"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/_=(_:_:)-86dq6",
-                    "title" : "static func >= (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/logverbosity\/comparable-implementations",
-                "title" : "Comparable Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Operators",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/!=(_:_:)",
-                    "title" : "static func != (Self, Self) -> Bool",
-                    "type" : "op"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/logverbosity\/equatable-implementations",
-                "title" : "Equatable Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/hashvalue",
-                    "title" : "var hashValue: Int",
-                    "type" : "property"
-                  },
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automerge\/logverbosity\/hash(into:)",
-                    "title" : "func hash(into: inout Hasher)",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/automerge\/logverbosity\/rawrepresentable-implementations",
-                "title" : "RawRepresentable Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/automerge\/logverbosity",
-            "title" : "LogVerbosity",
-            "type" : "enum"
-          },
-          {
-            "children" : [
-              {
                 "title" : "Creating an AnyCodingKey",
                 "type" : "groupMarker"
               },
@@ -1284,6 +1191,160 @@
             "path" : "\/documentation\/automerge\/anycodingkey",
             "title" : "AnyCodingKey",
             "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Log levels",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/erroronly",
+                "title" : "case errorOnly",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/debug",
+                "title" : "case debug",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/tracing",
+                "title" : "case tracing",
+                "type" : "case"
+              },
+              {
+                "title" : "Operators",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/_(_:_:)-5qdhi",
+                "title" : "static func < (LogVerbosity, LogVerbosity) -> Bool",
+                "type" : "op"
+              },
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/init(rawvalue:)",
+                "title" : "init?(rawValue: Int)",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/candebug()",
+                "title" : "func canDebug() -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/logverbosity\/cantrace()",
+                "title" : "func canTrace() -> Bool",
+                "type" : "method"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:)-1o73a",
+                    "title" : "static func ... (Self) -> PartialRangeFrom<Self>",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:)-nira",
+                    "title" : "static func ... (Self) -> PartialRangeThrough<Self>",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/'...(_:_:)",
+                    "title" : "static func ... (Self, Self) -> ClosedRange<Self>",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/'.._(_:)",
+                    "title" : "static func ..< (Self) -> PartialRangeUpTo<Self>",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/'.._(_:_:)",
+                    "title" : "static func ..< (Self, Self) -> Range<Self>",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/_(_:_:)-1i3hg",
+                    "title" : "static func > (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/_=(_:_:)-329ct",
+                    "title" : "static func <= (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/_=(_:_:)-86dq6",
+                    "title" : "static func >= (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/logverbosity\/comparable-implementations",
+                "title" : "Comparable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/logverbosity\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/hashvalue",
+                    "title" : "var hashValue: Int",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/logverbosity\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/logverbosity\/rawrepresentable-implementations",
+                "title" : "RawRepresentable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/logverbosity",
+            "title" : "LogVerbosity",
+            "type" : "enum"
           },
           {
             "title" : "Representing Objects and Values in a Document",
@@ -1508,7 +1569,7 @@
               },
               {
                 "path" : "\/documentation\/automerge\/scalarvalue\/timestamp(_:)",
-                "title" : "case Timestamp(Int64)",
+                "title" : "case Timestamp(Date)",
                 "type" : "case"
               },
               {
@@ -1639,8 +1700,138 @@
                 "type" : "init"
               },
               {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/automergetext\/bind(doc:id:)",
+                "title" : "func bind(doc: Document, id: ObjId) throws",
+                "type" : "method"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/value",
+                    "title" : "case value",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/init(intvalue:)",
+                    "title" : "init?(intValue: Int)",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/init(rawvalue:)",
+                    "title" : "init?(rawValue: String)",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/init(stringvalue:)",
+                    "title" : "init?(stringValue: String)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/debugdescription",
+                        "title" : "var debugDescription: String",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/description",
+                        "title" : "var description: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/codingkey-implementations",
+                    "title" : "CodingKey Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/hashvalue",
+                        "title" : "var hashValue: Int",
+                        "type" : "property"
+                      },
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/hash(into:)",
+                        "title" : "func hash(into: inout Hasher)",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/automerge\/automergetext\/codingkeys\/rawrepresentable-implementations",
+                    "title" : "RawRepresentable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/automergetext\/codingkeys",
+                "title" : "AutomergeText.CodingKeys",
+                "type" : "enum"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/automergetext\/debugdescription",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/automergetext\/customdebugstringconvertible-implementations",
+                "title" : "CustomDebugStringConvertible Implementations",
+                "type" : "symbol"
               },
               {
                 "children" : [
@@ -2235,8 +2426,8 @@
                     "type" : "case"
                   },
                   {
-                    "path" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:marks:)",
-                    "title" : "case Insert(obj: ObjId, index: UInt64, values: [Value], marks: [String : Value])",
+                    "path" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:)",
+                    "title" : "case Insert(obj: ObjId, index: UInt64, values: [Value])",
                     "type" : "case"
                   },
                   {
@@ -2598,8 +2789,8 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:marks:)",
-                "title" : "case Insert(obj: ObjId, index: UInt64, values: [Value], marks: [String : Value])",
+                "path" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:)",
+                "title" : "case Insert(obj: ObjId, index: UInt64, values: [Value])",
                 "type" : "case"
               },
               {
@@ -3008,6 +3199,25 @@
           {
             "children" : [
               {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/actorid\/init()",
+                "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automerge\/actorid\/init(data:)",
+                "title" : "init?(data: Data)",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automerge\/actorid\/init(uuid:)",
+                "title" : "init(uuid: UUID)",
+                "type" : "init"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -3066,11 +3276,6 @@
               {
                 "path" : "\/documentation\/automerge\/scalarvaluerepresentable\/fromscalarvalue(_:)",
                 "title" : "static func fromScalarValue(ScalarValue) -> Result<Self, ConvertError>",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automerge\/scalarvaluerepresentable\/fromvalue(_:)",
-                "title" : "static func fromValue(Value) -> Result<Self, ConvertError>",
                 "type" : "method"
               },
               {
@@ -3432,6 +3637,15 @@
           {
             "children" : [
               {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/decodesyncstateerror\/errordescription",
+                "title" : "var errorDescription: String?",
+                "type" : "property"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -3449,6 +3663,32 @@
                 ],
                 "path" : "\/documentation\/automerge\/decodesyncstateerror\/error-implementations",
                 "title" : "Error Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/decodesyncstateerror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/decodesyncstateerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/decodesyncstateerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/decodesyncstateerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
                 "type" : "symbol"
               }
             ],
@@ -3521,6 +3761,15 @@
           {
             "children" : [
               {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/loaderror\/errordescription",
+                "title" : "var errorDescription: String?",
+                "type" : "property"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -3539,6 +3788,32 @@
                 "path" : "\/documentation\/automerge\/loaderror\/error-implementations",
                 "title" : "Error Implementations",
                 "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/loaderror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/loaderror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/loaderror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/loaderror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/automerge\/loaderror",
@@ -3547,6 +3822,15 @@
           },
           {
             "children" : [
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/receivesyncerror\/errordescription",
+                "title" : "var errorDescription: String?",
+                "type" : "property"
+              },
               {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
@@ -3565,6 +3849,32 @@
                 ],
                 "path" : "\/documentation\/automerge\/receivesyncerror\/error-implementations",
                 "title" : "Error Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/receivesyncerror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/receivesyncerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/receivesyncerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/receivesyncerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
                 "type" : "symbol"
               }
             ],
@@ -3585,11 +3895,6 @@
               {
                 "path" : "\/documentation\/automerge\/booleanscalarconversionerror\/notboolscalarvalue(_:)",
                 "title" : "case notboolScalarValue(ScalarValue)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/booleanscalarconversionerror\/notboolvalue(_:)",
-                "title" : "case notboolValue(Value)",
                 "type" : "case"
               },
               {
@@ -3664,11 +3969,6 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automerge\/bytesscalarconversionerror\/notbytesvalue(_:)",
-                "title" : "case notbytesValue(Value)",
-                "type" : "case"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -3737,11 +4037,6 @@
               {
                 "path" : "\/documentation\/automerge\/intscalarconversionerror\/notintscalarvalue(_:)",
                 "title" : "case notIntScalarValue(ScalarValue)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/intscalarconversionerror\/notintvalue(_:)",
-                "title" : "case notIntValue(Value)",
                 "type" : "case"
               },
               {
@@ -3816,11 +4111,6 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automerge\/floatingpointscalarconversionerror\/notf64value(_:)",
-                "title" : "case notF64Value(Value)",
-                "type" : "case"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -3889,11 +4179,6 @@
               {
                 "path" : "\/documentation\/automerge\/stringscalarconversionerror\/notstringscalarvalue(_:)",
                 "title" : "case notstringScalarValue(ScalarValue)",
-                "type" : "case"
-              },
-              {
-                "path" : "\/documentation\/automerge\/stringscalarconversionerror\/notstringvalue(_:)",
-                "title" : "case notstringValue(Value)",
                 "type" : "case"
               },
               {
@@ -3968,11 +4253,6 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automerge\/timestampscalarconversionerror\/nottimetampvalue(_:)",
-                "title" : "case notTimetampValue(Value)",
-                "type" : "case"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -4044,11 +4324,6 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automerge\/uintscalarconversionerror\/notuintvalue(_:)",
-                "title" : "case notUIntValue(Value)",
-                "type" : "case"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -4107,6 +4382,82 @@
             "path" : "\/documentation\/automerge\/uintscalarconversionerror",
             "title" : "UIntScalarConversionError",
             "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/notmatchingurlscheme(_:)",
+                "title" : "case notMatchingURLScheme(String)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/notstringscalarvalue(_:)",
+                "title" : "case notStringScalarValue(ScalarValue)",
+                "type" : "case"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/errordescription",
+                "title" : "var errorDescription: String?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/failurereason",
+                "title" : "var failureReason: String?",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/urlscalarconversionerror\/localizeddescription",
+                    "title" : "var localizedDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/error-implementations",
+                "title" : "Error Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/urlscalarconversionerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/urlscalarconversionerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/urlscalarconversionerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/urlscalarconversionerror",
+            "title" : "URLScalarConversionError",
+            "type" : "enum"
           }
         ],
         "path" : "\/documentation\/automerge",
@@ -4122,12 +4473,42 @@
           {
             "children" : [
               {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/doc\/nopointer\/init()",
+                    "title" : "init()",
+                    "type" : "init"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/doc\/nopointer",
+                "title" : "Doc.NoPointer",
+                "type" : "struct"
+              },
+              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/doc\/init()",
                 "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/init(nopointer:)",
+                "title" : "init(noPointer: NoPointer)",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/init(unsafefromrawpointer:)",
+                "title" : "init(unsafeFromRawPointer: UnsafeMutableRawPointer)",
                 "type" : "init"
               },
               {
@@ -4451,12 +4832,42 @@
           {
             "children" : [
               {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/syncstate\/nopointer\/init()",
+                    "title" : "init()",
+                    "type" : "init"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/syncstate\/nopointer",
+                "title" : "SyncState.NoPointer",
+                "type" : "struct"
+              },
+              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/syncstate\/init()",
                 "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/syncstate\/init(nopointer:)",
+                "title" : "init(noPointer: NoPointer)",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/syncstate\/init(unsafefromrawpointer:)",
+                "title" : "init(unsafeFromRawPointer: UnsafeMutableRawPointer)",
                 "type" : "init"
               },
               {
@@ -6241,8 +6652,8 @@
                 "type" : "case"
               },
               {
-                "path" : "\/documentation\/automergeuniffi\/patchaction\/insert(obj:index:values:marks:)",
-                "title" : "case insert(obj: ObjId, index: UInt64, values: [Value], marks: [String : Value])",
+                "path" : "\/documentation\/automergeuniffi\/patchaction\/insert(obj:index:values:)",
+                "title" : "case insert(obj: ObjId, index: UInt64, values: [Value])",
                 "type" : "case"
               },
               {

@@ -157,7 +157,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Conflict(_:_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/DeleteMap(_:_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/DeleteSeq(_:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Insert(obj:index:values:marks:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Insert(obj:index:values:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Marks(_:_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Put(_:_:_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/SpliceText(obj:index:value:marks:)"
@@ -495,10 +495,10 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/patchaction\/increment(_:_:_:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/PatchAction/Insert(obj:index:values:marks:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/PatchAction/Insert(obj:index:values:)": {
   "abstract" : [
     {
-      "text" : "Insert a collection of values at the index you provide for the identified object with the given marks",
+      "text" : "Insert a collection of values at the index you provide for the identified object.",
       "type" : "text"
     }
   ],
@@ -568,41 +568,15 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "marks"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ["
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : " : "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
-    },
-    {
-      "kind" : "text",
       "text" : "])"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Insert(obj:index:values:marks:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Insert(obj:index:values:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "PatchAction.Insert(obj:index:values:marks:)",
+  "title" : "PatchAction.Insert(obj:index:values:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:marks:)"
+  "url" : "\/documentation\/automerge\/patchaction\/insert(obj:index:values:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/PatchAction/Marks(_:_:)": {
   "abstract" : [
