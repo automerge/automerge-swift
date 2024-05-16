@@ -500,14 +500,14 @@ impl Doc {
         Ok(Mark::from_markset(markset, index as u64))
     }
 
-    pub fn split_block(&self, obj: ObjId, index: u32) -> Result<ObjId, DocError> {
+    pub fn split_block(&self, obj: ObjId, index: u64) -> Result<ObjId, DocError> {
         let mut doc = self.0.write().unwrap();
         let obj = am::ObjId::from(obj);
         let id = doc.split_block(obj, index.try_into().unwrap())?;
         Ok(id.into())
     }
 
-    pub fn join_block(&self, obj: ObjId, index: u32) -> Result<(), DocError> {
+    pub fn join_block(&self, obj: ObjId, index: u64) -> Result<(), DocError> {
         let mut doc = self.0.write().unwrap();
         let obj = am::ObjId::from(obj);
         doc.join_block(obj, index.try_into().unwrap())?;

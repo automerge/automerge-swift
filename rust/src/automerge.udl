@@ -104,6 +104,44 @@ dictionary Mark {
     ScalarValue value;
 };
 
+dictionary MarkSet {
+    record<string,ScalarValue> marks;
+};
+
+enum AMValueType {
+    "Scalar",
+    "List",
+    "Map",
+    "Text",
+};
+
+interface AMValue {
+    constructor(ScalarValue input);
+    [Name=new_from_map]
+    constructor(MapValue input);
+};
+
+dictionary MapValue {
+    record<string,ScalarValue> value;
+};
+
+dictionary TextValue {
+    string value;
+    record<string,ScalarValue> marks;
+};
+
+dictionary ListValue {
+    AMValue value;
+    record<string,ScalarValue> marks;
+    boolean conflict;
+};
+
+[Enum]
+interface Span {
+    Text ( string text, MarkSet? marks );
+    Block ( MapValue value );
+};
+
 dictionary PathElement {
     Prop prop;
     ObjId obj;
@@ -180,9 +218,9 @@ interface Doc {
     sequence<Mark> marks_at_position(ObjId obj, Position position, sequence<ChangeHash> heads);
 
     [Throws=DocError]
-    ObjId split_block(ObjId obj, u32 index);
+    ObjId split_block(ObjId obj, u64 index);
     [Throws=DocError]
-    void join_block(ObjId obj, u32 index);
+    void join_block(ObjId obj, u64 index);
 
     [Throws=DocError]
     void delete_in_map(ObjId obj, string key);

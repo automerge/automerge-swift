@@ -857,6 +857,25 @@ public final class Document: @unchecked Sendable {
         try marksAt(obj: obj, position: position, heads: heads())
     }
 
+    public func splitBlock(obj: ObjId, index: UInt64) throws -> ObjId {
+        try sync {
+            try self.doc.wrapErrors { doc in
+                sendObjectWillChange()
+                let objIdBytes = try doc.splitBlock(obj: obj.bytes, index: index)
+                return ObjId(bytes: objIdBytes)
+            }
+        }
+    }
+
+    public func joinBlock(obj: ObjId, index: UInt64) throws {
+        try sync {
+            try self.doc.wrapErrors { doc in
+                sendObjectWillChange()
+                try doc.joinBlock(obj: obj.bytes, index: index)
+            }
+        }
+    }
+
     /// Commit the auto-generated transaction with options.
     ///
     /// - Parameters:
