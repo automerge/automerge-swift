@@ -1,6 +1,7 @@
+
 use automerge as am;
 
-use crate::Value;
+use crate::ScalarValue;
 
 pub enum ExpandMark {
     Before,
@@ -24,7 +25,7 @@ pub struct Mark {
     pub start: u64,
     pub end: u64,
     pub name: String,
-    pub value: Value,
+    pub value: ScalarValue,
 }
 
 impl<'a> From<&'a am::marks::Mark<'a>> for Mark {
@@ -33,9 +34,7 @@ impl<'a> From<&'a am::marks::Mark<'a>> for Mark {
             start: am_mark.start as u64,
             end: am_mark.end as u64,
             name: am_mark.name().to_string(),
-            value: Value::Scalar {
-                value: am_mark.value().into(),
-            },
+            value: am_mark.value().into()
         }
     }
 }
