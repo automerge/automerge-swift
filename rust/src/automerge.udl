@@ -95,7 +95,7 @@ dictionary Mark {
     u64 start;
     u64 end;
     string name;
-    Value value;
+    ScalarValue value;
 };
 
 dictionary PathElement {
