@@ -81,13 +81,18 @@ public final class Document: @unchecked Sendable {
     /// and ignores any previous increments or decrements of the value. If you intent to update the counter by a fixed
     /// amount,
     /// use the method ``increment(obj:key:by:)`` instead.
-    public func put(obj: ObjId, key: String, value: ScalarValue) throws {
+    public func mapPut(obj: ObjId, key: String, value: ScalarValue) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "mapPut")
+    public func put(obj: ObjId, key: String, value: ScalarValue) throws {
+        try self.mapPut(obj: obj, key: key, value: value)
     }
 
     /// Set or update a value within an array object you specify.
@@ -104,13 +109,18 @@ public final class Document: @unchecked Sendable {
     /// and ignores any previous increments or decrements of the value. If you intent to update the counter by a fixed
     /// amount,
     /// use the method ``increment(obj:key:by:)`` instead.
-    public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
+    public func listPut(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi())
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "listPut")
+    public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
+        try self.listPut(obj: obj, index: index, value: value)
     }
 
     /// Set or update an object within a dictionary object you specify.
@@ -120,13 +130,18 @@ public final class Document: @unchecked Sendable {
     ///   - key: The key of the property to update.
     ///   - ty: The type of object to add to the dictionary.
     /// - Returns: The object Id that references the object added.
-    public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
+    public func mapPutObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 return try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "mapPutObject")
+    public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
+        try mapPutObject(obj: obj, key: key, ty: ty)
     }
 
     /// Set or update an object within an array object you specify.
@@ -139,13 +154,18 @@ public final class Document: @unchecked Sendable {
     ///
     /// If the index position doesn't yet exist within the array, this method will throw an error.
     /// To add an object that extends the array, use the method ``insertObject(obj:index:ty:)``.
-    public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
+    public func listPutObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 return try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "listPutObject")
+    public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
+        try listPutObject(obj: obj, index: index, ty: ty)
     }
 
     /// Insert a value, at the index you provide, into the array object you specify.
@@ -174,7 +194,7 @@ public final class Document: @unchecked Sendable {
     /// This method extends the array by inserting a new object.
     /// If you want to change an existing index, use the ``putObject(obj:index:ty:)`` to put in an object or
     /// ``put(obj:index:value:)`` to put in a value.
-    public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
+    public func listInsertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
@@ -183,17 +203,27 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    @available(*, deprecated, renamed: "listInsertObject")
+    public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
+        try listInsertObject(obj: obj, index: index, ty: ty)
+    }
+
     /// Deletes the key you provide, and its associated value or object, from the dictionary object you specify.
     /// - Parameters:
     ///   - obj: The identifier of the dictionary to update.
     ///   - key: The key to delete.
-    public func delete(obj: ObjId, key: String) throws {
+    public func mapDelete(obj: ObjId, key: String) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 try $0.deleteInMap(obj: obj.bytes, key: key)
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "mapDelete")
+    public func delete(obj: ObjId, key: String) throws {
+        try mapDelete(obj: obj, key: key)
     }
 
     /// Deletes the object or value at the index you provide from the array object you specify.
@@ -203,7 +233,7 @@ public final class Document: @unchecked Sendable {
     ///   - index: The index position to remove.
     ///
     /// This method shrinks the length of the array object.
-    public func delete(obj: ObjId, index: UInt64) throws {
+    public func listDelete(obj: ObjId, index: UInt64) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
@@ -212,13 +242,18 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    @available(*, deprecated, renamed: "listDelete")
+    public func delete(obj: ObjId, index: UInt64) throws {
+        try listDelete(obj: obj, index: index)
+    }
+
     /// Increment or decrement the counter referenced by the key you provide in the dictionary object you specify.
     ///
     /// - Parameters:
     ///   - obj: The identifier of the dictionary object that holds the counter.
     ///   - key: The key in the dictionary object that references the counter.
     ///   - by: The amount to increment, or decrement, the counter.
-    public func increment(obj: ObjId, key: String, by: Int64) throws {
+    public func mapCounterIncrement(obj: ObjId, key: String, by: Int64) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
@@ -227,19 +262,29 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    @available(*, deprecated, renamed: "mapCounterIncrement")
+    public func increment(obj: ObjId, key: String, by: Int64) throws {
+        try mapCounterIncrement(obj: obj, key: key, by: by)
+    }
+
     /// Increment or decrement a counter refrerenced at the index you provide in the array object you specify.
     ///
     /// - Parameters:
     ///   - obj: The identifier of the array object that holds the counter.
     ///   - index: The index position in the array object that references the counter.
     ///   - by: The amount to increment, or decrement, the counter.
-    public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
+    public func listCounterIncrement(obj: ObjId, index: UInt64, by: Int64) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
                 try $0.incrementInList(obj: obj.bytes, index: index, by: by)
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "listCounterIncrement")
+    public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
+        try listCounterIncrement(obj: obj, index: index, by: by)
     }
 
     /// Get the value of the key you provide from the dictionary object you specify.
@@ -254,11 +299,16 @@ public final class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAll(obj:key:)``
-    public func get(obj: ObjId, key: String) throws -> Value? {
+    public func mapGet(obj: ObjId, key: String) throws -> Value? {
         try sync {
             let val = try self.doc.wrapErrors { try $0.getInMap(obj: obj.bytes, key: key) }
             return val.map(Value.fromFfi)
         }
+    }
+
+    @available(*, deprecated, renamed: "mapGet")
+    public func get(obj: ObjId, key: String) throws -> Value? {
+        try mapGet(obj: obj, key: key)
     }
 
     /// Get the value at the index position you provide from the array object you specify.
@@ -273,11 +323,16 @@ public final class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAll(obj:index:)``
-    public func get(obj: ObjId, index: UInt64) throws -> Value? {
+    public func listGet(obj: ObjId, index: UInt64) throws -> Value? {
         try sync {
             let val = try self.doc.wrapErrors { try $0.getInList(obj: obj.bytes, index: index) }
             return val.map(Value.fromFfi)
         }
+    }
+
+    @available(*, deprecated, renamed: "listGet")
+    public func get(obj: ObjId, index: UInt64) throws -> Value? {
+        try listGet(obj: obj, index: index)
     }
 
     /// Get the set of possibly conflicting values at the key you provide for the dictionary object that you specify.
@@ -286,11 +341,16 @@ public final class Document: @unchecked Sendable {
     ///   - obj: The identifier of the dictionary object.
     ///   - key: The key within the dictionary.
     /// - Returns: A set of value objects.
-    public func getAll(obj: ObjId, key: String) throws -> Set<Value> {
+    public func mapGetAll(obj: ObjId, key: String) throws -> Set<Value> {
         try sync {
             let vals = try self.doc.wrapErrors { try $0.getAllInMap(obj: obj.bytes, key: key) }
             return Set(vals.map { Value.fromFfi(value: $0) })
         }
+    }
+
+    @available(*, deprecated, renamed: "mapGetAll")
+    public func getAll(obj: ObjId, key: String) throws -> Set<Value> {
+        try mapGetAll(obj: obj, key: key)
     }
 
     /// Get the set of possibly conflicting values at the index you provide for the array object you specify.
@@ -301,11 +361,16 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A set of the values at that index.
     ///
     /// If you request a index beyond the bounds of the array, this method throws an error.
-    public func getAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
+    public func listGetAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
         try sync {
             let vals = try self.doc.wrapErrors { try $0.getAllInList(obj: obj.bytes, index: index) }
             return Set(vals.map { Value.fromFfi(value: $0) })
         }
+    }
+
+    @available(*, deprecated, renamed: "listGetAll")
+    public func getAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
+        try listGetAll(obj: obj, index: index)
     }
 
     /// Get the historical value of the key you provide, in the dictionary object and point in time you specify.
@@ -322,7 +387,7 @@ public final class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:key:heads:)``
-    public func getAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
+    public func mapGetAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Value?
     {
         try sync {
@@ -331,6 +396,13 @@ public final class Document: @unchecked Sendable {
             }
             return val.map(Value.fromFfi)
         }
+    }
+
+    @available(*, deprecated, renamed: "mapGetAt")
+    public func getAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
+        -> Value?
+    {
+        try mapGetAt(obj: obj, key: key, heads: heads)
     }
 
     /// Get the historical value at of the index you provide in the array object and point in time you specify.
@@ -346,7 +418,7 @@ public final class Document: @unchecked Sendable {
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
     /// need all the conflicting values see ``getAllAt(obj:index:heads:)``
-    public func getAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws
+    public func listGetAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws
         -> Value?
     {
         try sync {
@@ -355,6 +427,13 @@ public final class Document: @unchecked Sendable {
             }
             return val.map(Value.fromFfi)
         }
+    }
+
+    @available(*, deprecated, renamed: "listGetAt")
+    public func getAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws
+        -> Value?
+    {
+        try listGetAt(obj: obj, index: index, heads: heads)
     }
 
     /// Get the the historical set of possibly conflicting values of the key you provide, in the dictionary object and
@@ -368,7 +447,7 @@ public final class Document: @unchecked Sendable {
     /// the dictionary.
     ///
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
-    public func getAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
+    public func mapGetAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
         -> Set<Value>
     {
         try sync {
@@ -377,6 +456,13 @@ public final class Document: @unchecked Sendable {
             }
             return Set(vals.map { Value.fromFfi(value: $0) })
         }
+    }
+
+    @available(*, deprecated, renamed: "mapGetAllAt")
+    public func getAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws
+        -> Set<Value>
+    {
+        try mapGetAllAt(obj: obj, key: key, heads: heads)
     }
 
     /// Get the historical value at of the index you provide, in the array object and point of time you specify.
@@ -388,7 +474,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The set of possibly conflicting values of the index at the point in time you provide.
     ///
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
-    public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
+    public func listGetAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
         throws -> Set<Value>
     {
         try sync {
@@ -397,6 +483,13 @@ public final class Document: @unchecked Sendable {
             }
             return Set(vals.map { Value.fromFfi(value: $0) })
         }
+    }
+
+    @available(*, deprecated, renamed: "listGetAllAt")
+    public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
+        throws -> Set<Value>
+    {
+        try listGetAllAt(obj: obj, index: index, heads: heads)
     }
 
     /// Get a list of all the current keys available for the dictionary object you specify.
@@ -603,7 +696,7 @@ public final class Document: @unchecked Sendable {
     ///   - delete: The number of elements to delete from the `start` index.
     ///   If negative, the function deletes elements preceding `start` index, rather than following it.
     ///   - values: An array of values to insert after the `start` index.
-    public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
+    public func listSplice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try sync {
             try self.doc.wrapErrors {
                 sendObjectWillChange()
@@ -612,6 +705,11 @@ public final class Document: @unchecked Sendable {
                 )
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "listSplice")
+    public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
+        try listSplice(obj: obj, start: start, delete: delete, values: values)
     }
 
     /// Splice characters into the text object you specify.
@@ -719,7 +817,7 @@ public final class Document: @unchecked Sendable {
     /// ```swift
     /// Int64("🇬🇧".unicodeScalars.count)
     /// ```
-    public func mark(
+    public func textMark(
         obj: ObjId,
         start: UInt64,
         end: UInt64,
@@ -742,16 +840,33 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    @available(*, deprecated, renamed: "textMark")
+    public func mark(
+        obj: ObjId,
+        start: UInt64,
+        end: UInt64,
+        expand: ExpandMark,
+        name: String,
+        value: ScalarValue
+    ) throws {
+        try textMark(obj: obj, start: start, end: end, expand: expand, name: name, value: value)
+    }
+
     /// Returns the current list of marks for a text object.
     ///
     /// - Parameter obj: The identifier of the text object.
     /// - Returns: The current list of ``Mark`` for the text object.
-    public func marks(obj: ObjId) throws -> [Mark] {
+    public func textMarks(obj: ObjId) throws -> [Mark] {
         try sync {
             try self.doc.wrapErrors {
                 try $0.marks(obj: obj.bytes).map(Mark.fromFfi)
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "textMarks")
+    public func marks(obj: ObjId) throws -> [Mark] {
+        try textMarks(obj: obj)
     }
 
     /// Get the historical list of marks for a text object and point in time you specify.
@@ -760,12 +875,17 @@ public final class Document: @unchecked Sendable {
     ///   - obj: The identifier of the text object.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A list of ``Mark`` for the text object at the point in time you specify.
-    public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
+    public func textMarksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
         try sync {
             try self.doc.wrapErrors {
                 try $0.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "textMarksAt")
+    public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
+        try textMarksAt(obj: obj, heads: heads)
     }
 
     /// Commit the auto-generated transaction with options.
@@ -1055,7 +1175,7 @@ import OSLog
 
 extension Document: ObservableObject {
     fileprivate func sendObjectWillChange() {
-// DEBUGGING / DIAGNOSTICS CODE to show where object changes are being initiated
+        // DEBUGGING / DIAGNOSTICS CODE to show where object changes are being initiated
 //        #if canImport(os)
 //        if #available(macOS 11, iOS 14, *) {
 //            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")

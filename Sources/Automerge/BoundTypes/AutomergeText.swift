@@ -395,7 +395,7 @@ import os
 
 extension AutomergeText: ObservableObject {
     fileprivate func sendObjectWillChange() {
-// DEBUGGING / DIAGNOSTICS CODE to show where object changes are being initiated
+        // DEBUGGING / DIAGNOSTICS CODE to show where object changes are being initiated
 //        #if canImport(os)
 //        if #available(macOS 11, iOS 14, *) {
 //            let logger = Logger(subsystem: "Automerge", category: "AutomergeText")
