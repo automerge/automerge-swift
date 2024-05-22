@@ -191,6 +191,11 @@ interface Doc {
     sequence<Mark> marks_at(ObjId obj, sequence<ChangeHash> heads);
 
     [Throws=DocError]
+    ObjId split_block(ObjId obj, u32 index);
+    [Throws=DocError]
+    void join_block(ObjId obj, u32 index);
+
+    [Throws=DocError]
     void delete_in_map(ObjId obj, string key);
     [Throws=DocError]
     void delete_in_list(ObjId obj, u64 index);
