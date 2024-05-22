@@ -27,4 +27,4 @@ use sync_state::{DecodeSyncStateError, SyncState};
 mod value;
 use value::Value;
 mod span;
-use span::{AMValue, Span, MapValue, TextValue};
+use span::{AMValue, MapValue, Span, TextValue};

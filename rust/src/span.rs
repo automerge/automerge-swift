@@ -14,7 +14,6 @@ pub struct SpanThing {
 }
 // maps to am::iter::Span
 
-
 pub enum Span {
     /// A span of text and the marks that were active for that span
     Text(TextValue),
