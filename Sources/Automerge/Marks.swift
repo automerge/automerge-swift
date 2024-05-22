@@ -17,7 +17,7 @@ public struct Mark: Equatable, Hashable, Sendable {
     /// The name of the mark.
     public let name: String
     /// The value associated with the mark.
-    public let value: Value
+    public let value: ScalarValue
 
     /// Creates a new mark.
     ///
@@ -53,7 +53,7 @@ public struct Mark: Equatable, Hashable, Sendable {
     /// ```swift
     /// Int64("🇬🇧".unicodeScalars.count)
     /// ```
-    public init(start: UInt64, end: UInt64, name: String, value: Value) {
+    public init(start: UInt64, end: UInt64, name: String, value: ScalarValue) {
         self.start = start
         self.end = end
         self.name = name
@@ -61,7 +61,7 @@ public struct Mark: Equatable, Hashable, Sendable {
     }
 
     static func fromFfi(_ ffiMark: FfiMark) -> Self {
-        Self(start: ffiMark.start, end: ffiMark.end, name: ffiMark.name, value: Value.fromFfi(value: ffiMark.value))
+        Self(start: ffiMark.start, end: ffiMark.end, name: ffiMark.name, value: ScalarValue.fromFfi(value: ffiMark.value))
     }
 }
 

@@ -432,6 +432,11 @@ void uniffi_uniffi_automerge_fn_method_doc_insert_in_list(void*_Nonnull ptr, Rus
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustBuffer obj_type, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_JOIN_BLOCK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_JOIN_BLOCK
+void uniffi_uniffi_automerge_fn_method_doc_join_block(void*_Nonnull ptr, RustBuffer obj, uint32_t index, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH
 uint64_t uniffi_uniffi_automerge_fn_method_doc_length(void*_Nonnull ptr, RustBuffer obj, RustCallStatus *_Nonnull out_status
@@ -545,6 +550,11 @@ void uniffi_uniffi_automerge_fn_method_doc_splice(void*_Nonnull ptr, RustBuffer 
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE_TEXT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLICE_TEXT
 void uniffi_uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBuffer obj, uint64_t start, int64_t delete, RustBuffer chars, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLIT_BLOCK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLIT_BLOCK
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_split_block(void*_Nonnull ptr, RustBuffer obj, uint32_t index, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT
@@ -1086,6 +1096,12 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_insert_object_in_list(void
     
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_JOIN_BLOCK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_JOIN_BLOCK
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_join_block(void
+    
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_LENGTH
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_length(void
@@ -1221,6 +1237,12 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE_TEXT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLICE_TEXT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_splice_text(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLIT_BLOCK
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_SPLIT_BLOCK
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_split_block(void
     
 );
 #endif
