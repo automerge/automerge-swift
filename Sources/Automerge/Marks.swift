@@ -61,7 +61,12 @@ public struct Mark: Equatable, Hashable, Sendable {
     }
 
     static func fromFfi(_ ffiMark: FfiMark) -> Self {
-        Self(start: ffiMark.start, end: ffiMark.end, name: ffiMark.name, value: ScalarValue.fromFfi(value: ffiMark.value))
+        Self(
+            start: ffiMark.start,
+            end: ffiMark.end,
+            name: ffiMark.name,
+            value: ScalarValue.fromFfi(value: ffiMark.value)
+        )
     }
 }
 
