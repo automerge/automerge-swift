@@ -4,10 +4,6 @@ import XCTest
 class AutomergeTextTestCase: XCTestCase {
     func testTextInitializer() throws {
         let doc = Document()
-        // the schema in the document needs to exist before you can bind
-        // AutomergeText
-        let _ = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
-
         let text = try AutomergeText("Hello World!", doc: doc, path: "text")
         XCTAssertTrue(text.isBound)
         let docValue = try doc.get(obj: ObjId.ROOT, key: "text")
@@ -16,15 +12,6 @@ class AutomergeTextTestCase: XCTestCase {
             return
         }
         XCTAssertEqual(try! doc.text(obj: textId), "Hello World!")
-    }
-
-    func testFailedTextInitializer() throws {
-        let doc = Document()
-        // the schema in the document needs to exist before you can bind
-        // AutomergeText
-        let _ = try doc.putObject(obj: ObjId.ROOT, key: "anotherPlace", ty: .Text)
-
-        XCTAssertThrowsError(try AutomergeText("Hello World!", doc: doc, path: "text"))
     }
 
     func testEmojiTextInitializationWithSpliceText() throws {

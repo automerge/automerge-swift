@@ -50,10 +50,8 @@ public enum PatchAction: Equatable {
     ///
     /// The property included within the `Put` can be either an index to a sequence, or a key into a map.
     case Put(ObjId, Prop, Value)
-    /// Insert a collection of values at the index you provide for the identified object with the given marks
-    ///
-    /// `marks` will only  be set for text objects.
-    case Insert(obj: ObjId, index: UInt64, values: [Value], marks: [String: Value])
+    /// Insert a collection of values at the index you provide for the identified object.
+    case Insert(obj: ObjId, index: UInt64, values: [Value])
     /// Splices characters into and/or removes characters from the identified object at a given position within it.
     ///
     /// > Note: The unsigned 64bit integer is the index to a UTF-8 code point, and not a grapheme cluster index.
@@ -77,12 +75,11 @@ public enum PatchAction: Equatable {
         switch ffi {
         case let .put(obj, prop, value):
             return .Put(ObjId(bytes: obj), Prop.fromFfi(prop), Value.fromFfi(value: value))
-        case let .insert(obj, index, values, marks):
+        case let .insert(obj, index, values):
             return .Insert(
                 obj: ObjId(bytes: obj),
                 index: index,
-                values: values.map { Value.fromFfi(value: $0) },
-                marks: marks.mapValues(Value.fromFfi)
+                values: values.map { Value.fromFfi(value: $0) }
             )
         case let .spliceText(obj, index, value, marks):
             return .SpliceText(

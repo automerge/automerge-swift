@@ -642,11 +642,12 @@ open class Doc:
     }
 
     public convenience init() {
-        let pointer = try! rustCall {
-            uniffi_uniffi_automerge_fn_constructor_doc_new(
-                $0
-            )
-        }
+        let pointer =
+            try! rustCall {
+                uniffi_uniffi_automerge_fn_constructor_doc_new(
+                    $0
+                )
+            }
         self.init(unsafeFromRawPointer: pointer)
     }
 
@@ -1385,11 +1386,12 @@ open class SyncState:
     }
 
     public convenience init() {
-        let pointer = try! rustCall {
-            uniffi_uniffi_automerge_fn_constructor_syncstate_new(
-                $0
-            )
-        }
+        let pointer =
+            try! rustCall {
+                uniffi_uniffi_automerge_fn_constructor_syncstate_new(
+                    $0
+                )
+            }
         self.init(unsafeFromRawPointer: pointer)
     }
 
@@ -1998,8 +2000,7 @@ public enum PatchAction {
     case insert(
         obj: ObjId,
         index: UInt64,
-        values: [Value],
-        marks: [String: Value]
+        values: [Value]
     )
     case spliceText(
         obj: ObjId,
@@ -2046,8 +2047,7 @@ public struct FfiConverterTypePatchAction: FfiConverterRustBuffer {
         case 2: return try .insert(
                 obj: FfiConverterTypeObjId.read(from: &buf),
                 index: FfiConverterUInt64.read(from: &buf),
-                values: FfiConverterSequenceTypeValue.read(from: &buf),
-                marks: FfiConverterDictionaryStringTypeValue.read(from: &buf)
+                values: FfiConverterSequenceTypeValue.read(from: &buf)
             )
 
         case 3: return try .spliceText(
@@ -2096,12 +2096,11 @@ public struct FfiConverterTypePatchAction: FfiConverterRustBuffer {
             FfiConverterTypeProp.write(prop, into: &buf)
             FfiConverterTypeValue.write(value, into: &buf)
 
-        case let .insert(obj, index, values, marks):
+        case let .insert(obj, index, values):
             writeInt(&buf, Int32(2))
             FfiConverterTypeObjId.write(obj, into: &buf)
             FfiConverterUInt64.write(index, into: &buf)
             FfiConverterSequenceTypeValue.write(values, into: &buf)
-            FfiConverterDictionaryStringTypeValue.write(marks, into: &buf)
 
         case let .spliceText(obj, index, value, marks):
             writeInt(&buf, Int32(3))

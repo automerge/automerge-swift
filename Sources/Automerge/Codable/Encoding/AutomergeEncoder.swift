@@ -53,7 +53,16 @@ public struct AutomergeEncoder {
             cautiousWrite: cautiousWrite,
             logLevel: logLevel
         )
-        try value.encode(to: encoder)
+        switch value {
+        // special case encoding AutomergeText directly - it has a default encoder implementation
+        // that would otherwise get missed as a top-level item to be encoded, and not encode "correctly"
+        // into an Automerge document.
+        case let value as AutomergeText:
+            var container = encoder.container(keyedBy: AutomergeText.CodingKeys.self)
+            try container.encode(value, forKey: .value)
+        default:
+            try value.encode(to: encoder)
+        }
         encoder.postencodeCleanup()
     }
 
@@ -87,7 +96,16 @@ public struct AutomergeEncoder {
             cautiousWrite: cautiousWrite,
             logLevel: logLevel
         )
-        try value.encode(to: encoder)
+        switch value {
+        // special case encoding AutomergeText directly - it has a default encoder implementation
+        // that would otherwise get missed as a top-level item to be encoded, and not encode "correctly"
+        // into an Automerge document.
+        case let value as AutomergeText:
+            var container = encoder.container(keyedBy: AutomergeText.CodingKeys.self)
+            try container.encode(value, forKey: .value)
+        default:
+            try value.encode(to: encoder)
+        }
         encoder.postencodeCleanup(below: path.map { AnyCodingKey($0) })
     }
 }

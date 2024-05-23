@@ -50,7 +50,7 @@ class InteropTests: XCTestCase {
     func testFixtureFileLoad() throws {
         XCTAssertNotNil(markdownData)
     }
-    
+
     struct ExemplarStructure: Codable, Equatable {
         var title: String
         var notes: AutomergeText
@@ -63,7 +63,7 @@ class InteropTests: XCTestCase {
         var bytes: Data
         var bool: Bool
     }
-    
+
     func testExemplarAutomergeDocRepresentations() throws {
         guard let data = try dataFrom(resource: "exemplar") else {
             XCTFail("Unable to load exemplar fixture")
@@ -71,16 +71,16 @@ class InteropTests: XCTestCase {
         }
         let doc = try Document(data)
         let decoder = AutomergeDecoder(doc: doc)
-        
+
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions.insert(.withFractionalSeconds)
         let expectedDate = formatter.date(from: "1941-04-26T08:17:01.000Z")
-        
-        let magicValue: String = "856f4a83"
+
+        let magicValue = "856f4a83"
         // hex values for the magic value of an Automerge document
-        
+
         let exemplar = try decoder.decode(ExemplarStructure.self)
-        
+
         XCTAssertEqual(exemplar.timestamp, expectedDate)
         XCTAssertEqual(exemplar.title, "Hello 🇬🇧👨‍👨‍👧‍👦😀")
         XCTAssertEqual(exemplar.notes.value, "🇬🇧👨‍👨‍👧‍👦😀")

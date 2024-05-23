@@ -52,8 +52,8 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 - ``Automerge/AutomergeEncoder``
 - ``Automerge/AutomergeDecoder``
 - ``Automerge/SchemaStrategy``
-- ``Automerge/LogVerbosity``
 - ``Automerge/AnyCodingKey``
+- ``Automerge/LogVerbosity``
 
 ### Representing Objects and Values in a Document
 
@@ -118,4 +118,4 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 - ``Automerge/StringScalarConversionError``
 - ``Automerge/TimestampScalarConversionError``
 - ``Automerge/UIntScalarConversionError``
-
+- ``Automerge/URLScalarConversionError``

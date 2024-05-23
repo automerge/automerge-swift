@@ -160,8 +160,10 @@ struct AutomergeUnkeyedEncodingContainer: UnkeyedEncodingContainer {
                         )
                 }
                 textNodeId = textId
+                try text.bind(doc: document, id: textNodeId)
             } else {
                 textNodeId = try document.insertObject(obj: objectId, index: UInt64(count), ty: .Text)
+                try text.bind(doc: document, id: textNodeId)
             }
 
             // AutomergeText is a reference type that, when bound, writes directly into the
