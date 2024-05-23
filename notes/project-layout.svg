@@ -1,112 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 3508 2481" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-11.2345,-52.3496)">
-        <g transform="matrix(1.22736,0,0,0.788168,-236.185,106.693)">
-            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:0.97px;"/>
+<svg width="100%" height="100%" viewBox="0 0 3190 997" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-42.1072,-45.2369)">
+        <g transform="matrix(1,0,0,1,-11.2345,-52.3496)">
+            <g transform="matrix(1.22736,0,0,0.788168,-236.185,106.693)">
+                <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:0.97px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-234.112,-965.713)">
+                <text x="381.73px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Automerge Core (Rust)</text>
+                <text x="302.46px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">https://github.com/automerge/automerge</text>
+            </g>
         </g>
-        <g transform="matrix(1,0,0,1,-234.112,-965.713)">
-            <text x="381.73px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Automerge Core (Rust)</text>
-            <text x="302.46px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">https://github.com/automerge/automerge</text>
+        <g transform="matrix(1,0,0,1,42.646,-52.3496)">
+            <g transform="matrix(0.78296,0,0,0.293753,836.276,495.865)">
+                <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.69px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-21.3497,27.2894)">
+                <text x="1217.21px" y="632.777px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">UDL</text>
+                <text x="1070.27px" y="671.504px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./rust/src/automerge.udl</text>
+            </g>
         </g>
-    </g>
-    <g transform="matrix(1,0,0,1,42.646,-52.3496)">
-        <g transform="matrix(0.78296,0,0,0.293753,836.276,495.865)">
-            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.69px;"/>
+        <g transform="matrix(1,0,0,1,42.646,-52.3496)">
+            <g transform="matrix(0.78296,0,0,0.444376,836.276,233.098)">
+                <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.57px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,142.108,74.6224)">
+                <text x="1050.97px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Rust</text>
+                <text x="1060.69px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./rust</text>
+            </g>
         </g>
-        <g transform="matrix(1,0,0,1,-21.3497,27.2894)">
-            <text x="1217.21px" y="632.777px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">UDL</text>
-            <text x="1070.27px" y="671.504px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./rust/src/automerge.udl</text>
+        <g transform="matrix(0.78296,0,0,0.554691,1584.36,140.188)">
+            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.47px;"/>
         </g>
-    </g>
-    <g transform="matrix(1,0,0,1,42.646,-52.3496)">
-        <g transform="matrix(0.78296,0,0,0.444376,836.276,233.098)">
-            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.57px;"/>
+        <g transform="matrix(0.814836,0,0,0.543057,2044.4,144.465)">
+            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.44px;"/>
         </g>
-        <g transform="matrix(1,0,0,1,142.108,74.6224)">
-            <text x="1050.97px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Rust</text>
-            <text x="1060.69px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./rust</text>
+        <g transform="matrix(0.814836,0,0,0.329042,2044.4,476.989)">
+            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.61px;"/>
         </g>
-    </g>
-    <g transform="matrix(0.78296,0,0,0.554691,1584.36,140.188)">
-        <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.47px;"/>
-    </g>
-    <g transform="matrix(0.814836,0,0,0.543057,2044.4,144.465)">
-        <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.44px;"/>
-    </g>
-    <g transform="matrix(0.814836,0,0,0.329042,2044.4,476.989)">
-        <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.61px;"/>
-    </g>
-    <g transform="matrix(0.902692,0,0,0.329042,2499.35,223.154)">
-        <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.47px;"/>
-    </g>
-    <g transform="matrix(2.53813,0,0,0.197922,1173.07,178.458)">
-        <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:0.56px;"/>
-    </g>
-    <g transform="matrix(1,0,0,1,1173.58,-1440.75)">
-        <text x="556.208px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Automerge Swif</text>
-        <text x="909.138px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">t</text>
-        <text x="357.995px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">https://github.com/auto</text>
-        <text x="737.389px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">m</text>
-        <text x="769.002px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">erge/automerge-swift</text>
-    </g>
-    <g transform="matrix(1,0,0,1,891.757,41.997)">
-        <text x="912.002px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (generated)</text>
-        <text x="957.516px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./AutomergeUnifﬁ</text>
-    </g>
-    <g transform="matrix(1,0,0,1,1358.62,41.997)">
-        <text x="944.008px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (overlay)</text>
-        <text x="926.241px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./Sources/Automerge</text>
-    </g>
-    <g transform="matrix(1,0,0,1,1358.62,251.882)">
-        <text x="966.25px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (T<tspan x="1130.14px 1157.95px " y="413.366px 413.366px ">es</tspan>ts)</text>
-        <text x="907.313px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./T<tspan x="946.9px 967.756px " y="452.092px 452.092px ">es</tspan>ts/</text>
-        <text x="1026.09px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">A</text>
-        <text x="1051.48px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">utomergeT<tspan x="1228.65px 1249.51px " y="452.092px 452.092px ">es</tspan>ts</text>
-    </g>
-    <g transform="matrix(1,0,0,1,1872.15,-5.32797)">
-        <text x="992.641px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (util)</text>
-        <text x="865.816px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./Sources/AutomergeUtilities</text>
-    </g>
-    <g transform="matrix(1,0,0,1,42.646,-52.3496)">
-        <g transform="matrix(1,0,0,1,231.57,-322.675)">
-            <path d="M1262.28,943.701L1262.28,882.093L1416.65,882.093L1416.65,851.288L1478.26,912.897L1416.65,974.505L1416.65,943.701L1262.28,943.701Z" style="fill:white;stroke:black;stroke-width:1px;"/>
+        <g transform="matrix(0.902692,0,0,0.329042,2499.35,223.154)">
+            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:1.47px;"/>
         </g>
-        <g transform="matrix(1,0,0,1,300.145,-442.221)">
-            <text x="1245.65px" y="1045.64px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">UniFFI</text>
+        <g transform="matrix(2.53813,0,0,0.197922,1173.07,178.458)">
+            <rect x="236.302" y="367.68" width="574.662" height="419.458" style="fill:white;stroke:black;stroke-width:0.56px;"/>
         </g>
-    </g>
-    <g transform="matrix(1,0,0,1,19.1628,-506.732)">
-        <g transform="matrix(0.776489,0,0,1,186.493,3.25928)">
-            <path d="M832.432,1056.51L832.432,1100.11L720.13,1012.91L832.432,925.709L832.432,969.31L1075.09,969.31L1075.09,1056.51L832.432,1056.51Z" style="fill:white;stroke:black;stroke-width:1.12px;"/>
+        <g transform="matrix(1,0,0,1,1173.58,-1440.75)">
+            <text x="556.208px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Automerge Swif</text>
+            <text x="909.138px" y="1522.39px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">t</text>
+            <text x="357.995px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">https://github.com/auto</text>
+            <text x="737.389px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">m</text>
+            <text x="769.002px" y="1561.12px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">erge/automerge-swift</text>
         </g>
-        <g transform="matrix(1,0,0,1,883.323,1026.1)">
-            <text x="-105.276px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">Depends On</text>
+        <g transform="matrix(1,0,0,1,891.757,41.997)">
+            <text x="912.002px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (generated)</text>
+            <text x="957.516px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./AutomergeUnifﬁ</text>
         </g>
-    </g>
-    <g transform="matrix(1,0,0,1,2.81149,-171.073)">
-        <rect x="1766.57" y="770.553" width="449.938" height="72.61" style="fill:white;stroke:black;stroke-width:1px;"/>
-        <g transform="matrix(1,0,0,1,0.639971,21.5536)">
-            <text x="1831.14px" y="803.2px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">XCFramework</text>
+        <g transform="matrix(1,0,0,1,1358.62,41.997)">
+            <text x="944.008px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (overlay)</text>
+            <text x="926.241px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./Sources/Automerge</text>
         </g>
-    </g>
-    <g transform="matrix(1,0,0,1,-38.8406,96.5093)">
-        <text x="2385.33px" y="209.17px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Package.swift</text>
-    </g>
-    <g transform="matrix(1,0,0,1,519.398,619.46)">
-        <text x="726.089px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/build-xcframework.sh</text>
-    </g>
-    <g transform="matrix(1,0,0,1,1365.3,500.329)">
-        <text x="851.516px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">export LOCAL_BUILD=1</text>
-        <text x="964.4px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">swift build</text>
-        <text x="976.943px" y="496.699px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">swift test</text>
-    </g>
-    <g transform="matrix(1,0,0,1,173.389,335.737)">
-        <text x="964.4px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">cargo build</text>
-        <text x="626.58px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">cargo fmt --manifest-path ./Cargo</text>
-        <text x="1454.4px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">.</text>
-        <text x="1477.82px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">toml</text>
-        <text x="826.43px" y="496.699px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/ci/clippy.sh</text>
-        <text x="813.888px" y="538.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/ci/rustfmt.sh</text>
+        <g transform="matrix(1,0,0,1,1358.62,251.882)">
+            <text x="966.25px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (T<tspan x="1130.14px 1157.95px " y="413.366px 413.366px ">es</tspan>ts)</text>
+            <text x="907.313px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./T<tspan x="946.9px 967.756px " y="452.092px 452.092px ">es</tspan>ts/</text>
+            <text x="1026.09px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">A</text>
+            <text x="1051.48px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">utomergeT<tspan x="1228.65px 1249.51px " y="452.092px 452.092px ">es</tspan>ts</text>
+        </g>
+        <g transform="matrix(1,0,0,1,1872.15,-5.32797)">
+            <text x="992.641px" y="413.366px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Swift (util)</text>
+            <text x="865.816px" y="452.092px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">./Sources/AutomergeUtilities</text>
+        </g>
+        <g transform="matrix(1,0,0,1,42.646,-52.3496)">
+            <g transform="matrix(1,0,0,1,231.57,-322.675)">
+                <path d="M1262.28,943.701L1262.28,882.093L1416.65,882.093L1416.65,851.288L1478.26,912.897L1416.65,974.505L1416.65,943.701L1262.28,943.701Z" style="fill:white;stroke:black;stroke-width:1px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,300.145,-442.221)">
+                <text x="1245.65px" y="1045.64px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">UniFFI</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,19.1628,-506.732)">
+            <g transform="matrix(0.776489,0,0,1,186.493,3.25928)">
+                <path d="M832.432,1056.51L832.432,1100.11L720.13,1012.91L832.432,925.709L832.432,969.31L1075.09,969.31L1075.09,1056.51L832.432,1056.51Z" style="fill:white;stroke:black;stroke-width:1.12px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,883.323,1026.1)">
+                <text x="-105.276px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:37.5px;">Depends On</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,2.81149,-171.073)">
+            <rect x="1766.57" y="770.553" width="449.938" height="72.61" style="fill:white;stroke:black;stroke-width:1px;"/>
+            <g transform="matrix(1,0,0,1,0.639971,21.5536)">
+                <text x="1831.14px" y="803.2px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">XCFramework</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-38.8406,96.5093)">
+            <text x="2385.33px" y="209.17px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:50px;">Package.swift</text>
+        </g>
+        <g transform="matrix(1,0,0,1,519.398,619.46)">
+            <text x="726.089px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/build-xcframework.sh</text>
+        </g>
+        <g transform="matrix(1,0,0,1,1374.96,436.082)">
+            <text x="851.516px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">export LOCAL_BUILD=1</text>
+            <text x="964.4px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">swift build</text>
+            <text x="976.943px" y="496.699px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">swift test</text>
+        </g>
+        <g transform="matrix(1,0,0,1,173.389,335.737)">
+            <text x="964.4px" y="413.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">cargo build</text>
+            <text x="626.58px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">cargo fmt --manifest-path ./Cargo</text>
+            <text x="1454.4px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">.</text>
+            <text x="1477.82px" y="455.032px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">toml</text>
+            <text x="826.43px" y="496.699px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/ci/clippy.sh</text>
+            <text x="813.888px" y="538.366px" style="font-family:'Menlo-Regular', 'Menlo', monospace;font-size:41.667px;">./scripts/ci/rustfmt.sh</text>
+        </g>
     </g>
 </svg>
