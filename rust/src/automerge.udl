@@ -120,7 +120,7 @@ dictionary Patch {
 [Enum]
 interface PatchAction {
     Put( ObjId obj, Prop prop, Value value);
-    Insert( ObjId obj, u64 index, sequence<Value> values, record<string, Value> marks);
+    Insert( ObjId obj, u64 index, sequence<Value> values);
     SpliceText( ObjId obj, u64 index, string value, record<string, Value> marks);
     Increment( ObjId obj, Prop prop, i64 value);
     Conflict( ObjId obj, Prop prop);

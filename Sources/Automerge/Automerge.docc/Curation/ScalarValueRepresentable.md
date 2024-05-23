@@ -6,5 +6,4 @@
 
 - ``toScalarValue()``
 - ``fromScalarValue(_:)``
-- ``fromValue(_:)``
 - ``ConvertError``

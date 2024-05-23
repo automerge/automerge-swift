@@ -336,12 +336,15 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
                         )
                 }
                 textNodeId = textId
+                try text.bind(doc: document, id: textNodeId)
             } else {
                 // no existing value is there, so create a Text node
                 if let indexToWrite = codingkey.intValue {
                     textNodeId = try document.putObject(obj: objectId, index: UInt64(indexToWrite), ty: .Text)
+                    try text.bind(doc: document, id: textNodeId)
                 } else {
                     textNodeId = try document.putObject(obj: objectId, key: codingkey.stringValue, ty: .Text)
+                    try text.bind(doc: document, id: textNodeId)
                 }
             }
 

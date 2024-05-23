@@ -15,7 +15,7 @@ import Foundation
 /// Implement ``ScalarValueRepresentable/toScalarValue()`` to encode your type into a relevant Automerge primitive.
 /// For example, you can encode your type into a buffer of bytes, and store the result as a value by returning
 /// ``ScalarValue/Bytes(_:)`` with the data embedded.
-/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` and ``ScalarValueRepresentable/fromValue(_:)`` to decode
+/// Implement ``ScalarValueRepresentable/fromScalarValue(_:)`` to decode
 /// the scalar value into your type.
 ///
 /// Types that conform to ScalarValueRepresentable define a localized error type to provide information when conversion
@@ -53,7 +53,6 @@ public enum BooleanScalarConversionError: LocalizedError {
 }
 
 extension Bool: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Bool, BooleanScalarConversionError> {
         switch val {
         case let .Boolean(b):
@@ -78,9 +77,9 @@ public enum URLScalarConversionError: LocalizedError {
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-        case .notStringScalarValue(let scalarValue):
+        case let .notStringScalarValue(scalarValue):
             return "Failed to read the scalar value \(scalarValue) as a String before converting to URL."
-        case .notMatchingURLScheme(let string):
+        case let .notMatchingURLScheme(string):
             return "Failed to convert the string \(string) to URL."
         }
     }
@@ -90,7 +89,6 @@ public enum URLScalarConversionError: LocalizedError {
 }
 
 extension URL: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<URL, URLScalarConversionError> {
         switch val {
         case let .String(urlString):
@@ -105,10 +103,9 @@ extension URL: ScalarValueRepresentable {
     }
 
     public func toScalarValue() -> ScalarValue {
-        .String(self.absoluteString)
+        .String(absoluteString)
     }
 }
-
 
 // MARK: String Conversions
 
@@ -129,7 +126,6 @@ public enum StringScalarConversionError: LocalizedError {
 }
 
 extension String: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<String, StringScalarConversionError> {
         switch val {
         case let .String(s):
@@ -163,7 +159,6 @@ public enum BytesScalarConversionError: LocalizedError {
 }
 
 extension Data: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Data, BytesScalarConversionError> {
         switch val {
         case let .Bytes(d):
@@ -197,7 +192,6 @@ public enum UIntScalarConversionError: LocalizedError {
 }
 
 extension UInt: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt, UIntScalarConversionError> {
         switch val {
         case let .Uint(d):
@@ -231,7 +225,6 @@ public enum IntScalarConversionError: LocalizedError {
 }
 
 extension Int: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int, IntScalarConversionError> {
         switch val {
         case let .Int(d):
@@ -247,7 +240,6 @@ extension Int: ScalarValueRepresentable {
 }
 
 extension Int8: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int8, IntScalarConversionError> {
         switch val {
         case let .Int(d):
@@ -263,7 +255,6 @@ extension Int8: ScalarValueRepresentable {
 }
 
 extension Int16: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int16, IntScalarConversionError> {
         switch val {
         case let .Int(d):
@@ -279,7 +270,6 @@ extension Int16: ScalarValueRepresentable {
 }
 
 extension Int32: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int32, IntScalarConversionError> {
         switch val {
         case let .Int(d):
@@ -295,7 +285,6 @@ extension Int32: ScalarValueRepresentable {
 }
 
 extension Int64: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Int64, IntScalarConversionError> {
         switch val {
         case let .Int(d):
@@ -313,7 +302,6 @@ extension Int64: ScalarValueRepresentable {
 // MARK: UInt types
 
 extension UInt8: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt8, IntScalarConversionError> {
         switch val {
         case let .Uint(d):
@@ -329,7 +317,6 @@ extension UInt8: ScalarValueRepresentable {
 }
 
 extension UInt16: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt16, IntScalarConversionError> {
         switch val {
         case let .Uint(d):
@@ -345,7 +332,6 @@ extension UInt16: ScalarValueRepresentable {
 }
 
 extension UInt32: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt32, IntScalarConversionError> {
         switch val {
         case let .Uint(d):
@@ -361,7 +347,6 @@ extension UInt32: ScalarValueRepresentable {
 }
 
 extension UInt64: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<UInt64, IntScalarConversionError> {
         switch val {
         case let .Uint(d):
@@ -447,7 +432,6 @@ public enum TimestampScalarConversionError: LocalizedError {
 }
 
 extension Date: ScalarValueRepresentable {
-
     public static func fromScalarValue(_ val: ScalarValue) -> Result<Date, TimestampScalarConversionError> {
         switch val {
         case let .Timestamp(d):
