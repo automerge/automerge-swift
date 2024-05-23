@@ -21,7 +21,8 @@ pub enum Span {
     Block(MapValue),
 }
 
-// maps to am::hydrate::Value
+// loosely maps to am::hydrate::Value
+// need to create From<> in to convert over
 pub enum AMValue {
     Scalar { value: ScalarValue },
     Map { value: MapValue },
