@@ -40,8 +40,7 @@ jobs:
       - run: rustup target add wasm32-wasi
       - uses: swiftwasm/setup-swiftwasm@v1
         with:
-          swift-version: "swift-wasm-5.9-SNAPSHOT-2024-04-26-a" 
-          # previously: wasm-5.8.0-RELEASE
+          swift-version: "wasm-5.9.1-RELEASE"
       - run: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
       - uses: actions/upload-artifact@v4
         with:
