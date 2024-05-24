@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: macos-latest
+    runs-on: macos-14
     env:
       LOCAL_BUILD: true
     steps:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.75.0
+          toolchain: 1.78.0
           default: true
       - name: get xcode information
         run: |
@@ -35,12 +35,12 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.75.0
+          toolchain: 1.78.0
           default: true
       - run: rustup target add wasm32-wasi
       - uses: swiftwasm/setup-swiftwasm@v1
         with:
-          swift-version: "wasm-5.8.0-RELEASE"
+          swift-version: "wasm-5.9.1-RELEASE"
       - run: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
       - uses: actions/upload-artifact@v4
         with:
@@ -55,7 +55,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.75.0
+          toolchain: 1.78.0
           default: true
           components: rustfmt
       - name: Clippy
@@ -68,7 +68,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.75.0
+          toolchain: 1.78.0
           default: true
           components: clippy
       - name: Clippy
