@@ -32,7 +32,7 @@ XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 # (as of 10/10/23), but leaving it open to float seems less useful than
 # moving the pinning forward, since Catalyst support (target macabi) still
 # requires an active, nightly toolchain.
-RUST_NIGHTLY="nightly-2023-10-09"
+RUST_NIGHTLY="nightly-2024-05-23"
 
 echo "Install nightly and rust-src for Catalyst"
 rustup toolchain install ${RUST_NIGHTLY}
@@ -44,13 +44,12 @@ echo "▸ Install toolchains"
 rustup target add x86_64-apple-ios # iOS Simulator (Intel)
 rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
 rustup target add aarch64-apple-ios # iOS Device
-rustup target add aarch64-apple-xros-sim # iOS Simulator (M1)
-rustup target add aarch64-apple-xros # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
 rustup target add wasm32-wasi # WebAssembly
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
 cargo_build_nightly="cargo +${RUST_NIGHTLY} build --manifest-path $RUST_FOLDER/Cargo.toml"
+cargo_build_nightly_with_std="cargo -Zbuild-std build --manifest-path $RUST_FOLDER/Cargo.toml"
 
 
 echo "▸ Clean state"
@@ -77,18 +76,13 @@ echo "▸ Building for aarch64-apple-ios"
 CFLAGS_aarch64_apple_ios="-target aarch64-apple-ios" \
 $cargo_build --target aarch64-apple-ios --locked --release
 
-echo "▸ Building for x86_64-apple-xros"
-CFLAGS_x86_64_apple_xros="-target x86_64-apple-xros" \
-$cargo_build --target x86_64-apple-xros --locked --release
+echo "▸ Building for aarch64-apple-visionos-sim"
+CFLAGS_aarch64_apple_visionos="-target aarch64-apple-visionos-sim" \
+$cargo_build_nightly_with_std --target aarch64-apple-visionos-sim --locked --release
 
-echo "▸ Building for aarch64-apple-xros-sim"
-CFLAGS_aarch64_apple_xros="-target aarch64-apple-xros-sim" \
-$cargo_build --target aarch64-apple-xros-sim --locked --release
-
-echo "▸ Building for aarch64-apple-xros"
-CFLAGS_aarch64_apple_xros="-target aarch64-apple-xros" \
-$cargo_build --target aarch64-apple-xros --locked --release
-
+echo "▸ Building for aarch64-apple-visionos"
+CFLAGS_aarch64_apple_visionos="-target aarch64-apple-visionos" \
+$cargo_build_nightly_with_std --target aarch64-apple-visionos --locked --release
 
 echo "▸ Building for aarch64-apple-darwin"
 CFLAGS_aarch64_apple_darwin="-target aarch64-apple-darwin" \
@@ -103,12 +97,6 @@ $cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --r
 
 echo "▸ Building for x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
-
-echo "▸ Building for aarch64-apple-xros-macabi"
-$cargo_build_nightly -Z build-std --target aarch64-apple-xros-macabi --locked --release
-
-echo "▸ Building for x86_64-apple-xros-macabi"
-$cargo_build_nightly -Z build-std --target x86_64-apple-xros-macabi --locked --release
 
 echo "▸ Building for wasm32-wasi"
 $cargo_build --target wasm32-wasi --locked --release
@@ -130,12 +118,11 @@ lipo -create  \
     "${BUILD_FOLDER}/aarch64-apple-ios-sim/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/ios-simulator/release/${LIB_NAME}"
 
-echo "▸ Lipo (merge) x86 and arm simulator static libraries into a fat static binary"
-mkdir -p "${BUILD_FOLDER}/xros-simulator/release"
+echo "▸ arm simulator static libraries into a static binary"
+mkdir -p "${BUILD_FOLDER}/visionos-simulator/release"
 lipo -create  \
-    "${BUILD_FOLDER}/x86_64-apple-xros/release/${LIB_NAME}" \
-    "${BUILD_FOLDER}/aarch64-apple-xros-sim/release/${LIB_NAME}" \
-    -output "${BUILD_FOLDER}/vis-simulator/release/${LIB_NAME}"
+    "${BUILD_FOLDER}/aarch64-apple-visionos-sim/release/${LIB_NAME}" \
+    -output "${BUILD_FOLDER}/visionos-simulator/release/${LIB_NAME}"
 
 echo "▸ Lipo (merge) x86 and arm macOS static libraries into a fat static binary"
 mkdir -p "${BUILD_FOLDER}/apple-darwin/release"
@@ -151,17 +138,10 @@ lipo -create  \
     "${BUILD_FOLDER}/aarch64-apple-ios-macabi/release/${LIB_NAME}" \
     -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
 
-echo "▸ Lipo (merge) x86 and arm macOS Catalyst static libraries into a fat static binary"
-mkdir -p "${BUILD_FOLDER}/apple-macabi/release"
-lipo -create  \
-    "${BUILD_FOLDER}/x86_64-apple-xros-macabi/release/${LIB_NAME}" \
-    "${BUILD_FOLDER}/aarch64-apple-xros-macabi/release/${LIB_NAME}" \
-    -output "${BUILD_FOLDER}/apple-macabi/release/${LIB_NAME}"
-
 xcodebuild -create-xcframework \
-    -library "$BUILD_FOLDER/aarch64-apple-xros/release/$LIB_NAME" \
+    -library "$BUILD_FOLDER/aarch64-apple-visionos/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
-    -library "${BUILD_FOLDER}/xros-simulator/release/${LIB_NAME}" \
+    -library "${BUILD_FOLDER}/visionos-simulator/release/${LIB_NAME}" \
     -headers "${BUILD_FOLDER}/includes" \
     -library "$BUILD_FOLDER/aarch64-apple-ios/release/$LIB_NAME" \
     -headers "${BUILD_FOLDER}/includes" \
@@ -198,16 +178,16 @@ cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64/
 cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-simulator/
 
 # Mac Catalyst
-mkdir -p ${XCFRAMEWORK_FOLDER}/xros-arm64_x86_64-maccatalyst/Versions
-mkdir -p ${XCFRAMEWORK_FOLDER}/xros-arm64_x86_64-maccatalyst/Versions/A
-mkdir -p ${XCFRAMEWORK_FOLDER}/xros-arm64_x86_64-maccatalyst/Versions/A/Resources
-cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/xros-arm64_x86_64-maccatalyst/Versions/A/Resources
+mkdir -p ${XCFRAMEWORK_FOLDER}/visionos-arm64_x86_64-maccatalyst/Versions
+mkdir -p ${XCFRAMEWORK_FOLDER}/visionos-arm64_x86_64-maccatalyst/Versions/A
+mkdir -p ${XCFRAMEWORK_FOLDER}/visionos-arm64_x86_64-maccatalyst/Versions/A/Resources
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/ios-arm64_x86_64-maccatalyst/Versions/A/Resources
 
-# xros
+# visionos
 cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/xros-arm64/
 
-# xros simulator
-cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/xros-arm64_x86_64-simulator/
+# visionos simulator
+cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/xros-arm64-simulator/
 
 
 echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
