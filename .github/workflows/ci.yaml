@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: macos-latest
+    runs-on: macos-14
     env:
       LOCAL_BUILD: true
     steps:
