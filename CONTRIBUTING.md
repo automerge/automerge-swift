@@ -6,29 +6,11 @@ Feel free to [join the Automerge Discord Server](https://discord.gg/HrpnPAU5zx),
 
 ## Building and Developing
 
-This package is implemented by wrapping the Rust library.
-There are two problems to solve to make this possible:
+This package is implemented by wrapping the Rust library using the [Uniffi](https://mozilla.github.io/uniffi-rs/) framework from Mozilla.
+The core library is compiled using Rust and exported as an XCFramework and WASM library.
+For an overview of the project layout and major components, review [notes/project-layers](./notes/project-layers.md).
 
-1. Writing and/or generating a bunch of code to cross the FFI bridge from Rust to Swift
-2. Distributing the compiled Rust in a way that Swift understands
-
-We use the [Uniffi](https://mozilla.github.io/uniffi-rs/) framework from Mozilla.
-Uniffi takes in an IDL file describing the FFI interface and some rust source code which implements the Rust side of the interface.
-Given this IDL Uniffi generates a swift package providing the swift side of the interface.
-However, the generated code is not very idiomatic Swift, so we wrap it in a handwritten Swift wrapper of our own.
-Finally, we distribute the compiled Rust code in the form of a binary XCFramework.
-
-The moving parts here then are:
-
-* The `rust/src/automerge.udl` file which describes the FFI interface.
-* The `rust/build.rs` build script, which uses Uniffi to generate the boilerplate parts of the rust side of the interface.
-* The `rust/src/*`files which implement the Automerge specific parts of the rust binding.
-* The `rust/uniffi-bindgen.rs` script, which uses Uniffi to output a Swift wrapper around the interface.
-* The source files in `./Sources` and `./Tests` which implement the handwritten swift wrappers.
-* The `./scripts/build-xcframework.sh` script, followed by `./scripts/compress-framework.sh`, which builds the rust project and packages it into an XCFramework.
-Actually, the `build-xcframework.sh` script does a bit more than this.
-It builds the rust framework, generates the swift package and copies it into `./AutomergeUniffi`, and generates the XCFramework directory.
-The follow-on script `./scripts/compress-framework.sh` compresses that into a zip file and places it in `automergeFFI.xcframework.zip`.
+> NOTE: The binary in the generated XCFramework and the code in ./AutomergeUniffi are **tightly** coupled. Do not edit any code in `./AutomergeUniffi` directly. Regenerate the XCFramework if you update the rust or UDL layer, and test with the regenerated XCFramework.
 
 The default Package.swift uses the latest, pre-compiled version of the XCFramework to make it easy to directly use this package.
 If you are developing at the Rust or FFI interface level, set the environment variable `LOCAL_BUILD` to any value, and use the script `./scripts/build-xcframework.sh` to rebuild the core library.
@@ -51,6 +33,48 @@ What this means is that the typical development cycle usually looks like this:
 * Wire up the swift side of the wrappers in `./Sources/*`.
 * Run tests on the swift side with `swift test`.
 
+## Dependencies
+
+The Automerge package intentionally holds no additional package dependencies, aside from the core Automerge library. Anything that requires additional package dependencies is not a good fit for this library, and should be developed in an external package/project. For example, [Automerge-repo-swift](http://github.com/automerge/automerge-repo-swift/) adds a number of other dependencies to enable platform-specific transports, storage management, etc.
+
+The supplementary package, `AutomergeUtilities` depends ONLY on Automerge, intended for tooling primarily to assist when debugging or testing.
+
+The core library dependencies is defined in `./rust/Cargo.toml`, and the specific Rust toolchain used to generate the XCFramework and WASM libraries is defined in the script `./scripts/build-xcframework.sh`.
+
+## Conditional Compilation in the Automerge module
+
+In Automerge, conditionally compile for platform specific dependencies (for example, `Combine`, `SwiftUI`, `CoreTransferrable`, `UniformTypeIdentifiers`) so that the package compiles cleanly in WASM.
+This is "enforced" by a validation build that compiles the project using a Swift-WASM toolchain.
+
+## Pull Requests
+
+If you're intending to work on the project, please open an issue for the work you're doing, and not just a pull-request unless it is a very simple bug or typo fix.
+Work on the project is discussed in the [Automerge Discord Server](https://discord.gg/HrpnPAU5zx), in the `#automerge-swift` channel (under `ports`).
+If you have an interactive question, want to discuss a bit of feature development, or want to request more immediate review of something, please contact in Discord.
+
+When adding code to the project, any features should include tests and documentation updates to match.
+
+### Formatting, Linting, and Tests
+
+The rust layer (`./rust/lib.rs`) is not expected to have any tests. It is expected to compile, be formatted with the `cargo fmt` command, and pass the Rust linter, `clippy`. To check
+the code locally, run the following commands:
+
+```bash
+./scripts/ci/clippy.sh
+./scripts/ci/rustfmt.sh
+```
+
+Tests are in Swift, as a test target defined on the primary deliverable: `Automerge`.
+The source for the tests is `Tests/AutomergeTests/`.
+
+Swift code is expected to be formatting with `swiftformat`, but commits are not gated on adherance to formatting.
+As a general practice, please run `swiftformat .` to format all Swift code in the project consistently.
+
+### Continuous Integration
+
+In addition to the formatting and linting for the Rust code, the CI system always builds a new framework and runs the tests.
+All are expected to pass before a Pull Request is merged.
+
 ## Benchmarking
 
 The repository has two-dimensional benchmarking as a seperate project in the directory `CollectionBenchmarks`.
@@ -60,7 +84,14 @@ The benchmark baselines were built on an Apple M1 MacBook Pro.
 ## Building the docs
 
 The script `./scripts/preview-docs.sh` will run a web server previewing the docs.
-This does not pick up all source code changes so you may need to restart it occasionally.
+This does not pick up all source code changes so you may need to restart the process occasionally.
+
+Documentation is generated using DocC (part of the Swift language toolchain), with content housed in the source code, both in the Swift source and in a DocC catalog directory for each module:
+
+* `Sources/Automerge/Automerge.docc/`
+* `Sources/AutomergeUtilities/AutomergeUtilities.docc/`
+
+Documentation is updated manually, typically as a follow-up to a point release.
 
 ## Releasing Updates
 
