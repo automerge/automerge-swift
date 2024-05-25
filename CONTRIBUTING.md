@@ -33,6 +33,8 @@ What this means is that the typical development cycle usually looks like this:
 * Wire up the swift side of the wrappers in `./Sources/*`.
 * Run tests on the swift side with `swift test`.
 
+For more, in-depth details about Rust development in this project, read the [Rust development notes](./notes/rust-dev.md).
+
 ## Dependencies
 
 The Automerge package intentionally holds no additional package dependencies, aside from the core Automerge library. Anything that requires additional package dependencies is not a good fit for this library, and should be developed in an external package/project. For example, [Automerge-repo-swift](http://github.com/automerge/automerge-repo-swift/) adds a number of other dependencies to enable platform-specific transports, storage management, etc.
