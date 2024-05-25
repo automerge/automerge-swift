@@ -1,10 +1,10 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.9
 
 import Foundation
 import PackageDescription
 
 var globalSwiftSettings: [PackageDescription.SwiftSetting] = []
-#if swift(>=5.7)
+#if swift(>=5.9)
 // Only enable these additional checker settings if the environment variable
 // `LOCAL_BUILD` is set. Previous value of `CI` was a poor choice because iOS
 // apps in GitHub Actions would trigger this as unsafe flags and fail builds
@@ -64,7 +64,7 @@ if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
 
 let package = Package(
     name: "Automerge",
-    platforms: [.iOS(.v13), .macOS(.v10_15)],
+    platforms: [.iOS(.v13), .macOS(.v10_15), .visionOS(.v1)],
     products: [
         .library(name: "Automerge", targets: ["Automerge", "AutomergeUtilities"]),
     ],
@@ -78,7 +78,7 @@ let package = Package(
                 // themselves and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
                 // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
                 .target(name: "automergeFFI", condition: .when(platforms: [
-                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS,
+                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS, .visionOS
                 ])),
                 // The dependency on _CAutomergeUniffi gives the WebAssembly linker a place to link in
                 // the automergeFFI target when the XCFramework binary target isn't available.

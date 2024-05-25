@@ -10,6 +10,7 @@ jobs:
     runs-on: macos-14
     env:
       LOCAL_BUILD: true
+      DEVELOPER_DIR: /Applications/Xcode_15.4.app
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
