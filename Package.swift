@@ -78,7 +78,7 @@ let package = Package(
                 // themselves and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
                 // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
                 .target(name: "automergeFFI", condition: .when(platforms: [
-                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS, .visionOS
+                    .iOS, .macOS, .macCatalyst, .tvOS, .watchOS, .visionOS,
                 ])),
                 // The dependency on _CAutomergeUniffi gives the WebAssembly linker a place to link in
                 // the automergeFFI target when the XCFramework binary target isn't available.
