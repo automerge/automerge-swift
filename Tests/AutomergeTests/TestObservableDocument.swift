@@ -19,4 +19,23 @@ class ObservableDocumentTestCase: XCTestCase {
         XCTAssertEqual(countOfUpdates, 2)
         XCTAssertNotNil(collection)
     }
+
+    func testObjectWillChangeCallEnabledPriorToChange() async throws {
+        let doc = Document()
+        let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+
+        // In earlier Automerge code, this test could crash, not fail - because
+        // the objectWillChange call was invoked from within the synchronous DispatchQueue
+        // which didn't allow simultaneous access to the document while it was in play.
+        //
+        // As such, this test verifies that you _can_ do that, and that the heads captured
+        // in the sink (outside of debounce or other temporal delays) are different from the
+        // heads _after_ the change.
+        var stashedHeads: Set<ChangeHash> = []
+        let collection = doc.objectWillChange.sink {
+            stashedHeads = doc.heads()
+        }
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
+        XCTAssertNotEqual(doc.heads(), stashedHeads)
+    }
 }
