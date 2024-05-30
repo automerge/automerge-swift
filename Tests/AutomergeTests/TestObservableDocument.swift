@@ -35,6 +35,7 @@ class ObservableDocumentTestCase: XCTestCase {
         let collection = doc.objectWillChange.sink {
             stashedHeads = doc.heads()
         }
+        XCTAssertNotNil(collection)
         try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
         XCTAssertNotEqual(doc.heads(), stashedHeads)
     }
