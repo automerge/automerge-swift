@@ -3,8 +3,11 @@
 The project is an [Automerge](https://automerge.org) implementation, a library of cross-platform data structures for building collaboraative applications, in Swift.
 
 The [API Documentation](https://automerge.org/automerge-swift/documentation/automerge/) provides an overview of the core library.
-A supplemental library, [Automerge Repo (Swift)](http://github.com/automerge/automerge-repo-swift/) adds network and storage support, that works with cross-platform with [Automerge Repo (JS)](https://github.com/automerge/automerge-repo).
-For a deeper demonstration, see the iOS and macOS document-based SwiftUI App [MeetingNotes](https://github.com/automerge/meetingnotes/) which uses both of the above libraries to provide an example of how to use Automerge to build a live, collaborative experience.
+The library is cross platform and cross-language, allowing you to provide collaboration support between browsers and native apps.
+
+A supplemental library, [Automerge Repo (Swift)](http://github.com/automerge/automerge-repo-swift/) adds network and storage support.
+The open-source iOS and macOS document-based SwiftUI App [MeetingNotes](https://github.com/automerge/meetingnotes/) provides a show-case for how to use Automerge to build a live, collaborative experience.
+MeetingNotes builds over both this library and the repository to provide both WebSocket and peer to peer based networking in the app.
 
 ## Quickstart
 
