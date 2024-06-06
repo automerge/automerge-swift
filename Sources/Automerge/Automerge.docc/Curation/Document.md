@@ -77,6 +77,7 @@
 - ``change(hash:)``
 - ``difference(from:to:)``
 - ``difference(from:)``
+- ``difference(to:)``
 
 ### Reading historical map values
 
