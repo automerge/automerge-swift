@@ -585,6 +585,20 @@ impl Doc {
         changes.into_iter().map(|h| h.hash().into()).collect()
     }
 
+    pub fn difference(&self, before: Vec<ChangeHash>, after: Vec<ChangeHash>) -> Vec<Patch> {
+        let lhs = before
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        let rhs = after
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        let mut doc = self.0.write().unwrap();
+        let patches = doc.diff(&lhs, &rhs);
+        patches.into_iter().map(Patch::from).collect()
+    }
+
     pub fn change_by_hash(&self, hash: ChangeHash) -> Option<Change> {
         let doc = self.0.write().unwrap();
         doc.get_change_by_hash(&am::ChangeHash::from(hash))

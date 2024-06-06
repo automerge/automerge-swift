@@ -233,6 +233,8 @@ interface Doc {
 
     Change? change_by_hash(ChangeHash hash);
 
+    sequence<Patch> difference(sequence<ChangeHash> before, sequence<ChangeHash> after);
+
     void commit_with(string? msg, i64 time);
 
     sequence<u8> save();
