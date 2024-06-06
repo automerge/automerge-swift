@@ -14,7 +14,7 @@ RUST_FOLDER="$THIS_SCRIPT_DIR/../../rust"
 
 FRAMEWORK_NAME="automergeFFI"
 
-SWIFT_FOLDER="$THIS_SCRIPT_DIR/../AutomergeUniffi"
+SWIFT_FOLDER="$THIS_SCRIPT_DIR/../../AutomergeUniffi"
 cargo_build="cargo build --manifest-path ${RUST_FOLDER}/Cargo.toml"
 
 echo "▸ Building for wasm32-wasi"
