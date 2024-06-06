@@ -34,10 +34,9 @@ class ChangeSetTests: XCTestCase {
 
     func testDifferenceToPreviousCommit() throws {
         let doc = Document()
-        doc.difference(to: doc.heads())
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
-        
+
         let before = doc.heads()
         try doc.spliceText(obj: textId, start: 5, delete: 0, value: " World 👨‍👩‍👧‍👦")
 
@@ -47,15 +46,15 @@ class ChangeSetTests: XCTestCase {
         XCTAssertEqual(patches.first?.action, .DeleteSeq(DeleteSeq(obj: textId, index: 5, length: length)))
     }
 
-    func testDifferenceFromPreviousCommit() throws {
+    func testDifferenceSincePreviousCommit() throws {
         let doc = Document()
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
-        
+
         let before = doc.heads()
         try doc.spliceText(obj: textId, start: 5, delete: 0, value: " World 👨‍👩‍👧‍👦")
 
-        let patches = doc.difference(from: before)
+        let patches = doc.difference(since: before)
         XCTAssertEqual(patches.count, 1)
         XCTAssertEqual(patches.first?.action, .SpliceText(obj: textId, index: 5, value: " World 👨‍👩‍👧‍👦", marks: [:]))
     }
@@ -73,7 +72,7 @@ class ChangeSetTests: XCTestCase {
         XCTAssertEqual(patches.first?.action, .SpliceText(obj: textId, index: 0, value: "Hello World 👨‍👩‍👧‍👦", marks: [:]))
     }
 
-    func testDifferenceProperty_DifferenceBetweenCommitAndCurrent_DifferenceFromCommit_ResultsEquals() throws {
+    func testDifferenceProperty_DifferenceBetweenCommitAndCurrent_DifferenceSinceCommit_ResultsEquals() throws {
         let doc = Document()
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         let before = doc.heads()
@@ -81,7 +80,7 @@ class ChangeSetTests: XCTestCase {
         try doc.spliceText(obj: textId, start: 5, delete: 0, value: " World 👨‍👩‍👧‍👦")
 
         let patches1 = doc.difference(from: before, to: doc.heads())
-        let patches2 = doc.difference(from: before)
+        let patches2 = doc.difference(since: before)
         XCTAssertEqual(patches1.count, 1)
         XCTAssertEqual(patches1, patches2)
     }

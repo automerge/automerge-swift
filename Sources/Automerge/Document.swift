@@ -951,8 +951,15 @@ public final class Document: @unchecked Sendable {
     /// Use:
     /// ```
     /// let doc = Document()
-    /// doc.difference(to: doc.heads())
+    /// let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+    /// let before = doc.heads()
+    ///
+    /// try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
+    /// let after = doc.heads()
+    ///
+    /// let patches = doc.difference(from: before, to: after)
     /// ```
+    ///
     /// - Parameters:
     ///   - from: The set of heads at beginning point in the documents history.
     ///   - to: The set of heads at ending point in the documents history.
@@ -967,19 +974,19 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Generates patches **from** a given point in the document history.
+    /// Generates patches **since** a given point in the document history.
     ///
     /// Use:
     /// ```
     /// let doc = Document()
-    /// doc.difference(from: doc.heads())
+    /// doc.difference(since: doc.heads())
     /// ```
+    ///
     /// - Parameters:
     ///     - since: The set of heads at the point in the documents history to compare to.
-    /// - Note: `from` do not have to be chronological. Document state can move backward.
     /// - Returns: The difference needed to produce current document given an arbitrary
     /// point in the history.
-    public func difference(from lhs: Set<ChangeHash>) -> [Patch] {
+    public func difference(since lhs: Set<ChangeHash>) -> [Patch] {
         difference(from: lhs, to: heads())
     }
 
@@ -990,10 +997,11 @@ public final class Document: @unchecked Sendable {
     /// let doc = Document()
     /// doc.difference(to: doc.heads())
     /// ```
+    ///
     /// - Parameters:
-    ///     - to: heads at ending point in the documents history.
-    /// - Note: `to` do not have to be chronological. Document state can move backward.
-    /// - Returns: The difference needed to produce a document at `to` in the history.
+    ///     - to: The set of heads at ending point in the documents history.
+    /// - Returns: The difference needed to move current document to a previous point
+    /// in the history.
     public func difference(to rhs: Set<ChangeHash>) -> [Patch] {
         difference(from: heads(), to: rhs)
     }
