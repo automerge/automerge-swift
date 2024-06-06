@@ -955,7 +955,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     /// - Parameters:
     ///   - from: The set of heads at beginning point in the documents history.
-    ///   - to: heads at ending point in the documents history.
+    ///   - to: The set of heads at ending point in the documents history.
     /// - Note: `from` and `to` do not have to be chronological. Document state can move backward.
     /// - Returns: The difference needed to produce a document at `to` when it is set at `from` in history.
     public func difference(from before: Set<ChangeHash>, to after: Set<ChangeHash>) -> [Patch] {
