@@ -967,6 +967,37 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Generates patches **from** a given point in the document history.
+    ///
+    /// Use:
+    /// ```
+    /// let doc = Document()
+    /// doc.difference(from: doc.heads())
+    /// ```
+    /// - Parameters:
+    ///     - from: heads at beginning point in the documents history.
+    /// - Note: `from` do not have to be chronological. Document state can move backward.
+    /// - Returns: The difference needed to produce current document given an arbitrary
+    /// point in the history.
+    public func difference(from lhs: Set<ChangeHash>) -> [Patch] {
+        difference(from: lhs, to: heads())
+    }
+
+    /// Generates patches **to** a given point in the document history.
+    ///
+    /// Use:
+    /// ```
+    /// let doc = Document()
+    /// doc.difference(to: doc.heads())
+    /// ```
+    /// - Parameters:
+    ///     - to: heads at ending point in the documents history.
+    /// - Note: `from` do not have to be chronological. Document state can move backward.
+    /// - Returns: The difference needed to produce a document at `to` in the history.
+    public func difference(to rhs: Set<ChangeHash>) -> [Patch] {
+        difference(from: heads(), to: rhs)
+    }
+
     /// Get the path to an object within the document.
     ///
     /// - Parameter obj: The identifier of an array, dictionary or text object.
