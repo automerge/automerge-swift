@@ -954,7 +954,7 @@ public final class Document: @unchecked Sendable {
     /// doc.difference(to: doc.heads())
     /// ```
     /// - Parameters:
-    ///   - from: heads at beginning point in the documents history.
+    ///   - from: The set of heads at beginning point in the documents history.
     ///   - to: heads at ending point in the documents history.
     /// - Note: `from` and `to` do not have to be chronological. Document state can move backward.
     /// - Returns: The difference needed to produce a document at `to` when it is set at `from` in history.
