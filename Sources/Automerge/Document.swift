@@ -946,6 +946,27 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Generates patches between two points in the document history.
+    ///
+    /// Use:
+    /// ```
+    /// let doc = Document()
+    /// doc.difference(to: doc.heads())
+    /// ```
+    /// - Parameters:
+    ///   - from: heads at beginning point in the documents history.
+    ///   - to: heads at ending point in the documents history.
+    /// - Note: `from` and `to` do not have to be chronological. Document state can move backward.
+    /// - Returns: The difference needed to produce a document at `to` when it is set at `from` in history.
+    public func difference(from before: Set<ChangeHash>, to after: Set<ChangeHash>) -> [Patch] {
+        sync {
+            let patches = self.doc.wrapErrors { doc in
+                doc.difference(before: before.map(\.bytes), after: after.map(\.bytes))
+            }
+            return patches.map { Patch($0) }
+        }
+    }
+
     /// Get the path to an object within the document.
     ///
     /// - Parameter obj: The identifier of an array, dictionary or text object.
