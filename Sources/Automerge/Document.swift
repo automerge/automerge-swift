@@ -992,7 +992,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     /// - Parameters:
     ///     - to: heads at ending point in the documents history.
-    /// - Note: `from` do not have to be chronological. Document state can move backward.
+    /// - Note: `to` do not have to be chronological. Document state can move backward.
     /// - Returns: The difference needed to produce a document at `to` in the history.
     public func difference(to rhs: Set<ChangeHash>) -> [Patch] {
         difference(from: heads(), to: rhs)
