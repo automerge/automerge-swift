@@ -17,6 +17,16 @@ FRAMEWORK_NAME="automergeFFI"
 SWIFT_FOLDER="$THIS_SCRIPT_DIR/../../AutomergeUniffi"
 cargo_build="cargo build --manifest-path ${RUST_FOLDER}/Cargo.toml"
 
+mkdir -p "${SWIFT_FOLDER}"
+
+echo "▸ Generate Swift Scaffolding Code"
+cargo run --manifest-path "$RUST_FOLDER/Cargo.toml"  \
+    --features=uniffi/cli \
+    --bin uniffi-bindgen generate \
+    "$RUST_FOLDER/src/automerge.udl" \
+    --language swift \
+    --out-dir "${SWIFT_FOLDER}"
+
 echo "▸ Building for wasm32-wasi"
 $cargo_build --target wasm32-wasi --locked --release
 

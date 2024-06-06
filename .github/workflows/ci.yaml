@@ -42,7 +42,7 @@ jobs:
       - uses: swiftwasm/setup-swiftwasm@v1
         with:
           swift-version: "wasm-5.9.1-RELEASE"
-      - run: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
+      #- run: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
       - run: scripts/ci/wasi-regen-swift.sh
       - uses: actions/upload-artifact@v4
         with:
