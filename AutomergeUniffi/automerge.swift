@@ -516,6 +516,8 @@ public protocol DocProtocol: AnyObject {
 
     func deleteInMap(obj: ObjId, key: String) throws
 
+    func difference(before: [ChangeHash], after: [ChangeHash]) -> [Patch]
+
     func encodeChangesSince(heads: [ChangeHash]) throws -> [UInt8]
 
     func encodeNewChanges() -> [UInt8]
@@ -796,6 +798,17 @@ open class Doc:
             $0
         )
     }
+    }
+
+    open func difference(before: [ChangeHash], after: [ChangeHash]) -> [Patch] {
+        try! FfiConverterSequenceTypePatch.lift(try! rustCall {
+            uniffi_uniffi_automerge_fn_method_doc_difference(
+                self.uniffiClonePointer(),
+                FfiConverterSequenceTypeChangeHash.lower(before),
+                FfiConverterSequenceTypeChangeHash.lower(after),
+                $0
+            )
+        })
     }
 
     open func encodeChangesSince(heads: [ChangeHash]) throws -> [UInt8] {
@@ -2946,6 +2959,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_delete_in_map() != 1721 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_method_doc_difference() != 13614 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_encode_changes_since() != 49806 {

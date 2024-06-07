@@ -337,6 +337,11 @@ void uniffi_uniffi_automerge_fn_method_doc_delete_in_list(void*_Nonnull ptr, Rus
 void uniffi_uniffi_automerge_fn_method_doc_delete_in_map(void*_Nonnull ptr, RustBuffer obj, RustBuffer key, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DIFFERENCE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DIFFERENCE
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_difference(void*_Nonnull ptr, RustBuffer before, RustBuffer after, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_CHANGES_SINCE
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ENCODE_CHANGES_SINCE
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_encode_changes_since(void*_Nonnull ptr, RustBuffer heads, RustCallStatus *_Nonnull out_status
@@ -964,6 +969,12 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_list(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_MAP
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DELETE_IN_MAP
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_delete_in_map(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DIFFERENCE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_DIFFERENCE
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_difference(void
     
 );
 #endif
