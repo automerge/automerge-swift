@@ -1,4 +1,3 @@
-
 use automerge as am;
 
 use crate::ScalarValue;
@@ -34,7 +33,7 @@ impl<'a> From<&'a am::marks::Mark<'a>> for Mark {
             start: am_mark.start as u64,
             end: am_mark.end as u64,
             name: am_mark.name().to_string(),
-            value: am_mark.value().into()
+            value: am_mark.value().into(),
         }
     }
 }
