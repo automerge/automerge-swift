@@ -95,7 +95,7 @@ dictionary Mark {
     u64 start;
     u64 end;
     string name;
-    Value value;
+    ScalarValue value;
 };
 
 dictionary PathElement {
@@ -170,6 +170,11 @@ interface Doc {
     sequence<Mark> marks(ObjId obj);
     [Throws=DocError]
     sequence<Mark> marks_at(ObjId obj, sequence<ChangeHash> heads);
+
+    [Throws=DocError]
+    ObjId split_block(ObjId obj, u32 index);
+    [Throws=DocError]
+    void join_block(ObjId obj, u32 index);
 
     [Throws=DocError]
     void delete_in_map(ObjId obj, string key);

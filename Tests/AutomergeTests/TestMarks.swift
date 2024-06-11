@@ -16,7 +16,7 @@ class MarksTestCase: XCTestCase {
         )
         let marks = try! doc.marks(obj: text)
         let expectedMarks = [
-            Mark(start: 0, end: 5, name: "bold", value: Value.Scalar(ScalarValue.Boolean(true))),
+            Mark(start: 0, end: 5, name: "bold", value: ScalarValue.Boolean(true)),
         ]
         XCTAssertEqual(marks, expectedMarks)
 
@@ -50,7 +50,7 @@ class MarksTestCase: XCTestCase {
         )
         let patches = try! doc.mergeWithPatches(other: fork)
         let expectedMarks = [
-            Mark(start: 0, end: 5, name: "bold", value: Value.Scalar(ScalarValue.Boolean(true))),
+            Mark(start: 0, end: 5, name: "bold", value: ScalarValue.Boolean(true)),
         ]
         XCTAssertEqual(patches, [Patch(
             action: .Marks(text, expectedMarks),
