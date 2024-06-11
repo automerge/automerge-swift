@@ -98,25 +98,6 @@ dictionary Mark {
     ScalarValue value;
 };
 
-dictionary TextValue {
-    string value;
-    sequence<Mark> marks;
-};
-
-// UDL file only supports enums with named attributes
-// https://mozilla.github.io/uniffi-rs/udl/enumerations.html
-[Enum]
-interface AMValue {
-    Scalar( ScalarValue value);
-    List( sequence<AMValue> value);
-    Map( MapValue value);
-    Text( TextValue value);
-};
-
-dictionary MapValue {
-    record<string,AMValue> value;
-};
-
 dictionary PathElement {
     Prop prop;
     ObjId obj;
