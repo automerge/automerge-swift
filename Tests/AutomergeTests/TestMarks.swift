@@ -65,4 +65,29 @@ class MarksTestCase: XCTestCase {
             path: [PathElement(obj: ObjId.ROOT, prop: .Key("text"))]
         )])
     }
+
+    func testMarksPosition() throws {
+        let doc = Document()
+        let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello World!")
+        try doc.mark(obj: textId, start: 2, end: 5, expand: .both, name: "italic", value: .Boolean(true))
+        try doc.mark(obj: textId, start: 1, end: 5, expand: .both, name: "bold", value: .Boolean(true))
+
+        let marks = try doc.marksAt(obj: textId, position: 2)
+
+        XCTAssertEqual(marks.count, 2)
+    }
+
+    func testMarksCursor() throws {
+        let doc = Document()
+        let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello World!")
+        try doc.mark(obj: textId, start: 2, end: 5, expand: .both, name: "italic", value: .Boolean(true))
+        try doc.mark(obj: textId, start: 1, end: 5, expand: .both, name: "bold", value: .Boolean(true))
+
+        let cursor = try doc.cursor(obj: textId, position: 2)
+        let marks = try doc.marksAt(obj: textId, cursor: cursor)
+
+        XCTAssertEqual(marks.count, 2)
+    }
 }
