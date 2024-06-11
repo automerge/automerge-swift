@@ -781,7 +781,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object.
-    ///   - cursor: The cursor created for this text object.
+    ///   - cursor: The cursor that indicates a position within the text.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A list of ``Mark`` for the text object at the specified ``Cursor``.
     public func marksAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
@@ -808,7 +808,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object.
-    ///   - index: The index value of the array to update.
+    ///   - position: The index that indicates the position of the text offset.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A list of ``Mark`` for the text object at the specified ``position``.
     public func marksAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
