@@ -5,7 +5,7 @@ use automerge as am;
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
-use crate::mark::{ExpandMark, Mark};
+use crate::mark::{ExpandMark, KeyValue, Mark};
 use crate::patches::Patch;
 use crate::{
     Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
@@ -31,11 +31,6 @@ pub enum ReceiveSyncError {
     Internal(#[from] am::AutomergeError),
     #[error("Invalid message")]
     InvalidMessage,
-}
-
-pub struct KeyValue {
-    pub key: String,
-    pub value: Value,
 }
 
 pub struct Doc(RwLock<automerge::AutoCommit>);
@@ -479,6 +474,43 @@ impl Doc {
             .into_iter()
             .map(|m| Mark::from(&m))
             .collect())
+    }
+
+    pub fn marks_cursor(
+        &self,
+        obj: ObjId,
+        cursor: Cursor,
+        heads: Vec<ChangeHash>,
+    ) -> Result<Vec<Mark>, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        let index = doc
+            .get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))
+            .unwrap() as u64;
+        let markset = doc.get_marks(obj, index as usize, Some(&heads)).unwrap();
+        Ok(KeyValue::from_marks(markset, index))
+    }
+
+    pub fn marks_position(
+        &self,
+        obj: ObjId,
+        index: u64,
+        heads: Vec<ChangeHash>,
+    ) -> Result<Vec<Mark>, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.write().unwrap();
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        let markset = doc.get_marks(obj, index as usize, Some(&heads)).unwrap();
+        Ok(KeyValue::from_marks(markset, index))
     }
 
     pub fn split_block(&self, obj: ObjId, index: u32) -> Result<ObjId, DocError> {

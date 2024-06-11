@@ -170,6 +170,10 @@ interface Doc {
     sequence<Mark> marks(ObjId obj);
     [Throws=DocError]
     sequence<Mark> marks_at(ObjId obj, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    sequence<Mark> marks_cursor(ObjId obj, Cursor cursor, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    sequence<Mark> marks_position(ObjId obj, u64 position, sequence<ChangeHash> heads);
 
     [Throws=DocError]
     ObjId split_block(ObjId obj, u32 index);

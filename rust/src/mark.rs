@@ -37,3 +37,26 @@ impl<'a> From<&'a am::marks::Mark<'a>> for Mark {
         }
     }
 }
+
+pub struct KeyValue {
+    pub key: String,
+    pub value: Value,
+}
+
+impl KeyValue {
+    pub fn from_marks(mark_set: am::marks::MarkSet, index: u64) -> Vec<Mark> {
+        let mut result = Vec::new();
+        for (key, value) in mark_set.iter() {
+            let mark = Mark {
+                start: index,
+                end: index,
+                name: key.to_string(),
+                value: Value::Scalar {
+                    value: value.into(),
+                },
+            };
+            result.push(mark);
+        }
+        result
+    }
+}
