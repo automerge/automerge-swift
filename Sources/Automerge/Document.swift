@@ -768,6 +768,61 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Get the list of marks for a text object at ``Cursor``.
+    ///
+    /// Use:
+    /// ```
+    /// let doc = Document()
+    /// let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+    ///
+    /// let cursor = try doc.cursor(obj: textId, position: 0)
+    /// let marks = try doc.marksAt(obj: textId, cursor: cursor)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - cursor: The cursor created for this text object.
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
+    /// - Returns: A list of ``Mark`` for the text object at the specified ``Cursor``.
+    public func marksAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
+        try sync {
+            try self.doc.wrapErrors {
+                try $0.marksCursor(
+                    obj: obj.bytes,
+                    cursor: cursor.bytes,
+                    heads: heads?.map(\.bytes) ?? $0.heads()
+                ).map(Mark.fromFfi)
+            }
+        }
+    }
+
+    /// Get the list of marks for a text object at specified position.
+    ///
+    /// Use:
+    /// ```
+    /// let doc = Document()
+    /// let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+    ///
+    /// let marks = try doc.marksAt(obj: textId, position: 0)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The index value of the array to update.
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
+    /// - Returns: A list of ``Mark`` for the text object at the specified ``position``.
+    public func marksAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
+        try sync {
+            try self.doc.wrapErrors {
+                try $0.marksPosition(
+                    obj: obj.bytes,
+                    position: position,
+                    heads: heads?.map(\.bytes) ?? $0.heads()
+                ).map(Mark.fromFfi)
+            }
+        }
+    }
+
     /// Commit the auto-generated transaction with options.
     ///
     /// - Parameters:
