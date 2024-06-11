@@ -1,6 +1,6 @@
 use automerge as am;
 
-use crate::ScalarValue;
+use crate::{ScalarValue, Value};
 
 pub enum ExpandMark {
     Before,
@@ -51,9 +51,7 @@ impl KeyValue {
                 start: index,
                 end: index,
                 name: key.to_string(),
-                value: Value::Scalar {
-                    value: value.into(),
-                },
+                value: value.into(),
             };
             result.push(mark);
         }
