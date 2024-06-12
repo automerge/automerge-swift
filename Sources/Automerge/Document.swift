@@ -768,7 +768,7 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Retrieves the list of marks within a text object at the specified position indicated by a position.
+    /// Retrieves the list of marks within a text object at the specified position and point in time.
     ///
     /// This method allows you to get the marks present at a specific position in a text object.
     /// Marks can represent various formatting or annotations applied to the text.
@@ -816,7 +816,7 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Retrieves the list of marks within a text object at the specified position indicated by a position.
+    /// Retrieves the list of marks within a text object at the specified position.
     ///
     /// This method allows you to get the marks present at a specific position in a text object.
     /// Marks can represent various formatting or annotations applied to the text.
