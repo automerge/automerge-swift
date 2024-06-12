@@ -22,12 +22,15 @@ extension Cursor: CustomStringConvertible {
 
 /// An umbrella type that represents a location within an array or text object.
 ///
-/// /// This type is used in conjunction with the [`Profile`](Profile) type to
-/// manage user data.
+/// ### See Also
+/// - ``Document/cursor(obj:position:)``
+/// - ``Document/cursorAt(obj:position:heads:)``
 public enum Position {
     case cursor(Cursor)
     case index(UInt64)
+}
 
+extension Position {
     func toFfi() -> FfiPosition {
         switch self {
         case .cursor(let cursor):
