@@ -43,8 +43,8 @@ pub struct KeyValue {
     pub value: Value,
 }
 
-impl KeyValue {
-    pub fn from_marks(mark_set: am::marks::MarkSet, index: u64) -> Vec<Mark> {
+impl Mark {
+    pub fn from_markset(mark_set: am::marks::MarkSet, index: u64) -> Vec<Mark> {
         let mut result = Vec::new();
         for (key, value) in mark_set.iter() {
             let mark = Mark {

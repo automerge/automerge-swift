@@ -15,6 +15,12 @@ typedef sequence<u8> ActorId;
 typedef sequence<u8> Cursor;
 
 [Enum]
+interface Position {
+    Cursor ( Cursor position );
+    Index ( u64 position );
+};
+
+[Enum]
 interface ScalarValue {
     Bytes( sequence<u8> value);
     String( string value );
@@ -171,9 +177,7 @@ interface Doc {
     [Throws=DocError]
     sequence<Mark> marks_at(ObjId obj, sequence<ChangeHash> heads);
     [Throws=DocError]
-    sequence<Mark> marks_cursor(ObjId obj, Cursor cursor, sequence<ChangeHash> heads);
-    [Throws=DocError]
-    sequence<Mark> marks_position(ObjId obj, u64 position, sequence<ChangeHash> heads);
+    sequence<Mark> marks_at_position(ObjId obj, Position position, sequence<ChangeHash> heads);
 
     [Throws=DocError]
     ObjId split_block(ObjId obj, u32 index);

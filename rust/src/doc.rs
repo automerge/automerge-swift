@@ -5,6 +5,7 @@ use automerge as am;
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
+use crate::cursor::Position;
 use crate::mark::{ExpandMark, KeyValue, Mark};
 use crate::patches::Patch;
 use crate::{
@@ -476,10 +477,10 @@ impl Doc {
             .collect())
     }
 
-    pub fn marks_cursor(
+    pub fn marks_at_position(
         &self,
         obj: ObjId,
-        cursor: Cursor,
+        position: Position,
         heads: Vec<ChangeHash>,
     ) -> Result<Vec<Mark>, DocError> {
         let obj = am::ObjId::from(obj);
@@ -489,28 +490,14 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        let index = doc
-            .get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))
-            .unwrap() as u64;
-        let markset = doc.get_marks(obj, index as usize, Some(&heads)).unwrap();
-        Ok(KeyValue::from_marks(markset, index))
-    }
-
-    pub fn marks_position(
-        &self,
-        obj: ObjId,
-        index: u64,
-        heads: Vec<ChangeHash>,
-    ) -> Result<Vec<Mark>, DocError> {
-        let obj = am::ObjId::from(obj);
-        let doc = self.0.write().unwrap();
-        assert_text(&*doc, &obj)?;
-        let heads = heads
-            .into_iter()
-            .map(am::ChangeHash::from)
-            .collect::<Vec<_>>();
-        let markset = doc.get_marks(obj, index as usize, Some(&heads)).unwrap();
-        Ok(KeyValue::from_marks(markset, index))
+        let index = match position {
+            Position::Cursor { position: cursor } => doc
+                .get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))
+                .unwrap() as usize,
+            Position::Index { position: index } => index as usize,
+        };
+        let markset = doc.get_marks(obj, index, Some(&heads)).unwrap();
+        Ok(Mark::from_markset(markset, index as u64))
     }
 
     pub fn split_block(&self, obj: ObjId, index: u32) -> Result<ObjId, DocError> {

@@ -3,7 +3,7 @@ uniffi::include_scaffolding!("automerge");
 mod actor_id;
 use actor_id::ActorId;
 mod cursor;
-use cursor::Cursor;
+use cursor::{Cursor, Position};
 mod change;
 use change::Change;
 mod change_hash;
