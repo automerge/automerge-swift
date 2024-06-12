@@ -784,13 +784,13 @@ public final class Document: @unchecked Sendable {
     ///   - cursor: The cursor that indicates a position within the text.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A list of ``Mark`` for the text object at the specified ``Cursor``.
-    public func marksAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
+    public func marksAt(obj: ObjId, position: Position, heads: Set<ChangeHash>) throws -> [Mark] {
         try sync {
             try self.doc.wrapErrors {
-                try $0.marksCursor(
+                try $0.marksAtPosition(
                     obj: obj.bytes,
-                    cursor: cursor.bytes,
-                    heads: heads?.map(\.bytes) ?? $0.heads()
+                    position: position.toFfi(),
+                    heads: heads.map(\.bytes)
                 ).map(Mark.fromFfi)
             }
         }
@@ -803,24 +803,15 @@ public final class Document: @unchecked Sendable {
     /// let doc = Document()
     /// let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
     ///
-    /// let marks = try doc.marksAt(obj: textId, position: 0)
+    /// let marks = try doc.marksAt(obj: textId, position: .index(0))
     /// ```
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object.
     ///   - position: The index that indicates the position of the text offset.
-    ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A list of ``Mark`` for the text object at the specified ``position``.
-    public func marksAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>? = nil) throws -> [Mark] {
-        try sync {
-            try self.doc.wrapErrors {
-                try $0.marksPosition(
-                    obj: obj.bytes,
-                    position: position,
-                    heads: heads?.map(\.bytes) ?? $0.heads()
-                ).map(Mark.fromFfi)
-            }
-        }
+    public func marksAt(obj: ObjId, position: Position) throws -> [Mark] {
+        try marksAt(obj: obj, position: position, heads: heads())
     }
 
     /// Commit the auto-generated transaction with options.

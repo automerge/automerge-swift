@@ -1,4 +1,6 @@
-import Foundation
+import enum AutomergeUniffi.Position
+
+typealias FfiPosition = AutomergeUniffi.Position
 
 /// A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to
 /// maintain its relative position.
@@ -15,5 +17,23 @@ extension Cursor: CustomStringConvertible {
     /// The bytes that describe the cursor.
     public var description: String {
         bytes.map { Swift.String(format: "%02hhx", $0) }.joined().uppercased()
+    }
+}
+
+/// An umbrella type that represents a location within an array or text object.
+///
+/// /// This type is used in conjunction with the [`Profile`](Profile) type to
+/// manage user data.
+public enum Position {
+    case cursor(Cursor)
+    case index(UInt64)
+
+    func toFfi() -> FfiPosition {
+        switch self {
+        case .cursor(let cursor):
+            return .cursor(position: cursor.bytes)
+        case .index(let index):
+            return .index(position: index)
+        }
     }
 }
