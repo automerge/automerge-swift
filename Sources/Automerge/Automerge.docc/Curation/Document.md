@@ -51,6 +51,7 @@
 - ``text(obj:)``
 - ``length(obj:)``
 - ``marks(obj:)``
+- ``marksAt(obj:position:)``
 
 ### Updating Text values
 
@@ -100,7 +101,6 @@
 - ``textAt(obj:heads:)``
 - ``lengthAt(obj:heads:)``
 - ``marksAt(obj:heads:)``
-- ``marksAt(obj:cursor:heads:)``
 - ``marksAt(obj:position:heads:)``
 
 ### Saving, forking, and merging documents
