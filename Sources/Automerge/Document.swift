@@ -768,7 +768,7 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the list of marks for a text object at ``Cursor``.
+    /// Get the list of marks inside a text object at the position you indicate with a cursor.
     ///
     /// Use:
     /// ```
