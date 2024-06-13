@@ -1,7 +1,7 @@
 use super::UniffiCustomTypeConverter;
 use automerge as am;
 
-pub struct Cursor(pub Vec<u8>);
+pub struct Cursor(Vec<u8>);
 
 pub enum Position {
     Cursor { position: Cursor },
