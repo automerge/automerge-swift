@@ -3,6 +3,11 @@ use automerge as am;
 
 pub struct Cursor(Vec<u8>);
 
+pub enum Position {
+    Cursor { position: Cursor },
+    Index { position: u64 },
+}
+
 impl From<Cursor> for am::Cursor {
     fn from(value: Cursor) -> Self {
         am::Cursor::try_from(value.0).unwrap()

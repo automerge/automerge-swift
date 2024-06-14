@@ -109,6 +109,7 @@ See the documentation for ``Document`` for more detail on the individual methods
 - ``Automerge/Document/text(obj:)``
 - ``Automerge/Document/length(obj:)``
 - ``Automerge/Document/marks(obj:)``
+- ``Automerge/Document/marksAt(obj:position:)``
 
 ### Updating Text values
 

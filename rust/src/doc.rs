@@ -5,7 +5,8 @@ use automerge as am;
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
-use crate::mark::{ExpandMark, Mark};
+use crate::cursor::Position;
+use crate::mark::{ExpandMark, KeyValue, Mark};
 use crate::patches::Patch;
 use crate::{
     Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
@@ -31,11 +32,6 @@ pub enum ReceiveSyncError {
     Internal(#[from] am::AutomergeError),
     #[error("Invalid message")]
     InvalidMessage,
-}
-
-pub struct KeyValue {
-    pub key: String,
-    pub value: Value,
 }
 
 pub struct Doc(RwLock<automerge::AutoCommit>);
@@ -479,6 +475,29 @@ impl Doc {
             .into_iter()
             .map(|m| Mark::from(&m))
             .collect())
+    }
+
+    pub fn marks_at_position(
+        &self,
+        obj: ObjId,
+        position: Position,
+        heads: Vec<ChangeHash>,
+    ) -> Result<Vec<Mark>, DocError> {
+        let obj = am::ObjId::from(obj);
+        let doc = self.0.read().unwrap();
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        let index = match position {
+            Position::Cursor { position: cursor } => doc
+                .get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))
+                .unwrap() as usize,
+            Position::Index { position: index } => index as usize,
+        };
+        let markset = doc.get_marks(obj, index, Some(&heads)).unwrap();
+        Ok(Mark::from_markset(markset, index as u64))
     }
 
     pub fn split_block(&self, obj: ObjId, index: u32) -> Result<ObjId, DocError> {

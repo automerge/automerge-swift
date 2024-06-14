@@ -768,6 +768,95 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Retrieves the list of marks within a text object at the specified position and point in time.
+    ///
+    /// This method allows you to get the marks present at a specific position in a text object.
+    /// Marks can represent various formatting or annotations applied to the text.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object, represented by an ``ObjId``.
+    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an `UInt64` as a fixed position.
+    ///   - heads: A set of `ChangeHash` values that represents a point in time in the document's history.
+    /// - Returns: An array of `Mark` objects for the text object at the specified position.
+    ///
+    /// # Example Usage
+    /// ```
+    /// let doc = Document()
+    /// let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+    ///
+    /// let cursor = try doc.cursor(obj: textId, position: 0)
+    /// let marks = try doc.marksAt(obj: textId, position: .cursor(cursor), heads: doc.heads())
+    /// ```
+    ///
+    /// ## Recommendation
+    /// Use this method to query the marks applied to a text object at a specific position.
+    /// This can be useful for retrieving ``Marks`` related to a character without traversing the full document.
+    ///
+    /// ## When to Use Cursor vs. Index
+    ///
+    /// While you can specify the position either with a `Cursor` or an `Index`, there are important distinctions:
+    ///
+    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the text content changes, making it more robust in collaborative or frequently edited documents.
+    ///
+    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not change, or changes are irrelevant to your current operation. An index is a straightforward approach for static text content.
+    ///
+    /// # See Also
+    /// ``marksAt(obj:position:)``
+    /// ``marksAt(obj:heads:)``
+    ///
+    public func marksAt(obj: ObjId, position: Position, heads: Set<ChangeHash>) throws -> [Mark] {
+        try sync {
+            try self.doc.wrapErrors {
+                try $0.marksAtPosition(
+                    obj: obj.bytes,
+                    position: position.toFfi(),
+                    heads: heads.map(\.bytes)
+                ).map(Mark.fromFfi)
+            }
+        }
+    }
+
+    /// Retrieves the list of marks within a text object at the specified position.
+    ///
+    /// This method allows you to get the marks present at a specific position in a text object.
+    /// Marks can represent various formatting or annotations applied to the text.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object, represented by an ``ObjId``.
+    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an `UInt64` as a fixed position.
+    /// - Returns: An array of `Mark` objects for the text object at the specified position.
+    /// - Note: This method retrieves marks from the latest version of the document.
+    /// If you need to specify a point in the document's history, refer to ``marksAt(obj:position:heads:)``.
+    ///
+    /// # Example Usage
+    /// ```
+    /// let doc = Document()
+    /// let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+    ///
+    /// let cursor = try doc.cursor(obj: textId, position: 0)
+    /// let marks = try doc.marksAt(obj: textId, position: .cursor(cursor), heads: doc.heads())
+    /// ```
+    ///
+    /// ## Recommendation
+    /// Use this method to query the marks applied to a text object at a specific position.
+    /// This can be useful for retrieving ``Marks`` related to a character without traversing the full document.
+    ///
+    /// ## When to Use Cursor vs. Index
+    ///
+    /// While you can specify the position either with a `Cursor` or an `Index`, there are important distinctions:
+    ///
+    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the text content changes, making it more robust in collaborative or frequently edited documents.
+    ///
+    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not change, or changes are irrelevant to your current operation. An index is a straightforward approach for static text content.
+    ///
+    /// # See Also
+    /// ``marksAt(obj:position:heads:)``
+    /// ``marksAt(obj:heads:)``
+    ///
+    public func marksAt(obj: ObjId, position: Position) throws -> [Mark] {
+        try marksAt(obj: obj, position: position, heads: heads())
+    }
+
     /// Commit the auto-generated transaction with options.
     ///
     /// - Parameters:

@@ -1,6 +1,7 @@
 use super::UniffiCustomTypeConverter;
 use automerge as am;
 
+#[derive(Debug, Clone)]
 pub struct ObjId(Vec<u8>);
 
 impl From<ObjId> for automerge::ObjId {
