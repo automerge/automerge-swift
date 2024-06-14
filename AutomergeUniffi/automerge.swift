@@ -587,6 +587,8 @@ public protocol DocProtocol: AnyObject {
 
     func marksAt(obj: ObjId, heads: [ChangeHash]) throws -> [Mark]
 
+    func marksAtPosition(obj: ObjId, position: Position, heads: [ChangeHash]) throws -> [Mark]
+
     func merge(other: Doc) throws
 
     func mergeWithPatches(other: Doc) throws -> [Patch]
@@ -1141,6 +1143,18 @@ open class Doc:
         })
     }
 
+    open func marksAtPosition(obj: ObjId, position: Position, heads: [ChangeHash]) throws -> [Mark] {
+        try FfiConverterSequenceTypeMark.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
+            uniffi_uniffi_automerge_fn_method_doc_marks_at_position(
+                self.uniffiClonePointer(),
+                FfiConverterTypeObjId.lower(obj),
+                FfiConverterTypePosition.lower(position),
+                FfiConverterSequenceTypeChangeHash.lower(heads),
+                $0
+            )
+        })
+    }
+
     open func merge(other: Doc) throws { try rustCallWithError(FfiConverterTypeDocError.lift) {
         uniffi_uniffi_automerge_fn_method_doc_merge(
             self.uniffiClonePointer(),
@@ -1668,49 +1682,6 @@ public func FfiConverterTypeKeyValue_lower(_ value: KeyValue) -> RustBuffer {
     FfiConverterTypeKeyValue.lower(value)
 }
 
-public struct MapValue {
-    public var value: [String: AmValue]
-
-    // Default memberwise initializers are never public by default, so we
-    // declare one manually.
-    public init(value: [String: AmValue]) {
-        self.value = value
-    }
-}
-
-extension MapValue: Equatable, Hashable {
-    public static func == (lhs: MapValue, rhs: MapValue) -> Bool {
-        if lhs.value != rhs.value {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-    }
-}
-
-public struct FfiConverterTypeMapValue: FfiConverterRustBuffer {
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> MapValue {
-        try MapValue(
-            value: FfiConverterDictionaryStringTypeAMValue.read(from: &buf)
-        )
-    }
-
-    public static func write(_ value: MapValue, into buf: inout [UInt8]) {
-        FfiConverterDictionaryStringTypeAMValue.write(value.value, into: &buf)
-    }
-}
-
-public func FfiConverterTypeMapValue_lift(_ buf: RustBuffer) throws -> MapValue {
-    try FfiConverterTypeMapValue.lift(buf)
-}
-
-public func FfiConverterTypeMapValue_lower(_ value: MapValue) -> RustBuffer {
-    FfiConverterTypeMapValue.lower(value)
-}
-
 public struct Mark {
     public var start: UInt64
     public var end: UInt64
@@ -1879,132 +1850,6 @@ public func FfiConverterTypePathElement_lift(_ buf: RustBuffer) throws -> PathEl
 public func FfiConverterTypePathElement_lower(_ value: PathElement) -> RustBuffer {
     FfiConverterTypePathElement.lower(value)
 }
-
-public struct TextValue {
-    public var value: String
-    public var marks: [Mark]
-
-    // Default memberwise initializers are never public by default, so we
-    // declare one manually.
-    public init(value: String, marks: [Mark]) {
-        self.value = value
-        self.marks = marks
-    }
-}
-
-extension TextValue: Equatable, Hashable {
-    public static func == (lhs: TextValue, rhs: TextValue) -> Bool {
-        if lhs.value != rhs.value {
-            return false
-        }
-        if lhs.marks != rhs.marks {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-        hasher.combine(marks)
-    }
-}
-
-public struct FfiConverterTypeTextValue: FfiConverterRustBuffer {
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> TextValue {
-        try TextValue(
-            value: FfiConverterString.read(from: &buf),
-            marks: FfiConverterSequenceTypeMark.read(from: &buf)
-        )
-    }
-
-    public static func write(_ value: TextValue, into buf: inout [UInt8]) {
-        FfiConverterString.write(value.value, into: &buf)
-        FfiConverterSequenceTypeMark.write(value.marks, into: &buf)
-    }
-}
-
-public func FfiConverterTypeTextValue_lift(_ buf: RustBuffer) throws -> TextValue {
-    try FfiConverterTypeTextValue.lift(buf)
-}
-
-public func FfiConverterTypeTextValue_lower(_ value: TextValue) -> RustBuffer {
-    FfiConverterTypeTextValue.lower(value)
-}
-
-// Note that we don't yet support `indirect` for enums.
-// See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
-
-public enum AmValue {
-    case scalar(
-        value: ScalarValue
-    )
-    case list(
-        value: [AmValue]
-    )
-    case map(
-        value: MapValue
-    )
-    case text(
-        value: TextValue
-    )
-}
-
-public struct FfiConverterTypeAMValue: FfiConverterRustBuffer {
-    typealias SwiftType = AmValue
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> AmValue {
-        let variant: Int32 = try readInt(&buf)
-        switch variant {
-        case 1: return try .scalar(
-                value: FfiConverterTypeScalarValue.read(from: &buf)
-            )
-
-        case 2: return try .list(
-                value: FfiConverterSequenceTypeAMValue.read(from: &buf)
-            )
-
-        case 3: return try .map(
-                value: FfiConverterTypeMapValue.read(from: &buf)
-            )
-
-        case 4: return try .text(
-                value: FfiConverterTypeTextValue.read(from: &buf)
-            )
-
-        default: throw UniffiInternalError.unexpectedEnumCase
-        }
-    }
-
-    public static func write(_ value: AmValue, into buf: inout [UInt8]) {
-        switch value {
-        case let .scalar(value):
-            writeInt(&buf, Int32(1))
-            FfiConverterTypeScalarValue.write(value, into: &buf)
-
-        case let .list(value):
-            writeInt(&buf, Int32(2))
-            FfiConverterSequenceTypeAMValue.write(value, into: &buf)
-
-        case let .map(value):
-            writeInt(&buf, Int32(3))
-            FfiConverterTypeMapValue.write(value, into: &buf)
-
-        case let .text(value):
-            writeInt(&buf, Int32(4))
-            FfiConverterTypeTextValue.write(value, into: &buf)
-        }
-    }
-}
-
-public func FfiConverterTypeAMValue_lift(_ buf: RustBuffer) throws -> AmValue {
-    try FfiConverterTypeAMValue.lift(buf)
-}
-
-public func FfiConverterTypeAMValue_lower(_ value: AmValue) -> RustBuffer {
-    FfiConverterTypeAMValue.lower(value)
-}
-
-extension AmValue: Equatable, Hashable {}
 
 public enum DecodeSyncStateError {
     case Internal(message: String)
@@ -2368,6 +2213,59 @@ public func FfiConverterTypePatchAction_lower(_ value: PatchAction) -> RustBuffe
 }
 
 extension PatchAction: Equatable, Hashable {}
+
+// Note that we don't yet support `indirect` for enums.
+// See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+public enum Position {
+    case cursor(
+        position: Cursor
+    )
+    case index(
+        position: UInt64
+    )
+}
+
+public struct FfiConverterTypePosition: FfiConverterRustBuffer {
+    typealias SwiftType = Position
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Position {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+        case 1: return try .cursor(
+                position: FfiConverterTypeCursor.read(from: &buf)
+            )
+
+        case 2: return try .index(
+                position: FfiConverterUInt64.read(from: &buf)
+            )
+
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: Position, into buf: inout [UInt8]) {
+        switch value {
+        case let .cursor(position):
+            writeInt(&buf, Int32(1))
+            FfiConverterTypeCursor.write(position, into: &buf)
+
+        case let .index(position):
+            writeInt(&buf, Int32(2))
+            FfiConverterUInt64.write(position, into: &buf)
+        }
+    }
+}
+
+public func FfiConverterTypePosition_lift(_ buf: RustBuffer) throws -> Position {
+    try FfiConverterTypePosition.lift(buf)
+}
+
+public func FfiConverterTypePosition_lower(_ value: Position) -> RustBuffer {
+    FfiConverterTypePosition.lower(value)
+}
+
+extension Position: Equatable, Hashable {}
 
 // Note that we don't yet support `indirect` for enums.
 // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
@@ -2892,28 +2790,6 @@ private struct FfiConverterSequenceTypePathElement: FfiConverterRustBuffer {
     }
 }
 
-private struct FfiConverterSequenceTypeAMValue: FfiConverterRustBuffer {
-    typealias SwiftType = [AmValue]
-
-    public static func write(_ value: [AmValue], into buf: inout [UInt8]) {
-        let len = Int32(value.count)
-        writeInt(&buf, len)
-        for item in value {
-            FfiConverterTypeAMValue.write(item, into: &buf)
-        }
-    }
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [AmValue] {
-        let len: Int32 = try readInt(&buf)
-        var seq = [AmValue]()
-        seq.reserveCapacity(Int(len))
-        for _ in 0 ..< len {
-            try seq.append(FfiConverterTypeAMValue.read(from: &buf))
-        }
-        return seq
-    }
-}
-
 private struct FfiConverterSequenceTypeScalarValue: FfiConverterRustBuffer {
     typealias SwiftType = [ScalarValue]
 
@@ -2977,29 +2853,6 @@ private struct FfiConverterSequenceTypeChangeHash: FfiConverterRustBuffer {
             try seq.append(FfiConverterTypeChangeHash.read(from: &buf))
         }
         return seq
-    }
-}
-
-private struct FfiConverterDictionaryStringTypeAMValue: FfiConverterRustBuffer {
-    public static func write(_ value: [String: AmValue], into buf: inout [UInt8]) {
-        let len = Int32(value.count)
-        writeInt(&buf, len)
-        for (key, value) in value {
-            FfiConverterString.write(key, into: &buf)
-            FfiConverterTypeAMValue.write(value, into: &buf)
-        }
-    }
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String: AmValue] {
-        let len: Int32 = try readInt(&buf)
-        var dict = [String: AmValue]()
-        dict.reserveCapacity(Int(len))
-        for _ in 0 ..< len {
-            let key = try FfiConverterString.read(from: &buf)
-            let value = try FfiConverterTypeAMValue.read(from: &buf)
-            dict[key] = value
-        }
-        return dict
     }
 }
 
@@ -3298,6 +3151,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_marks_at() != 57491 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_method_doc_marks_at_position() != 19243 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_merge() != 8598 {

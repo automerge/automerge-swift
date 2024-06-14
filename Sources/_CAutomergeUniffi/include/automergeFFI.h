@@ -482,6 +482,11 @@ RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks(void*_Nonnull ptr, RustBu
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS_AT_POSITION
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MARKS_AT_POSITION
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_marks_at_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer position, RustBuffer heads, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_MERGE
 void uniffi_uniffi_automerge_fn_method_doc_merge(void*_Nonnull ptr, void*_Nonnull other, RustCallStatus *_Nonnull out_status
@@ -1153,6 +1158,12 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks_at(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT_POSITION
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_MARKS_AT_POSITION
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_marks_at_position(void
     
 );
 #endif
