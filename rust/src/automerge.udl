@@ -108,29 +108,20 @@ dictionary MarkSet {
     record<string,ScalarValue> marks;
 };
 
-enum AMValueType {
-    "Scalar",
-    "List",
-    "Map",
-    "Text",
-};
-
+[Enum]
 interface AMValue {
-    constructor(ScalarValue input);
-    [Name=new_from_map]
-    constructor(MapValue input);
+    Map ( record<string,AMValue> value );
+    Scalar ( ScalarValue value );
+    List ( sequence<HydratedList> value );
+    Text ( HydratedText value );
 };
 
-dictionary MapValue {
-    record<string,ScalarValue> value;
-};
-
-dictionary TextValue {
+dictionary HydratedText {
     string value;
     record<string,ScalarValue> marks;
 };
 
-dictionary ListValue {
+dictionary HydratedList {
     AMValue value;
     record<string,ScalarValue> marks;
     boolean conflict;
@@ -139,7 +130,7 @@ dictionary ListValue {
 [Enum]
 interface Span {
     Text ( string text, MarkSet? marks );
-    Block ( MapValue value );
+    Block ( record<string,AMValue> value );
 };
 
 dictionary PathElement {
