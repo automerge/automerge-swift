@@ -251,6 +251,26 @@ typedef void (*UniffiForeignFutureCompleteVoid)(uint64_t, UniffiForeignFutureStr
     );
 
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_AMVALUE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_AMVALUE
+void*_Nonnull uniffi_uniffi_automerge_fn_clone_amvalue(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_AMVALUE
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_FREE_AMVALUE
+void uniffi_uniffi_automerge_fn_free_amvalue(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_AMVALUE_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_AMVALUE_NEW
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_amvalue_new(RustBuffer input, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_AMVALUE_NEW_FROM_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_AMVALUE_NEW_FROM_MAP
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_amvalue_new_from_map(RustBuffer input, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_DOC
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CLONE_DOC
 void*_Nonnull uniffi_uniffi_automerge_fn_clone_doc(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
@@ -434,7 +454,7 @@ RustBuffer uniffi_uniffi_automerge_fn_method_doc_insert_object_in_list(void*_Non
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_JOIN_BLOCK
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_JOIN_BLOCK
-void uniffi_uniffi_automerge_fn_method_doc_join_block(void*_Nonnull ptr, RustBuffer obj, uint32_t index, RustCallStatus *_Nonnull out_status
+void uniffi_uniffi_automerge_fn_method_doc_join_block(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_LENGTH
@@ -559,7 +579,7 @@ void uniffi_uniffi_automerge_fn_method_doc_splice_text(void*_Nonnull ptr, RustBu
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLIT_BLOCK
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_SPLIT_BLOCK
-RustBuffer uniffi_uniffi_automerge_fn_method_doc_split_block(void*_Nonnull ptr, RustBuffer obj, uint32_t index, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_split_block(void*_Nonnull ptr, RustBuffer obj, uint64_t index, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT
@@ -1302,6 +1322,18 @@ uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_reset(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_THEIR_HEADS
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_SYNCSTATE_THEIR_HEADS
 uint16_t uniffi_uniffi_automerge_checksum_method_syncstate_their_heads(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_AMVALUE_NEW
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_AMVALUE_NEW
+uint16_t uniffi_uniffi_automerge_checksum_constructor_amvalue_new(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_AMVALUE_NEW_FROM_MAP
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_AMVALUE_NEW_FROM_MAP
+uint16_t uniffi_uniffi_automerge_checksum_constructor_amvalue_new_from_map(void
     
 );
 #endif

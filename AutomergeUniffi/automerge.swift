@@ -393,19 +393,6 @@ private struct FfiConverterUInt8: FfiConverterPrimitive {
     }
 }
 
-private struct FfiConverterUInt32: FfiConverterPrimitive {
-    typealias FfiType = UInt32
-    typealias SwiftType = UInt32
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> UInt32 {
-        try lift(readInt(&buf))
-    }
-
-    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
-        writeInt(&buf, lower(value))
-    }
-}
-
 private struct FfiConverterUInt64: FfiConverterPrimitive {
     typealias FfiType = UInt64
     typealias SwiftType = UInt64
@@ -504,6 +491,105 @@ private struct FfiConverterString: FfiConverter {
     }
 }
 
+public protocol AmValueProtocol: AnyObject {}
+
+open class AmValue:
+    AmValueProtocol
+{
+    fileprivate let pointer: UnsafeMutableRawPointer!
+
+    /// Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.
+    public struct NoPointer {
+        public init() {}
+    }
+
+    // TODO: We'd like this to be `private` but for Swifty reasons,
+    // we can't implement `FfiConverter` without making this `required` and we can't
+    // make it `required` without making it `public`.
+    public required init(unsafeFromRawPointer pointer: UnsafeMutableRawPointer) {
+        self.pointer = pointer
+    }
+
+    /// This constructor can be used to instantiate a fake object.
+    /// - Parameter noPointer: Placeholder value so we can have a constructor separate from the default empty one that
+    /// may be implemented for classes extending [FFIObject].
+    ///
+    /// - Warning:
+    ///     Any object instantiated with this constructor cannot be passed to an actual Rust-backed object. Since there
+    /// isn't a backing [Pointer] the FFI lower functions will crash.
+    public init(noPointer _: NoPointer) {
+        pointer = nil
+    }
+
+    public func uniffiClonePointer() -> UnsafeMutableRawPointer {
+        try! rustCall { uniffi_uniffi_automerge_fn_clone_amvalue(self.pointer, $0) }
+    }
+
+    public convenience init(input: ScalarValue) {
+        let pointer =
+            try! rustCall {
+                uniffi_uniffi_automerge_fn_constructor_amvalue_new(
+                    FfiConverterTypeScalarValue.lower(input), $0
+                )
+            }
+        self.init(unsafeFromRawPointer: pointer)
+    }
+
+    deinit {
+        guard let pointer = pointer else {
+            return
+        }
+
+        try! rustCall { uniffi_uniffi_automerge_fn_free_amvalue(pointer, $0) }
+    }
+
+    public static func newFromMap(input: MapValue) -> AmValue {
+        try! FfiConverterTypeAMValue.lift(try! rustCall {
+            uniffi_uniffi_automerge_fn_constructor_amvalue_new_from_map(
+                FfiConverterTypeMapValue.lower(input), $0
+            )
+        })
+    }
+}
+
+public struct FfiConverterTypeAMValue: FfiConverter {
+    typealias FfiType = UnsafeMutableRawPointer
+    typealias SwiftType = AmValue
+
+    public static func lift(_ pointer: UnsafeMutableRawPointer) throws -> AmValue {
+        AmValue(unsafeFromRawPointer: pointer)
+    }
+
+    public static func lower(_ value: AmValue) -> UnsafeMutableRawPointer {
+        value.uniffiClonePointer()
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> AmValue {
+        let v: UInt64 = try readInt(&buf)
+        // The Rust code won't compile if a pointer won't fit in a UInt64.
+        // We have to go via `UInt` because that's the thing that's the size of a pointer.
+        let ptr = UnsafeMutableRawPointer(bitPattern: UInt(truncatingIfNeeded: v))
+        if ptr == nil {
+            throw UniffiInternalError.unexpectedNullPointer
+        }
+        return try lift(ptr!)
+    }
+
+    public static func write(_ value: AmValue, into buf: inout [UInt8]) {
+        // This fiddling is because `Int` is the thing that's the same size as a pointer.
+        // The Rust code won't compile if a pointer won't fit in a `UInt64`.
+        writeInt(&buf, UInt64(bitPattern: Int64(Int(bitPattern: lower(value)))))
+    }
+}
+
+public func FfiConverterTypeAMValue_lift(_ pointer: UnsafeMutableRawPointer) throws -> AmValue {
+    try FfiConverterTypeAMValue.lift(pointer)
+}
+
+public func FfiConverterTypeAMValue_lower(_ value: AmValue) -> UnsafeMutableRawPointer {
+    FfiConverterTypeAMValue.lower(value)
+}
+
 public protocol DocProtocol: AnyObject {
     func actorId() -> ActorId
 
@@ -567,7 +653,7 @@ public protocol DocProtocol: AnyObject {
 
     func insertObjectInList(obj: ObjId, index: UInt64, objType: ObjType) throws -> ObjId
 
-    func joinBlock(obj: ObjId, index: UInt32) throws
+    func joinBlock(obj: ObjId, index: UInt64) throws
 
     func length(obj: ObjId) -> UInt64
 
@@ -617,7 +703,7 @@ public protocol DocProtocol: AnyObject {
 
     func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String) throws
 
-    func splitBlock(obj: ObjId, index: UInt32) throws -> ObjId
+    func splitBlock(obj: ObjId, index: UInt64) throws -> ObjId
 
     func text(obj: ObjId) throws -> String
 
@@ -1027,11 +1113,11 @@ open class Doc:
         })
     }
 
-    open func joinBlock(obj: ObjId, index: UInt32) throws { try rustCallWithError(FfiConverterTypeDocError.lift) {
+    open func joinBlock(obj: ObjId, index: UInt64) throws { try rustCallWithError(FfiConverterTypeDocError.lift) {
         uniffi_uniffi_automerge_fn_method_doc_join_block(
             self.uniffiClonePointer(),
             FfiConverterTypeObjId.lower(obj),
-            FfiConverterUInt32.lower(index),
+            FfiConverterUInt64.lower(index),
             $0
         )
     }
@@ -1308,12 +1394,12 @@ open class Doc:
         }
     }
 
-    open func splitBlock(obj: ObjId, index: UInt32) throws -> ObjId {
+    open func splitBlock(obj: ObjId, index: UInt64) throws -> ObjId {
         try FfiConverterTypeObjId.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
             uniffi_uniffi_automerge_fn_method_doc_split_block(
                 self.uniffiClonePointer(),
                 FfiConverterTypeObjId.lower(obj),
-                FfiConverterUInt32.lower(index),
+                FfiConverterUInt64.lower(index),
                 $0
             )
         })
@@ -1682,6 +1768,87 @@ public func FfiConverterTypeKeyValue_lower(_ value: KeyValue) -> RustBuffer {
     FfiConverterTypeKeyValue.lower(value)
 }
 
+public struct ListValue {
+    public var value: AmValue
+    public var marks: [String: ScalarValue]
+    public var conflict: Bool
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(value: AmValue, marks: [String: ScalarValue], conflict: Bool) {
+        self.value = value
+        self.marks = marks
+        self.conflict = conflict
+    }
+}
+
+public struct FfiConverterTypeListValue: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ListValue {
+        try ListValue(
+            value: FfiConverterTypeAMValue.read(from: &buf),
+            marks: FfiConverterDictionaryStringTypeScalarValue.read(from: &buf),
+            conflict: FfiConverterBool.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: ListValue, into buf: inout [UInt8]) {
+        FfiConverterTypeAMValue.write(value.value, into: &buf)
+        FfiConverterDictionaryStringTypeScalarValue.write(value.marks, into: &buf)
+        FfiConverterBool.write(value.conflict, into: &buf)
+    }
+}
+
+public func FfiConverterTypeListValue_lift(_ buf: RustBuffer) throws -> ListValue {
+    try FfiConverterTypeListValue.lift(buf)
+}
+
+public func FfiConverterTypeListValue_lower(_ value: ListValue) -> RustBuffer {
+    FfiConverterTypeListValue.lower(value)
+}
+
+public struct MapValue {
+    public var value: [String: ScalarValue]
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(value: [String: ScalarValue]) {
+        self.value = value
+    }
+}
+
+extension MapValue: Equatable, Hashable {
+    public static func == (lhs: MapValue, rhs: MapValue) -> Bool {
+        if lhs.value != rhs.value {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+    }
+}
+
+public struct FfiConverterTypeMapValue: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> MapValue {
+        try MapValue(
+            value: FfiConverterDictionaryStringTypeScalarValue.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: MapValue, into buf: inout [UInt8]) {
+        FfiConverterDictionaryStringTypeScalarValue.write(value.value, into: &buf)
+    }
+}
+
+public func FfiConverterTypeMapValue_lift(_ buf: RustBuffer) throws -> MapValue {
+    try FfiConverterTypeMapValue.lift(buf)
+}
+
+public func FfiConverterTypeMapValue_lower(_ value: MapValue) -> RustBuffer {
+    FfiConverterTypeMapValue.lower(value)
+}
+
 public struct Mark {
     public var start: UInt64
     public var end: UInt64
@@ -1747,6 +1914,49 @@ public func FfiConverterTypeMark_lift(_ buf: RustBuffer) throws -> Mark {
 
 public func FfiConverterTypeMark_lower(_ value: Mark) -> RustBuffer {
     FfiConverterTypeMark.lower(value)
+}
+
+public struct MarkSet {
+    public var marks: [String: ScalarValue]
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(marks: [String: ScalarValue]) {
+        self.marks = marks
+    }
+}
+
+extension MarkSet: Equatable, Hashable {
+    public static func == (lhs: MarkSet, rhs: MarkSet) -> Bool {
+        if lhs.marks != rhs.marks {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(marks)
+    }
+}
+
+public struct FfiConverterTypeMarkSet: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> MarkSet {
+        try MarkSet(
+            marks: FfiConverterDictionaryStringTypeScalarValue.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: MarkSet, into buf: inout [UInt8]) {
+        FfiConverterDictionaryStringTypeScalarValue.write(value.marks, into: &buf)
+    }
+}
+
+public func FfiConverterTypeMarkSet_lift(_ buf: RustBuffer) throws -> MarkSet {
+    try FfiConverterTypeMarkSet.lift(buf)
+}
+
+public func FfiConverterTypeMarkSet_lower(_ value: MarkSet) -> RustBuffer {
+    FfiConverterTypeMarkSet.lower(value)
 }
 
 public struct Patch {
@@ -1850,6 +2060,112 @@ public func FfiConverterTypePathElement_lift(_ buf: RustBuffer) throws -> PathEl
 public func FfiConverterTypePathElement_lower(_ value: PathElement) -> RustBuffer {
     FfiConverterTypePathElement.lower(value)
 }
+
+public struct TextValue {
+    public var value: String
+    public var marks: [String: ScalarValue]
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(value: String, marks: [String: ScalarValue]) {
+        self.value = value
+        self.marks = marks
+    }
+}
+
+extension TextValue: Equatable, Hashable {
+    public static func == (lhs: TextValue, rhs: TextValue) -> Bool {
+        if lhs.value != rhs.value {
+            return false
+        }
+        if lhs.marks != rhs.marks {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+        hasher.combine(marks)
+    }
+}
+
+public struct FfiConverterTypeTextValue: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> TextValue {
+        try TextValue(
+            value: FfiConverterString.read(from: &buf),
+            marks: FfiConverterDictionaryStringTypeScalarValue.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: TextValue, into buf: inout [UInt8]) {
+        FfiConverterString.write(value.value, into: &buf)
+        FfiConverterDictionaryStringTypeScalarValue.write(value.marks, into: &buf)
+    }
+}
+
+public func FfiConverterTypeTextValue_lift(_ buf: RustBuffer) throws -> TextValue {
+    try FfiConverterTypeTextValue.lift(buf)
+}
+
+public func FfiConverterTypeTextValue_lower(_ value: TextValue) -> RustBuffer {
+    FfiConverterTypeTextValue.lower(value)
+}
+
+// Note that we don't yet support `indirect` for enums.
+// See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
+public enum AmValueType {
+    case scalar
+    case list
+    case map
+    case text
+}
+
+public struct FfiConverterTypeAMValueType: FfiConverterRustBuffer {
+    typealias SwiftType = AmValueType
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> AmValueType {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+        case 1: return .scalar
+
+        case 2: return .list
+
+        case 3: return .map
+
+        case 4: return .text
+
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: AmValueType, into buf: inout [UInt8]) {
+        switch value {
+        case .scalar:
+            writeInt(&buf, Int32(1))
+
+        case .list:
+            writeInt(&buf, Int32(2))
+
+        case .map:
+            writeInt(&buf, Int32(3))
+
+        case .text:
+            writeInt(&buf, Int32(4))
+        }
+    }
+}
+
+public func FfiConverterTypeAMValueType_lift(_ buf: RustBuffer) throws -> AmValueType {
+    try FfiConverterTypeAMValueType.lift(buf)
+}
+
+public func FfiConverterTypeAMValueType_lower(_ value: AmValueType) -> RustBuffer {
+    FfiConverterTypeAMValueType.lower(value)
+}
+
+extension AmValueType: Equatable, Hashable {}
 
 public enum DecodeSyncStateError {
     case Internal(message: String)
@@ -2500,6 +2816,62 @@ extension ScalarValue: Equatable, Hashable {}
 // Note that we don't yet support `indirect` for enums.
 // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
 
+public enum Span {
+    case text(
+        text: String,
+        marks: MarkSet?
+    )
+    case block(
+        value: MapValue
+    )
+}
+
+public struct FfiConverterTypeSpan: FfiConverterRustBuffer {
+    typealias SwiftType = Span
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Span {
+        let variant: Int32 = try readInt(&buf)
+        switch variant {
+        case 1: return try .text(
+                text: FfiConverterString.read(from: &buf),
+                marks: FfiConverterOptionTypeMarkSet.read(from: &buf)
+            )
+
+        case 2: return try .block(
+                value: FfiConverterTypeMapValue.read(from: &buf)
+            )
+
+        default: throw UniffiInternalError.unexpectedEnumCase
+        }
+    }
+
+    public static func write(_ value: Span, into buf: inout [UInt8]) {
+        switch value {
+        case let .text(text, marks):
+            writeInt(&buf, Int32(1))
+            FfiConverterString.write(text, into: &buf)
+            FfiConverterOptionTypeMarkSet.write(marks, into: &buf)
+
+        case let .block(value):
+            writeInt(&buf, Int32(2))
+            FfiConverterTypeMapValue.write(value, into: &buf)
+        }
+    }
+}
+
+public func FfiConverterTypeSpan_lift(_ buf: RustBuffer) throws -> Span {
+    try FfiConverterTypeSpan.lift(buf)
+}
+
+public func FfiConverterTypeSpan_lower(_ value: Span) -> RustBuffer {
+    FfiConverterTypeSpan.lower(value)
+}
+
+extension Span: Equatable, Hashable {}
+
+// Note that we don't yet support `indirect` for enums.
+// See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
+
 public enum Value {
     case object(
         typ: ObjType,
@@ -2590,6 +2962,27 @@ private struct FfiConverterOptionTypeChange: FfiConverterRustBuffer {
         switch try readInt(&buf) as Int8 {
         case 0: return nil
         case 1: return try FfiConverterTypeChange.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
+
+private struct FfiConverterOptionTypeMarkSet: FfiConverterRustBuffer {
+    typealias SwiftType = MarkSet?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterTypeMarkSet.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterTypeMarkSet.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
     }
@@ -2853,6 +3246,29 @@ private struct FfiConverterSequenceTypeChangeHash: FfiConverterRustBuffer {
             try seq.append(FfiConverterTypeChangeHash.read(from: &buf))
         }
         return seq
+    }
+}
+
+private struct FfiConverterDictionaryStringTypeScalarValue: FfiConverterRustBuffer {
+    public static func write(_ value: [String: ScalarValue], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for (key, value) in value {
+            FfiConverterString.write(key, into: &buf)
+            FfiConverterTypeScalarValue.write(value, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String: ScalarValue] {
+        let len: Int32 = try readInt(&buf)
+        var dict = [String: ScalarValue]()
+        dict.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            let key = try FfiConverterString.read(from: &buf)
+            let value = try FfiConverterTypeScalarValue.read(from: &buf)
+            dict[key] = value
+        }
+        return dict
     }
 }
 
@@ -3123,7 +3539,7 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_automerge_checksum_method_doc_insert_object_in_list() != 30538 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_automerge_checksum_method_doc_join_block() != 37348 {
+    if uniffi_uniffi_automerge_checksum_method_doc_join_block() != 8448 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_length() != 30352 {
@@ -3198,7 +3614,7 @@ private var initializationResult: InitializationResult {
     if uniffi_uniffi_automerge_checksum_method_doc_splice_text() != 20602 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_uniffi_automerge_checksum_method_doc_split_block() != 10956 {
+    if uniffi_uniffi_automerge_checksum_method_doc_split_block() != 15883 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_text() != 64716 {
@@ -3223,6 +3639,12 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_syncstate_their_heads() != 39870 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_constructor_amvalue_new() != 11832 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_constructor_amvalue_new_from_map() != 44769 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_constructor_doc_load() != 20048 {
