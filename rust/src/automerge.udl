@@ -112,7 +112,7 @@ dictionary MarkSet {
 interface AMValue {
     Map ( record<string,AMValue> value );
     Scalar ( ScalarValue value );
-    List ( sequence<HydratedList> value );
+    List ( sequence<HydratedListItem> value );
     Text ( HydratedText value );
 };
 
@@ -121,7 +121,7 @@ dictionary HydratedText {
     record<string,ScalarValue> marks;
 };
 
-dictionary HydratedList {
+dictionary HydratedListItem {
     AMValue value;
     record<string,ScalarValue> marks;
     boolean conflict;

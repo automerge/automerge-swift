@@ -27,4 +27,4 @@ use sync_state::{DecodeSyncStateError, SyncState};
 mod value;
 use value::Value;
 mod span;
-use span::{AMValue, HydratedList, HydratedText, MarkSet, Span};
+use span::{AMValue, HydratedListItem, HydratedText, MarkSet, Span};

@@ -7,6 +7,7 @@ use automerge::{transaction::Transactable, ReadDoc};
 use crate::actor_id::ActorId;
 use crate::cursor::Position;
 use crate::mark::{ExpandMark, KeyValue, Mark};
+use crate::span::{Span};
 use crate::patches::Patch;
 use crate::{
     Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
@@ -512,6 +513,15 @@ impl Doc {
         let obj = am::ObjId::from(obj);
         doc.join_block(obj, index.try_into().unwrap())?;
         Ok(())
+    }
+
+    pub fn spans(&self, obj: ObjId) -> Result<Vec<Span>, DocError> {
+        let mut doc = self.0.write().unwrap();
+        let obj = am::ObjId::from(obj);
+        let x = doc.spans(obj).unwrap();
+        let y = x
+        .into_iter()
+        .map(am::iter::spans::from);
     }
 
     pub fn merge(&self, other: Arc<Self>) -> Result<(), DocError> {
