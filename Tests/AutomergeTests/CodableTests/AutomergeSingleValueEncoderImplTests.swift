@@ -32,6 +32,20 @@ final class AutomergeSingleValueEncoderImplTests: XCTestCase {
         cautiousSingleValueContainer = cautious.singleValueContainer()
     }
 
+    func testSimpleKeyEncode_Null() throws {
+        try singleValueContainer.encodeNil()
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Null))
+        try cautiousSingleValueContainer.encodeNil()
+        XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Null))
+    }
+
+    func testSimpleKeyEncode_Null_CautiousFailure() throws {
+        try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
+        XCTAssertThrowsError(
+            try cautiousSingleValueContainer.encodeNil()
+        )
+    }
+
     func testSimpleKeyEncode_Bool() throws {
         try singleValueContainer.encode(true)
         XCTAssertEqual(try doc.get(obj: ObjId.ROOT, key: "value"), .Scalar(.Boolean(true)))

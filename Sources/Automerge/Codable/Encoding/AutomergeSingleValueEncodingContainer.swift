@@ -55,7 +55,10 @@ struct AutomergeSingleValueEncodingContainer: SingleValueEncodingContainer {
         #endif
     }
 
-    mutating func encodeNil() throws {}
+    mutating func encodeNil() throws {
+        try scalarValueEncode(value: ScalarValue.Null)
+        impl.singleValueWritten = true
+    }
 
     mutating func encode(_ value: Bool) throws {
         try scalarValueEncode(value: value)

@@ -34,6 +34,21 @@ public protocol ScalarValueRepresentable {
     func toScalarValue() -> ScalarValue
 }
 
+// MARK: ScalarValue Conversions
+
+/// A failure to convert an Automerge scalar value to or from an Automerge scalar value.
+public enum ScalarValueConversionError: LocalizedError {}
+
+extension ScalarValue: ScalarValueRepresentable {
+    public static func fromScalarValue(_ val: ScalarValue) -> Result<ScalarValue, ScalarValueConversionError> {
+        .success(val)
+    }
+
+    public func toScalarValue() -> ScalarValue {
+        self
+    }
+}
+
 // MARK: Boolean Conversions
 
 /// A failure to convert an Automerge scalar value to or from a Boolean representation.
