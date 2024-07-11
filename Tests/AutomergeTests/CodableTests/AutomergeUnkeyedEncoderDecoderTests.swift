@@ -276,4 +276,18 @@ final class AutomergeUnkeyedEncoderDecoderTests: XCTestCase {
         XCTAssertEqual(decodedStruct.list.count, 1)
         XCTAssertEqual(decodedStruct.list, [URL(string: "url.com")!])
     }
+
+    func testListOfNullEncodeDecode() throws {
+        struct WrapperStruct: Codable, Equatable {
+            let list: [Int?]
+        }
+
+        let topLevel = WrapperStruct(list: [nil])
+
+        try encoder.encode(topLevel)
+
+        let decodedStruct = try decoder.decode(WrapperStruct.self)
+        XCTAssertEqual(decodedStruct.list.count, 1)
+        XCTAssertEqual(decodedStruct.list, [nil])
+    }
 }

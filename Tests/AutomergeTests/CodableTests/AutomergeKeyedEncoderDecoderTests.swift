@@ -21,6 +21,7 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
             let date: Date
             let data: Data
             let uuid: UUID
+            let null: Int?
             let notes: AutomergeText
         }
 
@@ -35,6 +36,7 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
             date: earlyDate,
             data: Data("hello".utf8),
             uuid: UUID(uuidString: "99CEBB16-1062-4F21-8837-CF18EC09DCD7")!,
+            null: nil,
             notes: AutomergeText("Something wicked this way comes.")
         )
 
@@ -58,6 +60,25 @@ final class AutomergeKeyedEncoderDecoderTests: XCTestCase {
 
         let decodedStruct = try decoder.decode(WrapperStruct.self)
         XCTAssertEqual(decodedStruct.counter.value, 5)
+    }
+
+    func testSimpleOptionalEncode() throws {
+        struct WrapperStruct: Codable, Equatable {
+            let counter: Counter?
+            let string: String?
+
+            // Needed because default implementation uses `encodeIfPresent` instead of `encode`.
+            func encode(to encoder: any Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(counter, forKey: .counter)
+                try container.encode(string, forKey: .string)
+            }
+        }
+
+        let topLevel = WrapperStruct(counter: nil, string: nil)
+        try encoder.encode(topLevel)
+        XCTAssertEqual(try doc.get(obj: .ROOT, key: "counter"), .Scalar(.Null))
+        XCTAssertEqual(try doc.get(obj: .ROOT, key: "string"), .Scalar(.Null))
     }
 
     func testSimpleOptionalCounterEncodeDecode() throws {
