@@ -84,4 +84,38 @@ class ChangeSetTests: XCTestCase {
         XCTAssertEqual(patches1.count, 1)
         XCTAssertEqual(patches1, patches2)
     }
+
+    func testRelationBetweenChangeHashAndRaw() throws {
+        let doc = Document()
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        let doc1 = doc.fork()
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
+        try doc1.spliceText(obj: textId, start: 0, delete: 0, value: " World!")
+        try doc.merge(other: doc1)
+
+        let heads = doc.heads()
+        let restored = doc.heads(raw: heads.raw())
+
+        XCTAssertEqual(heads, restored)
+    }
+
+    func testChangeHash_WhenRawIsManipulated_DocumentDoesNotAccept() throws {
+        let doc = Document()
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        let doc1 = doc.fork()
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
+        try doc1.spliceText(obj: textId, start: 0, delete: 0, value: " World!")
+        try doc.merge(other: doc1)
+
+        let headsRaw = doc.heads().raw().map { raw in
+            var raw = raw
+            raw[0] = 0
+            raw[7] = 0
+            raw[14] = 0
+            return raw
+        }
+        let restored = doc.heads(raw: headsRaw)
+
+        XCTAssertNil(restored)
+    }
 }

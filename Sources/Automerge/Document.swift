@@ -1035,6 +1035,17 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Returns the related set of changes of a state representation within an Automerge document.
+    public func heads(raw: [[UInt8]]) -> Set<ChangeHash>? {
+        var output: Set<ChangeHash> = []
+        for bytes in raw {
+            guard let changeHash = change(hash: ChangeHash(bytes: bytes))?.hash
+            else { return nil }
+            output.insert(changeHash)
+        }
+        return output
+    }
+
     /// Generates patches between two points in the document history.
     ///
     /// Use:
