@@ -113,7 +113,7 @@ class ChangeSetTests: XCTestCase {
         try doc.merge(other: doc2)
         try doc.merge(other: doc3)
 
-        let rawHashes = (0..<100).map { _ in doc.heads().raw().hashValue }
+        let rawHashes = (0..<500).map { _ in doc.heads().raw() }
 
         XCTAssertEqual(Set(rawHashes).count, 1)
     }

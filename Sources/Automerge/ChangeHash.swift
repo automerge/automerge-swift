@@ -18,7 +18,7 @@ public extension Set<ChangeHash> {
     /// and retrieval of document states.
     func raw() -> Data {
         let rawBytes = map(\.bytes).sorted { lhs, rhs in
-            lhs.hashValue > rhs.hashValue
+            lhs.debugDescription > rhs.debugDescription
         }
         return Data(rawBytes.joined())
     }
@@ -28,7 +28,7 @@ public extension Data {
 
     /// Returns the related set of changes of a state representation within an Automerge document.
     func heads() -> Set<ChangeHash>? {
-        let rawBytes = Array(self)
+        let rawBytes: [UInt8] = Array(self)
         guard rawBytes.count % 32 == 0 else { return nil }
         let totalHashes = rawBytes.count / 32
         let heads = (0..<totalHashes).map { index in
