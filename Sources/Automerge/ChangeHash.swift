@@ -26,7 +26,7 @@ public extension Set<ChangeHash> {
 
 public extension Data {
 
-    /// Returns the related set of changes of a state representation within an Automerge document.
+    /// Interprets the data to return the data as a set of change hashes that represent a state within an Automerge document. If the data is not a multiple of 32 bytes, returns nil.
     func heads() -> Set<ChangeHash>? {
         let rawBytes: [UInt8] = Array(self)
         guard rawBytes.count % 32 == 0 else { return nil }
