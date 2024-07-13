@@ -212,7 +212,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "if you need to know what changed in the document as a result of",
+                  "text" : "If you need to know what changed in the document as a result of",
                   "type" : "text"
                 },
                 {
@@ -254,6 +254,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Syncing-documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/generateSyncMessage(state:)",

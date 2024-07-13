@@ -107,6 +107,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
@@ -123,12 +124,14 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Creating-a-new-Delete-Sequence",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq\/init(obj:index:length:)"
       ],
       "title" : "Creating a new Delete Sequence"
     },
     {
+      "anchor" : "Inspecting-a-Delete-Sequence",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq\/obj",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq\/index",
@@ -137,6 +140,7 @@
       "title" : "Inspecting a Delete Sequence"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DeleteSeq\/Equatable-Implementations"

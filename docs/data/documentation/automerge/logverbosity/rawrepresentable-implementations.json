@@ -42,6 +42,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/hashValue"
@@ -49,6 +50,7 @@
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/hash(into:)"
@@ -75,7 +77,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],

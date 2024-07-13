@@ -112,6 +112,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-a-Mark",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/start",
@@ -320,8 +321,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
+      "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+      "text" : "ScalarValue"
     }
   ],
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/value",

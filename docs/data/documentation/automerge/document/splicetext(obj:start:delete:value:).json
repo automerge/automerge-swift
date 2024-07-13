@@ -322,7 +322,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "values"
+          "name" : "value"
         }
       ]
     },
@@ -532,6 +532,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Updating-Text-values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/updateText(obj:value:)",

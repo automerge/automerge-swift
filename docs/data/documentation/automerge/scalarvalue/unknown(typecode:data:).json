@@ -179,6 +179,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Automerge-Primitives",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/Null",

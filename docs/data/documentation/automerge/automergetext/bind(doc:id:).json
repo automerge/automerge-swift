@@ -180,22 +180,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A string path that represents a ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "Text",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " container within the Automerge document.",
+                  "text" : "The Automerge object ID of the text object to bind.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "path"
+          "name" : "id"
         }
       ]
     },

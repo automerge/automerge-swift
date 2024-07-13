@@ -323,6 +323,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Synchronizing-Documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState"

@@ -96,6 +96,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncStateProtocol\/encode()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncStateProtocol\/reset()",

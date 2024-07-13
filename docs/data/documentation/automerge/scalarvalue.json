@@ -122,6 +122,8 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueRepresentable",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/SH",
@@ -142,6 +144,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Representing-Objects-and-Values-in-a-Document",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
@@ -155,6 +158,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Automerge-Primitives",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/Null",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/Boolean(_:)",
@@ -170,10 +174,12 @@
       "title" : "Automerge Primitives"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/CustomStringConvertible-Implementations",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/Equatable-Implementations"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/Equatable-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/ScalarValueRepresentable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -601,6 +607,17 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/scalarvalue\/null"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue/ScalarValueRepresentable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue\/ScalarValueRepresentable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "ScalarValueRepresentable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvalue\/scalarvaluerepresentable-implementations"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue/String(_:)": {
   "abstract" : [
     {
@@ -790,6 +807,40 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/scalarvalue\/unknown(typecode:data:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValueRepresentable": {
+  "abstract" : [
+    {
+      "text" : "A type that can be represented as an individual value within an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueRepresentable"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueRepresentable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueRepresentable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ScalarValueRepresentable",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvaluerepresentable"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Value": {
   "abstract" : [
     {
@@ -827,6 +878,11 @@
 "doc://com.github.automerge.automerge-swift/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {

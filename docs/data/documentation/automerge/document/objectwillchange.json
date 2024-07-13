@@ -190,6 +190,16 @@
   "sections" : [
 
   ],
+  "seeAlsoSections" : [
+    {
+      "anchor" : "Observing-Documents",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectDidChange"
+      ],
+      "title" : "Observing Documents"
+    }
+  ],
   "variants" : [
     {
       "paths" : [
@@ -262,6 +272,65 @@
   "title" : "ObservableObject Implementations",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/observableobject-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectDidChange": {
+  "abstract" : [
+    {
+      "text" : "A publisher that sends a signal after the document is updated.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "objectDidChange"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:7Combine18PassthroughSubjectC",
+      "text" : "PassthroughSubject"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5NeverO",
+      "text" : "Never"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectDidChange",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "objectDidChange",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/objectdidchange"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectWillChange": {
   "abstract" : [

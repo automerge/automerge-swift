@@ -336,6 +336,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
@@ -352,6 +353,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Inspecting-a-Path-Element",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement\/obj",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement\/prop"
@@ -359,12 +361,15 @@
       "title" : "Inspecting a Path Element"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement\/init(obj:prop:)"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathElement\/Equatable-Implementations"

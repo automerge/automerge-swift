@@ -137,6 +137,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Converting-Automerge-types-into-AnyCodingKey",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AnyCodingKey\/init(_:)-6lrn3"

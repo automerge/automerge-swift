@@ -209,10 +209,12 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-Text",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/text(obj:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/length(obj:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/length(obj:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)"
       ],
       "title" : "Reading Text"
     }
@@ -398,6 +400,89 @@
   "title" : "marks(obj:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/marks(obj:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/text(obj:)": {
   "abstract" : [

@@ -424,6 +424,7 @@
     {
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/7Combine16ObservableObjectP",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/Se",
@@ -447,9 +448,11 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Collaborating-with-Text",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark"
       ],
@@ -458,6 +461,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Creating-AutomergeText",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/init(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/init(_:doc:path:)",
@@ -466,18 +470,21 @@
       "title" : "Creating AutomergeText"
     },
     {
+      "anchor" : "Linking-a-new-AutomergeText-into-an-Automerge-Document",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:path:)"
       ],
       "title" : "Linking a new AutomergeText into an Automerge Document"
     },
     {
+      "anchor" : "Retrieving-a-binding-for-the-text",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/textBinding()"
       ],
       "title" : "Retrieving a binding for the text"
     },
     {
+      "anchor" : "Inspecting-an-AutomergeText-instance",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/isBound",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/value"
@@ -485,6 +492,7 @@
       "title" : "Inspecting an AutomergeText instance"
     },
     {
+      "anchor" : "Encoding-and-Decoding-AutomergeText",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/encode(to:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/init(from:)"
@@ -492,18 +500,23 @@
       "title" : "Encoding and Decoding AutomergeText"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/bind(doc:id:)"
       ],
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Enumerations",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys"
       ],
       "title" : "Enumerations"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CustomDebugStringConvertible-Implementations",
@@ -1494,6 +1507,40 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/objtype\/text"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
+},
 "doc://com.github.automerge.automerge-swift/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
@@ -1502,6 +1549,11 @@
 "doc://com.github.automerge.automerge-swift/s28CustomDebugStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
   "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {

@@ -98,6 +98,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
@@ -114,6 +115,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Inspecting-a-Change",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/hash",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/actorId",
@@ -124,6 +126,7 @@
       "title" : "Inspecting a Change"
     },
     {
+      "anchor" : "Inspecting-Change-Metadata",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/message",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/timestamp"
@@ -131,6 +134,7 @@
       "title" : "Inspecting Change Metadata"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Change\/Equatable-Implementations"

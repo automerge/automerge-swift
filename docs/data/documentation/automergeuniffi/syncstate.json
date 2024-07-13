@@ -92,12 +92,16 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Structures",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/NoPointer"
       ],
       "title" : "Structures"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/init(noPointer:)",
@@ -106,6 +110,8 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/encode()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/reset()",
@@ -115,6 +121,8 @@
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Type-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/SyncState\/decode(bytes:)"
       ],

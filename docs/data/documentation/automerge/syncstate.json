@@ -247,6 +247,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Synchronizing-Documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Sync"
@@ -256,6 +257,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Creating-a-SyncState",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/init()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/init(bytes:)"
@@ -263,18 +265,21 @@
       "title" : "Creating a SyncState"
     },
     {
+      "anchor" : "Serializing-SyncState",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/encode()"
       ],
       "title" : "Serializing SyncState"
     },
     {
+      "anchor" : "Resetting-SyncState",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/reset()"
       ],
       "title" : "Resetting SyncState"
     },
     {
+      "anchor" : "Inspecting-SyncState",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/theirHeads"
       ],

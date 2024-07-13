@@ -137,6 +137,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Creating-or-loading-a-document",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(_:logLevel:)",

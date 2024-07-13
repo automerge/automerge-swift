@@ -1,4 +1,7 @@
 {
+  "includedArchiveIdentifiers" : [
+    "com.github.automerge.automerge-swift"
+  ],
   "interfaceLanguages" : {
     "swift" : [
       {
@@ -389,6 +392,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automerge\/document\/marksat(obj:position:)",
+                "title" : "func marksAt(obj: ObjId, position: Position) throws -> [Mark]",
+                "type" : "method"
+              },
+              {
                 "title" : "Updating Text values",
                 "type" : "groupMarker"
               },
@@ -462,6 +470,21 @@
               {
                 "path" : "\/documentation\/automerge\/document\/change(hash:)",
                 "title" : "func change(hash: ChangeHash) -> Change?",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/difference(from:to:)",
+                "title" : "func difference(from: Set<ChangeHash>, to: Set<ChangeHash>) -> [Patch]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/difference(since:)",
+                "title" : "func difference(since: Set<ChangeHash>) -> [Patch]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/difference(to:)",
+                "title" : "func difference(to: Set<ChangeHash>) -> [Patch]",
                 "type" : "method"
               },
               {
@@ -539,6 +562,11 @@
               {
                 "path" : "\/documentation\/automerge\/document\/marksat(obj:heads:)",
                 "title" : "func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/marksat(obj:position:heads:)",
+                "title" : "func marksAt(obj: ObjId, position: Position, heads: Set<ChangeHash>) throws -> [Mark]",
                 "type" : "method"
               },
               {
@@ -621,6 +649,11 @@
               {
                 "path" : "\/documentation\/automerge\/document\/objectwillchange",
                 "title" : "var objectWillChange: ObservableObjectPublisher",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/objectdidchange",
+                "title" : "let objectDidChange: PassthroughSubject<Void, Never>",
                 "type" : "property"
               },
               {
@@ -1617,6 +1650,31 @@
                 "path" : "\/documentation\/automerge\/scalarvalue\/equatable-implementations",
                 "title" : "Equatable Implementations",
                 "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalue\/toscalarvalue()",
+                    "title" : "func toScalarValue() -> ScalarValue",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalue\/fromscalarvalue(_:)",
+                    "title" : "static func fromScalarValue(ScalarValue) -> Result<ScalarValue, ScalarValueConversionError>",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/scalarvalue\/scalarvaluerepresentable-implementations",
+                "title" : "ScalarValueRepresentable Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/automerge\/scalarvalue",
@@ -1953,6 +2011,27 @@
           {
             "children" : [
               {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/position\/cursor(_:)",
+                "title" : "case cursor(Cursor)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/position\/index(_:)",
+                "title" : "case index(UInt64)",
+                "type" : "case"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/position",
+            "title" : "Position",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
                 "title" : "Inspecting a Mark",
                 "type" : "groupMarker"
               },
@@ -1973,7 +2052,7 @@
               },
               {
                 "path" : "\/documentation\/automerge\/mark\/value",
-                "title" : "let value: Value",
+                "title" : "let value: ScalarValue",
                 "type" : "property"
               },
               {
@@ -1982,7 +2061,7 @@
               },
               {
                 "path" : "\/documentation\/automerge\/mark\/init(start:end:name:value:)",
-                "title" : "init(start: UInt64, end: UInt64, name: String, value: Value)",
+                "title" : "init(start: UInt64, end: UInt64, name: String, value: ScalarValue)",
                 "type" : "init"
               },
               {
@@ -2625,7 +2704,7 @@
                       },
                       {
                         "path" : "\/documentation\/automerge\/mark\/value",
-                        "title" : "let value: Value",
+                        "title" : "let value: ScalarValue",
                         "type" : "property"
                       },
                       {
@@ -2634,7 +2713,7 @@
                       },
                       {
                         "path" : "\/documentation\/automerge\/mark\/init(start:end:name:value:)",
-                        "title" : "init(start: UInt64, end: UInt64, name: String, value: Value)",
+                        "title" : "init(start: UInt64, end: UInt64, name: String, value: ScalarValue)",
                         "type" : "init"
                       },
                       {
@@ -2988,7 +3067,7 @@
                   },
                   {
                     "path" : "\/documentation\/automerge\/mark\/value",
-                    "title" : "let value: Value",
+                    "title" : "let value: ScalarValue",
                     "type" : "property"
                   },
                   {
@@ -2997,7 +3076,7 @@
                   },
                   {
                     "path" : "\/documentation\/automerge\/mark\/init(start:end:name:value:)",
-                    "title" : "init(start: UInt64, end: UInt64, name: String, value: Value)",
+                    "title" : "init(start: UInt64, end: UInt64, name: String, value: ScalarValue)",
                     "type" : "init"
                   },
                   {
@@ -3889,6 +3968,64 @@
           {
             "children" : [
               {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/localizeddescription",
+                    "title" : "var localizedDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/error-implementations",
+                "title" : "Error Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/errordescription",
+                    "title" : "var errorDescription: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/scalarvalueconversionerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/scalarvalueconversionerror",
+            "title" : "ScalarValueConversionError",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
                 "title" : "Enumeration Cases",
                 "type" : "groupMarker"
               },
@@ -4576,6 +4713,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/doc\/difference(before:after:)",
+                "title" : "func difference(before: [ChangeHash], after: [ChangeHash]) -> [Patch]",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/doc\/encodechangessince(heads:)",
                 "title" : "func encodeChangesSince(heads: [ChangeHash]) throws -> [UInt8]",
                 "type" : "method"
@@ -4666,6 +4808,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/doc\/joinblock(obj:index:)",
+                "title" : "func joinBlock(obj: ObjId, index: UInt32) throws",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/doc\/length(obj:)",
                 "title" : "func length(obj: ObjId) -> UInt64",
                 "type" : "method"
@@ -4708,6 +4855,11 @@
               {
                 "path" : "\/documentation\/automergeuniffi\/doc\/marksat(obj:heads:)",
                 "title" : "func marksAt(obj: ObjId, heads: [ChangeHash]) throws -> [Mark]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/marksatposition(obj:position:heads:)",
+                "title" : "func marksAtPosition(obj: ObjId, position: Position, heads: [ChangeHash]) throws -> [Mark]",
                 "type" : "method"
               },
               {
@@ -4778,6 +4930,11 @@
               {
                 "path" : "\/documentation\/automergeuniffi\/doc\/splicetext(obj:start:delete:chars:)",
                 "title" : "func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String) throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/splitblock(obj:index:)",
+                "title" : "func splitBlock(obj: ObjId, index: UInt32) throws -> ObjId",
                 "type" : "method"
               },
               {
@@ -4979,6 +5136,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/difference(before:after:)",
+                "title" : "func difference(before: [ChangeHash], after: [ChangeHash]) -> [Patch]",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/encodechangessince(heads:)",
                 "title" : "func encodeChangesSince(heads: [ChangeHash]) throws -> [UInt8]",
                 "type" : "method"
@@ -5069,6 +5231,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/joinblock(obj:index:)",
+                "title" : "func joinBlock(obj: ObjId, index: UInt32) throws",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/length(obj:)",
                 "title" : "func length(obj: ObjId) -> UInt64",
                 "type" : "method"
@@ -5111,6 +5278,11 @@
               {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/marksat(obj:heads:)",
                 "title" : "func marksAt(obj: ObjId, heads: [ChangeHash]) throws -> [Mark]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/marksatposition(obj:position:heads:)",
+                "title" : "func marksAtPosition(obj: ObjId, position: Position, heads: [ChangeHash]) throws -> [Mark]",
                 "type" : "method"
               },
               {
@@ -5181,6 +5353,11 @@
               {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/splicetext(obj:start:delete:chars:)",
                 "title" : "func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String) throws",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/splitblock(obj:index:)",
+                "title" : "func splitBlock(obj: ObjId, index: UInt32) throws -> ObjId",
                 "type" : "method"
               },
               {
@@ -5727,6 +5904,27 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition\/read(from:)",
+                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Position",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition\/write(_:into:)",
+                "title" : "static func write(Position, into: inout [UInt8])",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition",
+            "title" : "FfiConverterTypePosition",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop\/read(from:)",
                 "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Prop",
                 "type" : "method"
@@ -5914,7 +6112,7 @@
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/mark\/init(start:end:name:value:)",
-                "title" : "init(start: UInt64, end: UInt64, name: String, value: Value)",
+                "title" : "init(start: UInt64, end: UInt64, name: String, value: ScalarValue)",
                 "type" : "init"
               },
               {
@@ -5938,7 +6136,7 @@
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/mark\/value",
-                "title" : "var value: Value",
+                "title" : "var value: ScalarValue",
                 "type" : "property"
               },
               {
@@ -6261,6 +6459,16 @@
           {
             "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement_lower(_:)",
             "title" : "func FfiConverterTypePathElement_lower(PathElement) -> RustBuffer",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition_lift(_:)",
+            "title" : "func FfiConverterTypePosition_lift(RustBuffer) throws -> Position",
+            "type" : "func"
+          },
+          {
+            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition_lower(_:)",
+            "title" : "func FfiConverterTypePosition_lower(Position) -> RustBuffer",
             "type" : "func"
           },
           {
@@ -6703,6 +6911,47 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/position\/cursor(position:)",
+                "title" : "case cursor(position: Cursor)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/position\/index(position:)",
+                "title" : "case index(position: UInt64)",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/position\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/position\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automergeuniffi\/position",
+            "title" : "Position",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/prop\/index(value:)",
                 "title" : "case index(value: UInt64)",
                 "type" : "case"
@@ -6926,6 +7175,6 @@
   "schemaVersion" : {
     "major" : 0,
     "minor" : 1,
-    "patch" : 1
+    "patch" : 2
   }
 }

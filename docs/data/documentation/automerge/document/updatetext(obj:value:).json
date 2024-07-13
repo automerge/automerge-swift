@@ -237,6 +237,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Updating-Text-values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/spliceText(obj:start:delete:value:)",

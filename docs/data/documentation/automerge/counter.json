@@ -178,6 +178,7 @@
     {
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/7Combine16ObservableObjectP",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/Se",
         "doc:\/\/com.github.automerge.automerge-swift\/SE",
@@ -200,6 +201,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/init(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/init(_:doc:path:)",
@@ -209,6 +212,8 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/isBound",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/value"
@@ -216,6 +221,8 @@
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/bind(doc:path:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/encode(to:)",
@@ -225,6 +232,7 @@
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter\/CustomStringConvertible-Implementations",
@@ -291,7 +299,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],
@@ -935,6 +943,11 @@
 "doc://com.github.automerge.automerge-swift/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {

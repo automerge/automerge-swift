@@ -75,6 +75,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Creating-a-SyncState",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState\/init(bytes:)"

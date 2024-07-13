@@ -262,6 +262,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Syncing-documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/receiveSyncMessage(state:message:)",

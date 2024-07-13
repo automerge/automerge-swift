@@ -100,8 +100,10 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Type-Conversion-Errors",
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BooleanScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/IntScalarConversionError",
@@ -115,12 +117,16 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError\/notTimetampScalarValue(_:)"
       ],
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError\/errorDescription",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError\/failureReason"
@@ -128,6 +134,7 @@
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TimestampScalarConversionError\/Error-Implementations",
@@ -304,6 +311,40 @@
   "title" : "IntScalarConversionError",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/intscalarconversionerror"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValueConversionError": {
+  "abstract" : [
+    {
+      "text" : "A failure to convert an Automerge scalar value to or from an Automerge scalar value.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ScalarValueConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvalueconversionerror"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/StringScalarConversionError": {
   "abstract" : [

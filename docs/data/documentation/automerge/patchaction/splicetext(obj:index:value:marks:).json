@@ -324,6 +324,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Types-of-Patches",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Conflict(_:_:)",
