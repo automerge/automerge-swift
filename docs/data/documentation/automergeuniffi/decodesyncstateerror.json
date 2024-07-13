@@ -75,6 +75,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
         "doc:\/\/com.github.automerge.automerge-swift\/SH",
@@ -95,12 +96,15 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/Internal(message:)"
       ],
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/Equatable-Implementations",
@@ -246,6 +250,11 @@
 "doc://com.github.automerge.automerge-swift/s5ErrorP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
   "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {

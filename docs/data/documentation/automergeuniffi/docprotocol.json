@@ -96,6 +96,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/actorId()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/applyEncodedChanges(changes:)",
@@ -109,6 +111,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/cursorPositionAt(obj:cursor:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/deleteInList(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/deleteInMap(obj:key:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/difference(before:after:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/encodeChangesSince(heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/encodeNewChanges()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/fork()",
@@ -127,6 +130,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/incrementInMap(obj:key:by:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/insertInList(obj:index:value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/insertObjectInList(obj:index:objType:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/joinBlock(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/length(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/lengthAt(obj:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/mapEntries(obj:)",
@@ -136,6 +140,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/mark(obj:start:end:expand:name:value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/marks(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/marksAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/marksAtPosition(obj:position:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/merge(other:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/mergeWithPatches(other:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/objectType(obj:)",
@@ -150,6 +155,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/setActor(actor:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/splice(obj:start:delete:values:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/spliceText(obj:start:delete:chars:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/splitBlock(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/text(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/textAt(obj:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/updateText(obj:chars:)",
@@ -1032,6 +1038,79 @@
   "title" : "deleteInMap(obj:key:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docprotocol\/deleteinmap(obj:key:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/difference(before:after:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "difference"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "before"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi10ChangeHasha",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "after"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi10ChangeHasha",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi5PatchV",
+      "text" : "Patch"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/difference(before:after:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "difference(before:after:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/docprotocol\/difference(before:after:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/encodeChangesSince(heads:)": {
   "abstract" : [
@@ -2391,6 +2470,74 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docprotocol\/insertobjectinlist(obj:index:objtype:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/joinBlock(obj:index:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "joinBlock"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi5ObjIda",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/joinBlock(obj:index:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "joinBlock(obj:index:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/docprotocol\/joinblock(obj:index:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/length(obj:)": {
   "abstract" : [
 
@@ -3066,6 +3213,104 @@
   "title" : "marksAt(obj:heads:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docprotocol\/marksat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/marksAtPosition(obj:position:heads:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAtPosition"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi5ObjIda",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi10ChangeHasha",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : "]) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/marksAtPosition(obj:position:heads:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "marksAtPosition(obj:position:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/docprotocol\/marksatposition(obj:position:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/merge(other:)": {
   "abstract" : [
@@ -4094,6 +4339,83 @@
   "title" : "spliceText(obj:start:delete:chars:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docprotocol\/splicetext(obj:start:delete:chars:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/splitBlock(obj:index:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "splitBlock"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi5ObjIda",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt32V",
+      "text" : "UInt32"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi5ObjIda",
+      "text" : "ObjId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/splitBlock(obj:index:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "splitBlock(obj:index:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/docprotocol\/splitblock(obj:index:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/text(obj:)": {
   "abstract" : [

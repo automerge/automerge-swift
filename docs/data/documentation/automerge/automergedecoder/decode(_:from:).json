@@ -216,53 +216,38 @@
       "kind" : "declarations"
     },
     {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "_ The type of the value to decode from the Automerge document.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "_"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The path to the schema location within the Automerge document to attempt to decode into the type you",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "provide.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "path"
-        }
-      ]
-    },
-    {
       "content" : [
         {
           "anchor" : "discussion",
           "level" : 2,
           "text" : "Discussion",
           "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "path: The path to the schema location within the Automerge document to attempt to decode into the type you",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "provide.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
         },
         {
           "inlineContent" : [
@@ -386,6 +371,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Decoding",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder\/decode(_:)"

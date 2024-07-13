@@ -82,6 +82,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Type-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeActorId\/lift(_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeActorId\/lower(_:)",

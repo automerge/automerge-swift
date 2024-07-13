@@ -150,6 +150,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Creating-an-AnyCodingKey",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AnyCodingKey\/init(_:)-lfcr",

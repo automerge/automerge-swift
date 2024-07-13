@@ -121,6 +121,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Automerge-Values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value\/Object(_:_:)"

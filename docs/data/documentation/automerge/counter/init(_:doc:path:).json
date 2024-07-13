@@ -191,6 +191,20 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "An initial string value for the text reference.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "initialValue"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "The Automerge document associated with this reference.",
                   "type" : "text"
                 }
@@ -221,20 +235,6 @@
             }
           ],
           "name" : "path"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An initial string value for the text reference.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "initialValue"
         }
       ]
     },

@@ -125,6 +125,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-a-Decoder",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder\/doc"

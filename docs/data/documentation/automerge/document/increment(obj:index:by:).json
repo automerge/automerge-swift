@@ -249,6 +249,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Updating-counters",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/increment(obj:key:by:)"

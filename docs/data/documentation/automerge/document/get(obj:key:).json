@@ -322,6 +322,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-maps",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAll(obj:key:)",

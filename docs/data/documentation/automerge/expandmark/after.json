@@ -83,6 +83,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Mark-Expansion-Configurations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/before",

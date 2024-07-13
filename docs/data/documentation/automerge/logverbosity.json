@@ -183,6 +183,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-and-Writing-Codable-Types",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
@@ -196,6 +197,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Log-levels",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/errorOnly",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/debug",
@@ -204,18 +206,24 @@
       "title" : "Log levels"
     },
     {
+      "anchor" : "Operators",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/_(_:_:)-5qdhi"
       ],
       "title" : "Operators"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/init(rawValue:)"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canDebug()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/canTrace()"
@@ -223,6 +231,7 @@
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/Comparable-Implementations",
@@ -351,7 +360,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],

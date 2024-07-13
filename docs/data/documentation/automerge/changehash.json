@@ -101,6 +101,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
@@ -117,12 +118,14 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Inspecting-a-ChangeHash",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash\/debugDescription"
       ],
       "title" : "Inspecting a ChangeHash"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash\/Equatable-Implementations"

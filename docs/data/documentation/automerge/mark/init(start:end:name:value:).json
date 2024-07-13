@@ -30,7 +30,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:9Automerge4MarkV5start3end4name5valueACs6UInt64V_AISSAA5ValueOtcfc",
+    "externalID" : "s:9Automerge4MarkV5start3end4name5valueACs6UInt64V_AISSAA11ScalarValueOtcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -101,8 +101,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:9Automerge5ValueO",
-        "text" : "Value"
+        "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+        "text" : "ScalarValue"
       },
       {
         "kind" : "text",
@@ -198,10 +198,10 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:9Automerge5ValueO",
-              "text" : "Value"
+              "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+              "text" : "ScalarValue"
             },
             {
               "kind" : "text",
@@ -575,8 +575,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
+      "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+      "text" : "ScalarValue"
     },
     {
       "kind" : "text",
@@ -658,10 +658,10 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/patchaction"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Value": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue": {
   "abstract" : [
     {
-      "text" : "A type that represents a value or object managed by Automerge.",
+      "text" : "A type that represents a primitive Automerge value.",
       "type" : "text"
     }
   ],
@@ -676,21 +676,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "Value"
+      "text" : "ScalarValue"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValue",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "Value"
+      "text" : "ScalarValue"
     }
   ],
   "role" : "symbol",
-  "title" : "Value",
+  "title" : "ScalarValue",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/value"
+  "url" : "\/documentation\/automerge\/scalarvalue"
 }
 }
 }

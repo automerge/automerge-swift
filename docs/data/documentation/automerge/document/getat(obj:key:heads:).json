@@ -406,6 +406,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-historical-map-values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAllAt(obj:key:heads:)",

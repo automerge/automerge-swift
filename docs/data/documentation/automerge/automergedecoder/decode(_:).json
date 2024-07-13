@@ -174,23 +174,33 @@
       "kind" : "declarations"
     },
     {
-      "kind" : "parameters",
-      "parameters" : [
+      "content" : [
         {
-          "content" : [
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "items" : [
             {
-              "inlineContent" : [
+              "content" : [
                 {
-                  "text" : "_ The type of the value to decode from the Automerge document.",
-                  "type" : "text"
+                  "inlineContent" : [
+                    {
+                      "text" : "Parameter : The type of the value to decode from the Automerge document.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
                 }
-              ],
-              "type" : "paragraph"
+              ]
             }
           ],
-          "name" : "_"
+          "type" : "unorderedList"
         }
-      ]
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -203,6 +213,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Decoding",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeDecoder\/decode(_:from:)"

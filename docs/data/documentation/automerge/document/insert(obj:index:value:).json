@@ -250,6 +250,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Updating-lists",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/insertObject(obj:index:ty:)",

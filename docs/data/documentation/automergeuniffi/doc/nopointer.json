@@ -89,6 +89,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer\/init()"
       ],

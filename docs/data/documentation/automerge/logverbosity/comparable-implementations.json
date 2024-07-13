@@ -42,6 +42,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Operators",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity\/...(_:)-1o73a",
@@ -75,7 +76,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],

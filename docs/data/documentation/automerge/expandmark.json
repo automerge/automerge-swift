@@ -179,10 +179,12 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Collaborating-with-Text",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark"
       ],
       "title" : "Collaborating with Text"
@@ -190,6 +192,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Mark-Expansion-Configurations",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/before",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/after",
@@ -199,6 +202,7 @@
       "title" : "Mark Expansion Configurations"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark\/Equatable-Implementations"
@@ -510,6 +514,40 @@
   "title" : "Mark",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/mark"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",

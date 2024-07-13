@@ -312,6 +312,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Updating-maps",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/putObject(obj:key:ty:)",

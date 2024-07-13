@@ -120,6 +120,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Property-types",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Prop\/Index(_:)"

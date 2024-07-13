@@ -162,10 +162,12 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Collaborating-with-Text",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark"
       ],
       "title" : "Collaborating with Text"
@@ -173,6 +175,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Inspecting-a-Mark",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/name",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/start",
@@ -182,12 +185,14 @@
       "title" : "Inspecting a Mark"
     },
     {
+      "anchor" : "Creating-a-Mark",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/init(start:end:name:value:)"
       ],
       "title" : "Creating a Mark"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/Equatable-Implementations"
@@ -502,8 +507,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
+      "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+      "text" : "ScalarValue"
     },
     {
       "kind" : "text",
@@ -617,8 +622,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ValueO",
-      "text" : "Value"
+      "preciseIdentifier" : "s:9Automerge11ScalarValueO",
+      "text" : "ScalarValue"
     }
   ],
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark\/value",
@@ -695,6 +700,40 @@
   "title" : "PatchAction",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/patchaction"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValue": {
   "abstract" : [

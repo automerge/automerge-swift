@@ -371,6 +371,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-historical-list-values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAt(obj:index:heads:)",

@@ -1,0 +1,1323 @@
+{
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position and point in time.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge8DocumentC7marksAt3obj8position5headsSayAA4MarkVGAA5ObjIdV_AA8PositionOShyAA10ChangeHashVGtKF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "marksAt"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "obj"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:9Automerge5ObjIdV",
+        "text" : "ObjId"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "position"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:9Automerge8PositionO",
+        "text" : "Position"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "heads"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sh",
+        "text" : "Set"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+        "text" : "ChangeHash"
+      },
+      {
+        "kind" : "text",
+        "text" : ">) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:9Automerge4MarkV",
+        "text" : "Mark"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "marksAt(obj:position:heads:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "marksAt"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "obj"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:9Automerge5ObjIdV",
+              "text" : "ObjId"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "position"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:9Automerge8PositionO",
+              "text" : "Position"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "heads"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sh",
+              "text" : "Set"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+              "text" : "ChangeHash"
+            },
+            {
+              "kind" : "text",
+              "text" : ">) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> ["
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:9Automerge4MarkV",
+              "text" : "Mark"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The identifier of the text object, represented by an ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "obj"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The position within the text, represented by a ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " enum which can be a ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " or an",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "UInt64",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " as a fixed position.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "position"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A set of ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ChangeHash",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " values that represents a point in time in the document’s history.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "heads"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An array of ",
+              "type" : "text"
+            },
+            {
+              "code" : "Mark",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " objects for the text object at the specified position.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This method allows you to get the marks present at a specific position in a text object.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Marks can represent various formatting or annotations applied to the text.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Example-Usage",
+          "level" : 1,
+          "text" : "Example Usage",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "let doc = Document()",
+            "let textId = try doc.putObject(obj: ObjId.ROOT, key: \"text\", ty: .Text)",
+            "",
+            "let cursor = try doc.cursor(obj: textId, position: 0)",
+            "let marks = try doc.marksAt(obj: textId, position: .cursor(cursor), heads: doc.heads())"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Recommendation",
+          "level" : 2,
+          "text" : "Recommendation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use this method to query the marks applied to a text object at a specific position.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "This can be useful for retrieving the list of ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " related to a character without",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "traversing the full document.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "When-to-Use-Cursor-vs-Index",
+          "level" : 2,
+          "text" : "When to Use Cursor vs. Index",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "While you can specify the position either with a ",
+              "type" : "text"
+            },
+            {
+              "code" : "Cursor",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " or an ",
+              "type" : "text"
+            },
+            {
+              "code" : "Index",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", there are important distinctions:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "Cursor",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "strong"
+                    },
+                    {
+                      "text" : ": Use a ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "Cursor",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " when you need to track a position that might change over time due to edits in the",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "text object. A ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "Cursor",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " provides a way to maintain a reference to a logical position within the text even if the",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "text content changes, making it more robust in collaborative or frequently edited documents.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "Index",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "strong"
+                    },
+                    {
+                      "text" : ": Use an ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "Index",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " when you have a fixed position and you are sure that the text content will not",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "change, or changes are irrelevant to your current operation. An index is a straightforward approach for static",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "text content.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "See-Also",
+          "level" : 1,
+          "text" : "See Also",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:heads:)",
+              "isActive" : true,
+              "type" : "reference"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "anchor" : "Reading-historical-text-values",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/lengthAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:heads:)"
+      ],
+      "title" : "Reading historical text values"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/document\/marksat(obj:position:heads:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ChangeHash": {
+  "abstract" : [
+    {
+      "text" : "An opaque hash that represents a change within an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ChangeHash"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ChangeHash"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ChangeHash",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/changehash"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Cursor": {
+  "abstract" : [
+    {
+      "text" : "A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "maintain its relative position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Cursor"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Cursor"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Cursor",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/cursor"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document": {
+  "abstract" : [
+    {
+      "text" : "An Automerge document that provides an interface to the document-structured data it contains.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Document"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Document"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Document",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/lengthAt(obj:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Returns the historical length of the array, dictionary, or text object and point in time you specify.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "lengthAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/lengthAt(obj:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "lengthAt(obj:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/lengthat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Get the historical list of marks for a text object and point in time you specify.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position and point in time.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/textAt(obj:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Get the historical value of the text object and point in time you specify.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "textAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textAt(obj:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "textAt(obj:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/textat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Mark": {
+  "abstract" : [
+    {
+      "text" : "A type that represents a marked range of text.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Mark"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Mark"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Mark",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/mark"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ObjId": {
+  "abstract" : [
+    {
+      "text" : "The unique internal identifier for an object stored in an Automerge document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ObjId"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ObjId"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ObjId",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/objid"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
+}
+}
+}

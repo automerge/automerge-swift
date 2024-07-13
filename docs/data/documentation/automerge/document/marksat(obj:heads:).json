@@ -285,10 +285,12 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Reading-historical-text-values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textAt(obj:heads:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/lengthAt(obj:heads:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/lengthAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)"
       ],
       "title" : "Reading historical text values"
     }
@@ -560,6 +562,115 @@
   "title" : "marksAt(obj:heads:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/marksat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position and point in time.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/textAt(obj:heads:)": {
   "abstract" : [

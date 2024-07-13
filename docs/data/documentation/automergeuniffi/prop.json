@@ -75,6 +75,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/SH"
       ],
@@ -93,6 +94,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Prop\/index(value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Prop\/key(value:)"
@@ -100,6 +103,7 @@
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Prop\/Equatable-Implementations"
@@ -275,6 +279,11 @@
   "title" : "Prop.key(value:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/prop\/key(value:)"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
 }
 }
 }

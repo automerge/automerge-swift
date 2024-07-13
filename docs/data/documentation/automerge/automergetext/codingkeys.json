@@ -99,12 +99,16 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/value"
       ],
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/init(intValue:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/init(rawValue:)",
@@ -113,6 +117,7 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/CodingKey-Implementations",

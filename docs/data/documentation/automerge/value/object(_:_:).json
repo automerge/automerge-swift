@@ -140,6 +140,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Automerge-Values",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value\/Scalar(_:)"

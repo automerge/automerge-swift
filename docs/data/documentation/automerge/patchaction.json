@@ -102,6 +102,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
@@ -118,6 +119,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Types-of-Patches",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Conflict(_:_:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/DeleteMap(_:_:)",
@@ -131,6 +133,7 @@
       "title" : "Types of Patches"
     },
     {
+      "anchor" : "Supporting-Types",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Prop",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Value",
@@ -140,6 +143,7 @@
       "title" : "Supporting Types"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PatchAction\/Equatable-Implementations"

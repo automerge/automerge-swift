@@ -33,6 +33,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/hashValue"
@@ -40,6 +41,7 @@
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/CodingKeys\/hash(into:)"

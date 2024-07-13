@@ -228,6 +228,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/actor",

@@ -121,6 +121,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-an-AutomergeText-instance",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/isBound"

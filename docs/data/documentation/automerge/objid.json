@@ -145,6 +145,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/SH",
@@ -165,6 +166,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Representing-Objects-and-Values-in-a-Document",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
@@ -178,12 +180,14 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Built-in-Object-Ids",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId\/ROOT"
       ],
       "title" : "Built-in Object Ids"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjId\/CustomDebugStringConvertible-Implementations",
@@ -722,6 +726,11 @@
 "doc://com.github.automerge.automerge-swift/s28CustomDebugStringConvertibleP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s28CustomDebugStringConvertibleP",
   "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {

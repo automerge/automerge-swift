@@ -149,6 +149,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Encoding-and-Decoding-AutomergeText",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText\/init(from:)"

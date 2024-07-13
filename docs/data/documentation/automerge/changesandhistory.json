@@ -397,6 +397,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",

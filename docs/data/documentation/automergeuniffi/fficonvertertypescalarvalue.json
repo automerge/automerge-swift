@@ -82,6 +82,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Type-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeScalarValue\/read(from:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/FfiConverterTypeScalarValue\/write(_:into:)"

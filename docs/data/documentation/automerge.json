@@ -421,6 +421,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Essentials",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/FiveMinuteQuickstart",
@@ -429,6 +430,7 @@
       "title" : "Essentials"
     },
     {
+      "anchor" : "Reading-and-Writing-Codable-Types",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/MappingData",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeEncoder",
@@ -440,6 +442,7 @@
       "title" : "Reading and Writing Codable Types"
     },
     {
+      "anchor" : "Representing-Objects-and-Values-in-a-Document",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ModelingData",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ObjType",
@@ -451,21 +454,25 @@
       "title" : "Representing Objects and Values in a Document"
     },
     {
+      "anchor" : "Collaborating-with-Text",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/AutomergeText",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Cursor",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Mark",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ExpandMark"
       ],
       "title" : "Collaborating with Text"
     },
     {
+      "anchor" : "Collaborating-with-Counters",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Counter"
       ],
       "title" : "Collaborating with Counters"
     },
     {
+      "anchor" : "Synchronizing-Documents",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Sync",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/SyncState"
@@ -473,6 +480,7 @@
       "title" : "Synchronizing Documents"
     },
     {
+      "anchor" : "Inspecting-Document-History-and-Changes",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangesAndHistory",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ChangeHash",
@@ -487,12 +495,14 @@
       "title" : "Inspecting Document History and Changes"
     },
     {
+      "anchor" : "Converting-Scalar-Values-to-Local-Types",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueRepresentable"
       ],
       "title" : "Converting Scalar Values to Local Types"
     },
     {
+      "anchor" : "Codable-Errors",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/CodingKeyLookupError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/PathParseError",
@@ -501,6 +511,7 @@
       "title" : "Codable Errors"
     },
     {
+      "anchor" : "Document-Errors",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DecodeSyncStateError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/DocError",
@@ -510,7 +521,9 @@
       "title" : "Document Errors"
     },
     {
+      "anchor" : "Type-Conversion-Errors",
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BooleanScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BytesScalarConversionError",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/IntScalarConversionError",
@@ -684,7 +697,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],
@@ -1629,6 +1642,40 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/pathparseerror"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Prop": {
   "abstract" : [
     {
@@ -1730,6 +1777,40 @@
   "title" : "ScalarValue",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/scalarvalue"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValueConversionError": {
+  "abstract" : [
+    {
+      "text" : "A failure to convert an Automerge scalar value to or from an Automerge scalar value.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueConversionError"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ScalarValueConversionError",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ScalarValueConversionError"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ScalarValueConversionError",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/scalarvalueconversionerror"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ScalarValueRepresentable": {
   "abstract" : [

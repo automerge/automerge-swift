@@ -1,0 +1,205 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position\/index(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge8PositionO5indexyACs6UInt64VcACmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "index"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s6UInt64V",
+        "text" : "UInt64"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "Position.index(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "index"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s6UInt64V",
+              "text" : "UInt64"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/position\/index(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position": {
+  "abstract" : [
+    {
+      "text" : "An umbrella type that represents a location within an array or text object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Position"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Position",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Position/index(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Position\/index(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "Position.index(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/position\/index(_:)"
+}
+}
+}

@@ -199,6 +199,7 @@
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/7Combine16ObservableObjectP",
         "doc:\/\/com.github.automerge.automerge-swift\/16CoreTransferable0B0P",
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP"
       ],
       "kind" : "relationships",
@@ -216,6 +217,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Essentials",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/FiveMinuteQuickstart",
@@ -226,6 +228,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Creating-or-loading-a-document",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(logLevel:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(_:logLevel:)",
@@ -234,6 +237,7 @@
       "title" : "Creating or loading a document"
     },
     {
+      "anchor" : "Inspecting-Documents",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/actor",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/ActorId",
@@ -244,6 +248,7 @@
       "title" : "Inspecting Documents"
     },
     {
+      "anchor" : "Reading-maps",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/get(obj:key:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAll(obj:key:)",
@@ -254,6 +259,7 @@
       "title" : "Reading maps"
     },
     {
+      "anchor" : "Updating-maps",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/put(obj:key:value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/putObject(obj:key:ty:)",
@@ -262,6 +268,7 @@
       "title" : "Updating maps"
     },
     {
+      "anchor" : "Reading-lists",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/get(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAll(obj:index:)",
@@ -271,6 +278,7 @@
       "title" : "Reading lists"
     },
     {
+      "anchor" : "Updating-lists",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/insert(obj:index:value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/insertObject(obj:index:ty:)",
@@ -282,14 +290,17 @@
       "title" : "Updating lists"
     },
     {
+      "anchor" : "Reading-Text",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/text(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/length(obj:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marks(obj:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marks(obj:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)"
       ],
       "title" : "Reading Text"
     },
     {
+      "anchor" : "Updating-Text-values",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/spliceText(obj:start:delete:value:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/updateText(obj:value:)",
@@ -298,6 +309,7 @@
       "title" : "Updating Text values"
     },
     {
+      "anchor" : "Setting-and-Reading-cursors",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
@@ -307,6 +319,7 @@
       "title" : "Setting and Reading cursors"
     },
     {
+      "anchor" : "Updating-counters",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/increment(obj:key:by:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/increment(obj:index:by:)"
@@ -314,14 +327,19 @@
       "title" : "Updating counters"
     },
     {
+      "anchor" : "Reading-a-documents-history",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/heads()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getHistory()",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/change(hash:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/change(hash:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(from:to:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(since:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(to:)"
       ],
       "title" : "Reading a document’s history"
     },
     {
+      "anchor" : "Reading-historical-map-values",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAt(obj:key:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAllAt(obj:key:heads:)",
@@ -333,6 +351,7 @@
       "title" : "Reading historical map values"
     },
     {
+      "anchor" : "Reading-historical-list-values",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAt(obj:index:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/getAllAt(obj:index:heads:)",
@@ -342,14 +361,17 @@
       "title" : "Reading historical list values"
     },
     {
+      "anchor" : "Reading-historical-text-values",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textAt(obj:heads:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/lengthAt(obj:heads:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:heads:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)"
       ],
       "title" : "Reading historical text values"
     },
     {
+      "anchor" : "Saving-forking-and-merging-documents",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/save()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/commitWith(message:timestamp:)",
@@ -365,6 +387,7 @@
       "title" : "Saving, forking, and merging documents"
     },
     {
+      "anchor" : "Syncing-documents",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/generateSyncMessage(state:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/receiveSyncMessage(state:message:)",
@@ -373,18 +396,22 @@
       "title" : "Syncing documents"
     },
     {
+      "anchor" : "Observing-Documents",
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectWillChange"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectWillChange",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectDidChange"
       ],
       "title" : "Observing Documents"
     },
     {
+      "anchor" : "Transfering-Documents",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/transferRepresentation"
       ],
       "title" : "Transfering Documents"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/ObservableObject-Implementations",
@@ -516,7 +543,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/AutomergeEncoder": {
   "abstract" : [
     {
-      "text" : "An encoder that stores types that conform to the codable protocol into an Automerge document.",
+      "text" : "An encoder that stores types that conform to the Codable protocol into an Automerge document.",
       "type" : "text"
     }
   ],
@@ -1390,6 +1417,259 @@
   "title" : "delete(obj:key:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/delete(obj:key:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/difference(from:to:)": {
+  "abstract" : [
+    {
+      "text" : "Generates patches between two points in the document history.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "difference"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "to"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5PatchV",
+      "text" : "Patch"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(from:to:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "difference(from:to:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/difference(from:to:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/difference(since:)": {
+  "abstract" : [
+    {
+      "text" : "Generates patches ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "since",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " a given point in the document history.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "difference"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "since"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5PatchV",
+      "text" : "Patch"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(since:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "difference(since:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/difference(since:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/difference(to:)": {
+  "abstract" : [
+    {
+      "text" : "Generates patches ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "to",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " a given point in the document history.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "difference"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "to"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5PatchV",
+      "text" : "Patch"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/difference(to:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "difference(to:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/difference(to:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/encodeChangesSince(heads:)": {
   "abstract" : [
@@ -3834,6 +4114,198 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/marksat(obj:heads:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/marksAt(obj:position:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the list of marks within a text object at the specified position and point in time.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "marksAt"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge8PositionO",
+      "text" : "Position"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge4MarkV",
+      "text" : "Mark"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/marksAt(obj:position:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "marksAt(obj:position:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/marksat(obj:position:heads:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/merge(other:)": {
   "abstract" : [
     {
@@ -3952,6 +4424,65 @@
   "title" : "mergeWithPatches(other:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/mergewithpatches(other:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectDidChange": {
+  "abstract" : [
+    {
+      "text" : "A publisher that sends a signal after the document is updated.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "objectDidChange"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:7Combine18PassthroughSubjectC",
+      "text" : "PassthroughSubject"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5NeverO",
+      "text" : "Never"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/objectDidChange",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "objectDidChange",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/objectdidchange"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectType(obj:)": {
   "abstract" : [
@@ -5403,6 +5934,11 @@
   "title" : "Using the dynamic schema and core data model",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/modelingdata"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
 },
 "doc://com.github.automerge.automerge-swift/s8SendableP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8SendableP",

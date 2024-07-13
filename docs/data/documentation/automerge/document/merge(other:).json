@@ -131,7 +131,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "another ",
+                  "text" : "Another ",
                   "type" : "text"
                 },
                 {
@@ -202,6 +202,7 @@
   ],
   "seeAlsoSections" : [
     {
+      "anchor" : "Saving-forking-and-merging-documents",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/save()",
