@@ -67,7 +67,7 @@ extension AnyCodingKey: CodingKey {
     ///
     /// For a non-failable initializer for ``AnyCodingKey``, use ``AnyCodingKey/init(_:)-5azuh``.
     ///
-    /// - Parameter stringVal: The key for a keyed container.
+    /// - Parameter stringValue: The key for a keyed container.
     public init?(stringValue: String) {
         pathElement = Automerge.Prop.Key(stringValue)
     }

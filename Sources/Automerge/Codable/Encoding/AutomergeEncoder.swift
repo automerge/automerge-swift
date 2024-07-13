@@ -1,4 +1,4 @@
-/// An encoder that stores types that conform to the codable protocol into an Automerge document.
+/// An encoder that stores types that conform to the Codable protocol into an Automerge document.
 public struct AutomergeEncoder {
     /// The user info dictionary for the encoder.
     public var userInfo: [CodingUserInfoKey: Any] = [:]

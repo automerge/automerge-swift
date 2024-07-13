@@ -27,9 +27,13 @@ public final class Document: @unchecked Sendable {
         try work()
     }
     #endif
-    
+
     #if canImport(Combine)
-    public let objectDidChange: PassthroughSubject<(), Never> = .init()
+    /// A publisher that sends a signal after the document is updated.
+    ///
+    /// You can use the signal from this publisher to read the and record ``Document/heads()``
+    /// to get the state indicator of the document after the change is complete.
+    public let objectDidChange: PassthroughSubject<Void, Never> = .init()
     #endif
 
     var reportingLogLevel: LogVerbosity
@@ -129,7 +133,7 @@ public final class Document: @unchecked Sendable {
     ///   - ty: The type of object to add to the dictionary.
     /// - Returns: The object Id that references the object added.
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
@@ -149,7 +153,7 @@ public final class Document: @unchecked Sendable {
     /// If the index position doesn't yet exist within the array, this method will throw an error.
     /// To add an object that extends the array, use the method ``insertObject(obj:index:ty:)``.
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
@@ -186,7 +190,7 @@ public final class Document: @unchecked Sendable {
     /// If you want to change an existing index, use the ``putObject(obj:index:ty:)`` to put in an object or
     /// ``put(obj:index:value:)`` to put in a value.
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
@@ -558,7 +562,7 @@ public final class Document: @unchecked Sendable {
     ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
     /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
@@ -573,7 +577,7 @@ public final class Document: @unchecked Sendable {
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
@@ -641,7 +645,7 @@ public final class Document: @unchecked Sendable {
     /// deleting.
     ///   - delete: The number of unicode scalars to delete from the `start` index.
     ///   If negative, the function deletes characters preceding `start` index, rather than following it.
-    ///   - values: The characters to insert after the `start` index.
+    ///   - value: The characters to insert after the `start` index.
     ///
     /// With `spliceText`, the `start` and `delete` parameters represent integer distances of unicode scalars of the
     /// Swift strings, not the counts of Characters (or grapheme clusters).
@@ -797,7 +801,8 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object, represented by an ``ObjId``.
-    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an `UInt64` as a fixed position.
+    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an
+    /// `UInt64` as a fixed position.
     ///   - heads: A set of `ChangeHash` values that represents a point in time in the document's history.
     /// - Returns: An array of `Mark` objects for the text object at the specified position.
     ///
@@ -811,16 +816,22 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// ## Recommendation
+    ///
     /// Use this method to query the marks applied to a text object at a specific position.
-    /// This can be useful for retrieving ``Marks`` related to a character without traversing the full document.
+    /// This can be useful for retrieving the list of ``Automerge/Mark`` related to a character without
+    /// traversing the full document.
     ///
     /// ## When to Use Cursor vs. Index
     ///
     /// While you can specify the position either with a `Cursor` or an `Index`, there are important distinctions:
     ///
-    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the text content changes, making it more robust in collaborative or frequently edited documents.
+    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the
+    /// text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the
+    /// text content changes, making it more robust in collaborative or frequently edited documents.
     ///
-    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not change, or changes are irrelevant to your current operation. An index is a straightforward approach for static text content.
+    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not
+    /// change, or changes are irrelevant to your current operation. An index is a straightforward approach for static
+    /// text content.
     ///
     /// # See Also
     /// ``marksAt(obj:position:)``
@@ -845,7 +856,8 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object, represented by an ``ObjId``.
-    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an `UInt64` as a fixed position.
+    ///   - position: The position within the text, represented by a ``Position`` enum which can be a ``Cursor`` or an
+    /// `UInt64` as a fixed position.
     /// - Returns: An array of `Mark` objects for the text object at the specified position.
     /// - Note: This method retrieves marks from the latest version of the document.
     /// If you need to specify a point in the document's history, refer to ``marksAt(obj:position:heads:)``.
@@ -861,15 +873,20 @@ public final class Document: @unchecked Sendable {
     ///
     /// ## Recommendation
     /// Use this method to query the marks applied to a text object at a specific position.
-    /// This can be useful for retrieving ``Marks`` related to a character without traversing the full document.
+    /// This can be useful for retrieving the list of ``Automerge/Mark`` related to a character without
+    /// traversing the full document.
     ///
     /// ## When to Use Cursor vs. Index
     ///
     /// While you can specify the position either with a `Cursor` or an `Index`, there are important distinctions:
     ///
-    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the text content changes, making it more robust in collaborative or frequently edited documents.
+    /// - **Cursor**: Use a `Cursor` when you need to track a position that might change over time due to edits in the
+    /// text object. A `Cursor` provides a way to maintain a reference to a logical position within the text even if the
+    /// text content changes, making it more robust in collaborative or frequently edited documents.
     ///
-    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not change, or changes are irrelevant to your current operation. An index is a straightforward approach for static text content.
+    /// - **Index**: Use an `Index` when you have a fixed position and you are sure that the text content will not
+    /// change, or changes are irrelevant to your current operation. An index is a straightforward approach for static
+    /// text content.
     ///
     /// # See Also
     /// ``marksAt(obj:position:heads:)``
@@ -901,7 +918,7 @@ public final class Document: @unchecked Sendable {
     /// The `save` function also compacts the memory footprint of an Automerge document and increments the result of
     /// ``heads()``, which indicates a specific point in time for the history of the document.
     public func save() -> Data {
-        return lock {
+        lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             return self.doc.wrapErrors {
@@ -956,7 +973,7 @@ public final class Document: @unchecked Sendable {
     ///   - message: The message from the peer to update this document and sync state.
     /// - Returns: An array of ``Patch`` that represent the changes applied from the peer.
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrors {
@@ -1007,7 +1024,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameter other: another ``Document``
     /// - Returns: A list of ``Patch`` the represent the changes applied when merging the other document.
     public func mergeWithPatches(other: Document) throws -> [Patch] {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrorsWithOther(other: other.doc) {
@@ -1078,8 +1095,8 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// - Parameters:
-    ///   - from: The set of heads at beginning point in the documents history.
-    ///   - to: The set of heads at ending point in the documents history.
+    ///   - before: The set of heads at beginning point in the documents history.
+    ///   - after: The set of heads at ending point in the documents history.
     /// - Note: `from` and `to` do not have to be chronological. Document state can move backward.
     /// - Returns: The difference needed to produce a document at `to` when it is set at `from` in history.
     public func difference(from before: Set<ChangeHash>, to after: Set<ChangeHash>) -> [Patch] {
@@ -1100,7 +1117,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// - Parameters:
-    ///     - since: The set of heads at the point in the documents history to compare to.
+    ///     - lhs: The set of heads at the point in the documents history to compare to.
     /// - Returns: The difference needed to produce current document given an arbitrary
     /// point in the history.
     public func difference(since lhs: Set<ChangeHash>) -> [Patch] {
@@ -1116,7 +1133,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// - Parameters:
-    ///     - to: The set of heads at ending point in the documents history.
+    ///     - rhs: The set of heads at ending point in the documents history.
     /// - Returns: The difference needed to move current document to a previous point
     /// in the history.
     public func difference(to rhs: Set<ChangeHash>) -> [Patch] {
@@ -1186,7 +1203,7 @@ public final class Document: @unchecked Sendable {
     /// ``encodeNewChanges()``, ``encodeChangesSince(heads:)`` or any
     /// concatenation of those.
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
-        return try lock {
+        try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrors {
@@ -1253,6 +1270,7 @@ extension Document: ObservableObject {
 //        #endif
         objectWillChange.send()
     }
+
     fileprivate func sendObjectDidChange() {
         objectDidChange.send()
     }

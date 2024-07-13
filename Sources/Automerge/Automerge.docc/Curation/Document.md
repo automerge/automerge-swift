@@ -125,6 +125,7 @@
 ### Observing Documents
 
 - ``objectWillChange``
+- ``objectDidChange``
 
 ### Transfering Documents
 

@@ -17,6 +17,9 @@ var myColors = ColorList(colors: ["blue", "red"])
 try encoder.encode(myColors)
 ```
 
+To support cross-platform usage, when provided a optional type to encode, the encoder writes a
+``ScalarValue/Null`` into the Document as opposed to not creating the relevant entry in a map or list.
+
 ## Topics
 
 ### Creating an Encoder

@@ -33,9 +33,9 @@ public enum Position {
 extension Position {
     func toFfi() -> FfiPosition {
         switch self {
-        case .cursor(let cursor):
+        case let .cursor(cursor):
             return .cursor(position: cursor.bytes)
-        case .index(let index):
+        case let .index(index):
             return .index(position: index)
         }
     }

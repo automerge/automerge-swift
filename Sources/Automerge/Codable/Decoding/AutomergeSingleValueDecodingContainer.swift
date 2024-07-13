@@ -184,7 +184,6 @@ struct AutomergeSingleValueDecodingContainer: SingleValueDecodingContainer {
                     debugDescription: "Expected to decode \(T.self) from \(value), but it wasn't `.text`."
                 ))
             }
-
         default:
             return try T(from: impl)
         }
