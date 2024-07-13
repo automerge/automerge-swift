@@ -27,6 +27,10 @@ public final class Document: @unchecked Sendable {
         try work()
     }
     #endif
+    
+    #if canImport(Combine)
+    public let objectDidChange: PassthroughSubject<(), Never> = .init()
+    #endif
 
     var reportingLogLevel: LogVerbosity
 
@@ -86,6 +90,7 @@ public final class Document: @unchecked Sendable {
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
             }
@@ -109,6 +114,7 @@ public final class Document: @unchecked Sendable {
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.putInList(obj: obj.bytes, index: index, value: value.toFfi())
             }
@@ -125,6 +131,7 @@ public final class Document: @unchecked Sendable {
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
                 try ObjId(bytes: $0.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
             }
@@ -144,6 +151,7 @@ public final class Document: @unchecked Sendable {
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
                 try ObjId(bytes: $0.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
             }
@@ -159,6 +167,7 @@ public final class Document: @unchecked Sendable {
     public func insert(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
             }
@@ -179,6 +188,7 @@ public final class Document: @unchecked Sendable {
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return try self.doc.wrapErrors {
                 try ObjId(bytes: $0.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
             }
@@ -192,6 +202,7 @@ public final class Document: @unchecked Sendable {
     public func delete(obj: ObjId, key: String) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.deleteInMap(obj: obj.bytes, key: key)
             }
@@ -208,6 +219,7 @@ public final class Document: @unchecked Sendable {
     public func delete(obj: ObjId, index: UInt64) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.deleteInList(obj: obj.bytes, index: index)
             }
@@ -223,6 +235,7 @@ public final class Document: @unchecked Sendable {
     public func increment(obj: ObjId, key: String, by: Int64) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.incrementInMap(obj: obj.bytes, key: key, by: by)
             }
@@ -238,6 +251,7 @@ public final class Document: @unchecked Sendable {
     public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.incrementInList(obj: obj.bytes, index: index, by: by)
             }
@@ -546,6 +560,7 @@ public final class Document: @unchecked Sendable {
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
         }
     }
@@ -560,6 +575,7 @@ public final class Document: @unchecked Sendable {
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
                 obj: obj.bytes,
                 position: position,
@@ -608,6 +624,7 @@ public final class Document: @unchecked Sendable {
     public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.splice(
                     obj: obj.bytes, start: start, delete: delete, values: values.map { $0.toFfi() }
@@ -658,6 +675,7 @@ public final class Document: @unchecked Sendable {
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
             }
@@ -676,6 +694,7 @@ public final class Document: @unchecked Sendable {
     public func updateText(obj: ObjId, value: String) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors { doc in
                 try doc.updateText(obj: obj.bytes, chars: value)
             }
@@ -731,6 +750,7 @@ public final class Document: @unchecked Sendable {
     ) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.mark(
                     obj: obj.bytes,
@@ -867,6 +887,7 @@ public final class Document: @unchecked Sendable {
     public func commitWith(message: String? = nil, timestamp: Date = Date()) {
         lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             self.doc.wrapErrors {
                 $0.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
             }
@@ -882,6 +903,7 @@ public final class Document: @unchecked Sendable {
     public func save() -> Data {
         return lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             return self.doc.wrapErrors {
                 Data($0.save())
             }
@@ -919,6 +941,7 @@ public final class Document: @unchecked Sendable {
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.receiveSyncMessage(state: state.ffi_state, msg: Array(message))
             }
@@ -935,6 +958,7 @@ public final class Document: @unchecked Sendable {
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrors {
                 try $0.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
             }
@@ -973,6 +997,7 @@ public final class Document: @unchecked Sendable {
     public func merge(other: Document) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrorsWithOther(other: other.doc) { try $0.merge(other: $1) }
         }
     }
@@ -984,6 +1009,7 @@ public final class Document: @unchecked Sendable {
     public func mergeWithPatches(other: Document) throws -> [Patch] {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrorsWithOther(other: other.doc) {
                 try $0.mergeWithPatches(other: $1)
             }
@@ -1144,6 +1170,7 @@ public final class Document: @unchecked Sendable {
     public func applyEncodedChanges(encoded: Data) throws {
         try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             try self.doc.wrapErrors {
                 try $0.applyEncodedChanges(changes: Array(encoded))
             }
@@ -1161,6 +1188,7 @@ public final class Document: @unchecked Sendable {
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
         return try lock {
             sendObjectWillChange()
+            defer { sendObjectDidChange() }
             let patches = try self.doc.wrapErrors {
                 try $0.applyEncodedChangesWithPatches(changes: Array(encoded))
             }
@@ -1225,9 +1253,13 @@ extension Document: ObservableObject {
 //        #endif
         objectWillChange.send()
     }
+    fileprivate func sendObjectDidChange() {
+        objectDidChange.send()
+    }
 }
 #else
 fileprivate extension Document {
     func sendObjectWillChange() {}
+    func sendObjectDidChange() {}
 }
 #endif
