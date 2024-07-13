@@ -45,7 +45,7 @@ class ObservableDocumentTestCase: XCTestCase {
             stashedHeads = doc.heads()
         }
         XCTAssertNotNil(willChangeHandle)
-        
+
         let didChangeHandle = doc.objectDidChange.sink {
             _ = doc.heads()
         }

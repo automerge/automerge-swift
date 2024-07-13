@@ -224,7 +224,7 @@ public final class AutomergeText: Codable, @unchecked Sendable {
     /// document.
     /// - Parameters:
     ///   - doc: The Automerge document associated with this reference.
-    ///   - path: A string path that represents a `Text` container within the Automerge document.
+    ///   - id: The Automerge object ID of the text object to bind.
     public func bind(doc: Document, id: ObjId) throws {
         // this assert runs afoul of the encoder, which doesn't make sense right now, but
         // I don't want to second guess it at the moment.

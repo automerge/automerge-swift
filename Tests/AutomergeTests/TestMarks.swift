@@ -77,7 +77,7 @@ class MarksTestCase: XCTestCase {
 
         XCTAssertEqual(marks, [
             Mark(start: 2, end: 2, name: "bold", value: .Boolean(true)),
-            Mark(start: 2, end: 2, name: "italic", value: .Boolean(true))
+            Mark(start: 2, end: 2, name: "italic", value: .Boolean(true)),
         ])
     }
 
@@ -93,7 +93,7 @@ class MarksTestCase: XCTestCase {
 
         XCTAssertEqual(marks, [
             Mark(start: 2, end: 2, name: "bold", value: .Boolean(true)),
-            Mark(start: 2, end: 2, name: "italic", value: .Boolean(true))
+            Mark(start: 2, end: 2, name: "italic", value: .Boolean(true)),
         ])
     }
 }

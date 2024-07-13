@@ -14,7 +14,7 @@ public struct AutomergeDecoder {
     }
 
     /// Returns the type you specify, decoded from the Automerge document referenced by the decoder.
-    /// - Parameter _: _ The type of the value to decode from the Automerge document.
+    /// - Parameter : The type of the value to decode from the Automerge document.
     @inlinable public func decode<T: Decodable>(_: T.Type) throws -> T {
         if T.self == AutomergeText.self {
             // Special case decoding AutomergeText - when it's the top level type being encoded,
@@ -37,8 +37,8 @@ public struct AutomergeDecoder {
 
     /// Returns the type you specify, decoded from the Automerge document referenced by the decoder.
     /// - Parameters:
-    ///   - _: _ The type of the value to decode from the Automerge document.
-    ///   - path: The path to the schema location within the Automerge document to attempt to decode into the type you
+    ///   - : The type of the value to decode from the Automerge document.
+    ///  - path: The path to the schema location within the Automerge document to attempt to decode into the type you
     /// provide.
     ///
     ///  The `path` parameter accepts any type conforming to the `CodingKey` protocol.

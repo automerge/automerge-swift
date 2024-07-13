@@ -68,6 +68,7 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 
 - ``Automerge/AutomergeText``
 - ``Automerge/Cursor``
+- ``Automerge/Position``
 - ``Automerge/Mark``
 - ``Automerge/ExpandMark``
 
@@ -111,6 +112,7 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 
 ### Type Conversion Errors
 
+- ``Automerge/ScalarValueConversionError``
 - ``Automerge/BooleanScalarConversionError``
 - ``Automerge/BytesScalarConversionError``
 - ``Automerge/IntScalarConversionError``
