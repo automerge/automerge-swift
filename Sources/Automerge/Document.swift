@@ -30,10 +30,14 @@ public final class Document: @unchecked Sendable {
 
     #if canImport(Combine)
     /// A publisher that sends a signal after the document is updated.
+    private let objectDidChangeSubject: PassthroughSubject<(), Never> = .init()
     ///
     /// You can use the signal from this publisher to read the and record ``Document/heads()``
     /// to get the state indicator of the document after the change is complete.
     public let objectDidChange: PassthroughSubject<Void, Never> = .init()
+    public lazy var objectDidChange: AnyPublisher<(), Never> = {
+        objectDidChangeSubject.eraseToAnyPublisher()
+    }()
     #endif
 
     var reportingLogLevel: LogVerbosity
@@ -1272,7 +1276,7 @@ extension Document: ObservableObject {
     }
 
     fileprivate func sendObjectDidChange() {
-        objectDidChange.send()
+        objectDidChangeSubject.send()
     }
 }
 #else
