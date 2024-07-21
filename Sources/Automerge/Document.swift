@@ -27,14 +27,27 @@ public final class Document: @unchecked Sendable {
         try work()
     }
     #endif
-
+    
     #if canImport(Combine)
-    /// A publisher that sends a signal after the document is updated.
     private let objectDidChangeSubject: PassthroughSubject<(), Never> = .init()
+
+    /// A publisher that emits after the document has changed.
     ///
-    /// You can use the signal from this publisher to read the and record ``Document/heads()``
-    /// to get the state indicator of the document after the change is complete.
-    public let objectDidChange: PassthroughSubject<Void, Never> = .init()
+    /// This publisher and ``objectWillChange()`` are always paired. Unlike that
+    /// publisher, this one fires after the document update is complete, allowing you to
+    /// read any changed values.
+    ///
+    /// An example that uses this publisher to observe granular patch changes:
+    ///
+    /// ```swift
+    /// var observedHeads = doc.heads()
+    /// doc.objectDidChange.sink {
+    ///     let changes = doc.difference(since: observedHeads)
+    ///     observedHeads = doc.heads()
+    ///     if !changes.isEmpty {
+    ///         processChanges(changes)
+    ///     }
+    /// }.store(in: &cancellables)
     public lazy var objectDidChange: AnyPublisher<(), Never> = {
         objectDidChangeSubject.eraseToAnyPublisher()
     }()
