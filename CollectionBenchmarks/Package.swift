@@ -4,9 +4,10 @@ import PackageDescription
 
 let package = Package(
     name: "AutomergeCollectionBenchmarks",
-    platforms: [.macOS(.v10_15)],
+    platforms: [.macOS(.v12)],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections-benchmark", from: "0.0.1"),
+        .package(url: "https://github.com/loro-dev/loro-swift.git", from: "0.16.2-alpha.3"),
         .package(path: "../"),
     ],
     targets: [
@@ -16,6 +17,7 @@ let package = Package(
             name: "CollectionBenchmarks",
             dependencies: [
                 .product(name: "Automerge", package: "automerge-swift"),
+                .product(name: "Loro", package: "loro-swift"),
                 .product(
                     name: "CollectionsBenchmark",
                     package: "swift-collections-benchmark"

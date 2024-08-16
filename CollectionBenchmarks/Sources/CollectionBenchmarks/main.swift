@@ -1,6 +1,7 @@
-import Automerge
 import CollectionsBenchmark
 import Foundation
+import Automerge
+import Loro
 
 // NOTE(heckj): collections-benchmark implementations can be a bit hard to understand
 // from the opaque inputs and structure of the code.
@@ -77,6 +78,23 @@ benchmark.addSimple(
 }
 
 benchmark.addSimple(
+    title: "Text - append (Loro)",
+    input: [String].self
+) { input in
+    let doc = LoroDoc()
+    let text = doc.getText(id: "text")
+
+    var stringLength = text.lenUnicode()
+    for strChar in input {
+        _ = try! text.splice(pos: stringLength, len: 0, s: strChar)
+        stringLength = text.lenUnicode()
+    }
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(doc)
+}
+
+benchmark.addSimple(
     title: "Text - append and read",
     input: [String].self
 ) { input in
@@ -89,6 +107,25 @@ benchmark.addSimple(
         stringLength = doc.length(obj: text)
     }
     let resultingString = try! doc.text(obj: text)
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(resultingString)
+}
+
+benchmark.addSimple(
+    title: "Text - append and read (Loro)",
+    input: [String].self
+) { input in
+    let doc = LoroDoc()
+    let text = doc.getText(id: "text")
+
+    var stringLength = text.lenUnicode()
+    for strChar in input {
+        _ = try! text.splice(pos: stringLength, len: 0, s: strChar)
+        stringLength = text.lenUnicode()
+    }
+    
+    let resultingString = text.toString()
     // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
     // lengths
     blackHole(resultingString)
@@ -111,6 +148,22 @@ benchmark.addSimple(
 }
 
 benchmark.addSimple(
+    title: "List - Integer append (Loro)",
+    input: [Int].self
+) { integerInput in
+    let doc = LoroDoc()
+    let numList = doc.getList(id: "list")
+
+    for intValue in integerInput {
+        let listLength = numList.len()
+        try! numList.insert(pos: listLength, v: intValue)
+    }
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(doc)
+}
+
+benchmark.addSimple(
     title: "Map - Integer append",
     input: [Int].self
 ) { integerInput in
@@ -119,6 +172,21 @@ benchmark.addSimple(
 
     for intValue in integerInput {
         try! doc.put(obj: numberMap, key: String(intValue), value: .Int(Int64(exactly: intValue)!))
+    }
+    // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
+    // lengths
+    blackHole(doc)
+}
+
+benchmark.addSimple(
+    title: "Map - Integer append (Loro)",
+    input: [Int].self
+) { integerInput in
+    let doc = LoroDoc()
+    let numberMap = doc.getMap(id: "map")
+
+    for intValue in integerInput {
+        try! numberMap.insert(key: String(intValue), v: intValue)
     }
     // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
     // lengths
