@@ -29,7 +29,7 @@ jobs:
       - name: Swift tests
         run: swift test
 
-  build-wasm32-unknown-wasi:
+  build-wasm32-wasip1-threads:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
           profile: minimal
           toolchain: 1.78.0
           default: true
-      - run: rustup target add wasm32-wasi
+      - run: rustup target add wasm32-wasip1-threads
       - uses: swiftwasm/setup-swiftwasm@v1
         with:
           swift-version: "wasm-5.9.1-RELEASE"
@@ -46,9 +46,9 @@ jobs:
       - run: scripts/ci/wasi-regen-swift.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: libuniffi_automerge-wasm32-unknown-wasi.a
-          path: ./rust/target/wasm32-wasi/release/libuniffi_automerge.a
-      - run: swift build --triple wasm32-unknown-wasi
+          name: libuniffi_automerge-wasm32-wasip1-threads.a
+          path: ./rust/target/wasm32-wasip1-threads/release/libuniffi_automerge.a
+      - run: swift build --triple wasm32-wasip1-threads
 
   rustfmt:
     runs-on: macos-latest

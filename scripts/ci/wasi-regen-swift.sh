@@ -27,8 +27,8 @@ cargo run --manifest-path "$RUST_FOLDER/Cargo.toml"  \
     --language swift \
     --out-dir "${SWIFT_FOLDER}"
 
-echo "▸ Building for wasm32-wasi"
-$cargo_build --target wasm32-wasi --locked --release
+echo "▸ Building for wasm32-wasip1-threads"
+$cargo_build --target wasm32-wasip1-threads --locked --release
 
 # copies the generated header from AutomergeUniffi/automergeFFI.h to
 # Sources/_CAutomergeUniffi/include/automergeFFI.h within the project
