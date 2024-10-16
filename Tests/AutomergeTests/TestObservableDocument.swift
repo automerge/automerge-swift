@@ -1,3 +1,4 @@
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 import Automerge
 import Combine
 import XCTest
@@ -55,3 +56,4 @@ class ObservableDocumentTestCase: XCTestCase {
         XCTAssertNotEqual(doc.heads(), stashedHeads)
     }
 }
+#endif

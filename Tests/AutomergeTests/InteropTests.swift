@@ -1,3 +1,4 @@
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 import Automerge
 import Foundation
 import XCTest
@@ -111,3 +112,4 @@ class InteropTests: XCTestCase {
         // code, emphasis, line-break, strike-through, strong, etc.
     }
 }
+#endif

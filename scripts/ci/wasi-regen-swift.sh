@@ -10,11 +10,12 @@
 set -euxo pipefail
 
 THIS_SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-RUST_FOLDER="$THIS_SCRIPT_DIR/../../rust"
+ROOT_FOLDER="$THIS_SCRIPT_DIR/../.."
+RUST_FOLDER="$ROOT_FOLDER/rust"
+SWIFT_FOLDER="$ROOT_FOLDER/AutomergeUniffi"
 
 FRAMEWORK_NAME="automergeFFI"
 
-SWIFT_FOLDER="$THIS_SCRIPT_DIR/../../AutomergeUniffi"
 cargo_build="cargo build --manifest-path ${RUST_FOLDER}/Cargo.toml"
 
 mkdir -p "${SWIFT_FOLDER}"
@@ -29,6 +30,7 @@ cargo run --manifest-path "$RUST_FOLDER/Cargo.toml"  \
 
 echo "▸ Building for wasm32-wasip1-threads"
 $cargo_build --target wasm32-wasip1-threads --locked --release
+cp "${RUST_FOLDER}/target/wasm32-wasip1-threads/release/libuniffi_automerge.a" "${ROOT_FOLDER}/libuniffi_automerge.a"
 
 # copies the generated header from AutomergeUniffi/automergeFFI.h to
 # Sources/_CAutomergeUniffi/include/automergeFFI.h within the project
