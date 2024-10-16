@@ -355,7 +355,10 @@ impl Doc {
     pub fn cursor_position(&self, obj: ObjId, cursor: Cursor) -> Result<u64, DocError> {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
-        Ok(doc.get_cursor_position(obj, &cursor.into(), None).unwrap() as u64)
+        doc
+            .get_cursor_position(obj, &cursor.into(), None)
+            .map(|cursor| cursor as u64)
+            .map_err(|error| DocError::Internal(error))
     }
 
     pub fn cursor_position_at(
@@ -370,9 +373,10 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        Ok(doc
+        doc
             .get_cursor_position(obj, &cursor.into(), Some(&heads))
-            .unwrap() as u64)
+            .map(|cursor| cursor as u64)
+            .map_err(|error| DocError::Internal(error))
     }
 
     pub fn text(&self, obj: ObjId) -> Result<String, DocError> {
