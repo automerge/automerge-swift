@@ -26,7 +26,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -39,6 +39,7 @@ jobs:
         if: steps.cache-automerge.outputs.cache-hit != 'true'
         run: ./scripts/compress-framework.sh
       - uses: actions/upload-artifact@v4
+        if: steps.cache-automerge.outputs.cache-hit != 'true'
         with:
           name: libuniffi_automerge
           path: |
@@ -58,7 +59,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
       - name: Get swift version
         run: swift --version
       - name: Swift tests
@@ -84,7 +85,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
       - name: Cache SDK for WebAssembly
         id: cache-wasm-sdk
         uses: actions/cache@v4
