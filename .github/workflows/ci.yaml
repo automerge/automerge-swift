@@ -38,13 +38,16 @@ jobs:
       - name: Compress Automerge XCFramework
         if: steps.cache-automerge.outputs.cache-hit != 'true'
         run: ./scripts/compress-framework.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libuniffi_automerge
+          path: |
+            libuniffi_automerge.a
+            libuniffi_automerge_threads.a
 
   test-automerge-swift:
     runs-on: macos-14
     needs: automerge-dependencies
-    env:
-      LOCAL_BUILD: true
-      DEVELOPER_DIR: /Applications/Xcode_15.4.app
     steps:
       - uses: actions/checkout@v4
       - name: Restore Automerge XCFramework and library
@@ -56,8 +59,56 @@ jobs:
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
           key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}
+      - name: Get swift version
+        run: swift --version
       - name: Swift tests
         run: swift test
+
+  test-automerge-wasm:
+    runs-on: ubuntu-latest
+    needs: automerge-dependencies
+    strategy:
+      matrix:
+        include:
+          - toolchain: swift-DEVELOPMENT-SNAPSHOT-2024-10-08-a
+            swift-sdk: swift-wasm-DEVELOPMENT-SNAPSHOT-2024-10-15-a
+            checksum: 229cd9d3b0ed582c7ef7c3064888ad78764e4743b5a770df92554a94513f53fb
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bytecodealliance/actions/wasmtime/setup@v1
+      - name: Restore Automerge XCFramework and library
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            automergeFFI.xcframework
+            automergeFFI.xcframework.zip
+            libuniffi_automerge.a
+            libuniffi_automerge_threads.a
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}
+      - name: Cache SDK for WebAssembly
+        id: cache-wasm-sdk
+        uses: actions/cache@v4
+        with:
+          path: /tmp/swift-sdk.tar.gz
+          key: wasm-sdk-${{ matrix.checksum }}
+      - name: Download SDK for WebAssembly
+        if: steps.cache-wasm-sdk.outputs.cache-hit != 'true'
+        run: |
+          SWIFT_TOOLCHAIN_TAG="${{ matrix.toolchain }}"
+          set -ex
+          curl -f -o /tmp/swift-sdk.tar.gz "https://download.swift.org/development/ubuntu2204/$SWIFT_TOOLCHAIN_TAG/$SWIFT_TOOLCHAIN_TAG-ubuntu22.04.tar.gz"
+      - name: Install Swift and Swift SDK for WebAssembly
+        run: |
+          PREFIX=/opt/swift
+          SWIFT_SDK_TAG="${{ matrix.swift-sdk }}"
+          set -ex
+          sudo mkdir -p $PREFIX; sudo tar -xzf /tmp/swift-sdk.tar.gz -C $PREFIX --strip-component 1
+          $PREFIX/usr/bin/swift sdk install "https://github.com/swiftwasm/swift/releases/download/$SWIFT_SDK_TAG/$SWIFT_SDK_TAG-wasm32-unknown-wasi.artifactbundle.zip" --checksum ${{ matrix.checksum }}
+          echo "$PREFIX/usr/bin" >> $GITHUB_PATH
+      - name: Build tests
+        run: swift build --swift-sdk wasm32-unknown-wasi --build-tests -Xlinker "`pwd`/libuniffi_automerge.a" -Xlinker -z -Xlinker stack-size=$((1024 * 1024))
+      - name: Run tests
+        run: wasmtime run --wasm max-wasm-stack=$((1024 * 1024)) --dir . .build/debug/AutomergePackageTests.wasm
 
   rustfmt:
     runs-on: macos-latest
