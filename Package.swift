@@ -76,7 +76,7 @@ let package = Package(
                 // On Apple platforms, this links the core Rust library through XCFramework.
                 // On other platforms (such as WASM), end users will need to build the library
                 // themselves and link it through the "swift build -Xlinker path/to/libuniffi_automerge.a"
-                // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
+                // for example: cargo build --manifest-path rust/Cargo.toml --target wasm32-wasip1 --release
                 .target(name: "automergeFFI", condition: .when(platforms: [
                     .iOS, .macOS, .macCatalyst, .tvOS, .watchOS, .visionOS,
                 ])),

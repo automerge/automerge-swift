@@ -28,9 +28,11 @@ cargo run --manifest-path "$RUST_FOLDER/Cargo.toml"  \
     --language swift \
     --out-dir "${SWIFT_FOLDER}"
 
-echo "▸ Building for wasm32-wasip1-threads"
+echo "▸ Building for WASM"
+$cargo_build --target wasm32-wasip1 --locked --release
 $cargo_build --target wasm32-wasip1-threads --locked --release
-cp "${RUST_FOLDER}/target/wasm32-wasip1-threads/release/libuniffi_automerge.a" "${ROOT_FOLDER}/libuniffi_automerge.a"
+cp "${RUST_FOLDER}/target/wasm32-wasip1/release/libuniffi_automerge.a" "${ROOT_FOLDER}/libuniffi_automerge.a"
+cp "${RUST_FOLDER}/target/wasm32-wasip1-threads/release/libuniffi_automerge.a" "${ROOT_FOLDER}/libuniffi_automerge_threads.a"
 
 # copies the generated header from AutomergeUniffi/automergeFFI.h to
 # Sources/_CAutomergeUniffi/include/automergeFFI.h within the project

@@ -46,7 +46,8 @@ rustup target add aarch64-apple-ios-sim # iOS Simulator (M1)
 rustup target add aarch64-apple-ios # iOS Device
 rustup target add aarch64-apple-darwin # macOS ARM/M1
 rustup target add x86_64-apple-darwin # macOS Intel/x86
-rustup target add wasm32-wasip1-threads # WebAssembly
+rustup target add wasm32-wasip1 # WebAssembly
+rustup target add wasm32-wasip1-threads # WebAssembly with native multi threading capabilities
 cargo_build="cargo build --manifest-path $RUST_FOLDER/Cargo.toml"
 cargo_build_nightly="cargo +${RUST_NIGHTLY} build --manifest-path $RUST_FOLDER/Cargo.toml"
 cargo_build_nightly_with_std="cargo -Zbuild-std build --manifest-path $RUST_FOLDER/Cargo.toml"
@@ -98,7 +99,8 @@ $cargo_build_nightly -Z build-std --target aarch64-apple-ios-macabi --locked --r
 echo "▸ Building for x86_64-apple-ios-macabi"
 $cargo_build_nightly -Z build-std --target x86_64-apple-ios-macabi --locked --release
 
-echo "▸ Building for wasm32-wasip1-threads"
+echo "▸ Building for WASM"
+$cargo_build --target wasm32-wasip1 --locked --release
 $cargo_build --target wasm32-wasip1-threads --locked --release
 
 echo "▸ Consolidating the headers and modulemaps for XCFramework generation"
@@ -191,4 +193,5 @@ cp ${PRIVACY_FOLDER}/PrivacyInfo.xcprivacy ${XCFRAMEWORK_FOLDER}/xros-arm64-simu
 
 
 echo "▸ Expose libuniffi_automerge.a WebAssembly archive"
-cp "${BUILD_FOLDER}/wasm32-wasip1-threads/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
+cp "${BUILD_FOLDER}/wasm32-wasip1/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../"
+cp "${BUILD_FOLDER}/wasm32-wasip1-threads/release/libuniffi_automerge.a" "$THIS_SCRIPT_DIR/../libuniffi_automerge_threads.a"
