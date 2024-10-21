@@ -97,7 +97,7 @@ jobs:
           path: /tmp/swift-toolchain.tar.gz
           key: wasm-toolchain-${{ matrix.checksum }}
       - name: Download Toolchain for WebAssembly
-        if: steps.cache-wasm-sdk.outputs.cache-hit != 'true'
+        if: steps.cache-wasm-toolchain.outputs.cache-hit != 'true'
         run: |
           SWIFT_TOOLCHAIN_TAG="${{ matrix.toolchain }}"
           set -ex
