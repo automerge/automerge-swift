@@ -1,3 +1,4 @@
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 @testable import Automerge
 import XCTest
 
@@ -48,3 +49,4 @@ class BoundTypeChangeTests: XCTestCase {
         await fulfillment(of: [textChangeNotification], timeout: 1.0, enforceOrder: false)
     }
 }
+#endif

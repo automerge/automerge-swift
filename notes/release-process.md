@@ -82,9 +82,11 @@ git push origin --tags
   - Add a release title
   - Add in a description for the release
   - Drag the file `automergeFFI.xcframework.zip` from the repository directory onto the github page to attach the binary.
-  - Drag the file `libuniffi_automerge.a` from the repository directory onto the github page to attach the binary.
+  - Drag the files `libuniffi_automerge.a` and `libuniffi_automerge_threads.a` from the repository directory onto the github page to attach the binary.
   - Wait for the upload to complete and verify the file is listed.
   - Select the checkout for a pre-release if relevant.
+
+> `libuniffi_automerge_threads.a` is created using the [wasm32-wasip1-threads](https://doc.rust-lang.org/nightly/rustc/platform-support/wasm32-wasip1-threads.html#wasm32-wasip1-threads) target.
 
 ![GitHub release page with tag selected, details filled, and binary uploaded.](./github_release_ready.png)
 

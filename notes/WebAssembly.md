@@ -12,7 +12,7 @@ Swift-wasm with Swift package manager doesn't support invoking cargo to get the 
 
 For example, the Rust core library (with the pieces needed to support Automerge-swift) can be built for wasm through Cargo using the command:
 
-    cargo build --manifest-path rust/Cargo.toml --target wasm32-wasi --release
+    cargo build --manifest-path rust/Cargo.toml --target wasm32-wasip1-threads --release
 
 This builds libuniffi_automerge.a, an archive of WebAssembly that can be linked and loaded by the swift-wasm compiler. The following snippet is an example of how to pass the library to swift-wasm builder on the command line:
 

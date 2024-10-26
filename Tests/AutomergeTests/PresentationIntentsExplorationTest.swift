@@ -1,3 +1,4 @@
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
 import Foundation
 import SwiftUI
 import XCTest
@@ -202,4 +203,5 @@ class PresentationIntentsExplorationTest: XCTestCase {
         }
     }
 }
+#endif
 #endif
