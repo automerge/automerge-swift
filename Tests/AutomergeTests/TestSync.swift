@@ -2,7 +2,7 @@ import Automerge
 import XCTest
 
 class SyncTests: XCTestCase {
-    func testSyncTwoDocs() {
+    @MainActor func testSyncTwoDocs() {
         let doc1 = Document()
         trackForMemoryLeak(instance: doc1)
         let syncState1 = SyncState()

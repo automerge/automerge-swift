@@ -102,5 +102,6 @@ let package = Package(
             dependencies: ["Automerge", "AutomergeUtilities"],
             exclude: ["Fixtures"]
         ),
-    ]
+    ],
+    swiftLanguageVersions: [.version("6"), .v5]
 )

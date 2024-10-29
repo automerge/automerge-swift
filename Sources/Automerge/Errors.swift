@@ -29,16 +29,16 @@ public struct DocError: LocalizedError {
     }
 }
 
-extension FfiDocError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case let .WrongObjectType(message: msg):
-            return "WrongObjectType: \(msg)"
-        case let .Internal(message: msg):
-            return "AutomergeCore Internal Error: \(msg)"
-        }
-    }
-}
+//extension FfiDocError: LocalizedError {
+//    public var errorDescription: String? {
+//        switch self {
+//        case let .WrongObjectType(message: msg):
+//            return "WrongObjectType: \(msg)"
+//        case let .Internal(message: msg):
+//            return "AutomergeCore Internal Error: \(msg)"
+//        }
+//    }
+//}
 
 /// An error that indicates the synchronisation state could not be decoded.
 ///

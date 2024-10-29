@@ -1,10 +1,10 @@
 import Foundation
 
 public enum Samples {
-    public static var layered = ExampleModel(title: "Samples", notes: generateSampleNotes())
+    public static let layered = ExampleModel(title: "Samples", notes: generateSampleNotes())
 }
 
-public struct GeoLocation: Hashable, Codable {
+public struct GeoLocation: Hashable, Codable, Sendable {
     var latitude: Double
     var longitude: Double
     var altitude: Double?
@@ -20,7 +20,7 @@ public struct GeoLocation: Hashable, Codable {
     }
 }
 
-public struct Note: Hashable, Codable {
+public struct Note: Hashable, Codable, Sendable {
     var timestamp: Date
     var description: String
     var location: GeoLocation
@@ -34,7 +34,7 @@ public struct Note: Hashable, Codable {
     }
 }
 
-public struct ExampleModel: Codable, Equatable {
+public struct ExampleModel: Codable, Equatable, Sendable {
     var title: String
     var notes: [Note]
 

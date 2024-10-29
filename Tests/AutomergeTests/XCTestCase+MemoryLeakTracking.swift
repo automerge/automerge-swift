@@ -1,6 +1,7 @@
 import XCTest
 
 extension XCTestCase {
+    @MainActor
     func trackForMemoryLeak(
         instance: AnyObject,
         file: StaticString = #filePath,
