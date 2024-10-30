@@ -2,7 +2,7 @@ import Automerge
 import XCTest
 
 class SyncTests: XCTestCase {
-    @MainActor func testSyncTwoDocs() {
+    func testSyncTwoDocs() {
         let doc1 = Document()
         let syncState1 = SyncState()
 
