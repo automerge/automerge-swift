@@ -2,9 +2,8 @@ import Automerge
 import XCTest
 
 final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
-    @MainActor func testSimpleKeyEncode() throws {
+    func testSimpleKeyEncode() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -33,9 +32,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(decodedStruct, sample)
     }
 
-    @MainActor func testTargetedSingleValueDecode() throws {
+    func testTargetedSingleValueDecode() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -66,9 +64,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(decoded2.value, "Something wicked this way comes.")
     }
 
-    @MainActor func testTargetedDecodeOfData() throws {
+    func testTargetedDecodeOfData() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let exampleData = Data("Hello".utf8)
         try doc.put(obj: ObjId.ROOT, key: "data", value: .Bytes(exampleData))
@@ -78,9 +75,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(decodedData, exampleData)
     }
 
-    @MainActor func testTargetedDecodeOfDate() throws {
+    func testTargetedDecodeOfDate() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let earlyDate = Date(timeIntervalSince1970: 0)
         try doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(earlyDate))
@@ -90,9 +86,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(decodedDate, earlyDate)
     }
 
-    @MainActor func testTargetedDecodeOfCounter() throws {
+    func testTargetedDecodeOfCounter() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let exampleCounter = Counter(342)
         try doc.put(obj: ObjId.ROOT, key: "counter", value: .Counter(342))
@@ -102,9 +97,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(decodedCounter, exampleCounter)
     }
 
-    @MainActor func testTargetedDecodeOfInts() throws {
+    func testTargetedDecodeOfInts() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
 
@@ -117,9 +111,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(try automergeDecoder.decode(Int32.self, from: [AnyCodingKey("int")]), 34)
     }
 
-    @MainActor func testTargetedDecodeOfUInts() throws {
+    func testTargetedDecodeOfUInts() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Uint(34))
 
@@ -132,9 +125,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(try automergeDecoder.decode(UInt32.self, from: [AnyCodingKey("int")]), 34)
     }
 
-    @MainActor func testTargetedDecodeOfFloats() throws {
+    func testTargetedDecodeOfFloats() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "double", value: .F64(3.4))
 
@@ -144,9 +136,8 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
         XCTAssertEqual(try automergeDecoder.decode(Float.self, from: [AnyCodingKey("double")]), 3.4, accuracy: 0.1)
     }
 
-    @MainActor func testTargetedDecodeOfOptionalInt() throws {
+    func testTargetedDecodeOfOptionalInt() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
 

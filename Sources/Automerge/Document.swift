@@ -27,9 +27,9 @@ public final class Document: @unchecked Sendable {
         try work()
     }
     #endif
-    
+
     #if canImport(Combine)
-    private let objectDidChangeSubject: PassthroughSubject<(), Never> = .init()
+    private let objectDidChangeSubject: PassthroughSubject<Void, Never> = .init()
 
     /// A publisher that emits after the document has changed.
     ///
@@ -48,9 +48,7 @@ public final class Document: @unchecked Sendable {
     ///         processChanges(changes)
     ///     }
     /// }.store(in: &cancellables)
-    public lazy var objectDidChange: AnyPublisher<(), Never> = {
-        objectDidChangeSubject.eraseToAnyPublisher()
-    }()
+    public lazy var objectDidChange: AnyPublisher<Void, Never> = objectDidChangeSubject.eraseToAnyPublisher()
     #endif
 
     var reportingLogLevel: LogVerbosity

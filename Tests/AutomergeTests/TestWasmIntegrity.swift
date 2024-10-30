@@ -2,7 +2,6 @@ import Automerge
 import XCTest
 
 class WasmIntegriy: XCTestCase {
-
     func testTextValueEncodingBetweenPlatforms() throws {
         let doc = Document()
         let textId = try doc.putObject(obj: .ROOT, key: "text", ty: .Text)

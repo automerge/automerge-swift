@@ -39,24 +39,42 @@ class CounterTestCase: XCTestCase {
         _ = doc2.save()
 
         let counter1 = try doc1.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter1 == Value.Scalar(.Counter(3)), "Test failure illustrating put doesn't merge the same as increment [\(counter1!) != \(Value.Scalar(.Counter(3)))]")
+        assertNonFatal(
+            counter1 == Value.Scalar(.Counter(3)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter1!) != \(Value.Scalar(.Counter(3)))]"
+        )
         let counter2 = try doc2.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter2 == Value.Scalar(.Counter(-1)), "Test failure illustrating put doesn't merge the same as increment [\(counter2!) != \(Value.Scalar(.Counter(-1)))]")
+        assertNonFatal(
+            counter2 == Value.Scalar(.Counter(-1)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter2!) != \(Value.Scalar(.Counter(-1)))]"
+        )
 
         try doc1.merge(other: doc2)
 
         let counter3 = try doc1.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter3 == Value.Scalar(.Counter(2)), "Test failure illustrating put doesn't merge the same as increment [\(counter3!) != \(Value.Scalar(.Counter(2)))]")
+        assertNonFatal(
+            counter3 == Value.Scalar(.Counter(2)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter3!) != \(Value.Scalar(.Counter(2)))]"
+        )
         let counter4 = try doc2.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter4 == Value.Scalar(.Counter(-1)), "Test failure illustrating put doesn't merge the same as increment [\(counter4!) != \(Value.Scalar(.Counter(-1)))]")
-        
+        assertNonFatal(
+            counter4 == Value.Scalar(.Counter(-1)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter4!) != \(Value.Scalar(.Counter(-1)))]"
+        )
+
         try doc2.merge(other: doc1)
 
         let counter5 = try doc1.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter5 == Value.Scalar(.Counter(2)), "Test failure illustrating put doesn't merge the same as increment [\(counter5!) != \(Value.Scalar(.Counter(2)))]")
+        assertNonFatal(
+            counter5 == Value.Scalar(.Counter(2)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter5!) != \(Value.Scalar(.Counter(2)))]"
+        )
 
         let counter6 = try doc2.get(obj: ObjId.ROOT, key: "counter")
-        assertNonFatal(counter6 == Value.Scalar(.Counter(2)), "Test failure illustrating put doesn't merge the same as increment [\(counter6!) != \(Value.Scalar(.Counter(2)))]")
+        assertNonFatal(
+            counter6 == Value.Scalar(.Counter(2)),
+            "Test failure illustrating put doesn't merge the same as increment [\(counter6!) != \(Value.Scalar(.Counter(2)))]"
+        )
     }
 }
 
@@ -66,4 +84,3 @@ private extension XCTestCase {
         print("\(message) at \(file):\(line)")
     }
 }
-

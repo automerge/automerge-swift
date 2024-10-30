@@ -1,6 +1,6 @@
+import Automerge
 import CollectionsBenchmark
 import Foundation
-import Automerge
 import Loro
 
 // NOTE(heckj): collections-benchmark implementations can be a bit hard to understand
@@ -124,7 +124,7 @@ benchmark.addSimple(
         _ = try! text.splice(pos: stringLength, len: 0, s: strChar)
         stringLength = text.lenUnicode()
     }
-    
+
     let resultingString = text.toString()
     // precondition(stringLength == input.count) // NOT VALID - difference in UTF-8 codepoints and how strings represent
     // lengths
