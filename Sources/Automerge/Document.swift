@@ -13,7 +13,7 @@ import Foundation
 /// In addition to working with the low-level methods, this library provides ``AutomergeEncoder`` and
 /// ``AutomergeDecoder``, which provide support for mapping your own `Codable` types into an Automerge document.
 public final class Document: @unchecked Sendable {
-    private var doc: WrappedDoc
+    private var doc: Doc
 
     #if !os(WASI)
     let lock = NSRecursiveLock()
@@ -58,13 +58,13 @@ public final class Document: @unchecked Sendable {
     /// The actor ID of this document
     public var actor: ActorId {
         get {
-            lock {
-                ActorId(ffi: self.doc.wrapErrors { $0.actorId() })
+            read {
+                ActorId(ffi: doc.actorId() )
             }
         }
         set {
-            lock {
-                self.doc.wrapErrors { $0.setActor(actor: [UInt8](newValue.data)) }
+            write {
+                doc.setActor(actor: [UInt8](newValue.data))
             }
         }
     }
@@ -73,7 +73,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameter logLevel: The level at which to generate logs into unified logging from actions within this
     /// document.
     public init(logLevel: LogVerbosity = .errorOnly) {
-        doc = WrappedDoc(Doc())
+        doc = Doc()
         self.reportingLogLevel = logLevel
     }
 
@@ -88,12 +88,12 @@ public final class Document: @unchecked Sendable {
     ///   - bytes: A data buffer of encoded automerge changes.
     ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
     public init(_ bytes: Data, logLevel: LogVerbosity = .errorOnly) throws {
-        doc = try WrappedDoc { try Doc.load(bytes: Array(bytes)) }
+        doc = try Doc.load(bytes: Array(bytes))
         self.reportingLogLevel = logLevel
     }
 
     private init(doc: Doc, logLevel: LogVerbosity = .errorOnly) {
-        self.doc = WrappedDoc(doc)
+        self.doc = doc
         self.reportingLogLevel = logLevel
     }
 
@@ -110,7 +110,7 @@ public final class Document: @unchecked Sendable {
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
         try write {
-            try doc.doc.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
+            try doc.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
         }
     }
 
@@ -130,7 +130,7 @@ public final class Document: @unchecked Sendable {
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try write {
-            try doc.doc.putInList(obj: obj.bytes, index: index, value: value.toFfi())
+            try doc.putInList(obj: obj.bytes, index: index, value: value.toFfi())
         }
     }
 
@@ -143,7 +143,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The object Id that references the object added.
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
         try write {
-            try ObjId(bytes: doc.doc.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
+            try ObjId(bytes: doc.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
         }
     }
 
@@ -159,7 +159,7 @@ public final class Document: @unchecked Sendable {
     /// To add an object that extends the array, use the method ``insertObject(obj:index:ty:)``.
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try write {
-            try ObjId(bytes: doc.doc.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+            try ObjId(bytes: doc.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
         }
     }
 
@@ -171,7 +171,7 @@ public final class Document: @unchecked Sendable {
     ///   - value: The value to insert for the index you provide.
     public func insert(obj: ObjId, index: UInt64, value: ScalarValue) throws {
         try write {
-            try doc.doc.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
+            try doc.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
         }
     }
 
@@ -188,7 +188,7 @@ public final class Document: @unchecked Sendable {
     /// ``put(obj:index:value:)`` to put in a value.
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
         try write {
-            try ObjId(bytes: doc.doc.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
+            try ObjId(bytes: doc.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
         }
     }
 
@@ -198,7 +198,7 @@ public final class Document: @unchecked Sendable {
     ///   - key: The key to delete.
     public func delete(obj: ObjId, key: String) throws {
         try write {
-            try doc.doc.deleteInMap(obj: obj.bytes, key: key)
+            try doc.deleteInMap(obj: obj.bytes, key: key)
         }
     }
 
@@ -211,7 +211,7 @@ public final class Document: @unchecked Sendable {
     /// This method shrinks the length of the array object.
     public func delete(obj: ObjId, index: UInt64) throws {
         try write {
-            try doc.doc.deleteInList(obj: obj.bytes, index: index)
+            try doc.deleteInList(obj: obj.bytes, index: index)
         }
     }
 
@@ -223,7 +223,7 @@ public final class Document: @unchecked Sendable {
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, key: String, by: Int64) throws {
         try write {
-            try doc.doc.incrementInMap(obj: obj.bytes, key: key, by: by)
+            try doc.incrementInMap(obj: obj.bytes, key: key, by: by)
         }
     }
 
@@ -235,7 +235,7 @@ public final class Document: @unchecked Sendable {
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
         try write {
-            try doc.doc.incrementInList(obj: obj.bytes, index: index, by: by)
+            try doc.incrementInList(obj: obj.bytes, index: index, by: by)
         }
     }
 
@@ -253,7 +253,7 @@ public final class Document: @unchecked Sendable {
     /// need all the conflicting values see ``getAll(obj:key:)``
     public func get(obj: ObjId, key: String) throws -> Value? {
         try read {
-            let value = try doc.doc.getInMap(obj: obj.bytes, key: key)
+            let value = try doc.getInMap(obj: obj.bytes, key: key)
             return value.map(Value.fromFfi)
         }
     }
@@ -272,7 +272,7 @@ public final class Document: @unchecked Sendable {
     /// need all the conflicting values see ``getAll(obj:index:)``
     public func get(obj: ObjId, index: UInt64) throws -> Value? {
         try read {
-            let value = try doc.doc.getInList(obj: obj.bytes, index: index)
+            let value = try doc.getInList(obj: obj.bytes, index: index)
             return value.map(Value.fromFfi)
         }
     }
@@ -285,7 +285,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A set of value objects.
     public func getAll(obj: ObjId, key: String) throws -> Set<Value> {
         try read {
-            let values = try doc.doc.getAllInMap(obj: obj.bytes, key: key)
+            let values = try doc.getAllInMap(obj: obj.bytes, key: key)
             return Set(values.map { Value.fromFfi(value: $0) })
         }
     }
@@ -300,7 +300,7 @@ public final class Document: @unchecked Sendable {
     /// If you request a index beyond the bounds of the array, this method throws an error.
     public func getAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
         try read {
-            let values = try doc.doc.getAllInList(obj: obj.bytes, index: index)
+            let values = try doc.getAllInList(obj: obj.bytes, index: index)
             return Set(values.map { Value.fromFfi(value: $0) })
         }
     }
@@ -321,7 +321,7 @@ public final class Document: @unchecked Sendable {
     /// need all the conflicting values see ``getAllAt(obj:key:heads:)``
     public func getAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws -> Value? {
         try read {
-            let value = try doc.doc.getAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+            let value = try doc.getAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
             return value.map(Value.fromFfi)
         }
     }
@@ -341,7 +341,7 @@ public final class Document: @unchecked Sendable {
     /// need all the conflicting values see ``getAllAt(obj:index:heads:)``
     public func getAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws -> Value? {
         try read {
-            let value = try doc.doc.getAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+            let value = try doc.getAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
             return value.map(Value.fromFfi)
         }
     }
@@ -359,7 +359,7 @@ public final class Document: @unchecked Sendable {
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
     public func getAllAt(obj: ObjId, key: String, heads: Set<ChangeHash>) throws -> Set<Value> {
         try read {
-            let values = try doc.doc.getAllAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
+            let values = try doc.getAllAtInMap(obj: obj.bytes, key: key, heads: heads.map(\.bytes))
             return Set(values.map { Value.fromFfi(value: $0) })
         }
     }
@@ -375,7 +375,7 @@ public final class Document: @unchecked Sendable {
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
     public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws -> Set<Value> {
         try read {
-            let values = try doc.doc.getAllAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
+            let values = try doc.getAllAtInList(obj: obj.bytes, index: index, heads: heads.map(\.bytes))
             return Set(values.map { Value.fromFfi(value: $0) })
         }
     }
@@ -386,7 +386,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The keys for that dictionary.
     public func keys(obj: ObjId) -> [String] {
         read {
-            doc.doc.mapKeys(obj: obj.bytes)
+            doc.mapKeys(obj: obj.bytes)
         }
     }
 
@@ -400,7 +400,7 @@ public final class Document: @unchecked Sendable {
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
     public func keysAt(obj: ObjId, heads: Set<ChangeHash>) -> [String] {
         read {
-            doc.doc.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            doc.mapKeysAt(obj: obj.bytes, heads: heads.map(\.bytes))
         }
     }
 
@@ -411,7 +411,7 @@ public final class Document: @unchecked Sendable {
     /// For a dictionary object, the list of the values for all the keys.
     public func values(obj: ObjId) throws -> [Value] {
         try read {
-            let values = try doc.doc.values(obj: obj.bytes)
+            let values = try doc.values(obj: obj.bytes)
             return values.map { Value.fromFfi(value: $0) }
         }
     }
@@ -427,7 +427,7 @@ public final class Document: @unchecked Sendable {
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
     public func valuesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Value] {
         try read {
-            let values = try doc.doc.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            let values = try doc.valuesAt(obj: obj.bytes, heads: heads.map(\.bytes))
             return values.map { Value.fromFfi(value: $0) }
         }
     }
@@ -439,7 +439,7 @@ public final class Document: @unchecked Sendable {
     /// object.
     public func mapEntries(obj: ObjId) throws -> [(String, Value)] {
         try read {
-            let entries = try doc.doc.mapEntries(obj: obj.bytes)
+            let entries = try doc.mapEntries(obj: obj.bytes)
             return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
         }
     }
@@ -452,7 +452,7 @@ public final class Document: @unchecked Sendable {
     /// object.
     public func mapEntriesAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [(String, Value)] {
         try read {
-            let entries = try doc.doc.mapEntriesAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            let entries = try doc.mapEntriesAt(obj: obj.bytes, heads: heads.map(\.bytes))
             return entries.map { ($0.key, Value.fromFfi(value: $0.value)) }
         }
     }
@@ -462,7 +462,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameter obj: The identifier of an array, dictionary, or text object.
     public func length(obj: ObjId) -> UInt64 {
         read {
-            doc.doc.length(obj: obj.bytes)
+            doc.length(obj: obj.bytes)
         }
     }
 
@@ -473,7 +473,7 @@ public final class Document: @unchecked Sendable {
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     public func lengthAt(obj: ObjId, heads: Set<ChangeHash>) -> UInt64 {
         read {
-            doc.doc.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            doc.lengthAt(obj: obj.bytes, heads: heads.map(\.bytes))
         }
     }
 
@@ -482,7 +482,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameter obj: The identifier of an array, dictionary, or text object.
     public func objectType(obj: ObjId) -> ObjType {
         read {
-            ObjType.fromFfi(ty: doc.doc.objectType(obj: obj.bytes))
+            ObjType.fromFfi(ty: doc.objectType(obj: obj.bytes))
         }
     }
 
@@ -492,7 +492,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The current string value that the text object contains.
     public func text(obj: ObjId) throws -> String {
         try read {
-            try doc.doc.text(obj: obj.bytes)
+            try doc.text(obj: obj.bytes)
         }
     }
 
@@ -504,7 +504,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The string value that the text object contains at the point in time you specify.
     public func textAt(obj: ObjId, heads: Set<ChangeHash>) throws -> String {
         try read {
-            try doc.doc.textAt(obj: obj.bytes, heads: heads.map(\.bytes))
+            try doc.textAt(obj: obj.bytes, heads: heads.map(\.bytes))
         }
     }
 
@@ -516,7 +516,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try write {
-            Cursor(bytes: try doc.doc.cursor(obj: obj.bytes, position: position))
+            Cursor(bytes: try doc.cursor(obj: obj.bytes, position: position))
         }
     }
 
@@ -529,7 +529,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try write {
-            return Cursor(bytes: try doc.doc.cursorAt(
+            return Cursor(bytes: try doc.cursorAt(
                 obj: obj.bytes,
                 position: position,
                 heads: heads.map(\.bytes)
@@ -545,7 +545,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
     public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try read {
-            try doc.doc.cursorPosition(obj: obj.bytes, cursor: cursor.bytes)
+            try doc.cursorPosition(obj: obj.bytes, cursor: cursor.bytes)
         }
     }
 
@@ -558,7 +558,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
     public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
         try read {
-            try doc.doc.cursorPositionAt(obj: obj.bytes, cursor: cursor.bytes, heads: heads.map(\.bytes))
+            try doc.cursorPositionAt(obj: obj.bytes, cursor: cursor.bytes, heads: heads.map(\.bytes))
         }
     }
 
@@ -573,7 +573,7 @@ public final class Document: @unchecked Sendable {
     public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
         try write {
             let ffiValue = values.map { $0.toFfi() }
-            try doc.doc.splice(obj: obj.bytes, start: start, delete: delete, values: ffiValue)
+            try doc.splice(obj: obj.bytes, start: start, delete: delete, values: ffiValue)
         }
     }
 
@@ -618,7 +618,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try write {
-            try doc.doc.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
+            try doc.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
         }
     }
 
@@ -633,7 +633,7 @@ public final class Document: @unchecked Sendable {
     /// what you provide.
     public func updateText(obj: ObjId, value: String) throws {
         try write {
-            try doc.doc.updateText(obj: obj.bytes, chars: value)
+            try doc.updateText(obj: obj.bytes, chars: value)
         }
     }
 
@@ -685,7 +685,7 @@ public final class Document: @unchecked Sendable {
         value: ScalarValue
     ) throws {
         try write {
-            try doc.doc.mark(
+            try doc.mark(
                 obj: obj.bytes,
                 start: start,
                 end: end,
@@ -702,7 +702,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The current list of ``Mark`` for the text object.
     public func marks(obj: ObjId) throws -> [Mark] {
         try read {
-            try doc.doc.marks(obj: obj.bytes).map(Mark.fromFfi)
+            try doc.marks(obj: obj.bytes).map(Mark.fromFfi)
         }
     }
 
@@ -714,7 +714,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A list of ``Mark`` for the text object at the point in time you specify.
     public func marksAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Mark] {
         try read {
-           try doc.doc.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
+           try doc.marksAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Mark.fromFfi)
         }
     }
 
@@ -763,7 +763,7 @@ public final class Document: @unchecked Sendable {
     ///
     public func marksAt(obj: ObjId, position: Position, heads: Set<ChangeHash>) throws -> [Mark] {
         try read {
-            try doc.doc.marksAtPosition(
+            try doc.marksAtPosition(
                 obj: obj.bytes,
                 position: position.toFfi(),
                 heads: heads.map(\.bytes)
@@ -825,7 +825,7 @@ public final class Document: @unchecked Sendable {
     ///   - timestamp: A timestamp to attach to the auto-committed change (if any), defaulting to Date().
     public func commitWith(message: String? = nil, timestamp: Date = Date()) {
         write {
-            doc.doc.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
+            doc.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
         }
     }
 
@@ -836,7 +836,7 @@ public final class Document: @unchecked Sendable {
     /// The `save` function also compacts the memory footprint of an Automerge document and increments the result of
     /// ``heads()``, which indicates a specific point in time for the history of the document.
     public func save() -> Data {
-        return write { Data(doc.doc.save()) }
+        return write { Data(doc.save()) }
     }
 
     /// Update the sync state you provide and return a sync message to send to a peer.
@@ -849,13 +849,11 @@ public final class Document: @unchecked Sendable {
     /// Use ``receiveSyncMessage(state:message:)`` to update the sync state with the state, and possibly changes, from
     /// the peer.
     public func generateSyncMessage(state: SyncState) -> Data? {
-        lock {
-            self.doc.wrapErrors {
-                if let tempArr = $0.generateSyncMessage(state: state.ffi_state) {
-                    return Data(tempArr)
-                }
-                return nil
+        read {
+            if let tempArr = doc.generateSyncMessage(state: state.ffi_state) {
+                return Data(tempArr)
             }
+            return nil
         }
     }
 
@@ -869,7 +867,7 @@ public final class Document: @unchecked Sendable {
     /// the message use the function ``receiveSyncMessageWithPatches(state:message:)``.
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
        try write {
-           _ = try doc.doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
+           _ = try doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
         }
     }
 
@@ -882,7 +880,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: An array of ``Patch`` that represent the changes applied from the peer.
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
         try write {
-            let patches = try doc.doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
+            let patches = try doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
             return patches.map { Patch($0) }
         }
     }
@@ -892,7 +890,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: A copy of the document with a new actor ID.
     public func fork() -> Document {
         read {
-            Document(doc: doc.doc.fork())
+            Document(doc: doc.fork())
         }
     }
 
@@ -903,7 +901,7 @@ public final class Document: @unchecked Sendable {
     /// specify.
     public func forkAt(heads: Set<ChangeHash>) throws -> Document {
         try read {
-            try Document(doc: doc.doc.forkAt(heads: heads.map(\.bytes)))
+            try Document(doc: doc.forkAt(heads: heads.map(\.bytes)))
         }
     }
 
@@ -915,7 +913,7 @@ public final class Document: @unchecked Sendable {
     /// the merge, use the method ``mergeWithPatches(other:)`` instead.
     public func merge(other: Document) throws {
         try write {
-            _ = try doc.doc.mergeWithPatches(other: other.doc.doc)
+            _ = try doc.mergeWithPatches(other: other.doc)
         }
     }
 
@@ -924,8 +922,8 @@ public final class Document: @unchecked Sendable {
     /// - Parameter other: another ``Document``
     /// - Returns: A list of ``Patch`` the represent the changes applied when merging the other document.
     public func mergeWithPatches(other: Document) throws -> [Patch] {
-        return try write({
-            try doc.doc.mergeWithPatches(other: other.doc.doc).map { Patch($0) }
+        try write({
+            try doc.mergeWithPatches(other: other.doc).map { Patch($0) }
         })
     }
 
@@ -952,7 +950,7 @@ public final class Document: @unchecked Sendable {
     /// there is no storage cost for these hashes.
     public func heads() -> Set<ChangeHash> {
         read {
-            Set(doc.doc.heads().map { ChangeHash(bytes: $0) })
+            Set(doc.heads().map { ChangeHash(bytes: $0) })
         }
     }
 
@@ -961,14 +959,14 @@ public final class Document: @unchecked Sendable {
     /// - Returns: An array of ``ChangeHash`` that represents the sequence of change hashes in the document.
     public func getHistory() -> [ChangeHash] {
         read {
-            doc.doc.changes().map { ChangeHash(bytes: $0) }
+            doc.changes().map { ChangeHash(bytes: $0) }
         }
     }
 
     /// Returns the contents of the change associated with the change hash you provide.
     public func change(hash: ChangeHash) -> Change? {
         read {
-            guard let change = doc.doc.changeByHash(hash: hash.bytes) else {
+            guard let change = doc.changeByHash(hash: hash.bytes) else {
                 return nil
             }
             return Change(change)
@@ -996,7 +994,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: The difference needed to produce a document at `to` when it is set at `from` in history.
     public func difference(from before: Set<ChangeHash>, to after: Set<ChangeHash>) -> [Patch] {
         read {
-            let patches = doc.doc.difference(before: before.map(\.bytes), after: after.map(\.bytes))
+            let patches = doc.difference(before: before.map(\.bytes), after: after.map(\.bytes))
             return patches.map { Patch($0) }
         }
     }
@@ -1039,7 +1037,7 @@ public final class Document: @unchecked Sendable {
     /// - Returns: An array of ``PathElement`` that represents the schema location of the object within the document.
     public func path(obj: ObjId) throws -> [PathElement] {
         try read {
-            let elems = try doc.doc.path(obj: obj.bytes)
+            let elems = try doc.path(obj: obj.bytes)
             return elems.map { PathElement.fromFfi($0) }
         }
     }
@@ -1049,8 +1047,8 @@ public final class Document: @unchecked Sendable {
     /// - Returns: Encoded changes suitable for sending over the network and
     /// applying to another document using ``applyEncodedChanges(encoded:)``.
     public func encodeNewChanges() -> Data {
-        lock {
-            self.doc.wrapErrors { Data($0.encodeNewChanges()) }
+        read {
+            Data(doc.encodeNewChanges())
         }
     }
 
@@ -1061,9 +1059,7 @@ public final class Document: @unchecked Sendable {
     /// applying to another document using ``applyEncodedChanges(encoded:)``.
     public func encodeChangesSince(heads: Set<ChangeHash>) throws -> Data {
         try read {
-            try self.doc.wrapErrors {
-                try Data($0.encodeChangesSince(heads: heads.map(\.bytes)))
-            }
+            try Data(doc.encodeChangesSince(heads: heads.map(\.bytes)))
         }
     }
 
@@ -1079,7 +1075,7 @@ public final class Document: @unchecked Sendable {
     /// the applied changes try using ``applyEncodedChangesWithPatches(encoded:)``
     public func applyEncodedChanges(encoded: Data) throws {
         try write {
-            _ = try doc.doc.applyEncodedChangesWithPatches(changes: Array(encoded))
+            _ = try doc.applyEncodedChangesWithPatches(changes: Array(encoded))
         }
     }
 
@@ -1093,7 +1089,7 @@ public final class Document: @unchecked Sendable {
     /// concatenation of those.
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
         try write {
-            let patches = try doc.doc.applyEncodedChangesWithPatches(changes: Array(encoded))
+            let patches = try doc.applyEncodedChangesWithPatches(changes: Array(encoded))
             return patches.map { Patch($0) }
         }
     }
@@ -1115,31 +1111,6 @@ public final class Document: @unchecked Sendable {
                 return try read()
             }
         }
-    }
-}
-
-/// A wrapper to force all throwing calls to return wrapped errors
-///
-/// Any throwing call from `Doc` could return errors from AutomergeUniffi
-/// which we don't want to expose as part of our public API. This wrapper
-/// forces any throwing call to go through a closure which converts the error.
-struct WrappedDoc {
-    let doc: Doc
-
-    init(_ doc: Doc) {
-        self.doc = doc
-    }
-
-    init(_ f: () throws -> Doc) throws {
-        doc = try wrappedErrors { try f() }
-    }
-
-    func wrapErrors<T>(f: (Doc) throws -> T) throws -> T {
-        try wrappedErrors { try f(doc) }
-    }
-
-    func wrapErrors<T>(f: (Doc) -> T) -> T {
-        f(doc)
     }
 }
 
