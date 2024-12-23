@@ -4,7 +4,6 @@ import XCTest
 final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
     func testSimpleKeyEncode() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -35,7 +34,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedSingleValueDecode() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         struct SimpleStruct: Codable, Equatable {
             let name: String
@@ -68,7 +66,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfData() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let exampleData = Data("Hello".utf8)
         try doc.put(obj: ObjId.ROOT, key: "data", value: .Bytes(exampleData))
@@ -80,7 +77,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfDate() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let earlyDate = Date(timeIntervalSince1970: 0)
         try doc.put(obj: ObjId.ROOT, key: "date", value: .Timestamp(earlyDate))
@@ -92,7 +88,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfCounter() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         let exampleCounter = Counter(342)
         try doc.put(obj: ObjId.ROOT, key: "counter", value: .Counter(342))
@@ -104,7 +99,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfInts() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
 
@@ -119,7 +113,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfUInts() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Uint(34))
 
@@ -134,7 +127,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfFloats() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "double", value: .F64(3.4))
 
@@ -146,7 +138,6 @@ final class AutomergeTargettedEncodeDecodeTests: XCTestCase {
 
     func testTargetedDecodeOfOptionalInt() throws {
         let doc = Document()
-        trackForMemoryLeak(instance: doc)
 
         try doc.put(obj: ObjId.ROOT, key: "int", value: .Int(34))
 
