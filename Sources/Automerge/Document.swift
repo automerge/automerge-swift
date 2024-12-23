@@ -109,7 +109,7 @@ public final class Document: @unchecked Sendable {
     /// amount,
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, key: String, value: ScalarValue) throws {
-        try mutate {
+        try write {
             try doc.doc.putInMap(obj: obj.bytes, key: key, value: value.toFfi())
         }
     }
@@ -129,7 +129,7 @@ public final class Document: @unchecked Sendable {
     /// amount,
     /// use the method ``increment(obj:key:by:)`` instead.
     public func put(obj: ObjId, index: UInt64, value: ScalarValue) throws {
-        try mutate {
+        try write {
             try doc.doc.putInList(obj: obj.bytes, index: index, value: value.toFfi())
         }
     }
@@ -142,7 +142,7 @@ public final class Document: @unchecked Sendable {
     ///   - ty: The type of object to add to the dictionary.
     /// - Returns: The object Id that references the object added.
     public func putObject(obj: ObjId, key: String, ty: ObjType) throws -> ObjId {
-        try mutate {
+        try write {
             try ObjId(bytes: doc.doc.putObjectInMap(obj: obj.bytes, key: key, objType: ty.toFfi()))
         }
     }
@@ -158,7 +158,7 @@ public final class Document: @unchecked Sendable {
     /// If the index position doesn't yet exist within the array, this method will throw an error.
     /// To add an object that extends the array, use the method ``insertObject(obj:index:ty:)``.
     public func putObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        try mutate {
+        try write {
             try ObjId(bytes: doc.doc.putObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
         }
     }
@@ -170,7 +170,7 @@ public final class Document: @unchecked Sendable {
     ///   - index: The index value of the array to update.
     ///   - value: The value to insert for the index you provide.
     public func insert(obj: ObjId, index: UInt64, value: ScalarValue) throws {
-        try mutate {
+        try write {
             try doc.doc.insertInList(obj: obj.bytes, index: index, value: value.toFfi())
         }
     }
@@ -187,7 +187,7 @@ public final class Document: @unchecked Sendable {
     /// If you want to change an existing index, use the ``putObject(obj:index:ty:)`` to put in an object or
     /// ``put(obj:index:value:)`` to put in a value.
     public func insertObject(obj: ObjId, index: UInt64, ty: ObjType) throws -> ObjId {
-        try mutate {
+        try write {
             try ObjId(bytes: doc.doc.insertObjectInList(obj: obj.bytes, index: index, objType: ty.toFfi()))
         }
     }
@@ -197,7 +197,7 @@ public final class Document: @unchecked Sendable {
     ///   - obj: The identifier of the dictionary to update.
     ///   - key: The key to delete.
     public func delete(obj: ObjId, key: String) throws {
-        try mutate {
+        try write {
             try doc.doc.deleteInMap(obj: obj.bytes, key: key)
         }
     }
@@ -210,7 +210,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// This method shrinks the length of the array object.
     public func delete(obj: ObjId, index: UInt64) throws {
-        try mutate {
+        try write {
             try doc.doc.deleteInList(obj: obj.bytes, index: index)
         }
     }
@@ -222,7 +222,7 @@ public final class Document: @unchecked Sendable {
     ///   - key: The key in the dictionary object that references the counter.
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, key: String, by: Int64) throws {
-        try mutate {
+        try write {
             try doc.doc.incrementInMap(obj: obj.bytes, key: key, by: by)
         }
     }
@@ -234,7 +234,7 @@ public final class Document: @unchecked Sendable {
     ///   - index: The index position in the array object that references the counter.
     ///   - by: The amount to increment, or decrement, the counter.
     public func increment(obj: ObjId, index: UInt64, by: Int64) throws {
-        try mutate {
+        try write {
             try doc.doc.incrementInList(obj: obj.bytes, index: index, by: by)
         }
     }
@@ -515,7 +515,7 @@ public final class Document: @unchecked Sendable {
     ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
     /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
-        try mutate {
+        try write {
             Cursor(bytes: try doc.doc.cursor(obj: obj.bytes, position: position))
         }
     }
@@ -528,7 +528,7 @@ public final class Document: @unchecked Sendable {
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
-        try mutate {
+        try write {
             return Cursor(bytes: try doc.doc.cursorAt(
                 obj: obj.bytes,
                 position: position,
@@ -571,7 +571,7 @@ public final class Document: @unchecked Sendable {
     ///   If negative, the function deletes elements preceding `start` index, rather than following it.
     ///   - values: An array of values to insert after the `start` index.
     public func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws {
-        try mutate {
+        try write {
             let ffiValue = values.map { $0.toFfi() }
             try doc.doc.splice(obj: obj.bytes, start: start, delete: delete, values: ffiValue)
         }
@@ -617,7 +617,7 @@ public final class Document: @unchecked Sendable {
     /// Int64("🇬🇧".unicodeScalars.count)
     /// ```
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
-        try mutate {
+        try write {
             try doc.doc.spliceText(obj: obj.bytes, start: start, delete: delete, chars: value ?? "")
         }
     }
@@ -632,7 +632,7 @@ public final class Document: @unchecked Sendable {
     /// This method creates a diff of the text, using Grapheme clusters, to apply updates to change the stored text to
     /// what you provide.
     public func updateText(obj: ObjId, value: String) throws {
-        try mutate {
+        try write {
             try doc.doc.updateText(obj: obj.bytes, chars: value)
         }
     }
@@ -684,7 +684,7 @@ public final class Document: @unchecked Sendable {
         name: String,
         value: ScalarValue
     ) throws {
-        try mutate {
+        try write {
             try doc.doc.mark(
                 obj: obj.bytes,
                 start: start,
@@ -824,7 +824,7 @@ public final class Document: @unchecked Sendable {
     ///   - message: An optional message to attach to the auto-committed change (if any).
     ///   - timestamp: A timestamp to attach to the auto-committed change (if any), defaulting to Date().
     public func commitWith(message: String? = nil, timestamp: Date = Date()) {
-        mutate {
+        write {
             doc.doc.commitWith(msg: message, time: Int64(timestamp.timeIntervalSince1970))
         }
     }
@@ -836,7 +836,7 @@ public final class Document: @unchecked Sendable {
     /// The `save` function also compacts the memory footprint of an Automerge document and increments the result of
     /// ``heads()``, which indicates a specific point in time for the history of the document.
     public func save() -> Data {
-        return mutate { Data(doc.doc.save()) }
+        return write { Data(doc.doc.save()) }
     }
 
     /// Update the sync state you provide and return a sync message to send to a peer.
@@ -868,7 +868,7 @@ public final class Document: @unchecked Sendable {
     /// > Tip: if you need to know what changed in the document as a result of
     /// the message use the function ``receiveSyncMessageWithPatches(state:message:)``.
     public func receiveSyncMessage(state: SyncState, message: Data) throws {
-       try mutate {
+       try write {
            _ = try doc.doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
         }
     }
@@ -881,7 +881,7 @@ public final class Document: @unchecked Sendable {
     ///   - message: The message from the peer to update this document and sync state.
     /// - Returns: An array of ``Patch`` that represent the changes applied from the peer.
     public func receiveSyncMessageWithPatches(state: SyncState, message: Data) throws -> [Patch] {
-        try mutate {
+        try write {
             let patches = try doc.doc.receiveSyncMessageWithPatches(state: state.ffi_state, msg: Array(message))
             return patches.map { Patch($0) }
         }
@@ -914,7 +914,7 @@ public final class Document: @unchecked Sendable {
     /// > Tip: If you need to know what changed in the document as a result of
     /// the merge, use the method ``mergeWithPatches(other:)`` instead.
     public func merge(other: Document) throws {
-        try mutate {
+        try write {
             _ = try doc.doc.mergeWithPatches(other: other.doc.doc)
         }
     }
@@ -924,7 +924,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameter other: another ``Document``
     /// - Returns: A list of ``Patch`` the represent the changes applied when merging the other document.
     public func mergeWithPatches(other: Document) throws -> [Patch] {
-        return try mutate({
+        return try write({
             try doc.doc.mergeWithPatches(other: other.doc.doc).map { Patch($0) }
         })
     }
@@ -1078,7 +1078,7 @@ public final class Document: @unchecked Sendable {
     /// > Tip: if you need to know what changed in the document as a result of
     /// the applied changes try using ``applyEncodedChangesWithPatches(encoded:)``
     public func applyEncodedChanges(encoded: Data) throws {
-        try mutate {
+        try write {
             _ = try doc.doc.applyEncodedChangesWithPatches(changes: Array(encoded))
         }
     }
@@ -1092,13 +1092,13 @@ public final class Document: @unchecked Sendable {
     /// ``encodeNewChanges()``, ``encodeChangesSince(heads:)`` or any
     /// concatenation of those.
     public func applyEncodedChangesWithPatches(encoded: Data) throws -> [Patch] {
-        try mutate {
+        try write {
             let patches = try doc.doc.applyEncodedChangesWithPatches(changes: Array(encoded))
             return patches.map { Patch($0) }
         }
     }
 
-    private func mutate<T>(_ mutation: () throws -> T) rethrows -> T {
+    private func write<T>(_ mutation: () throws -> T) rethrows -> T {
         return try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
