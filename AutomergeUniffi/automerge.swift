@@ -1487,7 +1487,7 @@ public func FfiConverterTypeSyncState_lower(_ value: SyncState) -> UnsafeMutable
 }
 
 
-public struct Change {
+public struct Change: Equatable, Hashable {
     public var actorId: ActorId
     public var message: String?
     public var deps: [ChangeHash]
@@ -1504,41 +1504,6 @@ public struct Change {
         self.timestamp = timestamp
         self.bytes = bytes
         self.hash = hash
-    }
-}
-
-
-
-extension Change: Equatable, Hashable {
-    public static func ==(lhs: Change, rhs: Change) -> Bool {
-        if lhs.actorId != rhs.actorId {
-            return false
-        }
-        if lhs.message != rhs.message {
-            return false
-        }
-        if lhs.deps != rhs.deps {
-            return false
-        }
-        if lhs.timestamp != rhs.timestamp {
-            return false
-        }
-        if lhs.bytes != rhs.bytes {
-            return false
-        }
-        if lhs.hash != rhs.hash {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(actorId)
-        hasher.combine(message)
-        hasher.combine(deps)
-        hasher.combine(timestamp)
-        hasher.combine(bytes)
-        hasher.combine(hash)
     }
 }
 
@@ -1585,7 +1550,7 @@ public func FfiConverterTypeChange_lower(_ value: Change) -> RustBuffer {
 }
 
 
-public struct KeyValue {
+public struct KeyValue: Equatable, Hashable {
     public var key: String
     public var value: Value
 
@@ -1594,25 +1559,6 @@ public struct KeyValue {
     public init(key: String, value: Value) {
         self.key = key
         self.value = value
-    }
-}
-
-
-
-extension KeyValue: Equatable, Hashable {
-    public static func ==(lhs: KeyValue, rhs: KeyValue) -> Bool {
-        if lhs.key != rhs.key {
-            return false
-        }
-        if lhs.value != rhs.value {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(key)
-        hasher.combine(value)
     }
 }
 
@@ -1651,7 +1597,7 @@ public func FfiConverterTypeKeyValue_lower(_ value: KeyValue) -> RustBuffer {
 }
 
 
-public struct Mark {
+public struct Mark: Equatable, Hashable {
     public var start: UInt64
     public var end: UInt64
     public var name: String
@@ -1664,33 +1610,6 @@ public struct Mark {
         self.end = end
         self.name = name
         self.value = value
-    }
-}
-
-
-
-extension Mark: Equatable, Hashable {
-    public static func ==(lhs: Mark, rhs: Mark) -> Bool {
-        if lhs.start != rhs.start {
-            return false
-        }
-        if lhs.end != rhs.end {
-            return false
-        }
-        if lhs.name != rhs.name {
-            return false
-        }
-        if lhs.value != rhs.value {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(start)
-        hasher.combine(end)
-        hasher.combine(name)
-        hasher.combine(value)
     }
 }
 
@@ -1733,7 +1652,7 @@ public func FfiConverterTypeMark_lower(_ value: Mark) -> RustBuffer {
 }
 
 
-public struct Patch {
+public struct Patch: Equatable, Hashable {
     public var path: [PathElement]
     public var action: PatchAction
 
@@ -1744,26 +1663,6 @@ public struct Patch {
         self.action = action
     }
 }
-
-
-
-extension Patch: Equatable, Hashable {
-    public static func ==(lhs: Patch, rhs: Patch) -> Bool {
-        if lhs.path != rhs.path {
-            return false
-        }
-        if lhs.action != rhs.action {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(path)
-        hasher.combine(action)
-    }
-}
-
 
 #if swift(>=5.8)
 @_documentation(visibility: private)
@@ -1799,7 +1698,7 @@ public func FfiConverterTypePatch_lower(_ value: Patch) -> RustBuffer {
 }
 
 
-public struct PathElement {
+public struct PathElement: Equatable, Hashable {
     public var prop: Prop
     public var obj: ObjId
 
@@ -1808,25 +1707,6 @@ public struct PathElement {
     public init(prop: Prop, obj: ObjId) {
         self.prop = prop
         self.obj = obj
-    }
-}
-
-
-
-extension PathElement: Equatable, Hashable {
-    public static func ==(lhs: PathElement, rhs: PathElement) -> Bool {
-        if lhs.prop != rhs.prop {
-            return false
-        }
-        if lhs.obj != rhs.obj {
-            return false
-        }
-        return true
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(prop)
-        hasher.combine(obj)
     }
 }
 
