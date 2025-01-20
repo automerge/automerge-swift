@@ -67,6 +67,21 @@ class TextTestCase: XCTestCase {
         XCTAssertEqual(c_heads_world.description, c_world.description)
     }
 
+    func testTextCursorDocumentBoundaries() throws {
+        let doc = Document(textEncoding: .utf16CodeUnit)
+        let content = "Hello family: 🧑‍🧑‍🧒‍🧒"
+        let text = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: text, start: 0, delete: 0, value: content)
+
+        let startCursor = try doc.cursor(obj: text, position: 0) // "|Hello family: 🧑‍🧑‍🧒‍🧒"
+        let startPosition = try doc.cursorPosition(obj: text, cursor: startCursor)
+        let endCursor = try doc.cursor(obj: text, position: UInt64(content.utf16.count)) // "Hello family: 🧑‍🧑‍🧒‍🧒|"
+        let endPosition = try doc.cursorPosition(obj: text, cursor: endCursor)
+
+        XCTAssertEqual(startPosition, 0)
+        XCTAssertEqual(endPosition, UInt64(content.utf16.count))
+    }
+
     func testRepeatedTextInsertion() throws {
         let characterCollection: [String] =
             "a bcdef ghijk lmnop qrstu vwxyz ABCD EFGHI JKLMN OPQRS TUVWX YZ😀😎🤓⚁ ♛⛺︎🕰️⏰⏲️ ⏱️🧭".map { char in

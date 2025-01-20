@@ -293,4 +293,38 @@ final class AutomergeDocTests: XCTestCase {
         XCTAssertNil(changes[4]!.message)
         XCTAssertEqual(changes[4]!.timestamp.timeIntervalSince1970, 0)
     }
+
+    func testDocumentTextEncodings_UTF8() throws {
+        let doc = Document(textEncoding: .utf8CodeUnit)
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
+        try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
+        try doc.spliceText(obj: textId, start: 31, delete: 0, value: "+🎄🏡🧑‍🧑‍🧒‍🧒")
+
+        let text = try doc.text(obj: textId)
+        XCTAssertEqual(text, "init: 🧑‍🧑‍🧒‍🧒+🎄🏡🧑‍🧑‍🧒‍🧒")
+    }
+
+    func testDocumentTextEncodings_UTF16() throws {
+        let doc = Document(textEncoding: .utf16CodeUnit)
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
+        try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
+        try doc.spliceText(obj: textId, start: 17, delete: 0, value: "+🎄🏡🧑‍🧑‍🧒‍🧒")
+
+        let text = try doc.text(obj: textId)
+        XCTAssertEqual(text, "init: 🧑‍🧑‍🧒‍🧒+🎄🏡🧑‍🧑‍🧒‍🧒")
+    }
+
+    func testDocumentTextEncodings_UnicodeScalars() throws {
+        let doc = Document(textEncoding: .unicodeCodePoint)
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
+        try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
+        try doc.spliceText(obj: textId, start: 13, delete: 0, value: "+🎄🏡🧑‍🧑‍🧒‍🧒")
+
+        let text = try doc.text(obj: textId)
+        XCTAssertEqual(text, "init: 🧑‍🧑‍🧒‍🧒+🎄🏡🧑‍🧑‍🧒‍🧒")
+    }
 }
