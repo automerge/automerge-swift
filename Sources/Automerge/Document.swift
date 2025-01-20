@@ -1,5 +1,6 @@
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
+import enum AutomergeUniffi.TextEncoding
 import Foundation
 
 /// An Automerge document that provides an interface to the document-structured data it contains.
@@ -69,11 +70,19 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Retrieve the current text encoding used by the document.
+    public var textEncoding: TextEncoding {
+        lock {
+            self.doc.wrapErrors { $0.textEncoding() }
+        }
+    }
+
     /// Creates an new, empty Automerge document.
-    /// - Parameter logLevel: The level at which to generate logs into unified logging from actions within this
-    /// document.
-    public init(logLevel: LogVerbosity = .errorOnly) {
-        doc = WrappedDoc(Doc())
+    /// - Parameters:
+    ///   - textEncoding: The encoding type for text within the document. Defaults to `.unicodeCodePoint`.
+    ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
+    public init(textEncoding: TextEncoding = .unicodeCodePoint, logLevel: LogVerbosity = .errorOnly) {
+        doc = WrappedDoc(Doc.newWithTextEncoding(textEncoding: textEncoding))
         self.reportingLogLevel = logLevel
     }
 
@@ -576,7 +585,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
-    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
     /// - Returns: A cursor that references the position you specified.
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try lock {
@@ -590,7 +599,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
-    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
     public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
@@ -610,7 +619,7 @@ public final class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
-    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
+    /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
     public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try lock {
             try self.doc.wrapErrors {
@@ -625,7 +634,7 @@ public final class Document: @unchecked Sendable {
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
-    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
+    /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
     public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
         try lock {
             try self.doc.wrapErrors {
@@ -658,23 +667,21 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to update.
-    ///   - start: The distance from the start of the string in unicode scalars where the function begins inserting or
-    /// deleting.
-    ///   - delete: The number of unicode scalars to delete from the `start` index.
+    ///   - start: The distance from the start of the string where the function begins inserting or deleting.
+    ///   - delete: Text length to delete from the `start` index. It depends on the picked ``TextEncoding`` in Document creation.
     ///   If negative, the function deletes characters preceding `start` index, rather than following it.
     ///   - value: The characters to insert after the `start` index.
     ///
-    /// With `spliceText`, the `start` and `delete` parameters represent integer distances of unicode scalars of the
-    /// Swift strings, not the counts of Characters (or grapheme clusters).
+    /// With `spliceText`, the `start` and `delete` parameters represent integer distances of the Swift strings. This distance will change
+    /// depends on the picked text representation in the Document creation.
     ///
-    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
-    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
-    /// To determine Automerge index position from a `String.Index`, convert the index position into a
-    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
+    /// APIs. Indices depends on picked ``TextEncoding`` during Automerge.Document creation.
     ///
     /// An example of deriving the automerge start position from a Swift string's index:
     /// ```swift
     /// extension String {
+    ///    /// Given: Automerge.Document(textEncoding: .unicodeScalars)
     ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
     ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
     ///            return nil
@@ -687,11 +694,12 @@ public final class Document: @unchecked Sendable {
     /// }
     /// ```
     ///
-    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
-    /// `Int64`.
+    /// For the length of index updates in Automerge, use the count in picked text encoding converted to `Int64`.
     /// For example:
     /// ```swift
     /// Int64("🇬🇧".unicodeScalars.count)
+    /// Int64("🇬🇧".utf8.count)
+    /// Int64("🇬🇧".utf16.count)
     /// ```
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try lock {
@@ -726,8 +734,8 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to which to add the mark.
-    ///   - start: The distance from the start of the string in unicode scalars where the function starts the mark.
-    ///   - end: The distance from the start of the string in unicode scalars where the function ends the mark.
+    ///   - start: The distance from the start of the string where the function begins inserting or deleting.
+    ///   - end: The distance from the start of the string where the function ends the mark.
     ///   - expand: How the mark should expand when text is inserted at the beginning or end of the range
     ///   - name: The name of the mark, for example "bold".
     ///   - value: The scalar value to associate with the mark.
@@ -735,14 +743,13 @@ public final class Document: @unchecked Sendable {
     /// To remove an existing mark between two index positions, set the name to the same value
     /// as the existing mark and set the value to the scalar value ``ScalarValue/Null``.
     ///
-    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
-    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
-    /// To determine Automerge index position from a `String.Index`, convert the index position into a
-    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
+    /// APIs. Indices depends on picked ``TextEncoding`` during Automerge.Document creation.
     ///
     /// An example of deriving the automerge start position from a Swift string's index:
     /// ```swift
     /// extension String {
+    ///    /// Given: Automerge.Document(textEncoding: .unicodeScalars)
     ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
     ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
     ///            return nil
@@ -755,11 +762,12 @@ public final class Document: @unchecked Sendable {
     /// }
     /// ```
     ///
-    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
-    /// `Int64`.
+    /// For the length of index updates in Automerge, use the count in picked text encoding converted to `UInt64`.
     /// For example:
     /// ```swift
-    /// Int64("🇬🇧".unicodeScalars.count)
+    /// UInt64("🇬🇧".unicodeScalars.count)
+    /// UInt64("🇬🇧".utf8.count)
+    /// UInt64("🇬🇧".utf16.count)
     /// ```
     public func mark(
         obj: ObjId,
