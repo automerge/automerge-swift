@@ -135,6 +135,13 @@ interface PatchAction {
     Marks( ObjId obj, sequence<Mark> marks );
 };
 
+enum TextEncoding {
+    "UnicodeCodePoint",
+    "Utf8CodeUnit",
+    "Utf16CodeUnit",
+    "GraphemeCluster",
+};
+
 interface Doc {
 
     constructor();
@@ -142,8 +149,11 @@ interface Doc {
     constructor(ActorId actor);
     [Name=load, Throws=LoadError]
     constructor(sequence<u8> bytes);
+    [Name=new_with_text_encoding]
+    constructor(TextEncoding text_encoding);
 
     ActorId actor_id();
+    TextEncoding text_encoding();
     void set_actor(ActorId actor);
     Doc fork();
     [Throws=DocError]

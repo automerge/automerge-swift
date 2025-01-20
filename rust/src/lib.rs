@@ -26,3 +26,5 @@ mod sync_state;
 use sync_state::{DecodeSyncStateError, SyncState};
 mod value;
 use value::Value;
+mod text_encoding;
+use text_encoding::TextEncoding;
