@@ -673,7 +673,7 @@ public final class Document: @unchecked Sendable {
     ///   - value: The characters to insert after the `start` index.
     ///
     /// With `spliceText`, the `start` and `delete` parameters represent integer distances of the Swift strings. This distance will change
-    /// depends on the picked text representation in the Document creation.
+    /// based on the text encoding chosen during at Document creation.
     ///
     /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
     /// APIs. Indices depends on picked ``TextEncoding`` during Automerge.Document creation.
