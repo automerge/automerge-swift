@@ -1,6 +1,5 @@
 import class AutomergeUniffi.Doc
 import protocol AutomergeUniffi.DocProtocol
-import enum AutomergeUniffi.TextEncoding
 import Foundation
 
 /// An Automerge document that provides an interface to the document-structured data it contains.
