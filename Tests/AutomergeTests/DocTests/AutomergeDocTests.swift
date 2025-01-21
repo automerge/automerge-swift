@@ -295,7 +295,7 @@ final class AutomergeDocTests: XCTestCase {
     }
 
     func testDocumentTextEncodings_UTF8() throws {
-        let doc = Document(textEncoding: .utf8CodeUnit)
+        let doc = Document(textEncoding: .utf8)
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
 
         try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
@@ -307,7 +307,7 @@ final class AutomergeDocTests: XCTestCase {
     }
 
     func testDocumentTextEncodings_UTF16() throws {
-        let doc = Document(textEncoding: .utf16CodeUnit)
+        let doc = Document(textEncoding: .utf16)
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
         try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
@@ -318,7 +318,7 @@ final class AutomergeDocTests: XCTestCase {
     }
 
     func testDocumentTextEncodings_UnicodeScalars() throws {
-        let doc = Document(textEncoding: .unicodeCodePoint)
+        let doc = Document(textEncoding: .unicodeScalar)
         let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
         try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
