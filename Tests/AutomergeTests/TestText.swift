@@ -68,7 +68,7 @@ class TextTestCase: XCTestCase {
     }
 
     func testTextCursorDocumentBoundaries() throws {
-        let doc = Document(textEncoding: .utf16CodeUnit)
+        let doc = Document(textEncoding: .utf16)
         let content = "Hello family: 🧑‍🧑‍🧒‍🧒"
         let text = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
         try doc.spliceText(obj: text, start: 0, delete: 0, value: content)

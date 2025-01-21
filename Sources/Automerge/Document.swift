@@ -73,7 +73,7 @@ public final class Document: @unchecked Sendable {
     /// Retrieve the current text encoding used by the document.
     public var textEncoding: TextEncoding {
         lock {
-            self.doc.wrapErrors { $0.textEncoding() }
+            self.doc.wrapErrors { $0.textEncoding().textEncoding }
         }
     }
 
@@ -81,8 +81,8 @@ public final class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - textEncoding: The encoding type for text within the document. Defaults to `.unicodeCodePoint`.
     ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
-    public init(textEncoding: TextEncoding = .unicodeCodePoint, logLevel: LogVerbosity = .errorOnly) {
-        doc = WrappedDoc(Doc.newWithTextEncoding(textEncoding: textEncoding))
+    public init(textEncoding: TextEncoding = .unicodeScalar, logLevel: LogVerbosity = .errorOnly) {
+        doc = WrappedDoc(Doc.newWithTextEncoding(textEncoding: textEncoding.ffi_textEncoding))
         self.reportingLogLevel = logLevel
     }
 
