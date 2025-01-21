@@ -33,10 +33,10 @@ impl From<am::TextEncoding> for TextEncoding {
 impl std::fmt::Display for TextEncoding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::UnicodeCodePoint => write!(f, "UnicodeCodePoint"),
-            Self::Utf8CodeUnit => write!(f, "Utf8CodeUnit"),
-            Self::Utf16CodeUnit => write!(f, "Utf16CodeUnit"),
-            Self::GraphemeCluster => write!(f, "GraphemeCluster"),
+            Self::UnicodeCodePoint => write!(f, "Unicode Scalar"),
+            Self::Utf8CodeUnit => write!(f, "UTF-8"),
+            Self::Utf16CodeUnit => write!(f, "UTF-16"),
+            Self::GraphemeCluster => write!(f, "Grapheme Cluster"),
         }
     }
 }
