@@ -676,7 +676,7 @@ public final class Document: @unchecked Sendable {
     /// based on the text encoding chosen during at Document creation.
     ///
     /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
-    /// APIs. Indices depends on picked ``TextEncoding`` during Automerge.Document creation.
+    /// APIs. Indices in Automerge are based on the ``TextEncoding`` chosen at document creation.
     ///
     /// An example of deriving the automerge start position from a Swift string's index:
     /// ```swift
