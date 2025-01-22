@@ -327,4 +327,15 @@ final class AutomergeDocTests: XCTestCase {
         let text = try doc.text(obj: textId)
         XCTAssertEqual(text, "init: 🧑‍🧑‍🧒‍🧒+🎄🏡🧑‍🧑‍🧒‍🧒")
     }
+
+    func testDocumentTextEncodings_GraphemeCluster() throws {
+        let doc = Document(textEncoding: .graphemeCluster)
+        let textId = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "init: ")
+        try doc.spliceText(obj: textId, start: 6, delete: 0, value: "🧑‍🧑‍🧒‍🧒")
+        try doc.spliceText(obj: textId, start: 6+1, delete: 0, value: "+🎄🏡🧑‍🧑‍🧒‍🧒")
+
+        let text = try doc.text(obj: textId)
+        XCTAssertEqual(text, "init: 🧑‍🧑‍🧒‍🧒+🎄🏡🧑‍🧑‍🧒‍🧒")
+    }
 }
