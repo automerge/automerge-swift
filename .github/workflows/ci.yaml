@@ -67,7 +67,9 @@ jobs:
       - name: Get swift version
         run: swift --version
       - name: Swift tests
-        run: swift test
+        run: |
+          export LOCAL_BUILD=true
+          swift test
 
   wasm:
     runs-on: ubuntu-latest
