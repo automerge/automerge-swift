@@ -277,6 +277,11 @@ void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new(RustCallStatus *_No
 void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new_with_actor(RustBuffer actor, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW_WITH_TEXT_ENCODING
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_CONSTRUCTOR_DOC_NEW_WITH_TEXT_ENCODING
+void*_Nonnull uniffi_uniffi_automerge_fn_constructor_doc_new_with_text_encoding(RustBuffer text_encoding, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ACTOR_ID
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_ACTOR_ID
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_actor_id(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
@@ -570,6 +575,11 @@ RustBuffer uniffi_uniffi_automerge_fn_method_doc_text(void*_Nonnull ptr, RustBuf
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_AT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_AT
 RustBuffer uniffi_uniffi_automerge_fn_method_doc_text_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer heads, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_ENCODING
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_TEXT_ENCODING
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_text_encoding(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_UPDATE_TEXT
@@ -1269,6 +1279,12 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_text_at(void
     
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT_ENCODING
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_TEXT_ENCODING
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_text_encoding(void
+    
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_UPDATE_TEXT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_UPDATE_TEXT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_update_text(void
@@ -1320,6 +1336,12 @@ uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_ACTOR
 uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new_with_actor(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_TEXT_ENCODING
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_CONSTRUCTOR_DOC_NEW_WITH_TEXT_ENCODING
+uint16_t uniffi_uniffi_automerge_checksum_constructor_doc_new_with_text_encoding(void
     
 );
 #endif
