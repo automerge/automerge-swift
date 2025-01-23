@@ -7,8 +7,9 @@ use automerge::{transaction::Transactable, ReadDoc};
 use crate::actor_id::ActorId;
 use crate::cursor::Position;
 use crate::mark::{ExpandMark, KeyValue, Mark};
-use crate::text_encoding::TextEncoding;
 use crate::patches::Patch;
+use crate::text_encoding::TextEncoding;
+
 use crate::{
     Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
 };
@@ -48,11 +49,15 @@ impl Doc {
     }
 
     pub(crate) fn new_with_actor(actor: ActorId) -> Self {
-        Self(RwLock::new(am::AutoCommit::default().with_actor(actor.into())))
+        Self(RwLock::new(
+            am::AutoCommit::default().with_actor(actor.into()),
+        ))
     }
 
     pub fn new_with_text_encoding(text_encoding: TextEncoding) -> Self {
-        Self(RwLock::new(am::AutoCommit::new_with_encoding(text_encoding.into())))
+        Self(RwLock::new(am::AutoCommit::new_with_encoding(
+            text_encoding.into(),
+        )))
     }
 
     pub fn text_encoding(&self) -> TextEncoding {
