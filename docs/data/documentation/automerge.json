@@ -534,6 +534,14 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/URLScalarConversionError"
       ],
       "title" : "Type Conversion Errors"
+    },
+    {
+      "anchor" : "Enumerations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding"
+      ],
+      "title" : "Enumerations"
     }
   ],
   "variants" : [
@@ -1969,6 +1977,40 @@
   "title" : "SyncState",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/syncstate"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding": {
+  "abstract" : [
+    {
+      "text" : "An enumeration representing different types of text encoding.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TextEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/TimestampScalarConversionError": {
   "abstract" : [

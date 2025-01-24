@@ -112,14 +112,6 @@
   ],
   "topicSections" : [
     {
-      "anchor" : "Operators",
-      "generated" : true,
-      "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BindingError\/==(_:_:)"
-      ],
-      "title" : "Operators"
-    },
-    {
       "anchor" : "Enumeration-Cases",
       "generated" : true,
       "identifiers" : [
@@ -220,70 +212,6 @@
   "title" : "BindingError",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/bindingerror"
-},
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/BindingError/==(_:_:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "=="
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge12BindingErrorO",
-      "text" : "BindingError"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge12BindingErrorO",
-      "text" : "BindingError"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/BindingError\/==(_:_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "==(_:_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/bindingerror\/==(_:_:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/BindingError/Equatable-Implementations": {
   "abstract" : [

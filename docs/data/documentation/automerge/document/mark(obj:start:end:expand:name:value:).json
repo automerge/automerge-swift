@@ -317,7 +317,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The distance from the start of the string in unicode scalars where the function starts the mark.",
+                  "text" : "The distance from the start of the string where the function begins inserting or deleting.",
                   "type" : "text"
                 }
               ],
@@ -331,7 +331,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The distance from the start of the string in unicode scalars where the function ends the mark.",
+                  "text" : "The distance from the start of the string where the function ends the mark.",
                   "type" : "text"
                 }
               ],
@@ -429,63 +429,28 @@
               "type" : "codeVoice"
             },
             {
-              "text" : " convert it to an index position usable by Automerge through",
+              "text" : " convert it to an index position usable by Automerge through ",
               "type" : "text"
+            },
+            {
+              "code" : "Foundation.String.View",
+              "type" : "codeVoice"
             },
             {
               "text" : " ",
               "type" : "text"
             },
             {
-              "code" : "UnicodeScalarView",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ", accessible through the ",
+              "text" : "APIs. Indices depends on picked ",
               "type" : "text"
             },
             {
-              "code" : "unicodeScalars",
-              "type" : "codeVoice"
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text" : " property on the string.",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "To determine Automerge index position from a ",
-              "type" : "text"
-            },
-            {
-              "code" : "String.Index",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ", convert the index position into a",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "code" : "String.UnicodeScalarView.Index",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " and calculate the distance from the ",
-              "type" : "text"
-            },
-            {
-              "code" : "startIndex",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " value.",
+              "text" : " during Automerge.Document creation.",
               "type" : "text"
             }
           ],
@@ -503,6 +468,7 @@
         {
           "code" : [
             "extension String {",
+            "   \/\/\/ Given: Automerge.Document(textEncoding: .unicodeScalars)",
             "   @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {",
             "       guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {",
             "           return nil",
@@ -520,23 +486,11 @@
         {
           "inlineContent" : [
             {
-              "text" : "For the length of index updates in Automerge, use the count of the string’s ",
+              "text" : "For the length of index updates in Automerge, use the count in picked text encoding converted to ",
               "type" : "text"
             },
             {
-              "code" : "UnicodeScalarView",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ", converted to",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "code" : "Int64",
+              "code" : "UInt64",
               "type" : "codeVoice"
             },
             {
@@ -556,7 +510,9 @@
         },
         {
           "code" : [
-            "Int64(\"🇬🇧\".unicodeScalars.count)"
+            "UInt64(\"🇬🇧\".unicodeScalars.count)",
+            "UInt64(\"🇬🇧\".utf8.count)",
+            "UInt64(\"🇬🇧\".utf16.count)"
           ],
           "syntax" : "swift",
           "type" : "codeListing"
@@ -1087,6 +1043,40 @@
   "title" : "ScalarValue.Null",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/scalarvalue\/null"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding": {
+  "abstract" : [
+    {
+      "text" : "An enumeration representing different types of text encoding.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TextEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding"
 }
 }
 }

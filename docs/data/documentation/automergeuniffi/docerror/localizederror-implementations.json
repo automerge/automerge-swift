@@ -35,7 +35,7 @@
       "anchor" : "Instance-Properties",
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/errorDescription",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/errorDescription-1xre0",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/failureReason",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/helpAnchor",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/recoverySuggestion"
@@ -87,7 +87,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docerror"
 },
-"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocError/errorDescription": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocError/errorDescription-1xre0": {
   "abstract" : [
 
   ],
@@ -118,12 +118,12 @@
       "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/errorDescription",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocError\/errorDescription-1xre0",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "errorDescription",
   "type" : "topic",
-  "url" : "\/documentation\/automergeuniffi\/docerror\/errordescription"
+  "url" : "\/documentation\/automergeuniffi\/docerror\/errordescription-1xre0"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocError/failureReason": {
   "abstract" : [

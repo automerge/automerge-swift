@@ -263,7 +263,6 @@
       "anchor" : "Creating-or-loading-a-document",
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(logLevel:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity"
       ],
       "title" : "Creating or loading a document"
@@ -492,47 +491,6 @@
   "title" : "init(_:logLevel:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/init(_:loglevel:)"
-},
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/init(logLevel:)": {
-  "abstract" : [
-    {
-      "text" : "Creates an new, empty Automerge document.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "logLevel"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge12LogVerbosityO",
-      "text" : "LogVerbosity"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(logLevel:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(logLevel:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/init(loglevel:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/save()": {
   "abstract" : [

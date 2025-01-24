@@ -17,11 +17,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/automerge\/document\/init(loglevel:)",
-                "title" : "init(logLevel: LogVerbosity)",
-                "type" : "init"
-              },
-              {
                 "path" : "\/documentation\/automerge\/document\/init(_:loglevel:)",
                 "title" : "init(Data, logLevel: LogVerbosity) throws",
                 "type" : "init"
@@ -653,7 +648,7 @@
               },
               {
                 "path" : "\/documentation\/automerge\/document\/objectdidchange",
-                "title" : "let objectDidChange: PassthroughSubject<Void, Never>",
+                "title" : "var objectDidChange: AnyPublisher<(), Never>",
                 "type" : "property"
               },
               {
@@ -663,6 +658,24 @@
               {
                 "path" : "\/documentation\/automerge\/document\/transferrepresentation",
                 "title" : "static var transferRepresentation: some TransferRepresentation",
+                "type" : "property"
+              },
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/init(textencoding:loglevel:)",
+                "title" : "init(textEncoding: TextEncoding, logLevel: LogVerbosity)",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/document\/textencoding",
+                "title" : "var textEncoding: TextEncoding",
                 "type" : "property"
               },
               {
@@ -688,6 +701,58 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/init(importing:contenttype:)-55yr2",
+                    "title" : "init(importing: URL, contentType: UTType?) async throws",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/init(importing:contenttype:)-6sfve",
+                    "title" : "init(importing: Data, contentType: UTType?) async throws",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/suggestedfilename",
+                    "title" : "var suggestedFilename: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/export(to:contenttype:)",
+                    "title" : "func export(to: URL, contentType: UTType?) async throws -> URL",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/exported(as:)",
+                    "title" : "func exported(as: UTType?) async throws -> Data",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/exportedcontenttypes(_:)",
+                    "title" : "func exportedContentTypes(TransferRepresentationVisibility) -> [UTType]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/importedcontenttypes()",
+                    "title" : "func importedContentTypes() -> [UTType]",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/withexportedfile(contenttype:filehandler:)",
+                    "title" : "func withExportedFile<Result>(contentType: UTType?, fileHandler: (URL) async throws -> Result) async throws -> Result",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -695,6 +760,15 @@
                     "path" : "\/documentation\/automerge\/document\/transferrepresentation",
                     "title" : "static var transferRepresentation: some TransferRepresentation",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/document\/exportedcontenttypes(visibility:)",
+                    "title" : "static func exportedContentTypes(visibility: TransferRepresentationVisibility) -> [UTType]",
+                    "type" : "method"
                   }
                 ],
                 "path" : "\/documentation\/automerge\/document\/transferable-implementations",
@@ -3601,15 +3675,6 @@
           {
             "children" : [
               {
-                "title" : "Operators",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automerge\/bindingerror\/==(_:_:)",
-                "title" : "static func == (BindingError, BindingError) -> Bool",
-                "type" : "op"
-              },
-              {
                 "title" : "Enumeration Cases",
                 "type" : "groupMarker"
               },
@@ -4595,6 +4660,61 @@
             "path" : "\/documentation\/automerge\/urlscalarconversionerror",
             "title" : "URLScalarConversionError",
             "type" : "enum"
+          },
+          {
+            "title" : "Enumerations",
+            "type" : "groupMarker"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automerge\/textencoding\/graphemecluster",
+                "title" : "case graphemeCluster",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/textencoding\/unicodescalar",
+                "title" : "case unicodeScalar",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/textencoding\/utf16",
+                "title" : "case utf16",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automerge\/textencoding\/utf8",
+                "title" : "case utf8",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automerge\/textencoding\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automerge\/textencoding\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automerge\/textencoding",
+            "title" : "TextEncoding",
+            "type" : "enum"
           }
         ],
         "path" : "\/documentation\/automerge",
@@ -4610,37 +4730,12 @@
           {
             "children" : [
               {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Initializers",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automergeuniffi\/doc\/nopointer\/init()",
-                    "title" : "init()",
-                    "type" : "init"
-                  }
-                ],
-                "path" : "\/documentation\/automergeuniffi\/doc\/nopointer",
-                "title" : "Doc.NoPointer",
-                "type" : "struct"
-              },
-              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/doc\/init()",
                 "title" : "init()",
-                "type" : "init"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/doc\/init(nopointer:)",
-                "title" : "init(noPointer: NoPointer)",
                 "type" : "init"
               },
               {
@@ -4948,8 +5043,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/automergeuniffi\/doc\/unifficlonepointer()",
-                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
+                "path" : "\/documentation\/automergeuniffi\/doc\/textencoding()",
+                "title" : "func textEncoding() -> TextEncoding",
                 "type" : "method"
               },
               {
@@ -4980,6 +5075,11 @@
                 "path" : "\/documentation\/automergeuniffi\/doc\/newwithactor(actor:)",
                 "title" : "static func newWithActor(actor: ActorId) -> Doc",
                 "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/doc\/newwithtextencoding(textencoding:)",
+                "title" : "static func newWithTextEncoding(textEncoding: TextEncoding) -> Doc",
+                "type" : "method"
               }
             ],
             "path" : "\/documentation\/automergeuniffi\/doc",
@@ -4989,37 +5089,12 @@
           {
             "children" : [
               {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Initializers",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/automergeuniffi\/syncstate\/nopointer\/init()",
-                    "title" : "init()",
-                    "type" : "init"
-                  }
-                ],
-                "path" : "\/documentation\/automergeuniffi\/syncstate\/nopointer",
-                "title" : "SyncState.NoPointer",
-                "type" : "struct"
-              },
-              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
               {
                 "path" : "\/documentation\/automergeuniffi\/syncstate\/init()",
                 "title" : "init()",
-                "type" : "init"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/syncstate\/init(nopointer:)",
-                "title" : "init(noPointer: NoPointer)",
                 "type" : "init"
               },
               {
@@ -5044,11 +5119,6 @@
               {
                 "path" : "\/documentation\/automergeuniffi\/syncstate\/theirheads()",
                 "title" : "func theirHeads() -> [ChangeHash]?",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/syncstate\/unifficlonepointer()",
-                "title" : "func uniffiClonePointer() -> UnsafeMutableRawPointer",
                 "type" : "method"
               },
               {
@@ -5371,6 +5441,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/automergeuniffi\/docprotocol\/textencoding()",
+                "title" : "func textEncoding() -> TextEncoding",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/automergeuniffi\/docprotocol\/updatetext(obj:chars:)",
                 "title" : "func updateText(obj: ObjId, chars: String) throws",
                 "type" : "method"
@@ -5509,528 +5584,6 @@
             ],
             "path" : "\/documentation\/automergeuniffi\/change",
             "title" : "Change",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid\/lift(_:)",
-                "title" : "static func lift(RustBuffer) throws -> ActorId",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid\/lower(_:)",
-                "title" : "static func lower(ActorId) -> RustBuffer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ActorId",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid\/write(_:into:)",
-                "title" : "static func write(ActorId, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid",
-            "title" : "FfiConverterTypeActorId",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Change",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange\/write(_:into:)",
-                "title" : "static func write(Change, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange",
-            "title" : "FfiConverterTypeChange",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash\/lift(_:)",
-                "title" : "static func lift(RustBuffer) throws -> ChangeHash",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash\/lower(_:)",
-                "title" : "static func lower(ChangeHash) -> RustBuffer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ChangeHash",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash\/write(_:into:)",
-                "title" : "static func write(ChangeHash, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash",
-            "title" : "FfiConverterTypeChangeHash",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor\/lift(_:)",
-                "title" : "static func lift(RustBuffer) throws -> Cursor",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor\/lower(_:)",
-                "title" : "static func lower(Cursor) -> RustBuffer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Cursor",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor\/write(_:into:)",
-                "title" : "static func write(Cursor, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor",
-            "title" : "FfiConverterTypeCursor",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedecodesyncstateerror\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> DecodeSyncStateError",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedecodesyncstateerror\/write(_:into:)",
-                "title" : "static func write(DecodeSyncStateError, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypedecodesyncstateerror",
-            "title" : "FfiConverterTypeDecodeSyncStateError",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc\/lift(_:)",
-                "title" : "static func lift(UnsafeMutableRawPointer) throws -> Doc",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc\/lower(_:)",
-                "title" : "static func lower(Doc) -> UnsafeMutableRawPointer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Doc",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc\/write(_:into:)",
-                "title" : "static func write(Doc, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc",
-            "title" : "FfiConverterTypeDoc",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedocerror\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> DocError",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypedocerror\/write(_:into:)",
-                "title" : "static func write(DocError, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypedocerror",
-            "title" : "FfiConverterTypeDocError",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeexpandmark\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ExpandMark",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeexpandmark\/write(_:into:)",
-                "title" : "static func write(ExpandMark, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeexpandmark",
-            "title" : "FfiConverterTypeExpandMark",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypekeyvalue\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> KeyValue",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypekeyvalue\/write(_:into:)",
-                "title" : "static func write(KeyValue, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypekeyvalue",
-            "title" : "FfiConverterTypeKeyValue",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeloaderror\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> LoadError",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeloaderror\/write(_:into:)",
-                "title" : "static func write(LoadError, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeloaderror",
-            "title" : "FfiConverterTypeLoadError",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypemark\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Mark",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypemark\/write(_:into:)",
-                "title" : "static func write(Mark, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypemark",
-            "title" : "FfiConverterTypeMark",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid\/lift(_:)",
-                "title" : "static func lift(RustBuffer) throws -> ObjId",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid\/lower(_:)",
-                "title" : "static func lower(ObjId) -> RustBuffer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ObjId",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid\/write(_:into:)",
-                "title" : "static func write(ObjId, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid",
-            "title" : "FfiConverterTypeObjId",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjtype\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ObjType",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjtype\/write(_:into:)",
-                "title" : "static func write(ObjType, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjtype",
-            "title" : "FfiConverterTypeObjType",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatch\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Patch",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatch\/write(_:into:)",
-                "title" : "static func write(Patch, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatch",
-            "title" : "FfiConverterTypePatch",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatchaction\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> PatchAction",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatchaction\/write(_:into:)",
-                "title" : "static func write(PatchAction, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatchaction",
-            "title" : "FfiConverterTypePatchAction",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> PathElement",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement\/write(_:into:)",
-                "title" : "static func write(PathElement, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement",
-            "title" : "FfiConverterTypePathElement",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Position",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition\/write(_:into:)",
-                "title" : "static func write(Position, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition",
-            "title" : "FfiConverterTypePosition",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Prop",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop\/write(_:into:)",
-                "title" : "static func write(Prop, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop",
-            "title" : "FfiConverterTypeProp",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypereceivesyncerror\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ReceiveSyncError",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypereceivesyncerror\/write(_:into:)",
-                "title" : "static func write(ReceiveSyncError, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypereceivesyncerror",
-            "title" : "FfiConverterTypeReceiveSyncError",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypescalarvalue\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> ScalarValue",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypescalarvalue\/write(_:into:)",
-                "title" : "static func write(ScalarValue, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypescalarvalue",
-            "title" : "FfiConverterTypeScalarValue",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate\/lift(_:)",
-                "title" : "static func lift(UnsafeMutableRawPointer) throws -> SyncState",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate\/lower(_:)",
-                "title" : "static func lower(SyncState) -> UnsafeMutableRawPointer",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> SyncState",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate\/write(_:into:)",
-                "title" : "static func write(SyncState, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate",
-            "title" : "FfiConverterTypeSyncState",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Type Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypevalue\/read(from:)",
-                "title" : "static func read(from: inout (data: Data, offset: Data.Index)) throws -> Value",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/automergeuniffi\/fficonvertertypevalue\/write(_:into:)",
-                "title" : "static func write(Value, into: inout [UInt8])",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypevalue",
-            "title" : "FfiConverterTypeValue",
             "type" : "struct"
           },
           {
@@ -6332,186 +5885,6 @@
             "type" : "groupMarker"
           },
           {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid_lift(_:)",
-            "title" : "func FfiConverterTypeActorId_lift(RustBuffer) throws -> ActorId",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeactorid_lower(_:)",
-            "title" : "func FfiConverterTypeActorId_lower(ActorId) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash_lift(_:)",
-            "title" : "func FfiConverterTypeChangeHash_lift(RustBuffer) throws -> ChangeHash",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechangehash_lower(_:)",
-            "title" : "func FfiConverterTypeChangeHash_lower(ChangeHash) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lift(_:)",
-            "title" : "func FfiConverterTypeChange_lift(RustBuffer) throws -> Change",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypechange_lower(_:)",
-            "title" : "func FfiConverterTypeChange_lower(Change) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor_lift(_:)",
-            "title" : "func FfiConverterTypeCursor_lift(RustBuffer) throws -> Cursor",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypecursor_lower(_:)",
-            "title" : "func FfiConverterTypeCursor_lower(Cursor) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc_lift(_:)",
-            "title" : "func FfiConverterTypeDoc_lift(UnsafeMutableRawPointer) throws -> Doc",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypedoc_lower(_:)",
-            "title" : "func FfiConverterTypeDoc_lower(Doc) -> UnsafeMutableRawPointer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeexpandmark_lift(_:)",
-            "title" : "func FfiConverterTypeExpandMark_lift(RustBuffer) throws -> ExpandMark",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeexpandmark_lower(_:)",
-            "title" : "func FfiConverterTypeExpandMark_lower(ExpandMark) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypekeyvalue_lift(_:)",
-            "title" : "func FfiConverterTypeKeyValue_lift(RustBuffer) throws -> KeyValue",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypekeyvalue_lower(_:)",
-            "title" : "func FfiConverterTypeKeyValue_lower(KeyValue) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypemark_lift(_:)",
-            "title" : "func FfiConverterTypeMark_lift(RustBuffer) throws -> Mark",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypemark_lower(_:)",
-            "title" : "func FfiConverterTypeMark_lower(Mark) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid_lift(_:)",
-            "title" : "func FfiConverterTypeObjId_lift(RustBuffer) throws -> ObjId",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjid_lower(_:)",
-            "title" : "func FfiConverterTypeObjId_lower(ObjId) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjtype_lift(_:)",
-            "title" : "func FfiConverterTypeObjType_lift(RustBuffer) throws -> ObjType",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeobjtype_lower(_:)",
-            "title" : "func FfiConverterTypeObjType_lower(ObjType) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatchaction_lift(_:)",
-            "title" : "func FfiConverterTypePatchAction_lift(RustBuffer) throws -> PatchAction",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatchaction_lower(_:)",
-            "title" : "func FfiConverterTypePatchAction_lower(PatchAction) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatch_lift(_:)",
-            "title" : "func FfiConverterTypePatch_lift(RustBuffer) throws -> Patch",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepatch_lower(_:)",
-            "title" : "func FfiConverterTypePatch_lower(Patch) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement_lift(_:)",
-            "title" : "func FfiConverterTypePathElement_lift(RustBuffer) throws -> PathElement",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypepathelement_lower(_:)",
-            "title" : "func FfiConverterTypePathElement_lower(PathElement) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition_lift(_:)",
-            "title" : "func FfiConverterTypePosition_lift(RustBuffer) throws -> Position",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeposition_lower(_:)",
-            "title" : "func FfiConverterTypePosition_lower(Position) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop_lift(_:)",
-            "title" : "func FfiConverterTypeProp_lift(RustBuffer) throws -> Prop",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypeprop_lower(_:)",
-            "title" : "func FfiConverterTypeProp_lower(Prop) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypescalarvalue_lift(_:)",
-            "title" : "func FfiConverterTypeScalarValue_lift(RustBuffer) throws -> ScalarValue",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypescalarvalue_lower(_:)",
-            "title" : "func FfiConverterTypeScalarValue_lower(ScalarValue) -> RustBuffer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate_lift(_:)",
-            "title" : "func FfiConverterTypeSyncState_lift(UnsafeMutableRawPointer) throws -> SyncState",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypesyncstate_lower(_:)",
-            "title" : "func FfiConverterTypeSyncState_lower(SyncState) -> UnsafeMutableRawPointer",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypevalue_lift(_:)",
-            "title" : "func FfiConverterTypeValue_lift(RustBuffer) throws -> Value",
-            "type" : "func"
-          },
-          {
-            "path" : "\/documentation\/automergeuniffi\/fficonvertertypevalue_lower(_:)",
-            "title" : "func FfiConverterTypeValue_lower(Value) -> RustBuffer",
-            "type" : "func"
-          },
-          {
             "path" : "\/documentation\/automergeuniffi\/root()",
             "title" : "func root() -> ObjId",
             "type" : "func"
@@ -6590,6 +5963,37 @@
                 "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/error-implementations",
                 "title" : "Error Implementations",
                 "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/errordescription",
+                    "title" : "var errorDescription: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/automergeuniffi\/decodesyncstateerror",
@@ -6611,6 +6015,15 @@
                 "path" : "\/documentation\/automergeuniffi\/docerror\/wrongobjecttype(message:)",
                 "title" : "case WrongObjectType(message: String)",
                 "type" : "case"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/docerror\/errordescription-621zr",
+                "title" : "var errorDescription: String?",
+                "type" : "property"
               },
               {
                 "title" : "Default Implementations",
@@ -6655,7 +6068,7 @@
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/automergeuniffi\/docerror\/errordescription",
+                    "path" : "\/documentation\/automergeuniffi\/docerror\/errordescription-1xre0",
                     "title" : "var errorDescription: String?",
                     "type" : "property"
                   },
@@ -6780,6 +6193,37 @@
                 ],
                 "path" : "\/documentation\/automergeuniffi\/loaderror\/error-implementations",
                 "title" : "Error Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/loaderror\/errordescription",
+                    "title" : "var errorDescription: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/loaderror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/loaderror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/loaderror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/loaderror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
                 "type" : "symbol"
               }
             ],
@@ -7037,6 +6481,37 @@
                 "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/error-implementations",
                 "title" : "Error Implementations",
                 "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/errordescription",
+                    "title" : "var errorDescription: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/failurereason",
+                    "title" : "var failureReason: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/helpanchor",
+                    "title" : "var helpAnchor: String?",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/recoverysuggestion",
+                    "title" : "var recoverySuggestion: String?",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/receivesyncerror\/localizederror-implementations",
+                "title" : "LocalizedError Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/automergeuniffi\/receivesyncerror",
@@ -7122,6 +6597,57 @@
             ],
             "path" : "\/documentation\/automergeuniffi\/scalarvalue",
             "title" : "ScalarValue",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/textencoding\/graphemecluster",
+                "title" : "case graphemeCluster",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/textencoding\/unicodecodepoint",
+                "title" : "case unicodeCodePoint",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/textencoding\/utf16codeunit",
+                "title" : "case utf16CodeUnit",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/automergeuniffi\/textencoding\/utf8codeunit",
+                "title" : "case utf8CodeUnit",
+                "type" : "case"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/automergeuniffi\/textencoding\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/automergeuniffi\/textencoding\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/automergeuniffi\/textencoding",
+            "title" : "TextEncoding",
             "type" : "enum"
           },
           {

@@ -75,6 +75,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
         "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
@@ -108,7 +109,8 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/Equatable-Implementations",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/Error-Implementations"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/Error-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/LocalizedError-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -127,6 +129,11 @@
   ]
 , 
 "references": {
+"doc://com.github.automerge.automerge-swift/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
 "doc://com.github.automerge.automerge-swift/SH": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SH",
   "title" : "Swift.Hashable",
@@ -246,6 +253,17 @@
   "title" : "DecodeSyncStateError.Internal(message:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/internal(message:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DecodeSyncStateError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DecodeSyncStateError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/decodesyncstateerror\/localizederror-implementations"
 },
 "doc://com.github.automerge.automerge-swift/s5ErrorP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",

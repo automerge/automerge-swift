@@ -276,14 +276,14 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectDidChange": {
   "abstract" : [
     {
-      "text" : "A publisher that sends a signal after the document is updated.",
+      "text" : "A publisher that emits after the document has changed.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -299,21 +299,12 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:7Combine18PassthroughSubjectC",
-      "text" : "PassthroughSubject"
+      "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+      "text" : "AnyPublisher"
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s4Voida",
-      "text" : "Void"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
+      "text" : "<(), "
     },
     {
       "kind" : "typeIdentifier",

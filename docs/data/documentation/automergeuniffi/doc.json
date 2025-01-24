@@ -92,19 +92,10 @@
   ],
   "topicSections" : [
     {
-      "anchor" : "Structures",
-      "generated" : true,
-      "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer"
-      ],
-      "title" : "Structures"
-    },
-    {
       "anchor" : "Initializers",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init()",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(noPointer:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(unsafeFromRawPointer:)"
       ],
       "title" : "Initializers"
@@ -172,7 +163,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/splitBlock(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/text(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/textAt(obj:heads:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/uniffiClonePointer()",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/textEncoding()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/updateText(obj:chars:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/values(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/valuesAt(obj:heads:)"
@@ -184,7 +175,8 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/load(bytes:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/newWithActor(actor:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/newWithActor(actor:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/newWithTextEncoding(textEncoding:)"
       ],
       "title" : "Type Methods"
     }
@@ -244,40 +236,6 @@
   "title" : "Doc",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc"
-},
-"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/NoPointer": {
-  "abstract" : [
-    {
-      "text" : "Used to instantiate a [FFIObject] without an actual pointer, for fakes in tests, mostly.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "NoPointer"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/NoPointer",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "NoPointer"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "Doc.NoPointer",
-  "type" : "topic",
-  "url" : "\/documentation\/automergeuniffi\/doc\/nopointer"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/actorId()": {
   "abstract" : [
@@ -2310,47 +2268,6 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc\/init()"
 },
-"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/init(noPointer:)": {
-  "abstract" : [
-    {
-      "text" : "This constructor can be used to instantiate a fake object.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "noPointer"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AutomergeUniffi3DocC9NoPointerV",
-      "text" : "NoPointer"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/init(noPointer:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(noPointer:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automergeuniffi\/doc\/init(nopointer:)"
-},
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/init(unsafeFromRawPointer:)": {
   "abstract" : [
 
@@ -3636,6 +3553,65 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc\/newwithactor(actor:)"
 },
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/newWithTextEncoding(textEncoding:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "newWithTextEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "textEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi12TextEncodingO",
+      "text" : "TextEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi3DocC",
+      "text" : "Doc"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/newWithTextEncoding(textEncoding:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "newWithTextEncoding(textEncoding:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/doc\/newwithtextencoding(textencoding:)"
+},
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/objectType(obj:)": {
   "abstract" : [
 
@@ -4748,7 +4724,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/doc\/textat(obj:heads:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/uniffiClonePointer()": {
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/textEncoding()": {
   "abstract" : [
 
   ],
@@ -4763,7 +4739,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "uniffiClonePointer"
+      "text" : "textEncoding"
     },
     {
       "kind" : "text",
@@ -4771,16 +4747,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sv",
-      "text" : "UnsafeMutableRawPointer"
+      "preciseIdentifier" : "s:15AutomergeUniffi12TextEncodingO",
+      "text" : "TextEncoding"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/uniffiClonePointer()",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/Doc\/textEncoding()",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "uniffiClonePointer()",
+  "title" : "textEncoding()",
   "type" : "topic",
-  "url" : "\/documentation\/automergeuniffi\/doc\/unifficlonepointer()"
+  "url" : "\/documentation\/automergeuniffi\/doc\/textencoding()"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/Doc/updateText(obj:chars:)": {
   "abstract" : [

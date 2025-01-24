@@ -75,6 +75,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
         "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
         "doc:\/\/com.github.automerge.automerge-swift\/SQ",
         "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
@@ -109,7 +110,8 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/ReceiveSyncError\/Equatable-Implementations",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/ReceiveSyncError\/Error-Implementations"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/ReceiveSyncError\/Error-Implementations",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/ReceiveSyncError\/LocalizedError-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -128,6 +130,11 @@
   ]
 , 
 "references": {
+"doc://com.github.automerge.automerge-swift/10Foundation14LocalizedErrorP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/10Foundation14LocalizedErrorP",
+  "title" : "Foundation.LocalizedError",
+  "type" : "unresolvable"
+},
 "doc://com.github.automerge.automerge-swift/SH": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SH",
   "title" : "Swift.Hashable",
@@ -293,6 +300,17 @@
   "title" : "ReceiveSyncError.InvalidMessage(message:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/receivesyncerror\/invalidmessage(message:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/ReceiveSyncError/LocalizedError-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/ReceiveSyncError\/LocalizedError-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "LocalizedError Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/receivesyncerror\/localizederror-implementations"
 },
 "doc://com.github.automerge.automerge-swift/s5ErrorP": {
   "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s5ErrorP",
