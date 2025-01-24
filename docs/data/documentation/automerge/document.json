@@ -230,7 +230,6 @@
     {
       "anchor" : "Creating-or-loading-a-document",
       "identifiers" : [
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(logLevel:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(_:logLevel:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/LogVerbosity"
       ],
@@ -409,6 +408,22 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/transferRepresentation"
       ],
       "title" : "Transfering Documents"
+    },
+    {
+      "anchor" : "Initializers",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(textEncoding:logLevel:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textEncoding"
+      ],
+      "title" : "Instance Properties"
     },
     {
       "anchor" : "Default-Implementations",
@@ -3076,7 +3091,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/init(_:loglevel:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/init(logLevel:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/init(textEncoding:logLevel:)": {
   "abstract" : [
     {
       "text" : "Creates an new, empty Automerge document.",
@@ -3091,6 +3106,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "textEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge12TextEncodingO",
+      "text" : "TextEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -3110,12 +3142,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(logLevel:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/init(textEncoding:logLevel:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(logLevel:)",
+  "title" : "init(textEncoding:logLevel:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/init(loglevel:)"
+  "url" : "\/documentation\/automerge\/document\/init(textencoding:loglevel:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/insert(obj:index:value:)": {
   "abstract" : [
@@ -4428,14 +4460,14 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/objectDidChange": {
   "abstract" : [
     {
-      "text" : "A publisher that sends a signal after the document is updated.",
+      "text" : "A publisher that emits after the document has changed.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -4451,21 +4483,12 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:7Combine18PassthroughSubjectC",
-      "text" : "PassthroughSubject"
+      "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+      "text" : "AnyPublisher"
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s4Voida",
-      "text" : "Void"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
+      "text" : "<(), "
     },
     {
       "kind" : "typeIdentifier",
@@ -5591,6 +5614,43 @@
   "title" : "textAt(obj:heads:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/textat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/textEncoding": {
+  "abstract" : [
+    {
+      "text" : "Retrieve the current text encoding used by the document.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "textEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge12TextEncodingO",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/textEncoding",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "textEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/textencoding"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/transferRepresentation": {
   "abstract" : [

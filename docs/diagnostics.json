@@ -4,12 +4,36 @@
 
     ],
     "severity" : 2,
+    "source" : "..\/Document.swift",
+    "start" : {
+      "column" : 30,
+      "line" : 36
+    },
+    "summary" : "'objectWillChange()' doesn't exist at '\/Automerge\/Document\/objectDidChange'"
+  },
+  {
+    "notes" : [
+
+    ],
+    "severity" : 2,
     "source" : "..\/Document+Transferable.swift",
     "start" : {
       "column" : 69,
       "line" : 30
     },
     "summary" : "'UniformTypeIdentifiers' doesn't exist at '\/Automerge'"
+  },
+  {
+    "notes" : [
+
+    ],
+    "severity" : 2,
+    "source" : "Curation\/Document.md",
+    "start" : {
+      "column" : 5,
+      "line" : 7
+    },
+    "summary" : "'init(logLevel:)' doesn't exist at '\/Automerge\/Document'"
   },
   {
     "notes" : [

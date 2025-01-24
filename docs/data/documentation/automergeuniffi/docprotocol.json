@@ -158,6 +158,7 @@
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/splitBlock(obj:index:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/text(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/textAt(obj:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/textEncoding()",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/updateText(obj:chars:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/values(obj:)",
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/valuesAt(obj:heads:)"
@@ -4553,6 +4554,41 @@
   "title" : "textAt(obj:heads:)",
   "type" : "topic",
   "url" : "\/documentation\/automergeuniffi\/docprotocol\/textat(obj:heads:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/textEncoding()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "textEncoding"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AutomergeUniffi12TextEncodingO",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/DocProtocol\/textEncoding()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "textEncoding()",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/docprotocol\/textencoding()"
 },
 "doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/DocProtocol/updateText(obj:chars:)": {
   "abstract" : [
