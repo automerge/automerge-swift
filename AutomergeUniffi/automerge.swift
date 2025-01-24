@@ -773,7 +773,8 @@ open class Doc:
         try FfiConverterSequenceTypePatch.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
             uniffi_uniffi_automerge_fn_method_doc_apply_encoded_changes_with_patches(
                 self.uniffiClonePointer(),
-                FfiConverterSequenceUInt8.lower(changes),
+                FfiConverterSequenceUInt8
+                    .lower(changes),
                 $0
             )
         })
@@ -1312,7 +1313,8 @@ open class Doc:
         try FfiConverterSequenceTypePatch.lift(rustCallWithError(FfiConverterTypeReceiveSyncError.lift) {
             uniffi_uniffi_automerge_fn_method_doc_receive_sync_message_with_patches(
                 self.uniffiClonePointer(),
-                FfiConverterTypeSyncState.lower(state),
+                FfiConverterTypeSyncState
+                    .lower(state),
                 FfiConverterSequenceUInt8.lower(msg),
                 $0
             )
