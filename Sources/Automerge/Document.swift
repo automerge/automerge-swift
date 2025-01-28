@@ -585,12 +585,14 @@ public final class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
+    ///     When using a position equal to or greater than the current length of the object,
+    ///     the cursor will track the end of the document as it changes.
     /// - Returns: A cursor that references the position you specified.
-    public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
+    public func cursorSelection(obj: ObjId, position: UInt64) throws -> Cursor {
         try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
-            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorSelection(obj: obj.bytes, position: position) })
         }
     }
 
@@ -599,13 +601,15 @@ public final class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
+    ///     When using a position equal to or greater than the object's length at the specified point in time,
+    ///     the cursor will track the end of the document as it changes.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
-    public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
+    public func cursorSelectionAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
-            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorSelectionAt(
                 obj: obj.bytes,
                 position: position,
                 heads: heads.map(\.bytes)
