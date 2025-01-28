@@ -88,7 +88,7 @@ class MarksTestCase: XCTestCase {
         try doc.mark(obj: textId, start: 2, end: 5, expand: .both, name: "italic", value: .Boolean(true))
         try doc.mark(obj: textId, start: 1, end: 5, expand: .both, name: "bold", value: .Boolean(true))
 
-        let cursor = try doc.cursor(obj: textId, position: 2)
+        let cursor = try doc.cursorSelection(obj: textId, position: 2)
         let marks = try doc.marksAt(obj: textId, position: .cursor(cursor))
 
         XCTAssertEqual(marks, [

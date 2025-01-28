@@ -1,7 +1,6 @@
 use std::sync::{Arc, RwLock, RwLockWriteGuard};
 
-use am::sync::SyncDoc;
-use automerge as am;
+use automerge::{self as am, sync::SyncDoc, CursorPosition};
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
@@ -343,13 +342,21 @@ impl Doc {
         doc.object_type(obj).unwrap().into()
     }
 
-    pub fn cursor(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
+    pub fn cursor_selection(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
-        Ok(doc.get_cursor(obj, position as usize, None)?.into())
+        let index = position as usize;
+        let position = if index >= doc.length(&obj) {
+            CursorPosition::End
+        } else {
+            CursorPosition::Index(index)
+        };
+        doc.get_cursor(&obj, position, None)
+            .map(|c| c.into())
+            .map_err(|error| DocError::Internal(error))
     }
 
-    pub fn cursor_at(
+    pub fn cursor_selection_at(
         &self,
         obj: ObjId,
         position: u64,
@@ -361,7 +368,15 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        Ok(doc.get_cursor(obj, position as usize, Some(&heads))?.into())
+        let index = position as usize;
+        let cursor_position = if index >= doc.length(&obj) {
+            CursorPosition::End
+        } else {
+            CursorPosition::Index(index)
+        };
+        doc.get_cursor(&obj, cursor_position, Some(&heads))
+            .map(|c| c.into())
+            .map_err(|error| DocError::Internal(error))
     }
 
     pub fn cursor_position(&self, obj: ObjId, cursor: Cursor) -> Result<u64, DocError> {
