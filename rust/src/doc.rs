@@ -342,7 +342,7 @@ impl Doc {
         doc.object_type(obj).unwrap().into()
     }
 
-    pub fn cursor_selection(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
+    pub fn cursor(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
         let index = position as usize;
@@ -356,7 +356,7 @@ impl Doc {
             .map_err(|error| DocError::Internal(error))
     }
 
-    pub fn cursor_selection_at(
+    pub fn cursor_at(
         &self,
         obj: ObjId,
         position: u64,

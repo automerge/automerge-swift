@@ -553,13 +553,13 @@ public protocol DocProtocol: AnyObject {
 
     func commitWith(msg: String?, time: Int64)
 
+    func cursor(obj: ObjId, position: UInt64) throws -> Cursor
+
+    func cursorAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor
+
     func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64
 
     func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: [ChangeHash]) throws -> UInt64
-
-    func cursorSelection(obj: ObjId, position: UInt64) throws -> Cursor
-
-    func cursorSelectionAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor
 
     func deleteInList(obj: ObjId, index: UInt64) throws
 
@@ -808,6 +808,29 @@ open class Doc:
     }
     }
 
+    open func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
+        try FfiConverterTypeCursor.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
+            uniffi_uniffi_automerge_fn_method_doc_cursor(
+                self.uniffiClonePointer(),
+                FfiConverterTypeObjId.lower(obj),
+                FfiConverterUInt64.lower(position),
+                $0
+            )
+        })
+    }
+
+    open func cursorAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor {
+        try FfiConverterTypeCursor.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
+            uniffi_uniffi_automerge_fn_method_doc_cursor_at(
+                self.uniffiClonePointer(),
+                FfiConverterTypeObjId.lower(obj),
+                FfiConverterUInt64.lower(position),
+                FfiConverterSequenceTypeChangeHash.lower(heads),
+                $0
+            )
+        })
+    }
+
     open func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try FfiConverterUInt64.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
             uniffi_uniffi_automerge_fn_method_doc_cursor_position(
@@ -825,29 +848,6 @@ open class Doc:
                 self.uniffiClonePointer(),
                 FfiConverterTypeObjId.lower(obj),
                 FfiConverterTypeCursor.lower(cursor),
-                FfiConverterSequenceTypeChangeHash.lower(heads),
-                $0
-            )
-        })
-    }
-
-    open func cursorSelection(obj: ObjId, position: UInt64) throws -> Cursor {
-        try FfiConverterTypeCursor.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
-            uniffi_uniffi_automerge_fn_method_doc_cursor_selection(
-                self.uniffiClonePointer(),
-                FfiConverterTypeObjId.lower(obj),
-                FfiConverterUInt64.lower(position),
-                $0
-            )
-        })
-    }
-
-    open func cursorSelectionAt(obj: ObjId, position: UInt64, heads: [ChangeHash]) throws -> Cursor {
-        try FfiConverterTypeCursor.lift(rustCallWithError(FfiConverterTypeDocError.lift) {
-            uniffi_uniffi_automerge_fn_method_doc_cursor_selection_at(
-                self.uniffiClonePointer(),
-                FfiConverterTypeObjId.lower(obj),
-                FfiConverterUInt64.lower(position),
                 FfiConverterSequenceTypeChangeHash.lower(heads),
                 $0
             )
@@ -3424,16 +3424,16 @@ private var initializationResult: InitializationResult = {
     if uniffi_uniffi_automerge_checksum_method_doc_commit_with() != 65319 {
         return InitializationResult.apiChecksumMismatch
     }
+    if uniffi_uniffi_automerge_checksum_method_doc_cursor() != 18441 {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if uniffi_uniffi_automerge_checksum_method_doc_cursor_at() != 39363 {
+        return InitializationResult.apiChecksumMismatch
+    }
     if uniffi_uniffi_automerge_checksum_method_doc_cursor_position() != 5760 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_cursor_position_at() != 35233 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_automerge_checksum_method_doc_cursor_selection() != 11014 {
-        return InitializationResult.apiChecksumMismatch
-    }
-    if uniffi_uniffi_automerge_checksum_method_doc_cursor_selection_at() != 22700 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_uniffi_automerge_checksum_method_doc_delete_in_list() != 36066 {

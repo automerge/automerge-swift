@@ -44,26 +44,26 @@ class TextTestCase: XCTestCase {
 
         let heads = doc.heads()
 
-        let c_hello = try! doc.cursorSelection(obj: text, position: 0)
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 0)
+        let c_hello = try! doc.cursor(obj: text, position: 0)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_hello), 0)
 
-        let c_world = try! doc.cursorSelection(obj: text, position: 6)
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 6)
+        let c_world = try! doc.cursor(obj: text, position: 6)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_world), 6)
 
         try doc.spliceText(obj: text, start: 6, delete: 0, value: "wonderful ")
         XCTAssertEqual(try! doc.text(obj: text), "hello wonderful world!")
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 0)
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 16)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_hello), 0)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_world), 16)
 
         try doc.spliceText(obj: text, start: 0, delete: 5, value: "Greetings")
         XCTAssertEqual(try! doc.text(obj: text), "Greetings wonderful world!")
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_hello), 9)
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_world), 20)
-        XCTAssertEqual(try! doc.cursorPositionAt(obj: text, cursor: c_world, heads: heads), 6)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_hello), 9)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_world), 20)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_world, heads: heads), 6)
 
         // let's time travel with cursor
-        let c_heads_world = try! doc.cursorSelectionAt(obj: text, position: 6, heads: heads)
-        XCTAssertEqual(try! doc.cursorPosition(obj: text, cursor: c_heads_world), 20)
+        let c_heads_world = try! doc.cursor(obj: text, position: 6, heads: heads)
+        XCTAssertEqual(try! doc.position(obj: text, cursor: c_heads_world), 20)
         XCTAssertEqual(c_heads_world.description, c_world.description)
     }
 
@@ -72,10 +72,10 @@ class TextTestCase: XCTestCase {
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
 
         try doc.spliceText(obj: text, start: 0, delete: 0, value: "hello world!")
-        let c_hello = try! doc.cursorSelection(obj: text, position: doc.length(obj: text))
+        let c_hello = try! doc.cursor(obj: text, position: doc.length(obj: text))
         try doc.spliceText(obj: text, start: doc.length(obj: text), delete: 0, value: "🏡🧑‍🧑‍🧒‍🧒")
 
-        let position = try! doc.cursorPosition(obj: text, cursor: c_hello)
+        let position = try! doc.position(obj: text, cursor: c_hello)
         XCTAssertEqual(position, UInt64("hello world!🏡🧑‍🧑‍🧒‍🧒".count))
     }
 

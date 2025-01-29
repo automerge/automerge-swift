@@ -282,9 +282,9 @@ interface Doc {
     sequence<Patch> apply_encoded_changes_with_patches(sequence<u8> changes);
 
     [Throws=DocError]
-    Cursor cursor_selection(ObjId obj, u64 position);
+    Cursor cursor(ObjId obj, u64 position);
     [Throws=DocError]
-    Cursor cursor_selection_at(ObjId obj, u64 position, sequence<ChangeHash> heads);
+    Cursor cursor_at(ObjId obj, u64 position, sequence<ChangeHash> heads);
     [Throws=DocError]
     u64 cursor_position(ObjId obj, Cursor cursor);
     [Throws=DocError]

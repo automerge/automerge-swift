@@ -582,21 +582,61 @@ public final class Document: @unchecked Sendable {
 
     /// Establish a cursor at the position you specify in the list or text object you provide.
     ///
+    /// In collaborative applications, maintaining stable cursor positions is crucial. Traditional index-based
+    /// positions can become outdated due to document modifications. This method ensures the cursor stays
+    /// correctly anchored regardless of changes.
+    ///
+    /// `Cursor` provides a reliable way to track positions over time without being affected by document changes.
+    /// The cursor remains anchored to the following character, and if placed at the end of the document,
+    /// it will persistently stay attached to the end.
+    ///
+    /// ```swift
+    /// "ABC"   // scenario
+    /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
+    /// "AZ|BC" // insert `Z` at `1`
+    /// ```
+    ///
+    /// To retrieve the original absolute index-based positions, use:
+    /// - ``position(obj:cursor:)``
+    /// - ``position(obj:cursor:heads:)``
+    ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
     ///     When using a position equal to or greater than the current length of the object,
     ///     the cursor will track the end of the document as it changes.
     /// - Returns: A cursor that references the position you specified.
-    public func cursorSelection(obj: ObjId, position: UInt64) throws -> Cursor {
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:heads:)``
+    ///
+    public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
-            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorSelection(obj: obj.bytes, position: position) })
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursor(obj: obj.bytes, position: position) })
         }
     }
 
     /// Establish a cursor at the position and point of time you specify in the list or text object you provide.
+    ///
+    /// In collaborative applications, maintaining stable cursor positions is crucial. Traditional index-based
+    /// positions can become outdated due to document modifications. This method ensures the cursor stays
+    /// correctly anchored regardless of changes.
+    ///
+    /// `Cursor` provides a reliable way to track positions over time without being affected by document changes.
+    /// The cursor remains anchored to the following character, and if placed at the end of the document,
+    /// it will persistently stay attached to the end.
+    ///
+    /// ```swift
+    /// "ABC"   // scenario
+    /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
+    /// "AZ|BC" // insert `Z` at `1`
+    /// ```
+    ///
+    /// To retrieve the original absolute index-based positions, use:
+    /// - ``position(obj:cursor:)``
+    /// - ``position(obj:cursor:heads:)``
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
@@ -605,11 +645,15 @@ public final class Document: @unchecked Sendable {
     ///     the cursor will track the end of the document as it changes.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
-    public func cursorSelectionAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    ///
+    public func cursor(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try lock {
             sendObjectWillChange()
             defer { sendObjectDidChange() }
-            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorSelectionAt(
+            return try Cursor(bytes: self.doc.wrapErrors { try $0.cursorAt(
                 obj: obj.bytes,
                 position: position,
                 heads: heads.map(\.bytes)
@@ -617,13 +661,21 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// The current position of the cursor for the list or text object you provide.
+    /// Retrieves the absolute index-based position for the list or text object you provide.
+    ///
+    /// While cursors provide stable positions in a collaborative environment, this method allows you to convert
+    /// a cursor back into an absolute index-based position.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
     /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
-    public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    /// ``cursor(obj:position:heads:)``
+    ///
+    public func position(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try lock {
             try self.doc.wrapErrors {
                 try $0.cursorPosition(obj: obj.bytes, cursor: cursor.bytes)
@@ -631,14 +683,22 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// The historical position of the cursor for the list or text object and point in time you provide.
+    /// Retrieves the absolute index-based position for the list or text object and point in time you provide.
+    ///
+    /// While cursors provide stable positions in a collaborative environment, this method allows you to convert
+    /// a cursor back into an absolute index-based position.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
-    public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    /// ``cursor(obj:position:heads:)``
+    ///
+    public func position(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
         try lock {
             try self.doc.wrapErrors {
                 try $0.cursorPositionAt(obj: obj.bytes, cursor: cursor.bytes, heads: heads.map(\.bytes))

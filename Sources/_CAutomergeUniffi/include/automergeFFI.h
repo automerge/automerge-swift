@@ -312,6 +312,16 @@ RustBuffer uniffi_uniffi_automerge_fn_method_doc_changes(void*_Nonnull ptr, Rust
 void uniffi_uniffi_automerge_fn_method_doc_commit_with(void*_Nonnull ptr, RustBuffer msg, int64_t time, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_AT
+RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION
 uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustCallStatus *_Nonnull out_status
@@ -320,16 +330,6 @@ uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position(void*_Nonnull ptr
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION_AT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_POSITION_AT
 uint64_t uniffi_uniffi_automerge_fn_method_doc_cursor_position_at(void*_Nonnull ptr, RustBuffer obj, RustBuffer cursor, RustBuffer heads, RustCallStatus *_Nonnull out_status
-);
-#endif
-#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_SELECTION
-#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_SELECTION
-RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor_selection(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustCallStatus *_Nonnull out_status
-);
-#endif
-#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_SELECTION_AT
-#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_CURSOR_SELECTION_AT
-RustBuffer uniffi_uniffi_automerge_fn_method_doc_cursor_selection_at(void*_Nonnull ptr, RustBuffer obj, uint64_t position, RustBuffer heads, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_FN_METHOD_DOC_DELETE_IN_LIST
@@ -961,6 +961,18 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_commit_with(void
     
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_AT
+#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_AT
+uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_at(void
+    
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position(void
@@ -970,18 +982,6 @@ uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION_AT
 #define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_POSITION_AT
 uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_position_at(void
-    
-);
-#endif
-#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_SELECTION
-#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_SELECTION
-uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_selection(void
-    
-);
-#endif
-#ifndef UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_SELECTION_AT
-#define UNIFFI_FFIDEF_UNIFFI_UNIFFI_AUTOMERGE_CHECKSUM_METHOD_DOC_CURSOR_SELECTION_AT
-uint16_t uniffi_uniffi_automerge_checksum_method_doc_cursor_selection_at(void
     
 );
 #endif
