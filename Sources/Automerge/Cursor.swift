@@ -5,10 +5,10 @@ typealias FfiPosition = AutomergeUniffi.Position
 /// A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to
 /// maintain its relative position.
 ///
-/// Set a cursor using ``Document/cursor(obj:position:)``, or ``Document/cursorAt(obj:position:heads:)`` to place a
+/// Set a cursor using ``Document/cursor(obj:position:)``, or ``Document/cursor(obj:position:heads:)`` to place a
 /// cursor at a previous point in time.
-/// Retrieve the cursor position from the document using ``Document/cursorPosition(obj:cursor:)``, or use
-/// ``Document/cursorPositionAt(obj:cursor:heads:)`` to get the cursor position at a previous point in time.
+/// Retrieve the cursor position from the document using ``Document/position(obj:cursor:)``, or use
+/// ``Document/position(obj:cursor:heads:)`` to get the cursor position at a previous point in time.
 public struct Cursor: Equatable, Hashable, Sendable {
     var bytes: [UInt8]
 }
@@ -24,7 +24,7 @@ extension Cursor: CustomStringConvertible {
 ///
 /// ### See Also
 /// - ``Document/cursor(obj:position:)``
-/// - ``Document/cursorAt(obj:position:heads:)``
+/// - ``Document/cursor(obj:position:heads:)``
 public enum Position {
     case cursor(Cursor)
     case index(UInt64)

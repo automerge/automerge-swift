@@ -120,9 +120,9 @@ See the documentation for ``Document`` for more detail on the individual methods
 ### Setting and Reading cursors
 
 - ``Automerge/Document/cursor(obj:position:)``
-- ``Automerge/Document/cursorAt(obj:position:heads:)``
-- ``Automerge/Document/cursorPosition(obj:cursor:)``
-- ``Automerge/Document/cursorPositionAt(obj:cursor:heads:)``
+- ``Automerge/Document/cursor(obj:position:heads:)``
+- ``Automerge/Document/position(obj:cursor:)``
+- ``Automerge/Document/position(obj:cursor:heads:)``
 
 ### Updating counters
 
