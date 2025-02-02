@@ -588,6 +588,7 @@ public final class Document: @unchecked Sendable {
     /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
     /// The cursor remains anchored to the following character, and if placed at the end of the document,
     /// the location it represents stays persistently at the end of the text or array.
+    ///
     /// The following snippet provides examples of cursor locations and the character it tracks:
     /// ```swift
     /// "ABC"   // scenario
@@ -622,10 +623,11 @@ public final class Document: @unchecked Sendable {
     /// Traditional index-based positions become outdated when you or collaborators modify the document.
     /// This method provides a stable reference to a character that stays correctly anchored regardless of changes.
     ///
-    /// `Cursor` provides a reliable way to track positions over time without being affected by document changes.
+    /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
     /// The cursor remains anchored to the following character, and if placed at the end of the document,
-    /// it will persistently stay attached to the end.
+    /// the location it represents stays persistently at the end of the text or array.
     ///
+    /// The following snippet provides examples of cursor locations and the character it tracks:
     /// ```swift
     /// "ABC"   // scenario
     /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
@@ -639,8 +641,8 @@ public final class Document: @unchecked Sendable {
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
-    ///     When using a position equal to or greater than the object's length at the specified point in time,
-    ///     the cursor will track the end of the document as it changes.
+    ///     When you use a position equal to or greater than the current length of the object,
+    ///     the cursor tracks the end of the document, regardless of changes.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
     ///
