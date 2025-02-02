@@ -583,28 +583,28 @@ public final class Document: @unchecked Sendable {
     /// Establish a cursor at the position you specify in the list or text object you provide.
     ///
     /// In collaborative applications, maintaining stable cursor positions is crucial. Traditional index-based
-    /// positions can become outdated due to document modifications. This method ensures the cursor stays
+    /// positions become outdated when you or collaborators modify the document. This method provides a stable reference to a character that stays
     /// correctly anchored regardless of changes.
     ///
-    /// `Cursor` provides a reliable way to track positions over time without being affected by document changes.
+    /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
     /// The cursor remains anchored to the following character, and if placed at the end of the document,
-    /// it will persistently stay attached to the end.
-    ///
+    /// the location it represents stays persistently at the end of the text or array.
+    /// The following snippet provides examples of cursor locations and the character it tracks:
     /// ```swift
     /// "ABC"   // scenario
     /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
     /// "AZ|BC" // insert `Z` at `1`
     /// ```
     ///
-    /// To retrieve the original absolute index-based positions, use:
+    /// To retrieve the absolute index-based positions for a cursor, use:
     /// - ``position(obj:cursor:)``
     /// - ``position(obj:cursor:heads:)``
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
-    ///     When using a position equal to or greater than the current length of the object,
-    ///     the cursor will track the end of the document as it changes.
+    ///     When you use a position equal to or greater than the current length of the object,
+    ///     the cursor tracks the end of the document, regardless of changes.
     /// - Returns: A cursor that references the position you specified.
     ///
     /// ### See Also
@@ -663,8 +663,7 @@ public final class Document: @unchecked Sendable {
 
     /// Retrieves the absolute index-based position for the list or text object you provide.
     ///
-    /// While cursors provide stable positions in a collaborative environment, this method allows you to convert
-    /// a cursor back into an absolute index-based position.
+    /// Use this method to convert a cursor into an absolute index-based position.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
@@ -685,8 +684,7 @@ public final class Document: @unchecked Sendable {
 
     /// Retrieves the absolute index-based position for the list or text object and point in time you provide.
     ///
-    /// While cursors provide stable positions in a collaborative environment, this method allows you to convert
-    /// a cursor back into an absolute index-based position.
+    /// Use this method to convert a cursor into an absolute index-based position at a previous point in time.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
