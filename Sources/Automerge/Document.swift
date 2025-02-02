@@ -582,9 +582,8 @@ public final class Document: @unchecked Sendable {
 
     /// Establish a cursor at the position you specify in the list or text object you provide.
     ///
-    /// In collaborative applications, maintaining stable cursor positions is crucial. Traditional index-based
-    /// positions become outdated when you or collaborators modify the document. This method provides a stable reference to a character that stays
-    /// correctly anchored regardless of changes.
+    /// Traditional index-based positions become outdated when you or collaborators modify the document.
+    /// This method provides a stable reference to a character that stays correctly anchored regardless of changes.
     ///
     /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
     /// The cursor remains anchored to the following character, and if placed at the end of the document,
@@ -620,9 +619,8 @@ public final class Document: @unchecked Sendable {
 
     /// Establish a cursor at the position and point of time you specify in the list or text object you provide.
     ///
-    /// In collaborative applications, maintaining stable cursor positions is crucial. Traditional index-based
-    /// positions can become outdated due to document modifications. This method ensures the cursor stays
-    /// correctly anchored regardless of changes.
+    /// Traditional index-based positions become outdated when you or collaborators modify the document.
+    /// This method provides a stable reference to a character that stays correctly anchored regardless of changes.
     ///
     /// `Cursor` provides a reliable way to track positions over time without being affected by document changes.
     /// The cursor remains anchored to the following character, and if placed at the end of the document,
@@ -958,6 +956,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// ## Recommendation
+    ///
     /// Use this method to query the marks applied to a text object at a specific position.
     /// This can be useful for retrieving the list of ``Automerge/Mark`` related to a character without
     /// traversing the full document.
