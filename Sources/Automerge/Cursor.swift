@@ -26,7 +26,9 @@ extension Cursor: CustomStringConvertible {
 /// - ``Document/cursor(obj:position:)``
 /// - ``Document/cursor(obj:position:heads:)``
 public enum Position {
+    /// A stable location character or array position that follows that location regardless of Document changes.
     case cursor(Cursor)
+    /// An absolute index position within an array or text object.
     case index(UInt64)
 }
 
