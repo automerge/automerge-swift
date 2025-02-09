@@ -106,7 +106,7 @@
                 {
                   "inlineContent" : [
                     {
-                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
+                      "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -219,7 +219,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Cursor": {
   "abstract" : [
     {
-      "text" : "A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to",
+      "text" : "A opaque type that represents a stable location of the character following the location reference at creation within an array or text object that adjusts with insertions and deletions to",
       "type" : "text"
     },
     {
@@ -337,7 +337,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/cursor(obj:position:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorAt(obj:position:heads:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursor(obj:position:heads:)": {
   "abstract" : [
     {
       "text" : "Establish a cursor at the position and point of time you specify in the list or text object you provide.",
@@ -355,7 +355,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "cursorAt"
+      "text" : "cursor"
     },
     {
       "kind" : "text",
@@ -435,12 +435,12 @@
       "text" : "Cursor"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "cursorAt(obj:position:heads:)",
+  "title" : "cursor(obj:position:heads:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorat(obj:position:heads:)"
+  "url" : "\/documentation\/automerge\/document\/cursor(obj:position:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark": {
   "abstract" : [
@@ -546,7 +546,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Position/cursor(_:)": {
   "abstract" : [
-
+    {
+      "text" : "A stable location character or array position that follows that location regardless of Document changes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -584,7 +587,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Position/index(_:)": {
   "abstract" : [
-
+    {
+      "text" : "An absolute index position within an array or text object.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

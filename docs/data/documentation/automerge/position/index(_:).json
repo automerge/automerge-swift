@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "An absolute index position within an array or text object.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -165,7 +171,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Position/index(_:)": {
   "abstract" : [
-
+    {
+      "text" : "An absolute index position within an array or text object.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

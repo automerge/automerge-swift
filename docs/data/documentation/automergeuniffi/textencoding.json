@@ -1,0 +1,299 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AutomergeUniffi12TextEncodingO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "TextEncoding"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AutomergeUniffi"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "TextEncoding"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "TextEncoding"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "TextEncoding"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+        "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+        "doc:\/\/com.github.automerge.automerge-swift\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/graphemeCluster",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/unicodeCodePoint",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/utf16CodeUnit",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/utf8CodeUnit"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automergeuniffi\/textencoding"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/SH": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/SQ": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AutomergeUniffi",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TextEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding\/equatable-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding/graphemeCluster": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "graphemeCluster"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/graphemeCluster",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.graphemeCluster",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding\/graphemecluster"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding/unicodeCodePoint": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unicodeCodePoint"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/unicodeCodePoint",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.unicodeCodePoint",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding\/unicodecodepoint"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding/utf16CodeUnit": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "utf16CodeUnit"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/utf16CodeUnit",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.utf16CodeUnit",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding\/utf16codeunit"
+},
+"doc://com.github.automerge.automerge-swift/documentation/AutomergeUniffi/TextEncoding/utf8CodeUnit": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "utf8CodeUnit"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/AutomergeUniffi\/TextEncoding\/utf8CodeUnit",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.utf8CodeUnit",
+  "type" : "topic",
+  "url" : "\/documentation\/automergeuniffi\/textencoding\/utf8codeunit"
+},
+"doc://com.github.automerge.automerge-swift/s8CopyableP": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/s8CopyableP",
+  "title" : "Swift.Copyable",
+  "type" : "unresolvable"
+}
+}
+}

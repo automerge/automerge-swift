@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "A stable location character or array position that follows that location regardless of Document changes.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -133,7 +139,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Cursor": {
   "abstract" : [
     {
-      "text" : "A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to",
+      "text" : "A opaque type that represents a stable location of the character following the location reference at creation within an array or text object that adjusts with insertions and deletions to",
       "type" : "text"
     },
     {
@@ -208,7 +214,10 @@
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Position/cursor(_:)": {
   "abstract" : [
-
+    {
+      "text" : "A stable location character or array position that follows that location regardless of Document changes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

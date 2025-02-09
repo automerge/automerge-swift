@@ -1,0 +1,385 @@
+{
+  "abstract" : [
+    {
+      "text" : "An enumeration representing different types of text encoding.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge12TextEncodingO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "TextEncoding"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "TextEncoding"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "TextEncoding"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "TextEncoding"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Text encodings determine how text is processed across Automerge APIs.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+        "doc:\/\/com.github.automerge.automerge-swift\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/graphemeCluster",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/unicodeScalar",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/utf16",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/utf8"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "anchor" : "Default-Implementations",
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/textencoding"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/SH": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/SQ": {
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding": {
+  "abstract" : [
+    {
+      "text" : "An enumeration representing different types of text encoding.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TextEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/equatable-implementations"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/graphemeCluster": {
+  "abstract" : [
+    {
+      "text" : "Text encoding using Grapheme Cluster.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Grapheme clusters represent user-perceived characters, which may consist of multiple Unicode scalars.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "For example:",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "graphemeCluster"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/graphemeCluster",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.graphemeCluster",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/graphemecluster"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/unicodeScalar": {
+  "abstract" : [
+    {
+      "text" : "Text encoding using Unicode scalar values.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Unicode scalars are the fundamental building blocks of Unicode text, but they are not directly stored as-is.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Instead, they are encoded into binary formats like UTF-8 or UTF-16 for persistence.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unicodeScalar"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/unicodeScalar",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.unicodeScalar",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/unicodescalar"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/utf16": {
+  "abstract" : [
+    {
+      "text" : "Text encoding using UTF-16.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "A variable-width encoding using one or two 16-bit code units.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "utf16"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/utf16",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.utf16",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/utf16"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/utf8": {
+  "abstract" : [
+    {
+      "text" : "Text encoding using UTF-8.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "A variable-width encoding representing characters in 1–4 bytes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "utf8"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/utf8",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.utf8",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/utf8"
+}
+}
+}

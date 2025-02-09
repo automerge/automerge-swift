@@ -1,0 +1,249 @@
+{
+  "abstract" : [
+    {
+      "text" : "Text encoding using Grapheme Cluster.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Grapheme clusters represent user-perceived characters, which may consist of multiple Unicode scalars.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "For example:",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/graphemeCluster"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9Automerge12TextEncodingO15graphemeClusteryA2CmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "graphemeCluster"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Automerge"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "TextEncoding.graphemeCluster"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "graphemeCluster"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "“é” (a Latin small letter “e” followed by a combining acute accent) is a single grapheme cluster.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Emoji with modifiers, like “👨‍👩‍👧‍👦” (family emoji), are grapheme clusters combining multiple scalars.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/automerge\/textencoding\/graphemecluster"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge": {
+  "abstract" : [
+    {
+      "text" : "Create, Update, and Synchronize data for collaborative applications.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Automerge",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding": {
+  "abstract" : [
+    {
+      "text" : "An enumeration representing different types of text encoding.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "TextEncoding"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "TextEncoding",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/TextEncoding/graphemeCluster": {
+  "abstract" : [
+    {
+      "text" : "Text encoding using Grapheme Cluster.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Grapheme clusters represent user-perceived characters, which may consist of multiple Unicode scalars.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "For example:",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "graphemeCluster"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/TextEncoding\/graphemeCluster",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "TextEncoding.graphemeCluster",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/textencoding\/graphemecluster"
+}
+}
+}

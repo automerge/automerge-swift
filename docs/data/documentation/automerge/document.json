@@ -311,9 +311,9 @@
       "anchor" : "Setting-and-Reading-cursors",
       "identifiers" : [
         "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPosition(obj:cursor:)",
-        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPositionAt(obj:cursor:heads:)"
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:)",
+        "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:heads:)"
       ],
       "title" : "Setting and Reading cursors"
     },
@@ -1004,7 +1004,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/cursor(obj:position:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorAt(obj:position:heads:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursor(obj:position:heads:)": {
   "abstract" : [
     {
       "text" : "Establish a cursor at the position and point of time you specify in the list or text object you provide.",
@@ -1022,7 +1022,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "cursorAt"
+      "text" : "cursor"
     },
     {
       "kind" : "text",
@@ -1102,196 +1102,12 @@
       "text" : "Cursor"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "cursorAt(obj:position:heads:)",
+  "title" : "cursor(obj:position:heads:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorat(obj:position:heads:)"
-},
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorPosition(obj:cursor:)": {
-  "abstract" : [
-    {
-      "text" : "The current position of the cursor for the list or text object you provide.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "cursorPosition"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "obj"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ObjIdV",
-      "text" : "ObjId"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "cursor"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge6CursorV",
-      "text" : "Cursor"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s6UInt64V",
-      "text" : "UInt64"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPosition(obj:cursor:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "cursorPosition(obj:cursor:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorposition(obj:cursor:)"
-},
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorPositionAt(obj:cursor:heads:)": {
-  "abstract" : [
-    {
-      "text" : "The historical position of the cursor for the list or text object and point in time you provide.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "cursorPositionAt"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "obj"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge5ObjIdV",
-      "text" : "ObjId"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "cursor"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge6CursorV",
-      "text" : "Cursor"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "heads"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sh",
-      "text" : "Set"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
-      "text" : "ChangeHash"
-    },
-    {
-      "kind" : "text",
-      "text" : ">) "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s6UInt64V",
-      "text" : "UInt64"
-    }
-  ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPositionAt(obj:cursor:heads:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "cursorPositionAt(obj:cursor:heads:)",
-  "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorpositionat(obj:cursor:heads:)"
+  "url" : "\/documentation\/automerge\/document\/cursor(obj:position:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/delete(obj:index:)": {
   "abstract" : [
@@ -4692,6 +4508,190 @@
   "title" : "path(obj:)",
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/path(obj:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/position(obj:cursor:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the absolute index-based position for the list or text object you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "cursor"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge6CursorV",
+      "text" : "Cursor"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "position(obj:cursor:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/position(obj:cursor:)"
+},
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/position(obj:cursor:heads:)": {
+  "abstract" : [
+    {
+      "text" : "Retrieves the absolute index-based position for the list or text object and point in time you provide.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "position"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "obj"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge5ObjIdV",
+      "text" : "ObjId"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "cursor"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge6CursorV",
+      "text" : "Cursor"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "heads"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sh",
+      "text" : "Set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9Automerge10ChangeHashV",
+      "text" : "ChangeHash"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6UInt64V",
+      "text" : "UInt64"
+    }
+  ],
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:heads:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "position(obj:cursor:heads:)",
+  "type" : "topic",
+  "url" : "\/documentation\/automerge\/document\/position(obj:cursor:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/put(obj:index:value:)": {
   "abstract" : [

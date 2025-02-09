@@ -420,18 +420,18 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/automerge\/document\/cursorat(obj:position:heads:)",
-                "title" : "func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor",
+                "path" : "\/documentation\/automerge\/document\/cursor(obj:position:heads:)",
+                "title" : "func cursor(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/automerge\/document\/cursorposition(obj:cursor:)",
-                "title" : "func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64",
+                "path" : "\/documentation\/automerge\/document\/position(obj:cursor:)",
+                "title" : "func position(obj: ObjId, cursor: Cursor) throws -> UInt64",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/automerge\/document\/cursorpositionat(obj:cursor:heads:)",
-                "title" : "func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64",
+                "path" : "\/documentation\/automerge\/document\/position(obj:cursor:heads:)",
+                "title" : "func position(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64",
                 "type" : "method"
               },
               {

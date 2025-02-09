@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to",
+      "text" : "A opaque type that represents a stable location of the character following the location reference at creation within an array or text object that adjusts with insertions and deletions to",
       "type" : "text"
     },
     {
@@ -96,7 +96,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "Set a cursor using ",
+              "text" : "Create a cursor using ",
               "type" : "text"
             },
             {
@@ -109,7 +109,7 @@
               "type" : "text"
             },
             {
-              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
               "isActive" : true,
               "type" : "reference"
             },
@@ -122,7 +122,15 @@
               "type" : "text"
             },
             {
-              "text" : "cursor at a previous point in time.",
+              "text" : "cursor at the point in time indicated by the ",
+              "type" : "text"
+            },
+            {
+              "code" : "heads",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " parameter.",
               "type" : "text"
             },
             {
@@ -130,11 +138,11 @@
               "type" : "text"
             },
             {
-              "text" : "Retrieve the cursor position from the document using ",
+              "text" : "Retrieve the position of the cursor reference from the document using ",
               "type" : "text"
             },
             {
-              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPosition(obj:cursor:)",
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:)",
               "isActive" : true,
               "type" : "reference"
             },
@@ -147,12 +155,12 @@
               "type" : "text"
             },
             {
-              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPositionAt(obj:cursor:heads:)",
+              "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:heads:)",
               "isActive" : true,
               "type" : "reference"
             },
             {
-              "text" : " to get the cursor position at a previous point in time.",
+              "text" : " to get the position at a previous point in time.",
               "type" : "text"
             }
           ],
@@ -283,7 +291,7 @@
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/Cursor": {
   "abstract" : [
     {
-      "text" : "A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to",
+      "text" : "A opaque type that represents a stable location of the character following the location reference at creation within an array or text object that adjusts with insertions and deletions to",
       "type" : "text"
     },
     {
@@ -423,7 +431,7 @@
   "type" : "topic",
   "url" : "\/documentation\/automerge\/document\/cursor(obj:position:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorAt(obj:position:heads:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursor(obj:position:heads:)": {
   "abstract" : [
     {
       "text" : "Establish a cursor at the position and point of time you specify in the list or text object you provide.",
@@ -441,7 +449,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "cursorAt"
+      "text" : "cursor"
     },
     {
       "kind" : "text",
@@ -521,17 +529,17 @@
       "text" : "Cursor"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorAt(obj:position:heads:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursor(obj:position:heads:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "cursorAt(obj:position:heads:)",
+  "title" : "cursor(obj:position:heads:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorat(obj:position:heads:)"
+  "url" : "\/documentation\/automerge\/document\/cursor(obj:position:heads:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorPosition(obj:cursor:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/position(obj:cursor:)": {
   "abstract" : [
     {
-      "text" : "The current position of the cursor for the list or text object you provide.",
+      "text" : "Retrieves the absolute index-based position for the list or text object you provide.",
       "type" : "text"
     }
   ],
@@ -546,7 +554,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "cursorPosition"
+      "text" : "position"
     },
     {
       "kind" : "text",
@@ -600,17 +608,17 @@
       "text" : "UInt64"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPosition(obj:cursor:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "cursorPosition(obj:cursor:)",
+  "title" : "position(obj:cursor:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorposition(obj:cursor:)"
+  "url" : "\/documentation\/automerge\/document\/position(obj:cursor:)"
 },
-"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/cursorPositionAt(obj:cursor:heads:)": {
+"doc://com.github.automerge.automerge-swift/documentation/Automerge/Document/position(obj:cursor:heads:)": {
   "abstract" : [
     {
-      "text" : "The historical position of the cursor for the list or text object and point in time you provide.",
+      "text" : "Retrieves the absolute index-based position for the list or text object and point in time you provide.",
       "type" : "text"
     }
   ],
@@ -625,7 +633,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "cursorPositionAt"
+      "text" : "position"
     },
     {
       "kind" : "text",
@@ -705,12 +713,12 @@
       "text" : "UInt64"
     }
   ],
-  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/cursorPositionAt(obj:cursor:heads:)",
+  "identifier" : "doc:\/\/com.github.automerge.automerge-swift\/documentation\/Automerge\/Document\/position(obj:cursor:heads:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "cursorPositionAt(obj:cursor:heads:)",
+  "title" : "position(obj:cursor:heads:)",
   "type" : "topic",
-  "url" : "\/documentation\/automerge\/document\/cursorpositionat(obj:cursor:heads:)"
+  "url" : "\/documentation\/automerge\/document\/position(obj:cursor:heads:)"
 },
 "doc://com.github.automerge.automerge-swift/documentation/Automerge/ExpandMark": {
   "abstract" : [
