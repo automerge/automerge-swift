@@ -4,7 +4,7 @@
 
 ### Creating or loading a document
 
-- ``init(logLevel:)``
+- ``init(textEncoding:logLevel:)``
 - ``init(_:logLevel:)``
 - ``LogVerbosity``
 

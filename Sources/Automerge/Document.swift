@@ -33,7 +33,7 @@ public final class Document: @unchecked Sendable {
 
     /// A publisher that emits after the document has changed.
     ///
-    /// This publisher and ``objectWillChange()`` are always paired. Unlike that
+    /// This publisher and `objectWillChange()` are always paired. Unlike that
     /// publisher, this one fires after the document update is complete, allowing you to
     /// read any changed values.
     ///
