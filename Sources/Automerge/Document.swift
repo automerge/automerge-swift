@@ -33,7 +33,7 @@ public final class Document: @unchecked Sendable {
 
     /// A publisher that emits after the document has changed.
     ///
-    /// This publisher and ``objectWillChange()`` are always paired. Unlike that
+    /// This publisher and `objectWillChange()` are always paired. Unlike that
     /// publisher, this one fires after the document update is complete, allowing you to
     /// read any changed values.
     ///
@@ -69,11 +69,19 @@ public final class Document: @unchecked Sendable {
         }
     }
 
+    /// Retrieve the current text encoding used by the document.
+    public var textEncoding: TextEncoding {
+        read {
+            doc.textEncoding().textEncoding
+        }
+    }
+
     /// Creates an new, empty Automerge document.
-    /// - Parameter logLevel: The level at which to generate logs into unified logging from actions within this
-    /// document.
-    public init(logLevel: LogVerbosity = .errorOnly) {
-        doc = Doc()
+    /// - Parameters:
+    ///   - textEncoding: The encoding type for text within the document. Defaults to `.unicodeCodePoint`.
+    ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
+    public init(textEncoding: TextEncoding = .unicodeScalar, logLevel: LogVerbosity = .errorOnly) {
+        doc = Doc.newWithTextEncoding(textEncoding: textEncoding.ffi_textEncoding)
         self.reportingLogLevel = logLevel
     }
 
@@ -510,10 +518,34 @@ public final class Document: @unchecked Sendable {
 
     /// Establish a cursor at the position you specify in the list or text object you provide.
     ///
+    /// Traditional index-based positions become outdated when you or collaborators modify the document.
+    /// This method provides a stable reference to a character that stays correctly anchored regardless of changes.
+    ///
+    /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
+    /// The cursor remains anchored to the following character, and if placed at the end of the document,
+    /// the location it represents stays persistently at the end of the text or array.
+    ///
+    /// The following snippet provides examples of cursor locations and the character it tracks:
+    /// ```swift
+    /// "ABC"   // scenario
+    /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
+    /// "AZ|BC" // insert `Z` at `1`
+    /// ```
+    ///
+    /// To retrieve the absolute index-based positions for a cursor, use:
+    /// - ``position(obj:cursor:)``
+    /// - ``position(obj:cursor:heads:)``
+    ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
-    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
+    ///     When you use a position equal to or greater than the current length of the object,
+    ///     the cursor tracks the end of the document, regardless of changes.
     /// - Returns: A cursor that references the position you specified.
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:heads:)``
+    ///
     public func cursor(obj: ObjId, position: UInt64) throws -> Cursor {
         try write {
             Cursor(bytes: try doc.cursor(obj: obj.bytes, position: position))
@@ -522,12 +554,35 @@ public final class Document: @unchecked Sendable {
 
     /// Establish a cursor at the position and point of time you specify in the list or text object you provide.
     ///
+    /// Traditional index-based positions become outdated when you or collaborators modify the document.
+    /// This method provides a stable reference to a character that stays correctly anchored regardless of changes.
+    ///
+    /// `Cursor` provides a reliable way to track the position of a character's location over time regardless of document changes.
+    /// The cursor remains anchored to the following character, and if placed at the end of the document,
+    /// the location it represents stays persistently at the end of the text or array.
+    ///
+    /// The following snippet provides examples of cursor locations and the character it tracks:
+    /// ```swift
+    /// "ABC"   // scenario
+    /// "A|BC"  // set cursor at `1`, cursor is attached to `B`
+    /// "AZ|BC" // insert `Z` at `1`
+    /// ```
+    ///
+    /// To retrieve the original absolute index-based positions, use:
+    /// - ``position(obj:cursor:)``
+    /// - ``position(obj:cursor:heads:)``
+    ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
-    ///   - position: The index position in the list, or index of the UTF-8 view in the string for a text object.
+    ///   - position: The index position in the list, or index for a text object based on ``TextEncoding``.
+    ///     When you use a position equal to or greater than the current length of the object,
+    ///     the cursor tracks the end of the document, regardless of changes.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A cursor that references the position and point in time you specified.
-    public func cursorAt(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    ///
+    public func cursor(obj: ObjId, position: UInt64, heads: Set<ChangeHash>) throws -> Cursor {
         try write {
             return Cursor(bytes: try doc.cursorAt(
                 obj: obj.bytes,
@@ -537,26 +592,40 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// The current position of the cursor for the list or text object you provide.
+    /// Retrieves the absolute index-based position for the list or text object you provide.
+    ///
+    /// Use this method to convert a cursor into an absolute index-based position.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
-    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
-    public func cursorPosition(obj: ObjId, cursor: Cursor) throws -> UInt64 {
+    /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    /// ``cursor(obj:position:heads:)``
+    ///
+    public func position(obj: ObjId, cursor: Cursor) throws -> UInt64 {
         try read {
             try doc.cursorPosition(obj: obj.bytes, cursor: cursor.bytes)
         }
     }
 
-    /// The historical position of the cursor for the list or text object and point in time you provide.
+    /// Retrieves the absolute index-based position for the list or text object and point in time you provide.
+    ///
+    /// Use this method to convert a cursor into an absolute index-based position at a previous point in time.
     ///
     /// - Parameters:
     ///   - obj: The object identifier of the list or text object.
     ///   - cursor: The cursor created for this list or text object
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
-    /// - Returns: The index position of a list, or the index position of the UTF-8 view in the string, of the cursor.
-    public func cursorPositionAt(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
+    /// - Returns: The index position of a list, or index for a text object based on ``TextEncoding``, of the cursor.
+    ///
+    /// ### See Also
+    /// ``cursor(obj:position:)``
+    /// ``cursor(obj:position:heads:)``
+    ///
+    public func position(obj: ObjId, cursor: Cursor, heads: Set<ChangeHash>) throws -> UInt64 {
         try read {
             try doc.cursorPositionAt(obj: obj.bytes, cursor: cursor.bytes, heads: heads.map(\.bytes))
         }
@@ -581,23 +650,21 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to update.
-    ///   - start: The distance from the start of the string in unicode scalars where the function begins inserting or
-    /// deleting.
-    ///   - delete: The number of unicode scalars to delete from the `start` index.
+    ///   - start: The distance from the start of the string where the function begins inserting or deleting.
+    ///   - delete: Text length to delete from the `start` index. It depends on the picked ``TextEncoding`` in Document creation.
     ///   If negative, the function deletes characters preceding `start` index, rather than following it.
     ///   - value: The characters to insert after the `start` index.
     ///
-    /// With `spliceText`, the `start` and `delete` parameters represent integer distances of unicode scalars of the
-    /// Swift strings, not the counts of Characters (or grapheme clusters).
+    /// With `spliceText`, the `start` and `delete` parameters represent integer distances of the Swift strings. This distance will change
+    /// based on the text encoding chosen during at Document creation.
     ///
-    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
-    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
-    /// To determine Automerge index position from a `String.Index`, convert the index position into a
-    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
+    /// APIs. Indices in Automerge are based on the ``TextEncoding`` chosen at document creation.
     ///
     /// An example of deriving the automerge start position from a Swift string's index:
     /// ```swift
     /// extension String {
+    ///    /// Given: Automerge.Document(textEncoding: .unicodeScalars)
     ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
     ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
     ///            return nil
@@ -610,11 +677,12 @@ public final class Document: @unchecked Sendable {
     /// }
     /// ```
     ///
-    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
-    /// `Int64`.
+    /// For the length of index updates in Automerge, use the count in picked text encoding converted to `Int64`.
     /// For example:
     /// ```swift
     /// Int64("🇬🇧".unicodeScalars.count)
+    /// Int64("🇬🇧".utf8.count)
+    /// Int64("🇬🇧".utf16.count)
     /// ```
     public func spliceText(obj: ObjId, start: UInt64, delete: Int64, value: String? = nil) throws {
         try write {
@@ -641,8 +709,8 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameters:
     ///   - obj: The identifier of the text object to which to add the mark.
-    ///   - start: The distance from the start of the string in unicode scalars where the function starts the mark.
-    ///   - end: The distance from the start of the string in unicode scalars where the function ends the mark.
+    ///   - start: The distance from the start of the string where the function begins inserting or deleting.
+    ///   - end: The distance from the start of the string where the function ends the mark.
     ///   - expand: How the mark should expand when text is inserted at the beginning or end of the range
     ///   - name: The name of the mark, for example "bold".
     ///   - value: The scalar value to associate with the mark.
@@ -650,14 +718,13 @@ public final class Document: @unchecked Sendable {
     /// To remove an existing mark between two index positions, set the name to the same value
     /// as the existing mark and set the value to the scalar value ``ScalarValue/Null``.
     ///
-    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through
-    /// `UnicodeScalarView`, accessible through the `unicodeScalars` property on the string.
-    /// To determine Automerge index position from a `String.Index`, convert the index position into a
-    /// `String.UnicodeScalarView.Index` and calculate the distance from the `startIndex` value.
+    /// If you use or receive a Swift `String.Index` convert it to an index position usable by Automerge through `Foundation.String.View`
+    /// APIs. Indices depends on picked ``TextEncoding`` during Automerge.Document creation.
     ///
     /// An example of deriving the automerge start position from a Swift string's index:
     /// ```swift
     /// extension String {
+    ///    /// Given: Automerge.Document(textEncoding: .unicodeScalars)
     ///    @inlinable func automergeIndexPosition(index: String.Index) -> UInt64? {
     ///        guard let unicodeScalarIndex = index.samePosition(in: self.unicodeScalars) else {
     ///            return nil
@@ -670,11 +737,12 @@ public final class Document: @unchecked Sendable {
     /// }
     /// ```
     ///
-    /// For the length of index updates in Automerge, use the count of the string's `UnicodeScalarView`, converted to
-    /// `Int64`.
+    /// For the length of index updates in Automerge, use the count in picked text encoding converted to `UInt64`.
     /// For example:
     /// ```swift
-    /// Int64("🇬🇧".unicodeScalars.count)
+    /// UInt64("🇬🇧".unicodeScalars.count)
+    /// UInt64("🇬🇧".utf8.count)
+    /// UInt64("🇬🇧".utf16.count)
     /// ```
     public func mark(
         obj: ObjId,
@@ -794,6 +862,7 @@ public final class Document: @unchecked Sendable {
     /// ```
     ///
     /// ## Recommendation
+    ///
     /// Use this method to query the marks applied to a text object at a specific position.
     /// This can be useful for retrieving the list of ``Automerge/Mark`` related to a character without
     /// traversing the full document.

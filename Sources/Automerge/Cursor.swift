@@ -2,13 +2,13 @@ import enum AutomergeUniffi.Position
 
 typealias FfiPosition = AutomergeUniffi.Position
 
-/// A opaque type that represents a location within an array or text object that adjusts with insertions and deletes to
+/// A opaque type that represents a stable location of the character following the location reference at creation within an array or text object that adjusts with insertions and deletions to
 /// maintain its relative position.
 ///
-/// Set a cursor using ``Document/cursor(obj:position:)``, or ``Document/cursorAt(obj:position:heads:)`` to place a
-/// cursor at a previous point in time.
-/// Retrieve the cursor position from the document using ``Document/cursorPosition(obj:cursor:)``, or use
-/// ``Document/cursorPositionAt(obj:cursor:heads:)`` to get the cursor position at a previous point in time.
+/// Create a cursor using ``Document/cursor(obj:position:)``, or ``Document/cursor(obj:position:heads:)`` to place a
+/// cursor at the point in time indicated by the `heads` parameter.
+/// Retrieve the position of the cursor reference from the document using ``Document/position(obj:cursor:)``, or use
+/// ``Document/position(obj:cursor:heads:)`` to get the position at a previous point in time.
 public struct Cursor: Equatable, Hashable, Sendable {
     var bytes: [UInt8]
 }
@@ -24,9 +24,11 @@ extension Cursor: CustomStringConvertible {
 ///
 /// ### See Also
 /// - ``Document/cursor(obj:position:)``
-/// - ``Document/cursorAt(obj:position:heads:)``
+/// - ``Document/cursor(obj:position:heads:)``
 public enum Position {
+    /// A stable location character or array position that follows that location regardless of Document changes.
     case cursor(Cursor)
+    /// An absolute index position within an array or text object.
     case index(UInt64)
 }
 

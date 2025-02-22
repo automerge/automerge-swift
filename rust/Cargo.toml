@@ -13,7 +13,7 @@ path = "uniffi-bindgen.rs"
 required-features = ["uniffi/cli"]
 
 [dependencies]
-automerge = { version = "0.5.12", default-features = false, features = ["wasm"] }
+automerge = { version = "0.6.0", default-features = false, features = ["wasm"] }
 thiserror = "1.0.38"
 uniffi = "0.28.2"
 

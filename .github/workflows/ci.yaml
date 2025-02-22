@@ -26,7 +26,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -63,11 +63,13 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
       - name: Get swift version
         run: swift --version
       - name: Swift tests
-        run: swift test
+        run: |
+          export LOCAL_BUILD=true
+          swift test
 
   wasm:
     runs-on: ubuntu-latest
@@ -89,7 +91,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(rust/Cargo.lock) }}
+          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
       - name: Cache Toolchain for WebAssembly
         id: cache-wasm-toolchain
         uses: actions/cache@v4

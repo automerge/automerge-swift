@@ -4,7 +4,7 @@
 
 ### Creating or loading a document
 
-- ``init(logLevel:)``
+- ``init(textEncoding:logLevel:)``
 - ``init(_:logLevel:)``
 - ``LogVerbosity``
 
@@ -62,9 +62,9 @@
 ### Setting and Reading cursors
 
 - ``cursor(obj:position:)``
-- ``cursorAt(obj:position:heads:)``
-- ``cursorPosition(obj:cursor:)``
-- ``cursorPositionAt(obj:cursor:heads:)``
+- ``cursor(obj:position:heads:)``
+- ``position(obj:cursor:)``
+- ``position(obj:cursor:heads:)``
 
 ### Updating counters
 

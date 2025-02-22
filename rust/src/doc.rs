@@ -1,13 +1,14 @@
 use std::sync::{Arc, RwLock, RwLockWriteGuard};
 
-use am::sync::SyncDoc;
-use automerge as am;
+use automerge::{self as am, sync::SyncDoc, CursorPosition};
 use automerge::{transaction::Transactable, ReadDoc};
 
 use crate::actor_id::ActorId;
 use crate::cursor::Position;
 use crate::mark::{ExpandMark, KeyValue, Mark};
 use crate::patches::Patch;
+use crate::text_encoding::TextEncoding;
+
 use crate::{
     Change, ChangeHash, Cursor, ObjId, ObjType, PathElement, ScalarValue, SyncState, Value,
 };
@@ -50,6 +51,16 @@ impl Doc {
         Self(RwLock::new(
             am::AutoCommit::default().with_actor(actor.into()),
         ))
+    }
+
+    pub fn new_with_text_encoding(text_encoding: TextEncoding) -> Self {
+        Self(RwLock::new(am::AutoCommit::new_with_encoding(
+            text_encoding.into(),
+        )))
+    }
+
+    pub fn text_encoding(&self) -> TextEncoding {
+        self.0.read().unwrap().text_encoding().into()
     }
 
     pub fn actor_id(&self) -> ActorId {
@@ -334,7 +345,15 @@ impl Doc {
     pub fn cursor(&self, obj: ObjId, position: u64) -> Result<Cursor, DocError> {
         let obj = am::ObjId::from(obj);
         let doc = self.0.read().unwrap();
-        Ok(doc.get_cursor(obj, position as usize, None)?.into())
+        let index = position as usize;
+        let position = if index >= doc.length(&obj) {
+            CursorPosition::End
+        } else {
+            CursorPosition::Index(index)
+        };
+        doc.get_cursor(&obj, position, None)
+            .map(|c| c.into())
+            .map_err(|error| DocError::Internal(error))
     }
 
     pub fn cursor_at(
@@ -349,7 +368,15 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        Ok(doc.get_cursor(obj, position as usize, Some(&heads))?.into())
+        let index = position as usize;
+        let cursor_position = if index >= doc.length(&obj) {
+            CursorPosition::End
+        } else {
+            CursorPosition::Index(index)
+        };
+        doc.get_cursor(&obj, cursor_position, Some(&heads))
+            .map(|c| c.into())
+            .map_err(|error| DocError::Internal(error))
     }
 
     pub fn cursor_position(&self, obj: ObjId, cursor: Cursor) -> Result<u64, DocError> {

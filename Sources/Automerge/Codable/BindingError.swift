@@ -2,9 +2,6 @@ import Foundation
 
 /// Binding errors
 public enum BindingError: LocalizedError, Equatable {
-    public static func == (lhs: BindingError, rhs: BindingError) -> Bool {
-        lhs.errorDescription == rhs.errorDescription
-    }
 
     /// The path provided was invalid to bind into the Automerge document.
     case InvalidPath(String)
