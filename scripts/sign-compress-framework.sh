@@ -9,7 +9,7 @@ FRAMEWORK_NAME="automergeFFI"
 XCFRAMEWORK_FOLDER="$THIS_SCRIPT_DIR/../${FRAMEWORK_NAME}.xcframework"
 
 echo "▸ code-sign the XCFramework"
-codesign --timestamp -v --sign "Apple Development: Joseph Heck (RGF7P769P6)" ${FRAMEWORK_NAME}.xcframework
+codesign --timestamp -v --sign "Apple Development: ALEXANDER JACK S GOOD (3A38HMNVML)" ${FRAMEWORK_NAME}.xcframework
 
 echo "▸ Compress xcframework"
 ditto -c -k --sequesterRsrc --keepParent "$XCFRAMEWORK_FOLDER" "$XCFRAMEWORK_FOLDER.zip"
