@@ -84,7 +84,7 @@ extension Bool: ScalarValueRepresentable {
 
 // MARK: URL Conversions
 
-/// A failure to convert an Automerge scalar value to or from a Boolean representation.
+/// A failure to convert an Automerge scalar value to or from a URL representation.
 public enum URLScalarConversionError: LocalizedError {
     case notStringScalarValue(_ val: ScalarValue)
     case notMatchingURLScheme(String)
