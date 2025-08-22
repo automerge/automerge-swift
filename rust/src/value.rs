@@ -28,9 +28,7 @@ impl<'a> From<(am::ValueRef<'a>, am::ObjId)> for Value {
                 typ: ObjType::from(ty),
                 id: id.into(),
             },
-            (am::ValueRef::Scalar(s), _) => Value::Scalar {
-                value: (&s).into(),
-            },
+            (am::ValueRef::Scalar(s), _) => Value::Scalar { value: (&s).into() },
         }
     }
 }

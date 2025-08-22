@@ -66,9 +66,7 @@ impl From<am::ScalarValue> for ScalarValue {
             am::ScalarValue::Int(n) => ScalarValue::Int { value: n },
             am::ScalarValue::Uint(n) => ScalarValue::Uint { value: n },
             am::ScalarValue::F64(n) => ScalarValue::F64 { value: n },
-            am::ScalarValue::Counter(c) => ScalarValue::Counter {
-                value: c.into(),
-            },
+            am::ScalarValue::Counter(c) => ScalarValue::Counter { value: c.into() },
             am::ScalarValue::Timestamp(n) => ScalarValue::Timestamp { value: n },
             am::ScalarValue::Boolean(b) => ScalarValue::Boolean { value: b },
             am::ScalarValue::Unknown { type_code, bytes } => ScalarValue::Unknown {

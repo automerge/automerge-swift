@@ -16,7 +16,7 @@ impl From<am::Change> for Change {
         Change {
             actor_id: value.actor_id().into(),
             message: value.message().cloned(),
-            deps: value.deps().into_iter().map(ChangeHash::from).collect(),
+            deps: value.deps().iter().map(ChangeHash::from).collect(),
             timestamp: value.timestamp(),
             bytes: value.bytes().into_owned(),
             hash: value.hash().into(),
