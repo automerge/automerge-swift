@@ -1,4 +1,5 @@
 use automerge as am;
+use automerge::ScalarValueRef;
 
 pub enum ScalarValue {
     Bytes { value: Vec<u8> },
@@ -51,6 +52,52 @@ impl<'a> From<&'a am::ScalarValue> for ScalarValue {
                 data: bytes.clone(),
             },
             am::ScalarValue::Null => ScalarValue::Null,
+        }
+    }
+}
+
+impl From<am::ScalarValue> for ScalarValue {
+    fn from(value: am::ScalarValue) -> Self {
+        match value {
+            am::ScalarValue::Bytes(b) => ScalarValue::Bytes { value: b },
+            am::ScalarValue::Str(s) => ScalarValue::String {
+                value: s.to_string(),
+            },
+            am::ScalarValue::Int(n) => ScalarValue::Int { value: n },
+            am::ScalarValue::Uint(n) => ScalarValue::Uint { value: n },
+            am::ScalarValue::F64(n) => ScalarValue::F64 { value: n },
+            am::ScalarValue::Counter(c) => ScalarValue::Counter {
+                value: c.into(),
+            },
+            am::ScalarValue::Timestamp(n) => ScalarValue::Timestamp { value: n },
+            am::ScalarValue::Boolean(b) => ScalarValue::Boolean { value: b },
+            am::ScalarValue::Unknown { type_code, bytes } => ScalarValue::Unknown {
+                type_code,
+                data: bytes,
+            },
+            am::ScalarValue::Null => ScalarValue::Null,
+        }
+    }
+}
+
+impl<'a> From<&ScalarValueRef<'a>> for ScalarValue {
+    fn from(value: &ScalarValueRef<'a>) -> Self {
+        match value {
+            ScalarValueRef::Bytes(b) => ScalarValue::Bytes { value: b.to_vec() },
+            ScalarValueRef::Str(s) => ScalarValue::String {
+                value: s.to_string(),
+            },
+            ScalarValueRef::Int(n) => ScalarValue::Int { value: *n },
+            ScalarValueRef::Uint(n) => ScalarValue::Uint { value: *n },
+            ScalarValueRef::F64(n) => ScalarValue::F64 { value: *n },
+            ScalarValueRef::Counter(c) => ScalarValue::Counter { value: *c },
+            ScalarValueRef::Timestamp(n) => ScalarValue::Timestamp { value: *n },
+            ScalarValueRef::Boolean(b) => ScalarValue::Boolean { value: *b },
+            ScalarValueRef::Null => ScalarValue::Null,
+            ScalarValueRef::Unknown { type_code, bytes } => ScalarValue::Unknown {
+                type_code: *type_code,
+                data: bytes.to_vec(),
+            },
         }
     }
 }

@@ -20,3 +20,17 @@ impl<'a> From<(am::Value<'a>, am::ObjId)> for Value {
         }
     }
 }
+
+impl<'a> From<(am::ValueRef<'a>, am::ObjId)> for Value {
+    fn from(value: (am::ValueRef<'a>, am::ObjId)) -> Self {
+        match value {
+            (am::ValueRef::Object(ty), id) => Value::Object {
+                typ: ObjType::from(ty),
+                id: id.into(),
+            },
+            (am::ValueRef::Scalar(s), _) => Value::Scalar {
+                value: (&s).into(),
+            },
+        }
+    }
+}
