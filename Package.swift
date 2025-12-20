@@ -52,7 +52,7 @@ if ProcessInfo.processInfo.environment["LOCAL_BUILD"] != nil {
     // `./scripts/build-ghpages-docs.sh`.
     FFIbinaryTarget = .binaryTarget(
         name: "automergeFFI",
-        path: "./automergeFFI.xcframework.zip"
+        path: "./automergeFFI.xcframework"
     )
 } else {
     FFIbinaryTarget = .binaryTarget(
