@@ -6,7 +6,7 @@ A quick-start guide on how to use Automerge for your iOS or macOS app.
 
 Use an Automerge document to store and merge changes to the data.
 You can store individuals values or entire models within Automerge.
-Encode and decide any model that conforms to the [Codable protocol](https://developer.apple.com/documentation/swift/codable) into an Automerge document. 
+Encode and decode any model that conforms to the [Codable protocol](https://developer.apple.com/documentation/swift/codable) into an Automerge document. 
 
 For example, the following code illustrates the model `ColorList`, that conforms to `Codable`, for this quick start:
 
