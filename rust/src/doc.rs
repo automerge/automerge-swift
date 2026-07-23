@@ -432,13 +432,13 @@ impl Doc {
         &self,
         obj: ObjId,
         start: u64,
-        delete: i64,
+        delete_count: i64,
         value: String,
     ) -> Result<(), DocError> {
         let obj = am::ObjId::from(obj);
         let mut doc = self.0.write().unwrap();
         assert_text(&*doc, &obj)?;
-        doc.splice_text(&obj, start as usize, delete as isize, value.as_str())?;
+        doc.splice_text(&obj, start as usize, delete_count as isize, value.as_str())?;
         Ok(())
     }
 
@@ -454,7 +454,7 @@ impl Doc {
         &self,
         obj: ObjId,
         start: u64,
-        delete: i64,
+        delete_count: i64,
         values: Vec<ScalarValue>,
     ) -> Result<(), DocError> {
         let obj = am::ObjId::from(obj);
@@ -463,7 +463,7 @@ impl Doc {
         doc.splice(
             &obj,
             start as usize,
-            delete as isize,
+            delete_count as isize,
             values.into_iter().map(|i| i.into()),
         )?;
         Ok(())
