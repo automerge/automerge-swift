@@ -654,9 +654,9 @@ public protocol DocProtocol : AnyObject {
     
     func setActor(actor: ActorId) 
     
-    func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue]) throws 
+    func splice(obj: ObjId, start: UInt64, deleteCount: Int64, values: [ScalarValue]) throws 
     
-    func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String) throws 
+    func spliceText(obj: ObjId, start: UInt64, deleteCount: Int64, chars: String) throws 
     
     func splitBlock(obj: ObjId, index: UInt32) throws  -> ObjId
     
@@ -1219,21 +1219,21 @@ open func setActor(actor: ActorId) {try! rustCall() {
 }
 }
     
-open func splice(obj: ObjId, start: UInt64, delete: Int64, values: [ScalarValue])throws  {try rustCallWithError(FfiConverterTypeDocError.lift) {
+open func splice(obj: ObjId, start: UInt64, deleteCount: Int64, values: [ScalarValue])throws  {try rustCallWithError(FfiConverterTypeDocError.lift) {
     uniffi_uniffi_automerge_fn_method_doc_splice(self.uniffiClonePointer(),
         FfiConverterTypeObjId.lower(obj),
         FfiConverterUInt64.lower(start),
-        FfiConverterInt64.lower(delete),
+        FfiConverterInt64.lower(deleteCount),
         FfiConverterSequenceTypeScalarValue.lower(values),$0
     )
 }
 }
     
-open func spliceText(obj: ObjId, start: UInt64, delete: Int64, chars: String)throws  {try rustCallWithError(FfiConverterTypeDocError.lift) {
+open func spliceText(obj: ObjId, start: UInt64, deleteCount: Int64, chars: String)throws  {try rustCallWithError(FfiConverterTypeDocError.lift) {
     uniffi_uniffi_automerge_fn_method_doc_splice_text(self.uniffiClonePointer(),
         FfiConverterTypeObjId.lower(obj),
         FfiConverterUInt64.lower(start),
-        FfiConverterInt64.lower(delete),
+        FfiConverterInt64.lower(deleteCount),
         FfiConverterString.lower(chars),$0
     )
 }
@@ -3580,10 +3580,10 @@ private var initializationResult: InitializationResult = {
     if (uniffi_uniffi_automerge_checksum_method_doc_set_actor() != 64337) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_automerge_checksum_method_doc_splice() != 29894) {
+    if (uniffi_uniffi_automerge_checksum_method_doc_splice() != 16143) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_uniffi_automerge_checksum_method_doc_splice_text() != 20602) {
+    if (uniffi_uniffi_automerge_checksum_method_doc_splice_text() != 31095) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_uniffi_automerge_checksum_method_doc_split_block() != 10956) {

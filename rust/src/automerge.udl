@@ -173,12 +173,12 @@ interface Doc {
     ObjId insert_object_in_list(ObjId obj, u64 index, ObjType obj_type);
 
     [Throws=DocError]
-    void splice_text(ObjId obj, u64 start, i64 delete, string chars);
+    void splice_text(ObjId obj, u64 start, i64 delete_count, string chars);
     [Throws=DocError]
     void update_text(ObjId obj, string chars);
 
     [Throws=DocError]
-    void splice(ObjId obj, u64 start, i64 delete, sequence<ScalarValue> values);
+    void splice(ObjId obj, u64 start, i64 delete_count, sequence<ScalarValue> values);
 
     [Throws=DocError]
     void mark(ObjId obj, u64 start, u64 end, ExpandMark expand, string name, ScalarValue value);
