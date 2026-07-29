@@ -1,5 +1,13 @@
 # Automerge-swift
 
+> [!IMPORTANT]
+> This STEAMplug fork carries a narrow Linux compatibility layer based directly on
+> upstream Automerge Swift `0.7.2` at
+> `aa45d17ac92cef2b8ded63b47e65a28dc85e3418`. Linux consumers must build and link the
+> revision-matched Rust archive; Apple consumers retain the upstream XCFramework path.
+> See [STEAMPLUG_LINUX_SUPPORT.md](./STEAMPLUG_LINUX_SUPPORT.md) for the supported
+> toolchains, exact commands, maintenance policy, licensing, and retirement criteria.
+
 The project is an [Automerge](https://automerge.org) implementation, a library of data structures for building collaboraative applications, in Swift.
 Automerge is cross platform and cross-language, allowing you to provide collaboration support between browsers and native apps.
 

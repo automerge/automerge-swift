@@ -10,6 +10,11 @@ This package is implemented by wrapping the Rust library using the [Uniffi](http
 The core library is compiled using Rust and exported as an XCFramework and WASM library.
 For an overview of the project layout and major components, review [notes/project-layers](./notes/project-layers.md).
 
+STEAMplug's Linux compatibility workflow, including its pinned toolchains and
+revision-matched archive commands, is documented in
+[STEAMPLUG_LINUX_SUPPORT.md](./STEAMPLUG_LINUX_SUPPORT.md). The upstream Apple
+XCFramework process below remains unchanged.
+
 > NOTE: The binary in the generated XCFramework and the code in ./AutomergeUniffi are **tightly** coupled. Do not edit any code in `./AutomergeUniffi` directly. Regenerate the XCFramework if you update the rust or UDL layer, and test with the regenerated XCFramework.
 
 The default Package.swift uses the latest, pre-compiled version of the XCFramework to make it easy to directly use this package.

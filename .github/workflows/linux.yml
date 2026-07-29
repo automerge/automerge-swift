@@ -1,0 +1,45 @@
+name: Linux
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: linux-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift-test:
+    name: Swift 6.3.3 / Ubuntu Noble
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    container:
+      image: swift:6.3.3-noble@sha256:66520bcba471018a34fd54ba09be97ba4abebd950a96ff5cb8c2bf50a2d33259
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Install rustup transport
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends ca-certificates curl
+
+      - name: Install Rust 1.89.0
+        uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master, pinned 2026-07-28
+        with:
+          toolchain: 1.89.0
+
+      - name: Record toolchains
+        run: |
+          cat /etc/os-release
+          swift --version
+          rustc --version
+          cargo --version
+
+      - name: Build locked Rust archive and run Swift tests
+        run: ./scripts/test-linux.sh
