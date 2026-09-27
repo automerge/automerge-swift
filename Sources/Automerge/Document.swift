@@ -100,6 +100,23 @@ public final class Document: @unchecked Sendable {
         self.reportingLogLevel = logLevel
     }
 
+    /// Creates a new document from the data that you provide, using the text encoding you choose.
+    ///
+    /// The text encoding isn't stored in the document's data, so ``init(_:logLevel:)``
+    /// uses the default encoding (``TextEncoding/unicodeScalar``). Use this initializer
+    /// to keep the encoding you created the document with, for example ``TextEncoding/utf16``
+    /// to match `NSString` and `NSRange` indices.
+    /// - Parameters:
+    ///   - bytes: A data buffer of encoded automerge changes.
+    ///   - textEncoding: The encoding type for text within the document.
+    ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
+    public init(_ bytes: Data, textEncoding: TextEncoding, logLevel: LogVerbosity = .errorOnly) throws {
+        doc = try WrappedDoc {
+            try Doc.loadWithTextEncoding(bytes: Array(bytes), textEncoding: textEncoding.ffi_textEncoding)
+        }
+        self.reportingLogLevel = logLevel
+    }
+
     private init(doc: Doc, logLevel: LogVerbosity = .errorOnly) {
         self.doc = WrappedDoc(doc)
         self.reportingLogLevel = logLevel
