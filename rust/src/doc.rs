@@ -585,6 +585,15 @@ impl Doc {
         Ok(Doc(RwLock::new(ac)))
     }
 
+    pub fn load_with_text_encoding(
+        bytes: Vec<u8>,
+        text_encoding: TextEncoding,
+    ) -> Result<Self, LoadError> {
+        let options = am::LoadOptions::new().text_encoding(text_encoding.into());
+        let ac = automerge::AutoCommit::load_with_options(bytes.as_slice(), options)?;
+        Ok(Doc(RwLock::new(ac)))
+    }
+
     pub fn generate_sync_message(&self, sync_state: Arc<SyncState>) -> Option<Vec<u8>> {
         let mut doc = self.0.write().unwrap();
         let mut state = sync_state.0.write().unwrap();
