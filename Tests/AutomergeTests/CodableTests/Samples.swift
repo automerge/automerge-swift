@@ -1,7 +1,7 @@
 import Foundation
 
 public enum Samples {
-    public static var layered = ExampleModel(title: "Samples", notes: generateSampleNotes())
+    public static var layered: ExampleModel { ExampleModel(title: "Samples", notes: generateSampleNotes()) }
 }
 
 public struct GeoLocation: Hashable, Codable {

@@ -27,7 +27,7 @@ class InteropTests: XCTestCase {
     // This doesn't following the best practices asserting by Apple re: using URLs
     // to reference file paths, it's at least functional, short, and relatively easy
     // to understand if something goes awry.
-    func fixturesDirectory(path: String = #file) -> URL {
+    func fixturesDirectory(path: String = #filePath) -> URL {
         let url = URL(fileURLWithPath: path)
         let testsDir = url.deletingLastPathComponent()
         return testsDir.appendingPathComponent("Fixtures")

@@ -270,7 +270,9 @@ public final class AutomergeText: Codable, @unchecked Sendable {
                 // context that can happen when a doc is being updated and Combine is triggering
                 // a change notification.
                 Task {
-                    let valueFromDoc = try doc.text(obj: objId)
+                    guard let valueFromDoc = try? doc.text(obj: objId) else {
+                        return
+                    }
                     let hashOfCurrentValue = self.sync { self._hashOfCurrentValue }
                     if valueFromDoc.hashValue != hashOfCurrentValue {
                         self.sendObjectWillChange()
