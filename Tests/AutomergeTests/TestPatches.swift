@@ -51,31 +51,31 @@ class PatchesTestCase: XCTestCase {
         let optional_msg = doc2.generateSyncMessage(state: state2)
         XCTAssertNotEqual(msg_before_update, optional_msg)
 
-        // The important thing to verify is that the message isn't nil - which
-        // indicates that there are changes pending. With this single change
-        // scenario, there's a roughly 1:100 chance that the sync message _will not_
-        // include the patches to bring everything up to speed, since it's a probabilistic
-        // scenario (bloom filter under the covers)
-        XCTAssertNotNil(optional_msg)
+        // A non-nil message indicates that there are changes pending.
+        var nextMessage = try XCTUnwrap(optional_msg)
 
-        let msg = try XCTUnwrap(optional_msg)
-        // print("  Sync Msg: \(msg.count) bytes: \(msg.hexEncodedString())")
-
-        let patches = try doc.receiveSyncMessageWithPatches(state: state1, message: msg)
-
-        let within_expected_count_values = (patches.isEmpty || patches.count == 1)
-        XCTAssertTrue(within_expected_count_values)
-        if patches.count == 1 {
-            XCTAssertEqual(
-                patches,
-                [
-                    Patch(
-                        action: .Put(ObjId.ROOT, .Key("key2"), .Scalar(.String("value2"))),
-                        path: []
-                    ),
-                ]
-            )
+        // The bloom filter used by sync is probabilistic, so the change may not arrive in the first
+        // message. Keep exchanging messages until the documents are in sync, collecting every patch doc
+        // receives along the way; across the whole exchange there must be exactly the one change.
+        var patches: [Patch] = []
+        for _ in 0 ..< 100 {
+            patches += try doc.receiveSyncMessageWithPatches(state: state1, message: nextMessage)
+            guard let reply = doc.generateSyncMessage(state: state1) else { break }
+            try doc2.receiveSyncMessage(state: state2, message: reply)
+            guard let message = doc2.generateSyncMessage(state: state2) else { break }
+            nextMessage = message
         }
+
+        XCTAssertEqual(
+            patches,
+            [
+                Patch(
+                    action: .Put(ObjId.ROOT, .Key("key2"), .Scalar(.String("value2"))),
+                    path: []
+                ),
+            ]
+        )
+        XCTAssertEqual(doc.heads(), doc2.heads())
     }
 
     func testApplyEncodedChangesWithPatches() {
