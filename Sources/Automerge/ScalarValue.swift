@@ -79,6 +79,46 @@ public enum ScalarValue: Equatable, Hashable, Sendable {
     }
 }
 
+extension ScalarValue {
+    /// Returns a Boolean value that indicates whether two scalar values are equal.
+    ///
+    /// Floating point values compare as `Double` does, except that NaN equals NaN, so that every value
+    /// equals itself, as `Equatable` and `Hashable` require. Without that, a document holding NaN wouldn't
+    /// equal a copy of itself, and sets of values couldn't find a NaN they contain.
+    public static func == (lhs: ScalarValue, rhs: ScalarValue) -> Bool {
+        switch (lhs, rhs) {
+        case let (.Bytes(lhs), .Bytes(rhs)): return lhs == rhs
+        case let (.String(lhs), .String(rhs)): return lhs == rhs
+        case let (.Uint(lhs), .Uint(rhs)): return lhs == rhs
+        case let (.Int(lhs), .Int(rhs)): return lhs == rhs
+        case let (.F64(lhs), .F64(rhs)): return lhs == rhs || (lhs.isNaN && rhs.isNaN)
+        case let (.Counter(lhs), .Counter(rhs)): return lhs == rhs
+        case let (.Timestamp(lhs), .Timestamp(rhs)): return lhs == rhs
+        case let (.Boolean(lhs), .Boolean(rhs)): return lhs == rhs
+        case let (.Unknown(lhsType, lhsData), .Unknown(rhsType, rhsData)):
+            return lhsType == rhsType && lhsData == rhsData
+        case (.Null, .Null): return true
+        default: return false
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .Bytes(data): hasher.combine(0); hasher.combine(data)
+        case let .String(string): hasher.combine(1); hasher.combine(string)
+        case let .Uint(uint): hasher.combine(2); hasher.combine(uint)
+        case let .Int(int): hasher.combine(3); hasher.combine(int)
+        // Every NaN hashes the same, since they're all equal.
+        case let .F64(double): hasher.combine(4); hasher.combine(double.isNaN ? .nan : double)
+        case let .Counter(count): hasher.combine(5); hasher.combine(count)
+        case let .Timestamp(date): hasher.combine(6); hasher.combine(date)
+        case let .Boolean(bool): hasher.combine(7); hasher.combine(bool)
+        case let .Unknown(typeCode, data): hasher.combine(8); hasher.combine(typeCode); hasher.combine(data)
+        case .Null: hasher.combine(9)
+        }
+    }
+}
+
 extension ScalarValue: CustomStringConvertible {
     public var description: String {
         switch self {
