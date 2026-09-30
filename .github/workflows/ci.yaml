@@ -25,7 +25,9 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
+          # Everything the Rust build depends on, so any change to it rebuilds the library
+          # instead of restoring one built from older sources.
+          key: automerge-dependencies-${{ hashFiles('rust/Cargo.toml', 'rust/Cargo.lock', 'rust/build.rs', 'rust/uniffi-bindgen.rs', 'rust/src/**', 'scripts/build-xcframework.sh', 'scripts/compress-framework.sh', '.github/workflows/ci.yaml') }}
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -58,7 +60,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
+          key: automerge-dependencies-${{ hashFiles('rust/Cargo.toml', 'rust/Cargo.lock', 'rust/build.rs', 'rust/uniffi-bindgen.rs', 'rust/src/**', 'scripts/build-xcframework.sh', 'scripts/compress-framework.sh', '.github/workflows/ci.yaml') }}
       - name: Get swift version
         run: swift --version
       - name: Swift tests
@@ -80,7 +82,7 @@ jobs:
             automergeFFI.xcframework.zip
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
-          key: automerge-dependencies-{{ hashFiles(AutomergeUniffi/automerge.swift) }}-{{ hashFiles(AutomergeUniffi/automergeFFI.h) }}-{{ hashFiles(rust/Cargo.lock) }}-{{ hashFiles(rust/src/doc.rs) }}
+          key: automerge-dependencies-${{ hashFiles('rust/Cargo.toml', 'rust/Cargo.lock', 'rust/build.rs', 'rust/uniffi-bindgen.rs', 'rust/src/**', 'scripts/build-xcframework.sh', 'scripts/compress-framework.sh', '.github/workflows/ci.yaml') }}
       - uses: swift-actions/setup-swift@v3
         with:
           swift-version: "6.2.3"
