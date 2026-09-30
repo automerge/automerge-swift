@@ -83,6 +83,19 @@ jobs:
             libuniffi_automerge.a
             libuniffi_automerge_threads.a
           key: automerge-dependencies-${{ hashFiles('rust/Cargo.toml', 'rust/Cargo.lock', 'rust/build.rs', 'rust/uniffi-bindgen.rs', 'rust/src/**', 'scripts/build-xcframework.sh', 'scripts/compress-framework.sh', '.github/workflows/ci.yaml') }}
+      # setup-swift v3.0.0-beta.1 verifies the Swiftly download before importing Swift's
+      # signing keys (swift-actions/setup-swift#798), so import them first. This keeps the
+      # signature check; remove it once a setup-swift release includes the fix.
+      - name: Import Swift signing keys
+        run: |
+          keys="$RUNNER_TEMP/swift-all-keys.asc"
+          curl -fsSL --compressed --retry 3 -o "$keys" https://www.swift.org/keys/all-keys.asc
+          # The file is sometimes served gzip-compressed; gzip -cdf passes plain text through unchanged.
+          if ! gzip -cdf "$keys" | gpg --import -; then
+            echo "::error::Could not import Swift's signing keys. Downloaded $(wc -c < "$keys") bytes starting with:"
+            head -c 256 "$keys" | od -c | head -16
+            exit 1
+          fi
       - uses: swift-actions/setup-swift@v3
         with:
           swift-version: "6.2.3"
