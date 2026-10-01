@@ -1,4 +1,5 @@
 @testable import Automerge
+import Foundation
 import XCTest
 
 class MarksTestCase: XCTestCase {
@@ -34,12 +35,17 @@ class MarksTestCase: XCTestCase {
     }
 
     func testMarkPatches() {
+        // The actors are fixed so that the fork's sorts after the document's. With random actors,
+        // whenever the fork's sorted first, the merge shifted the document's actor index, and the
+        // ObjIds in the patches no longer matched `text`, because ObjId equality includes that index.
         let doc = Document()
+        doc.actor = ActorId(data: Data(repeating: 0x00, count: 16))!
         let text = try! doc.putObject(obj: ObjId.ROOT, key: "text", ty: ObjType.Text)
         try! doc.spliceText(obj: text, start: 0, delete: 0, value: "Hello marks")
 
         // Make the marks on a fork so we can see the marks in patches when we merge
         let fork = doc.fork()
+        fork.actor = ActorId(data: Data(repeating: 0xFF, count: 16))!
         try! fork.mark(
             obj: text,
             start: 0,
