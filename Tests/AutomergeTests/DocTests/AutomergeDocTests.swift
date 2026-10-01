@@ -34,13 +34,10 @@ final class AutomergeDocTests: XCTestCase {
             notes: "An example string to show encoding."
         )
         try automergeEncoder.encode(sample)
-        print(sample)
-        // Note(created: 2023-08-01 23:28:38 +0000, notes: "An example string to show encoding.")
 
         let automergeDecoder = AutomergeDecoder(doc: doc)
 
         let decodedStruct = try automergeDecoder.decode(Note.self)
-        print(decodedStruct)
 
         XCTAssertEqual(decodedStruct.notes, sample.notes)
     }
@@ -85,7 +82,6 @@ final class AutomergeDocTests: XCTestCase {
 
         try pollingPlace1.merge(other: pollingPlace2)
         let updatedPlace1 = try place1decoder.decode(Ballot.self)
-        print(updatedPlace1.votes.value)
         // 2
 
         XCTAssertEqual(updatedPlace1.votes.value, 2)
@@ -109,7 +105,6 @@ final class AutomergeDocTests: XCTestCase {
         myColors.colors.append("green")
         try encoder.encode(myColors)
 
-        print(myColors.colors)
         // ["blue", "red", "green"]
 
         XCTAssertEqual(myColors.colors, ["blue", "red", "green"])
@@ -135,8 +130,6 @@ final class AutomergeDocTests: XCTestCase {
         let decoder = AutomergeDecoder(doc: doc)
         myColors = try decoder.decode(ColorList.self)
 
-        print(myColors.colors)
-        // ["red", "green"]
 
         XCTAssertEqual(myColors.colors, ["red", "green"])
 
@@ -200,36 +193,23 @@ final class AutomergeDocTests: XCTestCase {
             from: stringFromAutomerge.utf8.startIndex,
             to: stringFromAutomerge.utf8.endIndex
         )
-        print("UTF8 index length: \(utf8IndexLength)")
+        XCTAssertEqual(utf8IndexLength, 37)
 
         let unicodeScalarIndexLength = stringFromAutomerge.unicodeScalars.distance(
             from: stringFromAutomerge.unicodeScalars.startIndex,
             to: stringFromAutomerge.unicodeScalars.endIndex
         )
-        print("unicodeScalar index length: \(unicodeScalarIndexLength)")
+        XCTAssertEqual(unicodeScalarIndexLength, 10)
 
         let index🇬🇧: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "🇬🇧"))
         let index👨‍👨‍👧‍👦: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "👨‍👨‍👧‍👦"))
         let index😀: String.Index = try XCTUnwrap(stringFromAutomerge.firstIndex(of: "😀"))
-        print(
-            "utf8 index position of 🇬🇧: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index🇬🇧)))"
-        ) // 0
-        print(
-            "utf8 index position of 👨‍👨‍👧‍👦: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦)))"
-        ) // 8
-        print(
-            "utf8 index position of 😀: \(String(describing: convertToUTF8Index(someString: stringFromAutomerge, index: index😀)))"
-        ) // 33
-
-        print(
-            "unicodescalar index position of 🇬🇧: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index🇬🇧)))"
-        ) // 0
-        print(
-            "unicodescalar index position of 👨‍👨‍👧‍👦: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦)))"
-        ) // 2
-        print(
-            "unicodescalar index position of 😀: \(String(describing: convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index😀)))"
-        ) // 9
+        XCTAssertEqual(convertToUTF8Index(someString: stringFromAutomerge, index: index🇬🇧), 0)
+        XCTAssertEqual(convertToUTF8Index(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦), 8)
+        XCTAssertEqual(convertToUTF8Index(someString: stringFromAutomerge, index: index😀), 33)
+        XCTAssertEqual(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index🇬🇧), 0)
+        XCTAssertEqual(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index👨‍👨‍👧‍👦), 2)
+        XCTAssertEqual(convertToUnicodeScalarsIndex(someString: stringFromAutomerge, index: index😀), 9)
 
         try doc.spliceText(obj: textId, start: start, delete: delete) // delete "👨‍👨‍👧‍👦"
 

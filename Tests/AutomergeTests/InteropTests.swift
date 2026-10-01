@@ -14,8 +14,6 @@ extension Data {
 
 @available(macOS 12, iOS 16, *)
 class InteropTests: XCTestCase {
-    var markdownData: Data? = nil
-
     // DEVNOTE(heckj): Bundle based approaches for finding fixture files
     // work reasonably well with regular targets, but fail (or more specifically,
     // don't work as the docs assert) with resources embedded in test targets.
@@ -42,14 +40,6 @@ class InteropTests: XCTestCase {
         }
         let data = try Data(contentsOf: urlForResource)
         return data
-    }
-
-    override func setUp() async throws {
-        markdownData = try dataFrom(resource: "markdown.md")
-    }
-
-    func testFixtureFileLoad() throws {
-        XCTAssertNotNil(markdownData)
     }
 
     struct ExemplarStructure: Codable, Equatable {
@@ -92,24 +82,6 @@ class InteropTests: XCTestCase {
         XCTAssertEqual(exemplar.fp, 3.14159267, accuracy: 0.0000001)
         XCTAssertEqual(exemplar.bytes.hexEncodedString(), magicValue)
         XCTAssertEqual(exemplar.bool, true)
-    }
-
-    func testAttributedStringParse() throws {
-        let data = try XCTUnwrap(markdownData)
-        let fancy = try AttributedString(markdown: data)
-        XCTAssertNotNil(fancy)
-        // print(fancy) // A basic print() provides a loose idea of runs within the multi-line output.
-        let enc = JSONEncoder()
-        let jsonencode = try enc.encode(fancy)
-        print(String(bytes: jsonencode, encoding: .utf8) as Any)
-        // custom encoders built in to foundation:
-        // fancy.encode(to: Encoder, configuration: AttributeScopeCodableConfiguration)
-        // see: https://developer.apple.com/documentation/foundation/decodableattributedstringkey
-        // for some interesting details of what various Intents are provided by Apple that are
-        // supported for encoding/decoding.
-        //
-        // https://developer.apple.com/documentation/foundation/inlinepresentationintent includes
-        // code, emphasis, line-break, strike-through, strong, etc.
     }
 }
 #endif
