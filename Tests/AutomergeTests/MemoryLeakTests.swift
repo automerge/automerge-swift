@@ -34,10 +34,10 @@ final class MemoryLeakTests: XCTestCase {
         trackForMemoryLeak(instance: doc2)
     }
 
-    // While a Counter or AutomergeText is bound, each change to the document starts a task that
-    // compares the document's value with the bound one, and the task holds the document and the bound
-    // instance until it finishes. So they're freed shortly after the last reference goes, rather than
-    // immediately.
+    // Where Combine is available, while a Counter or AutomergeText is bound, each change to the
+    // document starts a task that compares the document's value with the bound one, and the task holds
+    // the document and the bound instance until it finishes. So they're freed shortly after the last
+    // reference goes, rather than immediately.
 
     func testBoundCounterIsFreed() throws {
         try assertEventuallyFreed {
@@ -72,10 +72,12 @@ final class MemoryLeakTests: XCTestCase {
         _ makeObjects: () throws -> [AnyObject]
     ) throws {
         let references = try makeObjects().map { WeakReference($0) }
+        #if canImport(Combine)
         let deadline = Date().addingTimeInterval(timeout)
         while references.contains(where: { $0.object != nil }), Date() < deadline {
             Thread.sleep(forTimeInterval: 0.01)
         }
+        #endif
         for reference in references where reference.object != nil {
             XCTFail("\(reference.description) was never freed", file: file, line: line)
         }
