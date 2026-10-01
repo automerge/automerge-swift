@@ -19,9 +19,13 @@ final class Document_PathTests: XCTestCase {
         XCTAssertEqual(try doc.lookupPath(path: ".list"), list)
         XCTAssertNil(try doc.lookupPath(path: "list.[1]"))
 
-        XCTAssertThrowsError(try doc.lookupPath(path: ".list.[5]"), "Index Out of Bounds should throw an error")
+        XCTAssertThrowsError(try doc.lookupPath(path: ".list.[5]"), "Index Out of Bounds should throw an error") { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isIndexOutOfBounds)
+        }
         // The top level object isn't a list - so an index lookup should fail with an error
-        XCTAssertThrowsError(try doc.lookupPath(path: "[1].a"))
+        XCTAssertThrowsError(try doc.lookupPath(path: "[1].a")) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isWrongObjectTypeDocError)
+        }
 
         // XCTAssertEqual(ObjId.ROOT, try XCTUnwrap(doc.lookupPath(path: "1.a")))
         // threw error "DocError(inner: AutomergeUniffi.DocError.WrongObjectType(message: "WrongObjectType"))"

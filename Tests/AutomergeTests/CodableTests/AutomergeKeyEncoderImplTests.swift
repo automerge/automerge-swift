@@ -45,7 +45,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .Int(4))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(false, forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Bool.self) }
+        }
     }
 
     func testSimpleKeyEncode_Float() throws {
@@ -70,29 +72,39 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Float(3.4), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Float(3.4), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testSimpleKeyEncode_InvalidFloat() throws {
         XCTAssertThrowsError(
             try rootKeyedContainer.encode(Float.infinity, forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Float.self) && $0.debugDescription.contains("Automerge") }
+        }
     }
 
     func testSimpleKeyEncode_InvalidDouble() throws {
         XCTAssertThrowsError(
             try rootKeyedContainer.encode(Double.nan, forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Double.self) && $0.debugDescription.contains("Automerge") }
+        }
     }
 
     func testSimpleKeyEncode_Float_CautiousFailure() throws {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .Int(4))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Float(4.0), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Float.self) }
+        }
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Double(4.0), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Double.self) }
+        }
     }
 
     func testSimpleKeyEncode_Int8() throws {
@@ -106,7 +118,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Int8(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Int8.self) }
+        }
     }
 
     func testSimpleKeyEncode_Int16() throws {
@@ -120,7 +134,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Int16(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Int16.self) }
+        }
     }
 
     func testSimpleKeyEncode_Int32() throws {
@@ -134,7 +150,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Int32(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Int32.self) }
+        }
     }
 
     func testSimpleKeyEncode_Int64() throws {
@@ -148,14 +166,18 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Int64(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Int64.self) }
+        }
     }
 
     func testSimpleKeyEncode_Int_CautiousFailure() throws {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Int(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Int.self) }
+        }
     }
 
     func testSimpleKeyEncode_UInt() throws {
@@ -169,7 +191,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(UInt(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: UInt.self) }
+        }
     }
 
     func testSimpleKeyEncode_UInt8() throws {
@@ -183,7 +207,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(UInt8(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: UInt8.self) }
+        }
     }
 
     func testSimpleKeyEncode_UInt16() throws {
@@ -197,7 +223,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(UInt16(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: UInt16.self) }
+        }
     }
 
     func testSimpleKeyEncode_UInt32() throws {
@@ -210,7 +238,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(UInt32(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: UInt32.self) }
+        }
     }
 
     func testSimpleKeyEncode_UInt64() throws {
@@ -223,7 +253,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(UInt64(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: UInt64.self) }
+        }
     }
 
     func testSimpleKeyEncode_Counter() throws {
@@ -237,7 +269,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         try doc.put(obj: ObjId.ROOT, key: "value", value: .F64(4.0))
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(Counter(4), forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Counter.self) }
+        }
     }
 
     func testSimpleKeyEncode_Data() throws {
@@ -253,7 +287,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
         let earlyDate = dateFormatter.date(from: "1941-04-26T08:17:00Z")!
         XCTAssertThrowsError(
             try cautiousKeyedContainer.encode(earlyDate, forKey: .value)
-        )
+        ) { error in
+            XCTAssertError(error, is: EncodingError.self) { $0.isInvalidValue(of: Date.self) }
+        }
     }
 
     func testErrorEncode_Bool() throws {
@@ -266,7 +302,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(true, forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(true, forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Double() throws {
@@ -279,7 +317,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Double(8.16), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Double(8.16), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Int() throws {
@@ -292,7 +332,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Int(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Int(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Int8() throws {
@@ -305,7 +347,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Int8(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Int8(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Int16() throws {
@@ -318,7 +362,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Int16(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Int16(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Int32() throws {
@@ -331,7 +377,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Int32(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Int32(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Int64() throws {
@@ -344,7 +392,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(Int64(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(Int64(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_UInt() throws {
@@ -357,7 +407,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_UInt8() throws {
@@ -370,7 +422,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt8(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt8(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_UInt16() throws {
@@ -383,7 +437,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt16(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt16(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_UInt32() throws {
@@ -396,7 +452,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt32(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt32(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_UInt64() throws {
@@ -409,7 +467,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt64(8), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(UInt64(8), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testErrorEncode_Codable() throws {
@@ -426,7 +486,9 @@ final class AutomergeKeyEncoderImplTests: XCTestCase {
             logLevel: .errorOnly
         )
         rootKeyedContainer = impl.container(keyedBy: SampleCodingKeys.self)
-        XCTAssertThrowsError(try rootKeyedContainer.encode(SimpleStruct(a: "foo"), forKey: .value))
+        XCTAssertThrowsError(try rootKeyedContainer.encode(SimpleStruct(a: "foo"), forKey: .value)) { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isSchemaMissing)
+        }
     }
 
     func testSuperEncoder() throws {
