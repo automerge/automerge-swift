@@ -49,7 +49,7 @@ For an example of this attribute markup in markdown format, see the documentatio
 The built-in encoding mechanism stores Attributed Strings as a series of `runs`, the plain text of the content followed immediately by a reference to an `attributeTable`. 
 The `attributeTable` is a list of objects that represents a unique set of presentation intents.
 Each presentation intent may also reference addition value information that the decoder uses to pick the relevant intent.
-For example, in the following example, `NSInlinePresentationIntent: 64` indicates strongly emphasized (bold), where `NSInlinePresentationIntent: 2` indicates emphasized (italic).
+For example, in the following example, `NSInlinePresentationIntent: 2` indicates strongly emphasized (bold), `NSInlinePresentationIntent: 1` indicates emphasized (italic), and `NSInlinePresentationIntent: 64` marks a soft break between lines.
 The full example of the markdown example encoded to JSON is shown below:
 
 ```json
@@ -472,6 +472,43 @@ There are also [UIKit](https://developer.apple.com/documentation/foundation/attr
 ### Accessibility
 
 - accessibility (UIKit, AppKit)
+
+## How individual intents and attributes encode
+
+These are the default `Codable` encodings of the individual intents and attributes, as JSON.
+
+Block-level `PresentationIntent.Kind` values encode as an array of the kind's name followed by its associated values:
+
+```text
+blockQuote        ["blockQuote"]
+codeBlock         ["codeBlock","swift"]
+header            ["header",1]
+listItem          ["listItem",1]
+orderedList       ["orderedList"]
+paragraph         ["paragraph"]
+table             ["table",[{"alignment":0},{"alignment":1},{"alignment":2}]]
+tableCell         ["tableCell",1]
+tableHeaderRow    ["tableHeaderRow"]
+tableRow          ["tableRow",1]
+thematicBreak     ["thematicBreak"]
+unorderedList     ["unorderedList"]
+```
+
+`InlinePresentationIntent` is an `OptionSet`, so any combination of inline intents encodes as a single integer, the sum of these raw values:
+
+```text
+emphasized          1
+stronglyEmphasized  2
+code                4
+strikethrough      32
+softBreak          64
+lineBreak         128
+inlineHTML        256
+blockHTML         512
+```
+
+SwiftUI's attributes (font, foreground and background color, strikethrough and underline style, kerning, tracking and baseline offset) are individual attributes rather than an option set.
+Color, font and line style values aren't publicly `Codable`, so even when encoded with `AttributeScopes.SwiftUIAttributes.encodingConfiguration`, an attributed string carrying them encodes the text with an empty attribute table, for example `["color example",{}]`.
 
 ## Implementation for Automerge-Swift
 
