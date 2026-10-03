@@ -24,7 +24,9 @@ final class AutomergeDictionaryEncodeDecodeTests: XCTestCase {
         wrapper.exampleDictionary[1] = "one"
         wrapper.exampleDictionary[2] = "two"
 
-        XCTAssertThrowsError(try encoder.encode(wrapper))
+        XCTAssertThrowsError(try encoder.encode(wrapper)) { error in
+            XCTAssertError(error, is: DocError.self, where: \.isWrongObjectType)
+        }
         // Automerge throws a DocError because it only supports
         // Strings as keys for dictionaries.
         // DocError(inner: AutomergeUniffi.DocError.WrongObjectType(message: "WrongObjectType"))

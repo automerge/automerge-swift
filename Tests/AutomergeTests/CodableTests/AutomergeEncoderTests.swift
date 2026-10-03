@@ -349,7 +349,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try automergeEncoder.encode(followupModel),
             "Expected mismatched schema to throw error"
         ) { error in
-            print(error)
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isMismatchedSchema)
         }
     }
 
@@ -372,7 +372,7 @@ final class AutomergeEncoderTests: XCTestCase {
             try automergeEncoder.encode(followupModel),
             "Expected mismatched schema to throw error"
         ) { error in
-            print(error)
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isMismatchedSchema)
         }
     }
 

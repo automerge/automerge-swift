@@ -154,7 +154,7 @@ struct AutomergeKeyedEncodingContainer<K: CodingKey>: KeyedEncodingContainerProt
         guard !value.isNaN, !value.isInfinite else {
             throw EncodingError.invalidValue(value, .init(
                 codingPath: codingPath + [key],
-                debugDescription: "Unable to encode Float.\(value) directly in JSON."
+                debugDescription: "Unable to encode Float.\(value) directly in Automerge."
             ))
         }
         if impl.cautiousWrite {
