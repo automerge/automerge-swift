@@ -464,7 +464,7 @@ impl Doc {
             &obj,
             start as usize,
             delete as isize,
-            values.into_iter().map(|i| i.into()),
+            values.into_iter().map(am::ScalarValue::from),
         )?;
         Ok(())
     }
