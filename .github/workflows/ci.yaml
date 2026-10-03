@@ -28,10 +28,10 @@ jobs:
           # Everything the Rust build depends on, so any change to it rebuilds the library
           # instead of restoring one built from older sources.
           key: automerge-dependencies-${{ hashFiles('rust/Cargo.toml', 'rust/Cargo.lock', 'rust/build.rs', 'rust/uniffi-bindgen.rs', 'rust/src/**', 'scripts/build-xcframework.sh', 'scripts/compress-framework.sh', '.github/workflows/ci.yaml') }}
-      - name: Install Rust 1.89.0
+      - name: Install Rust 1.98.1
         run: |
-          rustup toolchain install 1.89.0 --profile minimal --no-self-update
-          rustup default 1.89.0
+          rustup toolchain install 1.98.1 --profile minimal --no-self-update
+          rustup default 1.98.1
       - name: Build Automerge XCFramework and library
         if: steps.cache-automerge.outputs.cache-hit != 'true'
         run: ./scripts/build-xcframework.sh
@@ -109,10 +109,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Install Rust 1.89.0
+      - name: Install Rust 1.98.1
         run: |
-          rustup toolchain install 1.89.0 --profile minimal --component rustfmt --no-self-update
-          rustup default 1.89.0
+          rustup toolchain install 1.98.1 --profile minimal --component rustfmt --no-self-update
+          rustup default 1.98.1
       - name: Clippy
         run: ./scripts/ci/rustfmt.sh
 
@@ -120,9 +120,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Install Rust 1.89.0
+      - name: Install Rust 1.98.1
         run: |
-          rustup toolchain install 1.89.0 --profile minimal --component clippy --no-self-update
-          rustup default 1.89.0
+          rustup toolchain install 1.98.1 --profile minimal --component clippy --no-self-update
+          rustup default 1.98.1
       - name: Clippy
         run: ./scripts/ci/clippy.sh
