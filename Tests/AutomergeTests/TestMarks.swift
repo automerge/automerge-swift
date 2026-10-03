@@ -102,4 +102,36 @@ class MarksTestCase: XCTestCase {
             Mark(start: 2, end: 2, name: "italic", value: .Boolean(true)),
         ])
     }
+
+    func testMarksAtCursorFromAnotherDocumentThrows() throws {
+        let doc = Document()
+        let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
+
+        let otherDoc = Document()
+        let otherTextId = try otherDoc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try otherDoc.spliceText(obj: otherTextId, start: 0, delete: 0, value: "Hello World!")
+        let foreignCursor = try otherDoc.cursor(obj: otherTextId, position: 8)
+
+        // Previously a Rust panic, surfaced as an internal UniFFI error rather than a DocError.
+        XCTAssertThrowsError(try doc.marksAt(obj: textId, position: .cursor(foreignCursor))) { error in
+            XCTAssertTrue(error is DocError, "expected DocError, got \(error)")
+        }
+    }
+
+    func testMarksAtCursorWithHeadsBeforeCursorExistedThrows() throws {
+        let doc = Document()
+        let textId = try doc.putObject(obj: ObjId.ROOT, key: "text", ty: .Text)
+        try doc.spliceText(obj: textId, start: 0, delete: 0, value: "Hello")
+        let headsBeforeCursor = doc.heads()
+
+        try doc.spliceText(obj: textId, start: 5, delete: 0, value: " World!")
+        let cursor = try doc.cursor(obj: textId, position: 8)
+
+        XCTAssertThrowsError(
+            try doc.marksAt(obj: textId, position: .cursor(cursor), heads: headsBeforeCursor)
+        ) { error in
+            XCTAssertTrue(error is DocError, "expected DocError, got \(error)")
+        }
+    }
 }
