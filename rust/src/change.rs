@@ -15,7 +15,7 @@ impl From<am::Change> for Change {
     fn from(mut value: am::Change) -> Self {
         Change {
             actor_id: value.actor_id().into(),
-            message: value.message().cloned(),
+            message: value.message().map(String::from),
             deps: value.deps().into_iter().map(ChangeHash::from).collect(),
             timestamp: value.timestamp(),
             bytes: value.bytes().into_owned(),
