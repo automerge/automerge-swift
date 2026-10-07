@@ -20,6 +20,8 @@ mod patches;
 use patches::{Patch, PatchAction};
 mod path;
 use path::{PathElement, Prop};
+mod span;
+use span::{HydratedValue, Span};
 mod scalar_value;
 use scalar_value::ScalarValue;
 mod sync_state;

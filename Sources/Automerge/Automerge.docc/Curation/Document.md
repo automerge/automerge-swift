@@ -59,6 +59,15 @@
 - ``updateText(obj:value:)``
 - ``mark(obj:start:end:expand:name:value:)``
 
+### Reading and updating rich text blocks
+
+- ``spans(obj:)``
+- ``block(obj:index:)``
+- ``splitBlock(obj:index:)``
+- ``splitBlock(obj:index:block:)``
+- ``joinBlock(obj:index:)``
+- ``updateBlock(obj:index:block:)``
+
 ### Setting and Reading cursors
 
 - ``cursor(obj:position:)``
@@ -102,6 +111,8 @@
 - ``lengthAt(obj:heads:)``
 - ``marksAt(obj:heads:)``
 - ``marksAt(obj:position:heads:)``
+- ``spansAt(obj:heads:)``
+- ``blockAt(obj:index:heads:)``
 
 ### Saving, forking, and merging documents
 
