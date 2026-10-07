@@ -585,6 +585,15 @@ impl Doc {
         Ok(Doc(RwLock::new(ac)))
     }
 
+    pub fn load_with_text_encoding(
+        bytes: Vec<u8>,
+        text_encoding: TextEncoding,
+    ) -> Result<Self, LoadError> {
+        let options = am::LoadOptions::new().text_encoding(text_encoding.into());
+        let ac = automerge::AutoCommit::load_with_options(bytes.as_slice(), options)?;
+        Ok(Doc(RwLock::new(ac)))
+    }
+
     pub fn generate_sync_message(&self, sync_state: Arc<SyncState>) -> Option<Vec<u8>> {
         let mut doc = self.0.write().unwrap();
         let mut state = sync_state.0.write().unwrap();
@@ -632,7 +641,14 @@ impl Doc {
             .into_iter()
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
-        let new = doc.fork_at(&heads)?;
+        let mut new = doc.fork_at(&heads)?;
+        // automerge 0.7's fork_at creates the fork with the default text encoding. Later versions keep the
+        // document's encoding, and then this does nothing.
+        let text_encoding = doc.text_encoding();
+        if new.text_encoding() != text_encoding {
+            let options = am::LoadOptions::new().text_encoding(text_encoding);
+            new = automerge::AutoCommit::load_with_options(&new.save(), options)?;
+        }
         Ok(Arc::new(Self(RwLock::new(new))))
     }
 
