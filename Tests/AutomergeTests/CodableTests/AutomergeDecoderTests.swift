@@ -79,8 +79,8 @@ final class AutomergeDecoderTests: XCTestCase {
         }
         let decoder = AutomergeDecoder(doc: doc)
 
-        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { _ in
-            // print(error)
+        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { error in
+            XCTAssertError(error, is: DecodingError.self) { $0.isTypeMismatch(expecting: Double.self, at: "name") }
         }
     }
 
@@ -90,8 +90,8 @@ final class AutomergeDecoderTests: XCTestCase {
         }
         let decoder = AutomergeDecoder(doc: doc)
 
-        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { _ in
-            // print(error)
+        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { error in
+            XCTAssertError(error, is: CodingKeyLookupError.self, where: \.isMismatchedSchema)
         }
     }
 
@@ -101,8 +101,8 @@ final class AutomergeDecoderTests: XCTestCase {
         }
         let decoder = AutomergeDecoder(doc: doc)
 
-        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { _ in
-            // print(error)
+        XCTAssertThrowsError(try decoder.decode(SimpleStruct.self), "Expected type mismatch error") { error in
+            XCTAssertError(error, is: DecodingError.self) { $0.isTypeMismatch(expecting: String.self, at: "votes") }
         }
     }
 

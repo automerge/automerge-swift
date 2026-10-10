@@ -7,19 +7,27 @@ final class AnyCodingKeyTests: XCTestCase {
         let empty = try AnyCodingKey.parsePath("")
         XCTAssertEqual(empty, [])
 
-        XCTAssertThrowsError(try AnyCodingKey.parsePath("/"))
+        XCTAssertThrowsError(try AnyCodingKey.parsePath("/")) { error in
+            XCTAssertError(error, is: PathParseError.self, where: \.isInvalidPathElement)
+        }
 
         let single = try AnyCodingKey.parsePath("list")
         XCTAssertEqual(single, [AnyCodingKey("list")])
 
-        XCTAssertThrowsError(try AnyCodingKey.parsePath("1"))
+        XCTAssertThrowsError(try AnyCodingKey.parsePath("1")) { error in
+            XCTAssertError(error, is: PathParseError.self, where: \.isInvalidPathElement)
+        }
 
         let singleInt = try AnyCodingKey.parsePath("[1]")
         XCTAssertEqual(singleInt, [AnyCodingKey(1)])
 
-        XCTAssertThrowsError(try AnyCodingKey.parsePath("[]"))
+        XCTAssertThrowsError(try AnyCodingKey.parsePath("[]")) { error in
+            XCTAssertError(error, is: PathParseError.self, where: \.isEmptyListIndex)
+        }
 
-        XCTAssertThrowsError(try AnyCodingKey.parsePath("[foo]"))
+        XCTAssertThrowsError(try AnyCodingKey.parsePath("[foo]")) { error in
+            XCTAssertError(error, is: PathParseError.self, where: \.isEmptyListIndex)
+        }
 
         let sequence = try AnyCodingKey.parsePath(".list.[45].notes")
         XCTAssertEqual(sequence.count, 3)
