@@ -1,33 +1,5 @@
 import Automerge
 
-/// A type that mirrors the Automerge internal types
-public enum AutomergeValue: Hashable, Equatable {
-    /// Represents a dictionary or map type.
-    case dict([String: AutomergeValue])
-    /// Represents an array or list type.
-    case array([AutomergeValue])
-    /// Represents an Automerge Text type.
-    case text(String)
-    /// Represents an Automerge scalar value.
-    case scalar(ScalarValue)
-}
-
-extension AutomergeValue: CustomStringConvertible {
-    /// A text representation of the schema type and value.
-    public var description: String {
-        switch self {
-        case let .dict(dictionary):
-            return "{\(dictionary.description)}"
-        case let .array(array):
-            return "[\(array.description)]"
-        case let .text(string):
-            return "T{\(string)}"
-        case let .scalar(scalarValue):
-            return scalarValue.description
-        }
-    }
-}
-
 public extension Document {
     /// A function that returns a tree-based structure of values that represents the current state of the document.
     func schema() throws -> AutomergeValue {

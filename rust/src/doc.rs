@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::sync::{Arc, RwLock, RwLockWriteGuard};
 
 use automerge::{self as am, sync::SyncDoc, CursorPosition};
@@ -7,6 +8,7 @@ use crate::actor_id::ActorId;
 use crate::cursor::Position;
 use crate::mark::{ExpandMark, KeyValue, Mark};
 use crate::patches::Patch;
+use crate::span::{hydrated_map, map_into_hydrate, HydratedValue, Span};
 use crate::text_encoding::TextEncoding;
 
 use crate::{
@@ -535,18 +537,97 @@ impl Doc {
         Ok(Mark::from_markset(markset, index as u64))
     }
 
-    pub fn split_block(&self, obj: ObjId, index: u32) -> Result<ObjId, DocError> {
+    pub fn split_block(&self, obj: ObjId, index: u64) -> Result<ObjId, DocError> {
         let mut doc = self.0.write().unwrap();
         let obj = am::ObjId::from(obj);
-        let id = doc.split_block(obj, index.try_into().unwrap())?;
+        assert_text(&*doc, &obj)?;
+        let id = doc.split_block(obj, index as usize)?;
         Ok(id.into())
     }
 
-    pub fn join_block(&self, obj: ObjId, index: u32) -> Result<(), DocError> {
+    pub fn split_block_with_value(
+        &self,
+        obj: ObjId,
+        index: u64,
+        block: HashMap<String, HydratedValue>,
+    ) -> Result<ObjId, DocError> {
         let mut doc = self.0.write().unwrap();
         let obj = am::ObjId::from(obj);
-        doc.join_block(obj, index.try_into().unwrap())?;
+        assert_text(&*doc, &obj)?;
+        let block = map_into_hydrate(block, doc.text_encoding());
+        let id = doc.split_block(obj, index as usize)?;
+        doc.update_object(&id, &block).map_err(DocError::from)?;
+        Ok(id.into())
+    }
+
+    pub fn join_block(&self, obj: ObjId, index: u64) -> Result<(), DocError> {
+        let mut doc = self.0.write().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        assert_block(&*doc, &obj, index)?;
+        doc.join_block(obj, index as usize)?;
         Ok(())
+    }
+
+    pub fn update_block(
+        &self,
+        obj: ObjId,
+        index: u64,
+        block: HashMap<String, HydratedValue>,
+    ) -> Result<ObjId, DocError> {
+        let mut doc = self.0.write().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        assert_block(&*doc, &obj, index)?;
+        let block = map_into_hydrate(block, doc.text_encoding());
+        let id = doc.replace_block(obj, index as usize)?;
+        doc.update_object(&id, &block).map_err(DocError::from)?;
+        Ok(id.into())
+    }
+
+    pub fn get_block(
+        &self,
+        obj: ObjId,
+        index: u64,
+    ) -> Result<Option<HashMap<String, HydratedValue>>, DocError> {
+        let doc = self.0.read().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        block_value(&*doc, &obj, index, None)
+    }
+
+    pub fn get_block_at(
+        &self,
+        obj: ObjId,
+        index: u64,
+        heads: Vec<ChangeHash>,
+    ) -> Result<Option<HashMap<String, HydratedValue>>, DocError> {
+        let doc = self.0.read().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        block_value(&*doc, &obj, index, Some(&heads))
+    }
+
+    pub fn spans(&self, obj: ObjId) -> Result<Vec<Span>, DocError> {
+        let doc = self.0.read().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        Ok(doc.spans(obj)?.map(Span::from).collect())
+    }
+
+    pub fn spans_at(&self, obj: ObjId, heads: Vec<ChangeHash>) -> Result<Vec<Span>, DocError> {
+        let doc = self.0.read().unwrap();
+        let obj = am::ObjId::from(obj);
+        assert_text(&*doc, &obj)?;
+        let heads = heads
+            .into_iter()
+            .map(am::ChangeHash::from)
+            .collect::<Vec<_>>();
+        Ok(doc.spans_at(obj, &heads)?.map(Span::from).collect())
     }
 
     pub fn merge(&self, other: Arc<Self>) -> Result<(), DocError> {
@@ -755,5 +836,42 @@ fn assert_text<R: am::ReadDoc>(doc: &R, obj: &am::ObjId) -> Result<(), DocError>
     match doc.object_type(obj)? {
         am::ObjType::Text => Ok(()),
         _ => Err(DocError::WrongObjectType),
+    }
+}
+
+/// Checks that the element at `index` in a text object is a block marker. The core's `join_block`
+/// deletes whatever element is at the index, so without this check it would delete a character.
+fn assert_block<R: am::ReadDoc>(doc: &R, text: &am::ObjId, index: u64) -> Result<(), DocError> {
+    match doc.get(text, index as usize)? {
+        Some((am::Value::Object(am::ObjType::Map), _)) => Ok(()),
+        _ => Err(DocError::WrongObjectType),
+    }
+}
+
+fn block_value<R: am::ReadDoc>(
+    doc: &R,
+    text: &am::ObjId,
+    index: u64,
+    heads: Option<&[am::ChangeHash]>,
+) -> Result<Option<HashMap<String, HydratedValue>>, DocError> {
+    let element = match heads {
+        Some(heads) => doc.get_at(text, index as usize, heads)?,
+        None => doc.get(text, index as usize)?,
+    };
+    let Some((am::Value::Object(am::ObjType::Map), id)) = element else {
+        return Ok(None);
+    };
+    match doc.hydrate(&id, heads)? {
+        am::hydrate::Value::Map(map) => Ok(Some(hydrated_map(&map))),
+        _ => Ok(None),
+    }
+}
+
+impl From<am::error::UpdateObjectError> for DocError {
+    fn from(value: am::error::UpdateObjectError) -> Self {
+        match value {
+            am::error::UpdateObjectError::ChangeType => DocError::WrongObjectType,
+            am::error::UpdateObjectError::Automerge(e) => DocError::Internal(e),
+        }
     }
 }

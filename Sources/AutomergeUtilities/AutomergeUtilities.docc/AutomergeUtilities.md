@@ -12,7 +12,7 @@ Automerge Utilities extends Automerge's `Document` type to make it easier to par
 
 - ``Automerge/Document/isEmpty()``
 - ``Automerge/Document/schema()``
-- ``AutomergeUtilities/AutomergeValue``
+- ``Automerge/AutomergeValue``
 
 ### Parsing the contents of an Automerge document
 

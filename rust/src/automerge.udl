@@ -104,6 +104,20 @@ dictionary Mark {
     ScalarValue value;
 };
 
+[Enum]
+interface HydratedValue {
+    Scalar( ScalarValue value );
+    Map( record<string, HydratedValue> value );
+    List( sequence<HydratedValue> value );
+    Text( string value );
+};
+
+[Enum]
+interface Span {
+    Text( string text, record<string, ScalarValue> marks );
+    Block( record<string, HydratedValue> value );
+};
+
 dictionary PathElement {
     Prop prop;
     ObjId obj;
@@ -190,9 +204,21 @@ interface Doc {
     sequence<Mark> marks_at_position(ObjId obj, Position position, sequence<ChangeHash> heads);
 
     [Throws=DocError]
-    ObjId split_block(ObjId obj, u32 index);
+    ObjId split_block(ObjId obj, u64 index);
     [Throws=DocError]
-    void join_block(ObjId obj, u32 index);
+    ObjId split_block_with_value(ObjId obj, u64 index, record<string, HydratedValue> block);
+    [Throws=DocError]
+    void join_block(ObjId obj, u64 index);
+    [Throws=DocError]
+    ObjId update_block(ObjId obj, u64 index, record<string, HydratedValue> block);
+    [Throws=DocError]
+    record<string, HydratedValue>? get_block(ObjId obj, u64 index);
+    [Throws=DocError]
+    record<string, HydratedValue>? get_block_at(ObjId obj, u64 index, sequence<ChangeHash> heads);
+    [Throws=DocError]
+    sequence<Span> spans(ObjId obj);
+    [Throws=DocError]
+    sequence<Span> spans_at(ObjId obj, sequence<ChangeHash> heads);
 
     [Throws=DocError]
     void delete_in_map(ObjId obj, string key);

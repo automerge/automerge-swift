@@ -983,6 +983,162 @@ public final class Document: @unchecked Sendable {
         try marksAt(obj: obj, position: position, heads: heads())
     }
 
+    /// Inserts a block marker into a text object, and returns the identifier of the new block's map.
+    ///
+    /// A block marker divides rich text into blocks, such as paragraphs, headings, and list items.
+    /// It occupies one position in the text object, and reads as the object replacement character (`U+FFFC`) from
+    /// ``text(obj:)``. The new block is an empty map; write its contents through the identifier this method returns.
+    /// By convention, shared with Automerge's JavaScript library, a block holds a `type` string, a `parents` list of
+    /// strings, and an `attrs` map.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position at which to insert the block marker.
+    /// - Returns: The identifier of the new block's map.
+    @discardableResult
+    public func splitBlock(obj: ObjId, index: UInt64) throws -> ObjId {
+        try lock {
+            sendObjectWillChange()
+            defer { sendObjectDidChange() }
+            return try self.doc.wrapErrors {
+                try ObjId(bytes: $0.splitBlock(obj: obj.bytes, index: index))
+            }
+        }
+    }
+
+    /// Inserts a block marker with the contents you provide into a text object, and returns the identifier of the
+    /// new block's map.
+    ///
+    /// The marker and its contents are written in the same change, so any objects within the block, such as an
+    /// `attrs` map, are created by one actor only.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position at which to insert the block marker.
+    ///   - block: The contents of the block, for example
+    /// `["type": .scalar(.String("paragraph")), "parents": .array([]), "attrs": .dict([:])]`.
+    /// - Returns: The identifier of the new block's map.
+    @discardableResult
+    public func splitBlock(obj: ObjId, index: UInt64, block: [String: AutomergeValue]) throws -> ObjId {
+        try lock {
+            sendObjectWillChange()
+            defer { sendObjectDidChange() }
+            return try self.doc.wrapErrors {
+                try ObjId(bytes: $0.splitBlockWithValue(
+                    obj: obj.bytes,
+                    index: index,
+                    block: block.mapValues { $0.toFfi() }
+                ))
+            }
+        }
+    }
+
+    /// Removes the block marker at the position you provide, joining its text to the block before it.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position of the block marker.
+    ///
+    /// The method throws a ``DocError`` if the element at `index` isn't a block marker.
+    public func joinBlock(obj: ObjId, index: UInt64) throws {
+        try lock {
+            sendObjectWillChange()
+            defer { sendObjectDidChange() }
+            try self.doc.wrapErrors {
+                try $0.joinBlock(obj: obj.bytes, index: index)
+            }
+        }
+    }
+
+    /// Replaces the block marker at the position you provide with a new marker holding the contents you provide, and
+    /// returns the identifier of the new block's map.
+    ///
+    /// This matches `updateBlock` in Automerge's JavaScript library: it removes the existing marker and inserts a new
+    /// one in its place. If another actor concurrently updates the same block, both new markers remain after a merge,
+    /// and concurrent edits to objects within the old block are not carried into the new one.
+    /// To change part of a block in place, write to its map, or to maps within it, directly.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position of the block marker.
+    ///   - block: The new contents of the block.
+    /// - Returns: The identifier of the new block's map.
+    ///
+    /// The method throws a ``DocError`` if the element at `index` isn't a block marker.
+    @discardableResult
+    public func updateBlock(obj: ObjId, index: UInt64, block: [String: AutomergeValue]) throws -> ObjId {
+        try lock {
+            sendObjectWillChange()
+            defer { sendObjectDidChange() }
+            return try self.doc.wrapErrors {
+                try ObjId(bytes: $0.updateBlock(
+                    obj: obj.bytes,
+                    index: index,
+                    block: block.mapValues { $0.toFfi() }
+                ))
+            }
+        }
+    }
+
+    /// Returns the contents of the block marker at the position you provide, or `nil` if the element at that position
+    /// isn't a block marker.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position in the text object.
+    /// - Returns: The contents of the block, or `nil`.
+    public func block(obj: ObjId, index: UInt64) throws -> [String: AutomergeValue]? {
+        try lock {
+            try self.doc.wrapErrors {
+                try $0.getBlock(obj: obj.bytes, index: index)?.mapValues(AutomergeValue.fromFfi)
+            }
+        }
+    }
+
+    /// Returns the contents of the block marker at the position you provide, at a point in time in the document's
+    /// history, or `nil` if the element at that position isn't a block marker.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - index: The position in the text object.
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
+    /// - Returns: The contents of the block, or `nil`.
+    public func blockAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>) throws -> [String: AutomergeValue]? {
+        try lock {
+            try self.doc.wrapErrors {
+                try $0.getBlockAt(obj: obj.bytes, index: index, heads: heads.map(\.bytes))?
+                    .mapValues(AutomergeValue.fromFfi)
+            }
+        }
+    }
+
+    /// Returns the contents of a text object as spans: block markers, and runs of text with the marks that apply to
+    /// them.
+    ///
+    /// - Parameter obj: The identifier of the text object.
+    /// - Returns: The text object's contents, in order, as a list of ``Span``.
+    public func spans(obj: ObjId) throws -> [Span] {
+        try lock {
+            try self.doc.wrapErrors {
+                try $0.spans(obj: obj.bytes).map(Span.fromFfi)
+            }
+        }
+    }
+
+    /// Returns the contents of a text object as spans at a point in time in the document's history.
+    ///
+    /// - Parameters:
+    ///   - obj: The identifier of the text object.
+    ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
+    /// - Returns: The text object's contents at that point in time, in order, as a list of ``Span``.
+    public func spansAt(obj: ObjId, heads: Set<ChangeHash>) throws -> [Span] {
+        try lock {
+            try self.doc.wrapErrors {
+                try $0.spansAt(obj: obj.bytes, heads: heads.map(\.bytes)).map(Span.fromFfi)
+            }
+        }
+    }
+
     /// Commit the auto-generated transaction with options.
     ///
     /// - Parameters:

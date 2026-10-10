@@ -71,6 +71,8 @@ Read <doc:FiveMinuteQuickstart> to get a quick taste of how to use Automerge, or
 - ``Automerge/Position``
 - ``Automerge/Mark``
 - ``Automerge/ExpandMark``
+- ``Automerge/Span``
+- ``Automerge/AutomergeValue``
 
 ### Collaborating with Counters
 
