@@ -306,14 +306,16 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the value at the index position you provide from the array object you specify.
+    /// Get the value at the index position you provide from the array or text object you specify.
     ///
     /// - Parameters:
-    ///   - obj: The identifier of the array object.
-    ///   - index: The index position within the array.
-    /// - Returns: The value of the key, or `nil` if the key doesn't exist in the dictionary.
+    ///   - obj: The identifier of the array or text object.
+    ///   - index: The index position within the array or text.
+    /// - Returns: The value at the index, or `nil` if the index is beyond the end of the array or text.
     ///
-    /// If you request a index beyond the bounds of the array, this method throws an error.
+    /// In a text object, the index counts in the document's ``TextEncoding``, and the value is the character at that
+    /// index as a ``ScalarValue/String(_:)``, or a block marker as a ``Value/Object(_:_:)`` map. An index inside a
+    /// character returns that character.
     ///
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
@@ -338,14 +340,17 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the set of possibly conflicting values at the index you provide for the array object you specify.
+    /// Get the set of possibly conflicting values at the index you provide for the array or text object you specify.
     ///
     /// - Parameters:
-    ///   - obj: The identifier of the array object.
-    ///   - index: The index position within the array.
-    /// - Returns: A set of the values at that index.
+    ///   - obj: The identifier of the array or text object.
+    ///   - index: The index position within the array or text.
+    /// - Returns: A set of the values at that index, or an empty set if the index is beyond the end of the array or
+    /// text.
     ///
-    /// If you request a index beyond the bounds of the array, this method throws an error.
+    /// In a text object, the index counts in the document's ``TextEncoding``, and the value is the character at that
+    /// index as a ``ScalarValue/String(_:)``, or a block marker as a ``Value/Object(_:_:)`` map. An index inside a
+    /// character returns that character.
     public func getAll(obj: ObjId, index: UInt64) throws -> Set<Value> {
         try lock {
             let vals = try self.doc.wrapErrors { try $0.getAllInList(obj: obj.bytes, index: index) }
@@ -378,15 +383,19 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the historical value at of the index you provide in the array object and point in time you specify.
+    /// Get the historical value at of the index you provide in the array or text object and point in time you specify.
     ///
     /// - Parameters:
-    ///   - obj: The identifier of the array object.
-    ///   - index: The index position within the array.
+    ///   - obj: The identifier of the array or text object.
+    ///   - index: The index position within the array or text.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: The value of the index at the point in time you provide, or `nil` if the value doesn't exist.
     ///
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
+    ///
+    /// In a text object, the index counts in the document's ``TextEncoding``, and the value is the character at that
+    /// index as a ``ScalarValue/String(_:)``, or a block marker as a ``Value/Object(_:_:)`` map. An index inside a
+    /// character returns that character.
     ///
     /// > Tip: Note that if there are multiple conflicting values this method
     /// will return one of them  arbitrarily (but deterministically). If you
@@ -424,15 +433,19 @@ public final class Document: @unchecked Sendable {
         }
     }
 
-    /// Get the historical value at of the index you provide, in the array object and point of time you specify.
+    /// Get the historical value at of the index you provide, in the array or text object and point of time you specify.
     ///
     /// - Parameters:
-    ///   - obj: The identifier of the array object.
-    ///   - index: The index position within the array.
+    ///   - obj: The identifier of the array or text object.
+    ///   - index: The index position within the array or text.
     ///   - heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: The set of possibly conflicting values of the index at the point in time you provide.
     ///
     /// Use the method ``heads()`` to capture a specific point in time in order to use this method.
+    ///
+    /// In a text object, the index counts in the document's ``TextEncoding``, and the value is the character at that
+    /// index as a ``ScalarValue/String(_:)``, or a block marker as a ``Value/Object(_:_:)`` map. An index inside a
+    /// character returns that character.
     public func getAllAt(obj: ObjId, index: UInt64, heads: Set<ChangeHash>)
         throws -> Set<Value>
     {
