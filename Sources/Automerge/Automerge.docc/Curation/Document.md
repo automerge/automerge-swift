@@ -6,6 +6,7 @@
 
 - ``init(textEncoding:logLevel:)``
 - ``init(_:logLevel:)``
+- ``init(_:textEncoding:logLevel:)``
 - ``LogVerbosity``
 
 ### Inspecting Documents

@@ -78,7 +78,7 @@ public final class Document: @unchecked Sendable {
 
     /// Creates an new, empty Automerge document.
     /// - Parameters:
-    ///   - textEncoding: The encoding type for text within the document. Defaults to `.unicodeCodePoint`.
+    ///   - textEncoding: The encoding type for text within the document. Defaults to ``TextEncoding/unicodeScalar``.
     ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
     public init(textEncoding: TextEncoding = .unicodeScalar, logLevel: LogVerbosity = .errorOnly) {
         doc = WrappedDoc(Doc.newWithTextEncoding(textEncoding: textEncoding.ffi_textEncoding))
@@ -92,11 +92,33 @@ public final class Document: @unchecked Sendable {
     /// of
     /// ``encodeChangesSince(heads:)``, ``encodeNewChanges()``, or
     /// any sequence of bytes containing valid encodings of automerge changes.
+    ///
+    /// The document uses the default text encoding, ``TextEncoding/unicodeScalar``, because the data doesn't record
+    /// the encoding a document was created with. To load a document with another encoding, use
+    /// ``init(_:textEncoding:logLevel:)``.
     /// - Parameters:
     ///   - bytes: A data buffer of encoded automerge changes.
     ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
     public init(_ bytes: Data, logLevel: LogVerbosity = .errorOnly) throws {
         doc = try WrappedDoc { try Doc.load(bytes: Array(bytes)) }
+        self.reportingLogLevel = logLevel
+    }
+
+    /// Creates a new document from the data that you provide, using the text encoding you choose.
+    ///
+    /// The text encoding determines the units of every text position and length, such as the indices you pass to
+    /// ``spliceText(obj:start:delete:value:)`` and the bounds of each ``Mark``. It isn't stored in the document's
+    /// data, so load a document with the encoding it was created with to keep those positions the same. For example,
+    /// a document created with ``TextEncoding/utf16``, to match `NSString` and `NSRange`, keeps UTF-16 positions only
+    /// if you load it with ``TextEncoding/utf16``.
+    /// - Parameters:
+    ///   - bytes: A data buffer of encoded automerge changes.
+    ///   - textEncoding: The encoding type for text within the document.
+    ///   - logLevel: The level at which to generate logs into unified logging from actions within this document.
+    public init(_ bytes: Data, textEncoding: TextEncoding, logLevel: LogVerbosity = .errorOnly) throws {
+        doc = try WrappedDoc {
+            try Doc.loadWithTextEncoding(bytes: Array(bytes), textEncoding: textEncoding.ffi_textEncoding)
+        }
         self.reportingLogLevel = logLevel
     }
 
@@ -1083,7 +1105,7 @@ public final class Document: @unchecked Sendable {
     ///
     /// - Parameter heads: The set of ``ChangeHash`` that represents a point of time in the history the document.
     /// - Returns: A copy of the document with a new actor ID that contains the changes up to the point in time you
-    /// specify.
+    /// specify. The copy uses the same text encoding as this document.
     public func forkAt(heads: Set<ChangeHash>) throws -> Document {
         try lock {
             try self.doc.wrapErrors {
