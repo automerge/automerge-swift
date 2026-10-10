@@ -526,12 +526,12 @@ impl Doc {
             .map(am::ChangeHash::from)
             .collect::<Vec<_>>();
         let index = match position {
-            Position::Cursor { position: cursor } => doc
-                .get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))
-                .unwrap() as usize,
+            Position::Cursor { position: cursor } => {
+                doc.get_cursor_position(obj.clone(), &cursor.into(), Some(&heads))?
+            }
             Position::Index { position: index } => index as usize,
         };
-        let markset = doc.get_marks(obj, index, Some(&heads)).unwrap();
+        let markset = doc.get_marks(obj, index, Some(&heads))?;
         Ok(Mark::from_markset(markset, index as u64))
     }
 
